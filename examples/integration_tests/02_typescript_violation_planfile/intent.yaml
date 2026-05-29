@@ -1,0 +1,19 @@
+project:
+  name: typescript-violation-example
+
+contracts:
+  - id: example.permission
+    scope: project
+    intent: validate:user_permission
+    priority: 1
+    domain: security
+    input: [user, resource]
+    output: [allowed]
+    effect: [none]
+    forbid: [network, write]
+    require:
+      - validate.user_permission
+    validate:
+      - required_intents
+      - no_forbidden_effect
+    meaning: "Example should validate user permission without network calls."

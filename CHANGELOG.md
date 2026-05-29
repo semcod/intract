@@ -11,6 +11,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Docs
 - Update README.md
+- Update examples/integration_tests/01_python_pass/README.md
+- Update examples/integration_tests/02_typescript_violation_planfile/.intract/TODO.intract.md
+- Update examples/integration_tests/02_typescript_violation_planfile/README.md
+- Update examples/integration_tests/03_watch_engine_drift/README.md
+
+### Other
+- Update .env.example
+- Update .gitignore
+- Update .idea/inspectionProfiles/Project_Default.xml
+- Update .idea/inspectionProfiles/profiles_settings.xml
+- Update .idea/intract.iml
+- Update .idea/misc.xml
+- Update .idea/modules.xml
+- Update .idea/pyProjectModel.xml
+- Update .idea/vcs.xml
+- Update VERSION
+- ... and 11 more files
+
+## [0.3.1] - 2026-05-29
+
+### Docs
+- Update README.md
 - Update TODO/1.md
 - Update TODO/2.md
 - Update TODO/3.md

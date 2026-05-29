@@ -1,0 +1,20 @@
+{
+  "b934202b7e7a0c3a": {
+    "id": "b934202b7e7a0c3a",
+    "file_path": "scanner.py",
+    "kind": "function",
+    "name": "collect_project_files",
+    "start_line": 2,
+    "end_line": 9,
+    "text_hash": "a0fa273a88f7ee39003f4f0790a2ba8a032c592584d503c1c1ad53cf444ef089"
+  },
+  "2f750edc6d6c4a4c": {
+    "id": "2f750edc6d6c4a4c",
+    "file_path": "reporter.py",
+    "kind": "function",
+    "name": "render_summary",
+    "start_line": 2,
+    "end_line": 5,
+    "text_hash": "f4d44fe893d8cbdd4efe3444269d345e92dd88bbdeb0d869df78cd7dd7142c78"
+  }
+}

@@ -1,0 +1,1 @@
+# Intract Tickets\n\n- [ ] **INTRACT-0001** `high` VIOLATION: validate.user_permission\n  - Location: `permission.ts:1`\n  - Details: Violations: Declared forbid:network, but effect 'network' was detected.\n

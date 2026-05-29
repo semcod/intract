@@ -1,0 +1,20 @@
+project:
+  name: watch-engine-drift-example
+
+contracts:
+  - id: example.pipeline
+    scope: project
+    intent: analyze:file_inventory
+    priority: 1
+    domain: example
+    input: [source_tree]
+    output: [summary]
+    effect: [read]
+    forbid: [network, write]
+    require:
+      - scan.project_file
+      - render.summary_report
+    validate:
+      - required_intents
+      - no_forbidden_effect
+    meaning: "Example should scan project files and render a summary."

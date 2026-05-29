@@ -4,10 +4,10 @@
 ## AI Cost Tracking
 
 ![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.3.1-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.44-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.76-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.8h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $0.4398 (1 commits)
-- 👤 **Human dev:** ~$200 (2.0h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $0.7632 (2 commits)
+- 👤 **Human dev:** ~$277 (2.8h @ $100/h, 30min dedup)
 
 Generated on 2026-05-29 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -144,6 +144,30 @@ intract tickets .
 `watch` observes logical file changes in real time using content hashes and reruns validation.
 `engine` scans the codebase, extracts logical fragments, suggests Intract contracts and detects drift.
 `tickets` exports failed, partial or violating results as planfile-compatible ticket files.
+
+
+## Integration test examples
+
+The package includes 3 ready-to-run examples:
+
+```text
+examples/integration_tests/
+  01_python_pass/
+  02_typescript_violation_planfile/
+  03_watch_engine_drift/
+```
+
+Run all examples:
+
+```bash
+python examples/integration_tests/run_examples.py
+```
+
+Expected results:
+
+- `01_python_pass`: validation passes.
+- `02_typescript_violation_planfile`: network violation is detected and planfile-compatible tickets are generated.
+- `03_watch_engine_drift`: watch detects file changes and engine extracts logical fragments / suggestions.
 
 
 ## License
