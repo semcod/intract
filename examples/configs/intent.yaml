@@ -1,0 +1,22 @@
+project:
+  name: sample-intract-project
+
+contracts:
+  - id: project.analysis
+    scope: project
+    intent: analyze:code_duplication
+    priority: 1
+    domain: project
+    input: [source_tree]
+    output: [DuplicationMap, RefactorSuggestion]
+    effect: [read]
+    forbid: [network]
+    require:
+      - scan.project_files
+      - extract.code_blocks
+      - detect.duplicates
+      - render.report
+    validate:
+      - required_intents
+      - no_forbidden_effect
+    meaning: "Project should analyze source code duplication and produce refactoring guidance."
