@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "intract-plugin-example"
+version = "0.1.0"
+description = "Example Python plugin for Intract."
+requires-python = ">=3.10"
+dependencies = ["intract>=0.2.0"]
+
+[project.entry-points."intract.parsers"]
+example_parser = "intract_plugin_example:ExampleParserPlugin"
+
+[project.entry-points."intract.validators"]
+example_validator = "intract_plugin_example:ExampleValidatorPlugin"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/intract_plugin_example"]

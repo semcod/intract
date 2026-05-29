@@ -1,0 +1,12 @@
+# @intract.v1 scope:container intent:package:web_service priority:2 domain:runtime input:app_source output:oci_image effect:build forbid:secret_leak,root_user,latest_tag validate:no_forbidden_effect meaning:"build container image safely"
+FROM python:3.12-slim
+
+LABEL io.intract.scope="container"
+LABEL io.intract.intent="package:web_service"
+LABEL io.intract.forbid="secret_leak,root_user,latest_tag"
+
+WORKDIR /app
+COPY . .
+RUN pip install -e .
+USER 10001
+CMD ["python", "-m", "app"]

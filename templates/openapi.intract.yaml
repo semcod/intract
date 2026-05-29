@@ -1,0 +1,21 @@
+openapi: 3.1.0
+info:
+  title: Example API
+  version: 1.0.0
+
+paths:
+  /users/{user_id}:
+    get:
+      x-intract:
+        scope: endpoint
+        intent: read:user_profile
+        priority: 1
+        domain: user
+        input: [user_id]
+        output: [UserProfile]
+        effect: [read]
+        forbid: [write]
+        require: [authorize.user_access]
+      responses:
+        "200":
+          description: OK

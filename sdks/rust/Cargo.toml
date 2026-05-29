@@ -1,0 +1,9 @@
+[package]
+name = "intract-sdk"
+version = "0.1.0"
+edition = "2021"
+description = "Rust SDK for emitting Intract intent contracts."
+
+[lib]
+name = "intract_sdk"
+path = "src/lib.rs"

@@ -67,7 +67,10 @@ def validate_contract_against_source(
         forbidden_hits = sorted(signature.forbidden & observed_effects)
         for item in forbidden_hits:
             violations.append(
-                ValidationIssue(kind="forbidden_effect", message=f"Declared forbid:{item}, but effect '{item}' was detected.")
+                ValidationIssue(
+                    kind="forbidden_effect",
+                    message=f"Declared forbid:{item}, but effect '{item}' was detected.",
+                )
             )
         score_parts.append(1.0 if not forbidden_hits else 0.0)
 

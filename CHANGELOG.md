@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-05-29
+
+### Docs
+- Update README.md
+- Update TODO/1.md
+- Update TODO/2.md
+- Update TODO/3.md
+- Update TODO/4.md
+- Update TODO/5.md
+- Update docs/plugins.md
+- Update docs/quick-enable.md
+- Update docs/watch-engine-planfile.md
+
+### Other
+- Update .env
+- Update .env.example
+- Update .gitignore
+- Update VERSION
+- Update sdks/csharp/Intract.Sdk.csproj
+- Update sdks/csharp/IntractContract.cs
+- Update sdks/go/examples/main.go
+- Update sdks/go/go.mod
+- Update sdks/go/intractsdk/sdk.go
+- Update sdks/java/build.gradle
+- ... and 17 more files
+
 ## [0.1.1] - 2026-05-29
 
 ### Docs

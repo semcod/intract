@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.1-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.15-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-1.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.3.1-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.44-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $0.1500 (1 commits)
-- 👤 **Human dev:** ~$100 (1.0h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $0.4398 (1 commits)
+- 👤 **Human dev:** ~$200 (2.0h @ $100/h, 30min dedup)
 
 Generated on 2026-05-29 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -104,6 +104,46 @@ intract init .
 | `require` | `scan.project_files` | Required sub-intents. |
 | `validate` | `input_presence,no_forbidden_effect` | Validation rules to apply. |
 | `meaning` | `"..."` | Human-readable explanation. |
+
+
+## Plugins and SDKs
+
+This package now includes a plugin registry and SDK templates for:
+
+- Python plugin packages through `project.entry-points`
+- TypeScript / Node SDK
+- Go SDK
+- Rust SDK
+- Java SDK
+- C# SDK
+- config templates for `intract.yaml`, pre-commit, GitHub Actions, Dockerfile, OpenAPI
+
+See:
+
+```text
+docs/plugins.md
+docs/quick-enable.md
+templates/
+sdks/
+```
+
+
+## Watch and engine
+
+Intract can now behave like a logical linter running during development:
+
+```bash
+intract watch .
+intract watch . --planfile
+intract engine suggest .
+intract engine drift .
+intract engine run . --planfile
+intract tickets .
+```
+
+`watch` observes logical file changes in real time using content hashes and reruns validation.
+`engine` scans the codebase, extracts logical fragments, suggests Intract contracts and detects drift.
+`tickets` exports failed, partial or violating results as planfile-compatible ticket files.
 
 
 ## License

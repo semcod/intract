@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "intract"
-version = "0.1.1"
+version = "0.3.1"
 description = "Intent contract tagging, validation and semantic mapping for codebases."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -46,6 +46,17 @@ select = ["E", "F", "I", "UP", "B"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+
+[project.entry-points."intract.parsers"]
+inline = "intract.plugins.builtins:InlineContractParserPlugin"
+manifest = "intract.plugins.builtins:ManifestParserPlugin"
+
+[project.entry-points."intract.validators"]
+basic = "intract.plugins.builtins:BasicContractValidatorPlugin"
+
+[project.entry-points."intract.reporters"]
+json = "intract.plugins.builtins:JsonReporterPlugin"
 
 [tool.pfix]
 # Self-healing Python configuration

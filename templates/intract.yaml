@@ -1,0 +1,36 @@
+version: intract.v1
+
+project:
+  name: my-project
+  intent: serve:application
+
+contracts:
+  - id: project.main
+    scope: project
+    intent: serve:application
+    priority: 1
+    domain: project
+    input: [source_tree]
+    output: [release_artifact]
+    effect: [read]
+    forbid: [secret_leak]
+    require:
+      - validate.ci_pipeline
+      - package.docker_image
+      - deploy.runtime_service
+    validate:
+      - required_intents
+      - no_forbidden_effect
+    meaning: "Project should build, validate, package and deploy the application safely."
+
+artifacts:
+  Dockerfile:
+    kind: dockerfile
+    provides: [package.docker_image]
+    forbid: [root_user, latest_tag, secret_leak]
+
+  .github/workflows/ci.yml:
+    kind: github_actions
+    provides: [validate.ci_pipeline]
+    require: [run.tests, run.intract]
+    forbid: [publish]

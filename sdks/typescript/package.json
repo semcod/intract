@@ -1,0 +1,16 @@
+{
+  "name": "@intract/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for emitting Intract intent contracts.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "example": "tsx examples/basic.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0"
+  }
+}

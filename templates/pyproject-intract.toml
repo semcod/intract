@@ -1,0 +1,16 @@
+[tool.intract]
+manifest = "intract.yaml"
+mode = "changed"
+fail_on = ["violation", "invalid_manifest", "missing_required_p1"]
+warn_on = ["partial", "missing_contract", "unknown"]
+min_changed_coverage = 0
+
+[tool.intract.plugins]
+enabled = [
+  "inline",
+  "manifest",
+  "openapi",
+  "docker",
+  "github_actions",
+  "kubernetes"
+]
