@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "intract"
-version = "0.5.1"
+version = "0.5.2"
 description = "Intent contract tagging, validation and semantic mapping for codebases."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -53,9 +53,11 @@ pythonpath = ["src"]
 [project.entry-points."intract.parsers"]
 inline = "intract.plugins.builtins:InlineContractParserPlugin"
 manifest = "intract.plugins.builtins:ManifestParserPlugin"
+openapi = "intract.plugins.builtins:OpenAPIParserPlugin"
 
 [project.entry-points."intract.validators"]
 basic = "intract.plugins.builtins:BasicContractValidatorPlugin"
+artifact = "intract.plugins.builtins:ArtifactStructureValidatorPlugin"
 
 [project.entry-points."intract.reporters"]
 json = "intract.plugins.builtins:JsonReporterPlugin"

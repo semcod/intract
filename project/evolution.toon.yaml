@@ -1,0 +1,65 @@
+# code2llm/evolution | 192 func | 45f | 2026-05-30
+# generated in 0.00s
+
+NEXT[6] (ranked by impact):
+  [1] !! SPLIT-FUNC      parse_contract_line  CC=42  fan=28
+      WHY: CC=42 exceeds 15
+      EFFORT: ~1h  IMPACT: 1176
+
+  [2] !  SPLIT-FUNC      validate_manifest  CC=15  fan=17
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 255
+
+  [3] !  SPLIT-FUNC      build_signature  CC=15  fan=14
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 210
+
+  [4] !  SPLIT-FUNC      validate_sources  CC=16  fan=11
+      WHY: CC=16 exceeds 15
+      EFFORT: ~1h  IMPACT: 176
+
+  [5] !  SPLIT-FUNC      infer_artifact_kind  CC=17  fan=6
+      WHY: CC=17 exceeds 15
+      EFFORT: ~1h  IMPACT: 102
+
+  [6] !! SPLIT           goal.yaml
+      WHY: 511L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
+
+
+RISKS[1]:
+  ⚠ Splitting goal.yaml may break 0 import paths
+
+METRICS-TARGET:
+  CC̄:          4.3 → ≤3.0
+  max-CC:      42 → ≤20
+  god-modules: 1 → 0
+  high-CC(≥15): 5 → ≤2
+  hub-types:   0 → ≤0
+
+PATTERNS (language parser shared logic):
+  _extract_declarations() in base.py — unified extraction for:
+    - TypeScript: interfaces, types, classes, functions, arrow funcs
+    - PHP: namespaces, traits, classes, functions, includes
+    - Ruby: modules, classes, methods, requires
+    - C++: classes, structs, functions, #includes
+    - C#: classes, interfaces, methods, usings
+    - Java: classes, interfaces, methods, imports
+    - Go: packages, functions, structs
+    - Rust: modules, functions, traits, use statements
+
+  Shared regex patterns per language:
+    - import: language-specific import/require/using patterns
+    - class: class/struct/trait declarations with inheritance
+    - function: function/method signatures with visibility
+    - brace_tracking: for C-family languages ({ })
+    - end_keyword_tracking: for Ruby (module/class/def...end)
+
+  Benefits:
+    - Consistent extraction logic across all languages
+    - Reduced code duplication (~70% reduction in parser LOC)
+    - Easier maintenance: fix once, apply everywhere
+    - Standardized FunctionInfo/ClassInfo models
+
+HISTORY:
+  (first run — no previous data)

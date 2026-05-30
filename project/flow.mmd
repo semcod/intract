@@ -1,0 +1,34 @@
+flowchart TD
+%% generated in 0.03s
+
+    %% Entry points (blue)
+    classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
+
+    subgraph Core
+        src__intract__graph__ContractGraph__to_dict["to_dict"]
+        src__intract__graph__ContractGraph__to_mermaid["to_mermaid"]
+        src__intract__coverage__CoverageReport__to_dict["to_dict"]
+        src__intract__sdk__ContractBuilder__to_inline["to_inline"]
+        src__intract__sdk__contract["contract"]
+        src__intract__validators__input_output__InputPresenceRule__supports["supports"]
+        src__intract__validators__input_output__InputPresenceRule__validate["validate"]
+        src__intract__validators__input_output__OutputPresenceRule__supports["supports"]
+        src__intract__validators__input_output__OutputPresenceRule__validate["validate"]
+        src__intract__validators__input_output__ReturnValueRule__supports["supports"]
+        src__intract__validators__input_output__ReturnValueRule__validate["validate"]
+        src__intract__duplicates__grouping__DuplicateContract__to_dict["to_dict"]
+        src__intract__duplicates__grouping__IntentDuplicateGroup__to_dict["to_dict"]
+        src__intract__validators__effects__NoForbiddenEffectRule__supports["supports"]
+        src__intract__validators__effects__NoForbiddenEffectRule__validate["validate"]
+        ...["+78 more"]
+    end
+
+    subgraph Exporters
+        src__intract__integrations__planfile__PlanfileExporter__export["export"]
+        src__intract__integrations__planfile__PlanfileExporter___write_yaml["_write_yaml"]
+        src__intract__integrations__planfile__PlanfileExporter___write_json["_write_json"]
+        src__intract__integrations__planfile__PlanfileExporter___write_todo["_write_todo"]
+        src__intract__cli___export_tickets["_export_tickets"]
+    end
+
+    class src__intract__graph__ContractGraph__to_dict,src__intract__graph__ContractGraph__to_mermaid,src__intract__coverage__CoverageReport__to_dict,src__intract__sdk__ContractBuilder__to_inline,src__intract__sdk__contract,src__intract__validators__input_output__InputPresenceRule__supports,src__intract__validators__input_output__InputPresenceRule__validate,src__intract__validators__input_output__OutputPresenceRule__supports,src__intract__validators__input_output__OutputPresenceRule__validate,src__intract__validators__input_output__ReturnValueRule__supports entry

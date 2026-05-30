@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.2] - 2026-05-30
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update testql-scenarios/generated-cli-tests.testql.toon.yaml
+- Update tests/test_check_staged.py
+- Update tests/test_integrations.py
+
+### Other
+- Update app.doql.less
+- Update examples/integration_tests/02_typescript_violation_planfile/.intract/planfile-tickets.json
+- Update examples/integration_tests/02_typescript_violation_planfile/.intract/planfile-tickets.yaml
+- Update examples/integration_tests/03_watch_engine_drift/.intract/state.json
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- ... and 13 more files
+
 ## [0.5.1] - 2026-05-30
 
 ### Docs

@@ -72,12 +72,33 @@ def load_selected_sources(root: str | Path, files: list[str]) -> dict[str, str]:
     return sources
 
 
+MANIFEST_NAMES = {"intent.yaml", "intract.yaml", ".intract.yaml"}
+
+
+def _manifest_changed(files: list[str]) -> bool:
+    return any(Path(file_path).name in MANIFEST_NAMES for file_path in files)
+
+
 def validate_selected_paths(
     root: str | Path,
     files: list[str],
     *,
     manifest: str | Path | None = None,
+    full_graph: bool = False,
 ):
+    if full_graph:
+        from .project import validate_project
+
+        manifest_path = manifest
+        if manifest_path is None:
+            root_path = Path(root)
+            for candidate in MANIFEST_NAMES:
+                path = root_path / candidate
+                if path.exists():
+                    manifest_path = path
+                    break
+        return validate_project(root, manifest_path=manifest_path)
+
     sources = load_selected_sources(root, files)
 
     manifest_records = None
@@ -96,10 +117,14 @@ def staged_check(root: str | Path = ".", *, manifest: str | Path | None = None):
     files = paths_from_changes(changes)
     diff_text = staged_hunks(root)
     hunks = parse_unified_diff_hunks(diff_text)
-    return validate_selected_paths(root, files, manifest=manifest), files, hunks
+    full_graph = _manifest_changed(files)
+    report = validate_selected_paths(root, files, manifest=manifest, full_graph=full_graph)
+    return report, files, hunks
 
 
 def changed_check(root: str | Path = ".", *, base_ref: str = "main", manifest: str | Path | None = None):
     changes = changed_files(root, base_ref=base_ref)
     files = paths_from_changes(changes)
-    return validate_selected_paths(root, files, manifest=manifest), files, []
+    full_graph = _manifest_changed(files)
+    report = validate_selected_paths(root, files, manifest=manifest, full_graph=full_graph)
+    return report, files, []

@@ -13,19 +13,31 @@ ENTRYPOINT_GROUPS = {
 }
 
 
+def _register_unique(registry: PluginRegistry, kind: str, plugin) -> None:
+    collection = getattr(registry, kind)
+    names = {item.name for item in collection}
+    if plugin.name in names:
+        return
+    collection.append(plugin)
+
+
 def load_builtin_plugins() -> PluginRegistry:
     from .builtins import (
+        ArtifactStructureValidatorPlugin,
         BasicContractValidatorPlugin,
         InlineContractParserPlugin,
         JsonReporterPlugin,
         ManifestParserPlugin,
+        OpenAPIParserPlugin,
     )
 
     registry = PluginRegistry()
-    registry.add_parser(InlineContractParserPlugin())
-    registry.add_parser(ManifestParserPlugin())
-    registry.add_validator(BasicContractValidatorPlugin())
-    registry.add_reporter(JsonReporterPlugin())
+    _register_unique(registry, "parsers", InlineContractParserPlugin())
+    _register_unique(registry, "parsers", ManifestParserPlugin())
+    _register_unique(registry, "parsers", OpenAPIParserPlugin())
+    _register_unique(registry, "validators", BasicContractValidatorPlugin())
+    _register_unique(registry, "validators", ArtifactStructureValidatorPlugin())
+    _register_unique(registry, "reporters", JsonReporterPlugin())
     return registry
 
 
@@ -35,15 +47,15 @@ def discover_plugins(*, include_builtins: bool = True) -> PluginRegistry:
     eps = entry_points()
 
     for ep in eps.select(group=ENTRYPOINT_GROUPS["parsers"]):
-        registry.add_parser(ep.load()())
+        _register_unique(registry, "parsers", ep.load()())
 
     for ep in eps.select(group=ENTRYPOINT_GROUPS["validators"]):
-        registry.add_validator(ep.load()())
+        _register_unique(registry, "validators", ep.load()())
 
     for ep in eps.select(group=ENTRYPOINT_GROUPS["reporters"]):
-        registry.add_reporter(ep.load()())
+        _register_unique(registry, "reporters", ep.load()())
 
     for ep in eps.select(group=ENTRYPOINT_GROUPS["integrations"]):
-        registry.add_integration(ep.load()())
+        _register_unique(registry, "integrations", ep.load()())
 
     return registry

@@ -1,4 +1,5 @@
 .
+├── app.doql.less
 ├── CHANGELOG.md
 ├── Dockerfile
 ├── examples
@@ -27,6 +28,27 @@
 ├── goal.yaml
 ├── LICENSE
 ├── Makefile
+├── project
+│   ├── analysis.toon.yaml
+│   ├── calls.mmd
+│   ├── calls.png
+│   ├── calls.toon.yaml
+│   ├── calls.yaml
+│   ├── compact_flow.mmd
+│   ├── compact_flow.png
+│   ├── context.md
+│   ├── duplication.toon.yaml
+│   ├── evolution.toon.yaml
+│   ├── flow.mmd
+│   ├── flow.png
+│   ├── index.html
+│   ├── logic.pl
+│   ├── map.toon.yaml
+│   ├── mermaid.export
+│   ├── planfile-tickets.yaml
+│   ├── project.toon.yaml
+│   ├── prompt.txt
+│   └── README.md
 ├── project.sh
 ├── pyproject.toml
 ├── README.md
@@ -71,7 +93,19 @@
 │       ├── check.py
 │       ├── cli.py
 │       ├── config.py
+│       ├── core
+│       │   ├── artifact.py
+│       │   ├── __init__.py
+│       │   ├── models.py
+│       │   ├── normalizer.py
+│       │   ├── registry.py
+│       │   └── signatures.py
 │       ├── coverage.py
+│       ├── duplicates
+│       │   ├── grouping.py
+│       │   ├── __init__.py
+│       │   ├── matcher.py
+│       │   └── scoring.py
 │       ├── duplicates.py
 │       ├── effects.py
 │       ├── engine
@@ -87,12 +121,19 @@
 │       ├── __init__.py
 │       ├── integrations
 │       │   ├── __init__.py
-│       │   └── planfile.py
+│       │   ├── planfile.py
+│       │   ├── redup.py
+│       │   └── vallm.py
 │       ├── __main__.py
 │       ├── manifest_schema.py
 │       ├── models.py
 │       ├── normalizer.py
 │       ├── parser.py
+│       ├── parsers
+│       │   ├── __init__.py
+│       │   ├── inline.py
+│       │   ├── manifest.py
+│       │   └── openapi.py
 │       ├── plugins
 │       │   ├── base.py
 │       │   ├── builtins.py
@@ -106,14 +147,27 @@
 │       ├── sdk.py
 │       ├── signature.py
 │       ├── validation.py
+│       ├── validators
+│       │   ├── artifacts.py
+│       │   ├── base.py
+│       │   ├── effects.py
+│       │   ├── engine.py
+│       │   ├── __init__.py
+│       │   ├── input_output.py
+│       │   └── requirements.py
 │       ├── watch.py
 │       └── yaml_manifest.py
+├── SUMD.md
+├── SUMR.md
 ├── templates
 │   ├── Dockerfile.intract
 │   ├── intract.yaml
 │   ├── openapi.intract.yaml
 │   └── pyproject-intract.toml
+├── testql-scenarios
+│   └── generated-cli-tests.testql.toon.yaml
 ├── tests
+│   ├── test_integrations.py
 │   ├── test_manifest.py
 │   ├── test_new_modules.py
 │   ├── test_next_stage.py
@@ -130,4 +184,4 @@
 ├── uv.lock
 └── VERSION
 
-38 directories, 93 files
+44 directories, 141 files
