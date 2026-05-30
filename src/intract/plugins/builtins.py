@@ -1,13 +1,8 @@
-from __future__ import annotations
-
-import json
-from pathlib import Path
-from typing import Any
+from intract.parsers.inline import extract_contract_records_from_text
+from intract.core.signatures import build_signatures
+from intract.validators.engine import validate_contract_against_source
 
 from .base import Artifact, ArtifactKind, PluginResult
-from intract.parser import extract_contract_records_from_text
-from intract.signature import build_signatures
-from intract.validation import validate_contract_against_source
 
 
 class InlineContractParserPlugin:
@@ -34,7 +29,9 @@ class ManifestParserPlugin:
         return artifact.kind == ArtifactKind.MANIFEST
 
     def parse(self, artifact: Artifact) -> PluginResult:
-        from intract.yaml_manifest import load_manifest_records
+        from pathlib import Path
+
+        from intract.parsers.manifest import load_manifest_records
 
         records = load_manifest_records(Path(artifact.path))
         return PluginResult(plugin=self.name, ok=True, data=build_signatures(records))
@@ -57,7 +54,7 @@ class BasicContractValidatorPlugin:
             ArtifactKind.UNKNOWN,
         }
 
-    def validate(self, artifact: Artifact, contracts: list[Any]) -> PluginResult:
+    def validate(self, artifact: Artifact, contracts: list) -> PluginResult:
         results = []
         for contract in contracts:
             results.append(validate_contract_against_source(contract, artifact.content).to_dict())
@@ -71,7 +68,9 @@ class JsonReporterPlugin:
     version = "0.1.0"
     extension = "json"
 
-    def render(self, report: Any) -> str:
+    def render(self, report) -> str:
+        import json
+
         if hasattr(report, "to_dict"):
             report = report.to_dict()
         return json.dumps(report, indent=2, ensure_ascii=False)

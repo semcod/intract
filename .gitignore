@@ -1,6 +1,7 @@
 .env.example
 .idea/inspectionProfiles/Project_Default.xml
 .idea/inspectionProfiles/profiles_settings.xml
+.idea/intract-plugin-example.iml
 .idea/intract.iml
 .idea/misc.xml
 .idea/modules.xml

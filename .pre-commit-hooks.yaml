@@ -1,0 +1,6 @@
+- id: intract
+  name: intract intent contracts
+  entry: intract check --staged
+  language: python
+  pass_filenames: false
+  stages: [pre-commit]

@@ -1,0 +1,52 @@
+from __future__ import annotations
+
+import re
+
+from intract.core.models import ValidationIssue
+
+from .base import RuleResult, ValidationContext, ValidationRule
+
+NETWORK_PATTERNS = [r"\brequests\.", r"\bhttpx\.", r"\burllib\.", r"\bsocket\.", r"\bfetch\s*\(", r"\bHttpClient\b"]
+WRITE_PATTERNS = [r"\.write\s*\(", r"\.write_text\s*\(", r"\bopen\s*\([^)]*['\"]w", r"\bFile\.Write", r"\bDirectory\.Create", r"\bINSERT\b", r"\bUPDATE\b", r"\bDELETE\b"]
+READ_PATTERNS = [r"\.read\s*\(", r"\.read_text\s*\(", r"\bopen\s*\(", r"\bFile\.Read", r"\bDirectory\.GetFiles", r"\bSELECT\b"]
+LOG_PATTERNS = [r"\bprint\s*\(", r"\blogger\.", r"\bconsole\.log\s*\(", r"\bConsole\.Write"]
+
+
+def detect_effects(source: str) -> set[str]:
+    effects: set[str] = set()
+    if any(re.search(pattern, source, re.IGNORECASE) for pattern in NETWORK_PATTERNS):
+        effects.add("network")
+    if any(re.search(pattern, source, re.IGNORECASE) for pattern in WRITE_PATTERNS):
+        effects.add("write")
+    if any(re.search(pattern, source, re.IGNORECASE) for pattern in READ_PATTERNS):
+        effects.add("read")
+    if any(re.search(pattern, source, re.IGNORECASE) for pattern in LOG_PATTERNS):
+        effects.add("log")
+    return effects
+
+
+class NoForbiddenEffectRule:
+    name = "no_forbidden_effect"
+
+    def supports(self, validators: frozenset[str]) -> bool:
+        return self.name in validators
+
+    def validate(self, signature, source, context: ValidationContext) -> RuleResult:
+        observed_effects = detect_effects(source)
+        forbidden_hits = sorted(signature.forbidden & observed_effects)
+        violations = [
+            ValidationIssue(
+                kind="forbidden_effect",
+                message=f"Declared forbid:{item}, but effect '{item}' was detected.",
+            )
+            for item in forbidden_hits
+        ]
+        return RuleResult(
+            name=self.name,
+            score=1.0 if not forbidden_hits else 0.0,
+            violations=violations,
+            matched={"observed_effects": sorted(observed_effects)},
+        )
+
+
+EFFECT_RULES: tuple[ValidationRule, ...] = (NoForbiddenEffectRule(),)

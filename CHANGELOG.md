@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-05-30
+
+### Docs
+- Update README.md
+- Update docs/README.md
+- Update docs/architecture.md
+- Update docs/commands.md
+- Update docs/examples.md
+- Update docs/executed-next-stage.md
+- Update docs/getting-started.md
+- Update docs/integrations.md
+- Update docs/manifest.md
+- Update docs/missing-files-and-roadmap.md
+- ... and 2 more files
+
+### Test
+- Update tests/test_new_modules.py
+- Update tests/test_next_stage.py
+
+### Other
+- Update .env.example
+- Update .gitignore
+- Update .idea/inspectionProfiles/Project_Default.xml
+- Update .idea/inspectionProfiles/profiles_settings.xml
+- Update .idea/intract-plugin-example.iml
+- Update .idea/intract.iml
+- Update .idea/misc.xml
+- Update .idea/modules.xml
+- Update .idea/pyProjectModel.xml
+- Update .idea/vcs.xml
+- ... and 9 more files
+
 ## [0.3.1] - 2026-05-29
 
 ### Docs

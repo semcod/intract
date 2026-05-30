@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://intract.dev/schemas/intract.schema.json",
+  "title": "Intract Manifest",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "project": {
+      "type": "object"
+    },
+    "contracts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/contract"
+      }
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/contract"
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "contract": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "intent": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "domain": {
+          "type": "string"
+        },
+        "input": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "output": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "effect": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "forbid": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "require": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "validate": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "meaning": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "scope",
+        "intent"
+      ]
+    }
+  }
+}

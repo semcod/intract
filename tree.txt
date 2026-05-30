@@ -1,0 +1,133 @@
+.
+├── CHANGELOG.md
+├── Dockerfile
+├── examples
+│   ├── configs
+│   │   └── intent.yaml
+│   ├── csharp
+│   │   └── ScanPipeline.cs
+│   ├── integration_tests
+│   │   ├── 01_python_pass
+│   │   │   ├── app.py
+│   │   │   └── README.md
+│   │   ├── 02_typescript_violation_planfile
+│   │   │   ├── intent.yaml
+│   │   │   ├── permission.ts
+│   │   │   └── README.md
+│   │   ├── 03_watch_engine_drift
+│   │   │   ├── intent.yaml
+│   │   │   ├── README.md
+│   │   │   ├── reporter.py
+│   │   │   └── scanner.py
+│   │   └── run_examples.py
+│   ├── python
+│   │   └── parse_extensions.py
+│   └── typescript
+│       └── permission.ts
+├── goal.yaml
+├── LICENSE
+├── Makefile
+├── project.sh
+├── pyproject.toml
+├── README.md
+├── schemas
+│   └── intract.schema.json
+├── sdks
+│   ├── csharp
+│   │   ├── IntractContract.cs
+│   │   └── Intract.Sdk.csproj
+│   ├── go
+│   │   ├── examples
+│   │   │   └── main.go
+│   │   ├── go.mod
+│   │   └── intractsdk
+│   │       └── sdk.go
+│   ├── java
+│   │   ├── build.gradle
+│   │   └── src
+│   │       └── main
+│   │           └── java
+│   │               └── io
+│   ├── python
+│   │   ├── pyproject.toml
+│   │   └── src
+│   │       └── intract_plugin_example
+│   │           └── __init__.py
+│   ├── rust
+│   │   ├── Cargo.toml
+│   │   └── src
+│   │       └── lib.rs
+│   └── typescript
+│       ├── examples
+│       │   └── basic.ts
+│       ├── intract.config.ts
+│       ├── package.json
+│       ├── src
+│       │   └── index.ts
+│       └── tsconfig.json
+├── src
+│   └── intract
+│       ├── artifacts.py
+│       ├── check.py
+│       ├── cli.py
+│       ├── config.py
+│       ├── coverage.py
+│       ├── duplicates.py
+│       ├── effects.py
+│       ├── engine
+│       │   ├── analyzer.py
+│       │   ├── assigner.py
+│       │   ├── context.py
+│       │   ├── drift.py
+│       │   ├── __init__.py
+│       │   ├── monitor.py
+│       │   └── scanner.py
+│       ├── git.py
+│       ├── graph.py
+│       ├── __init__.py
+│       ├── integrations
+│       │   ├── __init__.py
+│       │   └── planfile.py
+│       ├── __main__.py
+│       ├── manifest_schema.py
+│       ├── models.py
+│       ├── normalizer.py
+│       ├── parser.py
+│       ├── plugins
+│       │   ├── base.py
+│       │   ├── builtins.py
+│       │   ├── __init__.py
+│       │   └── manager.py
+│       ├── policy.py
+│       ├── project.py
+│       ├── reporters
+│       │   ├── __init__.py
+│       │   └── sarif.py
+│       ├── sdk.py
+│       ├── signature.py
+│       ├── validation.py
+│       ├── watch.py
+│       └── yaml_manifest.py
+├── templates
+│   ├── Dockerfile.intract
+│   ├── intract.yaml
+│   ├── openapi.intract.yaml
+│   └── pyproject-intract.toml
+├── tests
+│   ├── test_manifest.py
+│   ├── test_new_modules.py
+│   ├── test_next_stage.py
+│   ├── test_parser.py
+│   └── test_validation.py
+├── TODO
+│   ├── 1.md
+│   ├── 2.md
+│   ├── 3.md
+│   ├── 4.md
+│   └── 5.md
+├── tree.sh
+├── tree.txt
+├── uv.lock
+└── VERSION
+
+38 directories, 93 files
