@@ -1,16 +1,16 @@
 # System Architecture Analysis
-<!-- generated in 0.01s -->
+<!-- generated in 0.00s -->
 
 ## Overview
 
 - **Project**: /home/tom/github/semcod/intract
 - **Primary Language**: python
-- **Languages**: python: 65, yaml: 8, typescript: 5, toml: 4, json: 3
+- **Languages**: python: 69, yaml: 10, typescript: 5, toml: 4, json: 3
 - **Analysis Mode**: static
-- **Total Functions**: 208
-- **Total Classes**: 63
-- **Modules**: 96
-- **Entry Points**: 95
+- **Total Functions**: 227
+- **Total Classes**: 64
+- **Modules**: 103
+- **Entry Points**: 106
 
 ## Architecture by Module
 
@@ -33,10 +33,20 @@
 - **Classes**: 3
 - **File**: `redup.py`
 
+### src.intract.check
+- **Functions**: 11
+- **Classes**: 1
+- **File**: `check.py`
+
 ### src.intract.validators.input_output
 - **Functions**: 8
 - **Classes**: 3
 - **File**: `input_output.py`
+
+### src.intract.validators.registry
+- **Functions**: 8
+- **Classes**: 1
+- **File**: `registry.py`
 
 ### src.intract.parsers.inline
 - **Functions**: 7
@@ -57,19 +67,18 @@
 - **Classes**: 2
 - **File**: `grouping.py`
 
-### src.intract.check
+### src.intract.validators.artifacts
 - **Functions**: 6
 - **Classes**: 1
-- **File**: `check.py`
+- **File**: `artifacts.py`
 
 ### src.intract.engine.assigner
 - **Functions**: 6
 - **File**: `assigner.py`
 
-### src.intract.validators.artifacts
-- **Functions**: 6
-- **Classes**: 1
-- **File**: `artifacts.py`
+### examples.integration_tests.run_examples
+- **Functions**: 5
+- **File**: `run_examples.py`
 
 ### src.intract.git
 - **Functions**: 5
@@ -85,39 +94,31 @@
 - **Functions**: 5
 - **File**: `manifest.py`
 
-### examples.integration_tests.run_examples
+### src.intract.integrations.vallm
 - **Functions**: 5
-- **File**: `run_examples.py`
+- **Classes**: 2
+- **File**: `vallm.py`
+
+### src.intract.project
+- **Functions**: 4
+- **File**: `project.py`
 
 ### src.intract.graph
 - **Functions**: 4
 - **Classes**: 1
 - **File**: `graph.py`
 
-### src.intract.core.normalizer
-- **Functions**: 4
-- **File**: `normalizer.py`
-
-### src.intract.engine.analyzer
-- **Functions**: 4
-- **File**: `analyzer.py`
-
-### src.intract.integrations.vallm
-- **Functions**: 4
-- **Classes**: 2
-- **File**: `vallm.py`
-
 ## Key Entry Points
 
 Main execution flows into the system:
 
-### src.intract.cli.scan
-> Scan files for inline @intract contracts.
-- **Calls**: app.command, typer.Argument, typer.Option, path.is_file, Table, table.add_column, table.add_column, table.add_column
-
 ### src.intract.cli.check
 > Policy-aware validation for pre-commit/CI.
 - **Calls**: app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
+
+### src.intract.cli.scan
+> Scan files for inline @intract contracts.
+- **Calls**: app.command, typer.Argument, typer.Option, path.is_file, Table, table.add_column, table.add_column, table.add_column
 
 ### src.intract.cli.watch
 > Watch folder and re-validate Intract contracts when logical files change.
@@ -175,11 +176,15 @@ Main execution flows into the system:
 ### src.intract.graph.ContractGraph.to_mermaid
 - **Calls**: None.join, src.intract.graph._safe, lines.append, lines.append, lines.append, lines.append, src.intract.graph._safe, src.intract.graph._safe
 
-### src.intract.core.artifact.Artifact.from_path
-- **Calls**: Path, p.read_text, cls, str, src.intract.core.artifact.infer_language, src.intract.core.artifact.infer_artifact_kind, str, str
+### src.intract.integrations.vallm.validate_proposal
+> Validate inline @intract contracts in a single code snippet or file body.
+- **Calls**: src.intract.parsers.inline.extract_contract_records_from_text, any, ProjectReport, src.intract.integrations.vallm.map_project_report, MappedValidationResult, src.intract.validators.engine.validate_contract_against_source, src.intract.core.signatures.build_signatures, all
 
 ### examples.integration_tests.run_examples.main
 - **Calls**: results.items, print, None.resolve, examples.integration_tests.run_examples.run_example_01, examples.integration_tests.run_examples.run_example_02, examples.integration_tests.run_examples.run_example_03, examples.integration_tests.run_examples.print_result, Path
+
+### src.intract.core.artifact.Artifact.from_path
+- **Calls**: Path, p.read_text, cls, str, src.intract.core.artifact.infer_language, src.intract.core.artifact.infer_artifact_kind, str, str
 
 ### src.intract.validators.input_output.InputPresenceRule.validate
 - **Calls**: sorted, RuleResult, src.intract.validators.input_output.contains_token_like, set, len, max, len
@@ -194,11 +199,11 @@ Main execution flows into the system:
 > Validate and export failed/partial/violating results as planfile-style tickets.
 - **Calls**: app.command, typer.Argument, typer.Option, src.intract.project.validate_project, src.intract.cli._export_tickets, console.print, Path
 
-### sdks.rust.src.inline_contract
-- **Calls**: sdks.rust.src.to_string, sdks.rust.src.Some, sdks.rust.src.push, sdks.rust.src.is_empty, sdks.rust.src.csv, sdks.rust.src.join
-
 ### src.intract.core.models.ProjectReport.to_dict
 - **Calls**: len, len, len, len, len, item.to_dict
+
+### sdks.rust.src.inline_contract
+- **Calls**: sdks.rust.src.to_string, sdks.rust.src.Some, sdks.rust.src.push, sdks.rust.src.is_empty, sdks.rust.src.csv, sdks.rust.src.join
 
 ### src.intract.validators.effects.NoForbiddenEffectRule.validate
 - **Calls**: src.intract.validators.effects.detect_effects, sorted, RuleResult, ValidationIssue, sorted
@@ -209,21 +214,18 @@ Main execution flows into the system:
 ### sdks.go.intractsdk.sdk.Inline
 - **Calls**: sdks.go.intractsdk.sdk.Sprintf, sdks.go.intractsdk.sdk.append, sdks.go.intractsdk.sdk.len, sdks.go.intractsdk.sdk.csv, sdks.go.intractsdk.sdk.Join
 
-### examples.python.parse_extensions.parse_extensions
-- **Calls**: None.lower, raw_extensions.split, item.strip, item.strip
-
 ## Process Flows
 
 Key execution flows identified:
 
-### Flow 1: scan
-```
-scan [src.intract.cli]
-```
-
-### Flow 2: check
+### Flow 1: check
 ```
 check [src.intract.cli]
+```
+
+### Flow 2: scan
+```
+scan [src.intract.cli]
 ```
 
 ### Flow 3: watch
@@ -284,6 +286,11 @@ to_inline [src.intract.sdk.ContractBuilder]
 - **Methods**: 6
 - **Key Methods**: src.intract.plugins.base.PluginRegistry.add_parser, src.intract.plugins.base.PluginRegistry.add_validator, src.intract.plugins.base.PluginRegistry.add_reporter, src.intract.plugins.base.PluginRegistry.add_integration, src.intract.plugins.base.PluginRegistry.parse_artifact, src.intract.plugins.base.PluginRegistry.validate_artifact
 
+### src.intract.validators.registry.RuleRegistry
+> Registry of contract validation rules with optional plugin discovery.
+- **Methods**: 6
+- **Key Methods**: src.intract.validators.registry.RuleRegistry.__init__, src.intract.validators.registry.RuleRegistry.register, src.intract.validators.registry.RuleRegistry.rules, src.intract.validators.registry.RuleRegistry.run, src.intract.validators.registry.RuleRegistry.rule_status, src.intract.validators.registry.RuleRegistry.summarize
+
 ### src.intract.core.models.ProjectReport
 - **Methods**: 5
 - **Key Methods**: src.intract.core.models.ProjectReport.passed, src.intract.core.models.ProjectReport.partial, src.intract.core.models.ProjectReport.failed, src.intract.core.models.ProjectReport.violations, src.intract.core.models.ProjectReport.to_dict
@@ -308,9 +315,24 @@ to_inline [src.intract.sdk.ContractBuilder]
 - **Methods**: 2
 - **Key Methods**: src.intract.validators.input_output.ReturnValueRule.supports, src.intract.validators.input_output.ReturnValueRule.validate
 
+### src.intract.validators.base.ValidationRule
+- **Methods**: 2
+- **Key Methods**: src.intract.validators.base.ValidationRule.supports, src.intract.validators.base.ValidationRule.validate
+- **Inherits**: Protocol
+
 ### src.intract.validators.effects.NoForbiddenEffectRule
 - **Methods**: 2
 - **Key Methods**: src.intract.validators.effects.NoForbiddenEffectRule.supports, src.intract.validators.effects.NoForbiddenEffectRule.validate
+
+### src.intract.plugins.base.ParserPlugin
+- **Methods**: 2
+- **Key Methods**: src.intract.plugins.base.ParserPlugin.supports, src.intract.plugins.base.ParserPlugin.parse
+- **Inherits**: Protocol
+
+### src.intract.plugins.base.ValidatorPlugin
+- **Methods**: 2
+- **Key Methods**: src.intract.plugins.base.ValidatorPlugin.supports, src.intract.plugins.base.ValidatorPlugin.validate
+- **Inherits**: Protocol
 
 ### src.intract.plugins.builtins.InlineContractParserPlugin
 - **Methods**: 2
@@ -344,34 +366,36 @@ to_inline [src.intract.sdk.ContractBuilder]
 - **Methods**: 2
 - **Key Methods**: sdks.python.src.intract_plugin_example.ExampleValidatorPlugin.supports, sdks.python.src.intract_plugin_example.ExampleValidatorPlugin.validate
 
-### src.intract.validators.base.ValidationRule
-- **Methods**: 2
-- **Key Methods**: src.intract.validators.base.ValidationRule.supports, src.intract.validators.base.ValidationRule.validate
-- **Inherits**: Protocol
-
-### src.intract.plugins.base.ParserPlugin
-- **Methods**: 2
-- **Key Methods**: src.intract.plugins.base.ParserPlugin.supports, src.intract.plugins.base.ParserPlugin.parse
-- **Inherits**: Protocol
-
-### src.intract.plugins.base.ValidatorPlugin
-- **Methods**: 2
-- **Key Methods**: src.intract.plugins.base.ValidatorPlugin.supports, src.intract.plugins.base.ValidatorPlugin.validate
-- **Inherits**: Protocol
-
-### src.intract.coverage.CoverageReport
-- **Methods**: 1
-- **Key Methods**: src.intract.coverage.CoverageReport.to_dict
-
 ## Data Transformation Functions
 
 Key functions that process and transform data:
 
-### examples.python.parse_extensions.parse_extensions
+### examples.integration_tests.01_python_pass.app.parse_extensions
 - **Output to**: None.lower, raw_extensions.split, item.strip, item.strip
 
-### src.intract.validators.engine.validate_contract_against_source
-- **Output to**: ValidationContext, src.intract.validators.base.merge_rule_results, ValidationResult, set, set
+### src.intract.project.validate_sources
+- **Output to**: src.intract.project.extract_signatures_from_sources, any, ProjectReport, observed_by_file.get, results.append
+
+### src.intract.project.validate_project
+- **Output to**: Path, src.intract.project.load_project_sources, src.intract.project.validate_sources, str, src.intract.parsers.manifest.load_manifest_records
+
+### src.intract.manifest_schema.validate_manifest
+- **Output to**: Path, ManifestValidationReport, manifest_path.exists, ManifestValidationReport, Draft202012Validator
+
+### src.intract.validators.artifacts.validate_openapi
+- **Output to**: src.intract.parsers.openapi.parse_openapi_contracts, None.lower, ArtifactValidationReport, src.intract.core.signatures.build_signature, record.owner.lower
+
+### src.intract.validators.artifacts.validate_dockerfile
+- **Output to**: path.read_text, re.search, re.search, ArtifactValidationReport, issues.append
+
+### src.intract.validators.artifacts.validate_github_actions
+- **Output to**: path.read_text, text.lower, any, ArtifactValidationReport, any
+
+### src.intract.validators.artifacts.validate_kubernetes
+- **Output to**: path.read_text, text.lower, any, ArtifactValidationReport, issues.append
+
+### src.intract.validators.artifacts.validate_artifact
+- **Output to**: Path, p.name.lower, p.read_text, ArtifactValidationReport, name.startswith
 
 ### src.intract.validators.input_output.InputPresenceRule.validate
 - **Output to**: sorted, RuleResult, src.intract.validators.input_output.contains_token_like, set, len
@@ -382,11 +406,26 @@ Key functions that process and transform data:
 ### src.intract.validators.input_output.ReturnValueRule.validate
 - **Output to**: src.intract.validators.input_output.has_return_value, RuleResult
 
+### src.intract.validators.base.ValidationRule.validate
+
 ### src.intract.validators.requirements.validate_required_contracts
 - **Output to**: sorted, sorted
 
 ### src.intract.validators.effects.NoForbiddenEffectRule.validate
 - **Output to**: src.intract.validators.effects.detect_effects, sorted, RuleResult, ValidationIssue, sorted
+
+### src.intract.plugins.base.ParserPlugin.parse
+
+### src.intract.plugins.base.ValidatorPlugin.validate
+
+### src.intract.plugins.base.PluginRegistry.add_parser
+- **Output to**: self.parsers.append
+
+### src.intract.plugins.base.PluginRegistry.parse_artifact
+- **Output to**: parser.supports, parser.parse, contracts.extend
+
+### src.intract.plugins.base.PluginRegistry.validate_artifact
+- **Output to**: validator.supports, results.append, validator.validate
 
 ### src.intract.plugins.builtins.InlineContractParserPlugin.parse
 - **Output to**: src.intract.parsers.inline.extract_contract_records_from_text, PluginResult, src.intract.core.signatures.build_signatures
@@ -403,45 +442,6 @@ Key functions that process and transform data:
 ### src.intract.plugins.builtins.ArtifactStructureValidatorPlugin.validate
 - **Output to**: src.intract.validators.artifacts.validate_artifact, PluginResult, item.to_dict, any
 
-### examples.integration_tests.01_python_pass.app.parse_extensions
-- **Output to**: None.lower, raw_extensions.split, item.strip, item.strip
-
-### src.intract.check.parse_unified_diff_hunks
-- **Output to**: diff_text.splitlines, line.startswith, HUNK_RE.match, hunks.append, ChangedHunk
-
-### src.intract.check.validate_selected_paths
-- **Output to**: src.intract.check.load_selected_sources, src.intract.project.validate_sources, Path, manifest_path.exists, manifest_path.is_absolute
-
-### src.intract.engine.monitor.scan_suggest_and_validate
-- **Output to**: src.intract.engine.scanner.collect_source_units, src.intract.engine.analyzer.analyze_source_units, src.intract.engine.assigner.suggest_contracts_for_fragments, src.intract.engine.drift.load_state, src.intract.engine.drift.detect_drift
-
-### src.intract.parsers.manifest._parse_intent
-- **Output to**: value.split, value.split, value.strip, left.strip, right.strip
-
-### src.intract.parsers.openapi.parse_openapi_contracts
-- **Output to**: paths.items, yaml.safe_load, data.get, methods.items, path.read_text
-
-### src.intract.parsers.openapi.parse_openapi_text
-- **Output to**: paths.items, yaml.safe_load, data.get, methods.items, isinstance
-
-### src.intract.integrations.vallm.validate_for_vallm
-- **Output to**: src.intract.project.validate_project, src.intract.integrations.vallm.map_project_report, Path
-
-### src.intract.parsers.inline.parse_priority
-- **Output to**: None.lower, max, text.startswith, None.isdigit, min
-
-### src.intract.parsers.inline.parse_key_value
-- **Output to**: re.match, None.lower, None.strip, match.group, match.group
-
-### src.intract.parsers.inline.parse_contract_line
-- **Output to**: src.intract.parsers.inline.marker_payload, shlex.split, Contract, src.intract.parsers.inline.parse_priority, src.intract.parsers.inline.parse_key_value
-
-### sdks.python.src.intract_plugin_example.ExampleParserPlugin.parse
-- **Output to**: PluginResult
-
-### sdks.python.src.intract_plugin_example.ExampleValidatorPlugin.validate
-- **Output to**: PluginResult, len
-
 ## Public API Surface
 
 Functions exposed as public API (no underscore prefix):
@@ -450,8 +450,8 @@ Functions exposed as public API (no underscore prefix):
 - `src.intract.parsers.inline.parse_contract_line` - 51 calls
 - `src.intract.core.signatures.build_signature` - 40 calls
 - `src.intract.manifest_schema.validate_manifest` - 35 calls
+- `src.intract.cli.check` - 32 calls
 - `src.intract.cli.scan` - 30 calls
-- `src.intract.cli.check` - 29 calls
 - `src.intract.cli.watch` - 28 calls
 - `src.intract.config.IntractConfig.from_mapping` - 23 calls
 - `src.intract.integrations.planfile.tickets_from_report` - 21 calls
@@ -459,33 +459,33 @@ Functions exposed as public API (no underscore prefix):
 - `src.intract.cli.engine_run` - 20 calls
 - `src.intract.reporters.sarif.report_to_sarif` - 19 calls
 - `src.intract.parsers.manifest.load_manifest_records` - 19 calls
+- `src.intract.policy.decide_policy` - 19 calls
 - `src.intract.graph.build_graph` - 18 calls
 - `src.intract.cli.engine_suggest` - 18 calls
+- `examples.integration_tests.run_examples.run_example_03` - 17 calls
+- `src.intract.validators.artifacts.validate_artifact` - 17 calls
 - `src.intract.engine.analyzer.analyze_source_units` - 17 calls
 - `src.intract.cli.duplicates` - 17 calls
-- `src.intract.validators.artifacts.validate_artifact` - 17 calls
-- `examples.integration_tests.run_examples.run_example_03` - 17 calls
 - `src.intract.duplicates.grouping.pairs_to_intent_groups` - 16 calls
+- `src.intract.validators.artifacts.validate_openapi` - 16 calls
 - `src.intract.core.normalizer.normalize_label` - 16 calls
-- `src.intract.check.parse_unified_diff_hunks` - 16 calls
 - `src.intract.parsers.openapi.parse_openapi_contracts` - 16 calls
 - `src.intract.cli.graph` - 16 calls
-- `src.intract.validators.artifacts.validate_openapi` - 16 calls
+- `src.intract.check.parse_unified_diff_hunks` - 16 calls
+- `src.intract.project.validate_sources` - 15 calls
 - `src.intract.sdk.ContractBuilder.to_inline` - 15 calls
 - `src.intract.plugins.manager.discover_plugins` - 15 calls
-- `src.intract.project.validate_sources` - 15 calls
+- `src.intract.check.validate_sources_for_hunks` - 15 calls
+- `src.intract.config.load_config` - 14 calls
 - `src.intract.coverage.calculate_coverage` - 14 calls
 - `src.intract.duplicates.scoring.score_similarity` - 14 calls
-- `src.intract.engine.scanner.collect_source_units` - 14 calls
-- `src.intract.parsers.openapi.parse_openapi_text` - 14 calls
-- `src.intract.parsers.inline.clean_comment_line` - 14 calls
 - `src.intract.validators.artifacts.validate_dockerfile` - 14 calls
-- `src.intract.config.load_config` - 14 calls
-- `src.intract.policy.decide_policy` - 13 calls
-- `src.intract.validators.engine.validate_contract_against_source` - 13 calls
-- `src.intract.validators.effects.detect_effects` - 13 calls
-- `src.intract.plugins.manager.load_builtin_plugins` - 13 calls
+- `src.intract.engine.scanner.collect_source_units` - 14 calls
+- `src.intract.parsers.inline.clean_comment_line` - 14 calls
+- `src.intract.parsers.openapi.parse_openapi_text` - 14 calls
+- `src.intract.validators.engine.validate_contract_against_source` - 14 calls
 - `src.intract.validators.artifacts.validate_kubernetes` - 13 calls
+- `src.intract.validators.effects.detect_effects` - 13 calls
 
 ## System Interactions
 
@@ -493,14 +493,14 @@ How components interact:
 
 ```mermaid
 graph TD
+    check --> command
+    check --> Argument
+    check --> Option
     scan --> command
     scan --> Argument
     scan --> Option
     scan --> is_file
     scan --> Table
-    check --> command
-    check --> Argument
-    check --> Option
     watch --> command
     watch --> Argument
     watch --> Option

@@ -1,8 +1,8 @@
-# intract | 208 func | 54f | 5520L | python | 2026-05-30
+# intract | 209 func | 53f | 5644L | python | 2026-05-30
 # generated in 0.00s
 
 HEALTH:
-  CC̄=4.1  critical=18 (limit:10)  dup=2  cycles=0
+  CC̄=4.2  critical=19 (limit:10)  dup=2  cycles=0
 
 ALERTS[20]:
   !!! cc_exceeded      parse_contract_line = 42 (limit:15)
@@ -13,26 +13,26 @@ ALERTS[20]:
   !!  high_fan_out     watch = 16 (limit:10)
   !   cc_exceeded      infer_artifact_kind = 17 (limit:15)
   !   cc_exceeded      validate_sources = 16 (limit:15)
-  !   cc_exceeded      build_signature = 15 (limit:15)
   !   cc_exceeded      validate_manifest = 15 (limit:15)
+  !   cc_exceeded      build_signature = 15 (limit:15)
 
 MODULES[96] (top by size):
   M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
   M[src/intract/cli.py] 385L C:0 F:18 CC↑10 D:0 (python)
-  M[src/intract/parsers/inline.py] 193L C:0 F:7 CC↑42 D:4 (python)
+  M[src/intract/parsers/inline.py] 193L C:0 F:7 CC↑42 D:5 (python)
+  M[tree.txt] 187L C:0 F:0 CC↑0 D:0 (txt)
   M[src/intract/validators/artifacts.py] 181L C:1 F:6 CC↑9 D:2 (python)
   M[src/intract/integrations/redup.py] 169L C:3 F:11 CC↑8 D:0 (python)
   M[src/intract/watch.py] 160L C:3 F:6 CC↑10 D:2 (python)
   M[src/intract/core/models.py] 153L C:7 F:2 CC↑2 D:0 (python)
   M[src/intract/integrations/planfile.py] 141L C:2 F:7 CC↑11 D:2 (python)
   M[src/intract/duplicates/grouping.py] 138L C:2 F:6 CC↑6 D:2 (python)
-  M[tree.txt] 133L C:0 F:0 CC↑0 D:0 (txt)
+  M[src/intract/check.py] 130L C:1 F:7 CC↑8 D:1 (python)
+  M[src/intract/integrations/vallm.py] 116L C:2 F:5 CC↑12 D:0 (python)
   M[src/intract/parsers/manifest.py] 113L C:0 F:5 CC↑11 D:7 (python)
   M[src/intract/engine/drift.py] 113L C:2 F:5 CC↑5 D:1 (python)
   M[src/intract/plugins/builtins.py] 111L C:6 F:11 CC↑3 D:0 (python)
-  M[src/intract/engine/assigner.py] 109L C:0 F:6 CC↑10 D:1 (python)
-  M[src/intract/plugins/base.py] 109L C:6 F:12 CC↑5 D:0 (python)
-  LANGS: python:65/yaml:8/typescript:5/toml:4/json:3/go:2/csharp:2/other:2/java:1/rust:1/shell:1/intract:1/txt:1
+  LANGS: python:64/yaml:9/typescript:5/toml:4/json:3/go:2/csharp:2/other:2/java:1/rust:1/shell:1/intract:1/txt:1
 
 HOTSPOTS[10]:
   ★ parse_contract_line fan=28  // Orchestrates 28 calls
@@ -44,9 +44,9 @@ HOTSPOTS[10]:
 REFACTOR[9]:
   [1] H/L Split parse_contract_line (CC=42)
   [2] H/H Split god module goal.yaml (511L, 0 classes)
-  [3] M/L Split build_signature (CC=15)
-  [4] M/L Split infer_artifact_kind (CC=17)
-  [5] M/L Split validate_manifest (CC=15)
+  [3] M/L Split validate_sources (CC=16)
+  [4] M/L Split validate_manifest (CC=15)
+  [5] M/L Split infer_artifact_kind (CC=17)
 
 EVOLUTION:
-  2026-05-30 CC̄=4.1 crit=18 5520L // Automated analysis
+  2026-05-30 CC̄=4.2 crit=19 5644L // Automated analysis

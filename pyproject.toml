@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "intract"
-version = "0.5.2"
+version = "0.5.3"
 description = "Intent contract tagging, validation and semantic mapping for codebases."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -61,6 +61,12 @@ artifact = "intract.plugins.builtins:ArtifactStructureValidatorPlugin"
 
 [project.entry-points."intract.reporters"]
 json = "intract.plugins.builtins:JsonReporterPlugin"
+
+[project.entry-points."intract.rules"]
+input_presence = "intract.validators.input_output:InputPresenceRule"
+output_presence = "intract.validators.input_output:OutputPresenceRule"
+return_value = "intract.validators.input_output:ReturnValueRule"
+no_forbidden_effect = "intract.validators.effects:NoForbiddenEffectRule"
 
 [tool.pfix]
 # Self-healing Python configuration

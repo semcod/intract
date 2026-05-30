@@ -4,29 +4,26 @@
 
 Zrobione:
 
-- `check --staged`
-- hunk parser
+- `check --staged` + `--hunks`
 - manifest schema validation
 - OpenAPI x-intract parser
-- Dockerfile validator
-- GitHub Actions validator
-- Kubernetes validator
+- Dockerfile / GitHub Actions / Kubernetes validators
 - SARIF reporter
-- coverage
-- duplicates
-- graph
-- watch
-- engine
+- coverage, duplicates, graph, watch, engine
 - planfile-compatible export
+- integrations: reDUP `--intent`, vallm `--intract`
+- rule registry z raportem per reguła
+- demo `examples/full-stack/`
+- CI script `scripts/ci-full-stack.sh`
+- MCP: vallm (`validate_intent_contracts`, `validate_intract_project`, `validate_intract_staged`), reDUP intent params
 
 ## 0.6.x — stabilizacja staged/hunk validation
 
 Do zrobienia:
 
-- mapowanie hunków na funkcje/metody/kontrakty,
-- walidacja tylko dotkniętych fragmentów,
-- ostrzejsze policy dla P1/P2,
-- config `fail_on` / `warn_on` z pełną obsługą.
+- ostrzejsze policy dla P1/P2 (`missing_required_p1` — częściowo),
+- pełna obsługa `fail_on` / `warn_on` w vallm/redup,
+- AST mapowanie hunk → kontrakt (Python).
 
 ## 0.7.x — pluginy artefaktów
 

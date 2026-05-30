@@ -167,6 +167,7 @@
 ├── testql-scenarios
 │   └── generated-cli-tests.testql.toon.yaml
 ├── tests
+│   ├── test_check_staged.py
 │   ├── test_integrations.py
 │   ├── test_manifest.py
 │   ├── test_new_modules.py
@@ -184,4 +185,4 @@
 ├── uv.lock
 └── VERSION
 
-44 directories, 141 files
+44 directories, 142 files

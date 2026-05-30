@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('intract', '0.5.1', 'python').
+project_metadata('intract', '0.5.2', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 49, 'less').
@@ -21,7 +21,7 @@ project_file('sdks/typescript/src/index.ts', 43, 'typescript').
 project_file('src/intract/__init__.py', 32, 'python').
 project_file('src/intract/__main__.py', 5, 'python').
 project_file('src/intract/artifacts.py', 6, 'python').
-project_file('src/intract/check.py', 106, 'python').
+project_file('src/intract/check.py', 131, 'python').
 project_file('src/intract/cli.py', 386, 'python').
 project_file('src/intract/config.py', 65, 'python').
 project_file('src/intract/core/__init__.py', 36, 'python').
@@ -46,10 +46,10 @@ project_file('src/intract/engine/monitor.py', 33, 'python').
 project_file('src/intract/engine/scanner.py', 54, 'python').
 project_file('src/intract/git.py', 54, 'python').
 project_file('src/intract/graph.py', 69, 'python').
-project_file('src/intract/integrations/__init__.py', 15, 'python').
+project_file('src/intract/integrations/__init__.py', 16, 'python').
 project_file('src/intract/integrations/planfile.py', 142, 'python').
 project_file('src/intract/integrations/redup.py', 170, 'python').
-project_file('src/intract/integrations/vallm.py', 85, 'python').
+project_file('src/intract/integrations/vallm.py', 117, 'python').
 project_file('src/intract/manifest_schema.py', 95, 'python').
 project_file('src/intract/models.py', 4, 'python').
 project_file('src/intract/normalizer.py', 4, 'python').
@@ -78,6 +78,7 @@ project_file('src/intract/validators/input_output.py', 75, 'python').
 project_file('src/intract/validators/requirements.py', 14, 'python').
 project_file('src/intract/watch.py', 161, 'python').
 project_file('src/intract/yaml_manifest.py', 4, 'python').
+project_file('tests/test_check_staged.py', 35, 'python').
 project_file('tests/test_integrations.py', 61, 'python').
 project_file('tests/test_manifest.py', 27, 'python').
 project_file('tests/test_new_modules.py', 49, 'python').
@@ -98,9 +99,10 @@ python_function('examples/integration_tests/run_examples.py', 'main', 0, 7, 8).
 python_function('examples/python/parse_extensions.py', 'parse_extensions', 1, 3, 3).
 python_function('src/intract/check.py', 'parse_unified_diff_hunks', 1, 6, 9).
 python_function('src/intract/check.py', 'load_selected_sources', 2, 5, 4).
-python_function('src/intract/check.py', 'validate_selected_paths', 2, 4, 6).
-python_function('src/intract/check.py', 'staged_check', 1, 1, 5).
-python_function('src/intract/check.py', 'changed_check', 1, 1, 3).
+python_function('src/intract/check.py', '_manifest_changed', 1, 2, 2).
+python_function('src/intract/check.py', 'validate_selected_paths', 2, 8, 7).
+python_function('src/intract/check.py', 'staged_check', 1, 1, 6).
+python_function('src/intract/check.py', 'changed_check', 1, 1, 4).
 python_function('src/intract/cli.py', 'main', 1, 2, 4).
 python_function('src/intract/cli.py', 'init', 2, 3, 9).
 python_function('src/intract/cli.py', 'scan', 2, 10, 18).
@@ -178,6 +180,7 @@ python_function('src/intract/integrations/redup.py', 'scan_blocks_for_intent_dup
 python_function('src/intract/integrations/vallm.py', 'map_validation_result', 1, 6, 3).
 python_function('src/intract/integrations/vallm.py', 'map_project_report', 1, 7, 3).
 python_function('src/intract/integrations/vallm.py', 'validate_for_vallm', 1, 2, 3).
+python_function('src/intract/integrations/vallm.py', 'validate_proposal', 1, 12, 8).
 python_function('src/intract/manifest_schema.py', '_load_schema', 0, 2, 5).
 python_function('src/intract/manifest_schema.py', 'validate_manifest', 1, 15, 17).
 python_function('src/intract/parsers/inline.py', 'clean_comment_line', 1, 8, 4).
@@ -221,6 +224,8 @@ python_function('src/intract/watch.py', 'snapshot_tree', 2, 4, 9).
 python_function('src/intract/watch.py', 'diff_snapshots', 2, 5, 4).
 python_function('src/intract/watch.py', 'watch_tree', 2, 7, 6).
 python_function('src/intract/watch.py', 'changes_to_paths', 1, 3, 1).
+python_function('tests/test_check_staged.py', 'test_manifest_changed_helper', 0, 3, 1).
+python_function('tests/test_check_staged.py', 'test_validate_selected_paths_full_graph', 1, 3, 3).
 python_function('tests/test_integrations.py', 'test_redup_finds_intent_duplicate_groups', 0, 4, 2).
 python_function('tests/test_integrations.py', 'test_duplicate_contracts_cli_parity', 1, 2, 2).
 python_function('tests/test_integrations.py', 'test_find_intent_duplicate_groups_from_blocks', 0, 2, 2).

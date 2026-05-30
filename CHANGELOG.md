@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.3] - 2026-05-30
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update docs/integrations.md
+- Update docs/missing-files-and-roadmap.md
+- Update docs/roadmap.md
+- Update examples/full-stack/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/test_full_stack.py
+- Update tests/test_hunk_filter.py
+- Update tests/test_policy.py
+- Update tests/test_rule_registry.py
+- Update tests/test_staged_e2e.py
+
+### Other
+- Update .gitignore
+- Update .pre-commit-hooks.yaml
+- Update app.doql.less
+- Update examples/full-stack/intract.yaml
+- Update examples/full-stack/src/analyzer.py
+- Update examples/full-stack/src/parser_a.py
+- Update examples/full-stack/src/parser_b.py
+- Update examples/full-stack/src/scanner.py
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- ... and 19 more files
+
 ## [0.5.2] - 2026-05-30
 
 ### Docs

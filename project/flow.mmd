@@ -1,26 +1,26 @@
 flowchart TD
-%% generated in 0.03s
+%% generated in 0.01s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
+        src__intract__config__IntractConfig__from_mapping["from_mapping"]
+        src__intract__project__extract_signatures_from_sources["extract_signatures_from_source"]
+        src__intract__project__validate_sources{{validate_sources CC=16}}
+        src__intract__project__validate_project["validate_project"]
+        src__intract__coverage__CoverageReport__to_dict["to_dict"]
         src__intract__graph__ContractGraph__to_dict["to_dict"]
         src__intract__graph__ContractGraph__to_mermaid["to_mermaid"]
-        src__intract__coverage__CoverageReport__to_dict["to_dict"]
         src__intract__sdk__ContractBuilder__to_inline["to_inline"]
         src__intract__sdk__contract["contract"]
-        src__intract__validators__input_output__InputPresenceRule__supports["supports"]
-        src__intract__validators__input_output__InputPresenceRule__validate["validate"]
-        src__intract__validators__input_output__OutputPresenceRule__supports["supports"]
-        src__intract__validators__input_output__OutputPresenceRule__validate["validate"]
-        src__intract__validators__input_output__ReturnValueRule__supports["supports"]
-        src__intract__validators__input_output__ReturnValueRule__validate["validate"]
+        src__intract__manifest_schema__ManifestValidationReport__to_dict["to_dict"]
+        src__intract__manifest_schema__validate_manifest{{validate_manifest CC=15}}
         src__intract__duplicates__grouping__DuplicateContract__to_dict["to_dict"]
         src__intract__duplicates__grouping__IntentDuplicateGroup__to_dict["to_dict"]
-        src__intract__validators__effects__NoForbiddenEffectRule__supports["supports"]
-        src__intract__validators__effects__NoForbiddenEffectRule__validate["validate"]
-        ...["+78 more"]
+        src__intract__validators__artifacts__ArtifactValidationReport__to_dict["to_dict"]
+        src__intract__validators__input_output__InputPresenceRule__supports["supports"]
+        ...["+86 more"]
     end
 
     subgraph Exporters
@@ -31,4 +31,4 @@ flowchart TD
         src__intract__cli___export_tickets["_export_tickets"]
     end
 
-    class src__intract__graph__ContractGraph__to_dict,src__intract__graph__ContractGraph__to_mermaid,src__intract__coverage__CoverageReport__to_dict,src__intract__sdk__ContractBuilder__to_inline,src__intract__sdk__contract,src__intract__validators__input_output__InputPresenceRule__supports,src__intract__validators__input_output__InputPresenceRule__validate,src__intract__validators__input_output__OutputPresenceRule__supports,src__intract__validators__input_output__OutputPresenceRule__validate,src__intract__validators__input_output__ReturnValueRule__supports entry
+    class src__intract__config__IntractConfig__from_mapping,src__intract__coverage__CoverageReport__to_dict,src__intract__graph__ContractGraph__to_dict,src__intract__graph__ContractGraph__to_mermaid,src__intract__sdk__ContractBuilder__to_inline,src__intract__sdk__contract,src__intract__manifest_schema__ManifestValidationReport__to_dict,src__intract__duplicates__grouping__DuplicateContract__to_dict,src__intract__duplicates__grouping__IntentDuplicateGroup__to_dict,src__intract__validators__artifacts__ArtifactValidationReport__to_dict entry

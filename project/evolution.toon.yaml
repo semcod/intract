@@ -1,7 +1,7 @@
-# code2llm/evolution | 192 func | 45f | 2026-05-30
+# code2llm/evolution | 207 func | 46f | 2026-05-30
 # generated in 0.00s
 
-NEXT[6] (ranked by impact):
+NEXT[7] (ranked by impact):
   [1] !! SPLIT-FUNC      parse_contract_line  CC=42  fan=28
       WHY: CC=42 exceeds 15
       EFFORT: ~1h  IMPACT: 1176
@@ -14,15 +14,19 @@ NEXT[6] (ranked by impact):
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 210
 
-  [4] !  SPLIT-FUNC      validate_sources  CC=16  fan=11
+  [4] !  SPLIT-FUNC      decide_policy  CC=15  fan=12
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 180
+
+  [5] !  SPLIT-FUNC      validate_sources  CC=16  fan=11
       WHY: CC=16 exceeds 15
       EFFORT: ~1h  IMPACT: 176
 
-  [5] !  SPLIT-FUNC      infer_artifact_kind  CC=17  fan=6
+  [6] !  SPLIT-FUNC      infer_artifact_kind  CC=17  fan=6
       WHY: CC=17 exceeds 15
       EFFORT: ~1h  IMPACT: 102
 
-  [6] !! SPLIT           goal.yaml
+  [7] !! SPLIT           goal.yaml
       WHY: 511L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
@@ -31,10 +35,10 @@ RISKS[1]:
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          4.3 → ≤3.0
+  CC̄:          4.5 → ≤3.1
   max-CC:      42 → ≤20
   god-modules: 1 → 0
-  high-CC(≥15): 5 → ≤2
+  high-CC(≥15): 6 → ≤3
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -62,4 +66,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  (first run — no previous data)
+  prev CC̄=4.4 → now CC̄=4.5

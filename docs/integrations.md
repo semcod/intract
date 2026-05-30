@@ -1,5 +1,24 @@
 # Integrations
 
+## Monorepo CI (Intract + vallm + reDUP)
+
+Local full-stack check:
+
+```bash
+bash scripts/ci-full-stack.sh
+```
+
+Installs sibling repos when present (`../vallm`, `../redup`) and runs:
+
+```bash
+intract validate examples/full-stack
+intract duplicates examples/full-stack
+vallm intract examples/full-stack
+redup scan examples/full-stack --intent
+```
+
+GitHub Actions job `full-stack-integration` runs the intract-only subset by default. For full integration in CI, checkout sibling repos and unset `SKIP_VALLM` / `SKIP_REDUP`.
+
 ## planfile
 
 Intract generuje planfile-compatible tickety.
@@ -27,9 +46,10 @@ Kod:
 
 ## pre-commit
 
-Plik:
+Pliki:
 
 - [`.pre-commit-hooks.yaml`](../.pre-commit-hooks.yaml)
+- [`templates/.pre-commit-config.yaml`](../templates/.pre-commit-config.yaml)
 
 Użycie w projekcie:
 
@@ -39,10 +59,12 @@ repos:
     hooks:
       - id: intract
         name: intract intent contracts
-        entry: intract check --staged
+        entry: intract check --staged --hunks
         language: system
         pass_filenames: false
 ```
+
+`--hunks` waliduje tylko kontrakty dotknięte staged diffem.
 
 ## GitHub Actions
 
@@ -92,25 +114,70 @@ python -m intract artifact k8s/deployment.yaml
 
 ## vallm
 
-Docelowa integracja:
+Zainstalowanie:
 
 ```bash
-vallm validate --enable-intract
-vallm intract --staged
+pip install -e ../intract
+pip install -e "../vallm[intract]"
 ```
 
-Intract ma odpowiadać na pytanie:
+CLI:
 
-```text
-czy kod realizuje zadeklarowaną intencję?
+```bash
+vallm validate --file app.py --intract
+vallm batch src --recursive --intract
+vallm intract .
+vallm intract . --staged
+vallm intract . --changed --base main
 ```
+
+MCP tools (`mcp/server/_tools_vallm.py`):
+
+- `validate_intent_contracts` — snippet z `@intract`
+- `validate_intract_project` — walidacja projektu
+- `validate_intract_staged` — staged check przed commitem
+
+Adapter:
+
+- [`src/intract/integrations/vallm.py`](../src/intract/integrations/vallm.py)
 
 ## reDUP
 
-Docelowa integracja:
+Zainstalowanie:
 
 ```bash
-redup scan . --intent
+pip install -e ../intract
+pip install -e "../redup[intent]"
 ```
 
-Intract ma dostarczać sygnatury kontraktów do wykrywania duplikacji intencji.
+CLI:
+
+```bash
+redup scan . --intent --intent-threshold 0.84
+redup scan . --intent --intent-manifest intract.yaml
+```
+
+MCP scan params: `intent`, `intent_threshold`, `intent_manifest`.
+
+Adapter:
+
+- [`src/intract/integrations/redup.py`](../src/intract/integrations/redup.py)
+- [`../redup/src/redup/integrations/intract/adapter.py`](../../redup/src/redup/integrations/intract/adapter.py)
+
+Intent duplicate groups are tagged with `engine: intract` in JSON/Markdown/TOON reporters.
+
+## Policy gates
+
+Domyślne `fail_on`:
+
+```yaml
+fail_on: ["violation", "invalid_manifest"]
+```
+
+Stopniowe zaostrzanie:
+
+```yaml
+fail_on: ["violation", "missing_required_p1", "invalid_manifest"]
+```
+
+`missing_required_p1` sprawdza brakujące `require` wymagane przez kontrakty manifestu z `priority: 1`.

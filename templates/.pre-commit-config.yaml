@@ -1,8 +1,9 @@
 repos:
   - repo: local
     hooks:
-      - id: intract
-        name: intract intent contracts
-        entry: intract validate . --json
+      - id: intract-staged
+        name: intract intent contracts (staged)
+        entry: intract check --staged --hunks
         language: system
         pass_filenames: false
+        stages: [pre-commit]

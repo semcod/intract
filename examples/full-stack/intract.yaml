@@ -1,0 +1,27 @@
+project:
+  name: full-stack-demo
+
+contracts:
+  - id: project.analysis
+    scope: project
+    intent: analyze:code_duplication
+    priority: 1
+    domain: analysis
+    require:
+      - scan.project_files
+      - parse.extensions
+      - detect.duplicates
+    validate:
+      - required_intents
+      - no_forbidden_effect
+    meaning: "Demo project satisfies analysis pipeline contracts."
+
+files:
+  src/scanner.py:
+    - scope: file
+      intent: scan:project_files
+      priority: 1
+      domain: scanner
+      effect: [read]
+      forbid: [network]
+      validate: [no_forbidden_effect]

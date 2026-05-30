@@ -103,6 +103,7 @@ def check(
     staged: bool = typer.Option(False, "--staged", help="Check staged files. Falls back to project if not in git."),
     changed: bool = typer.Option(False, "--changed", help="Check branch diff. Falls back to project if not in git."),
     base: str = typer.Option("main", "--base", help="Base ref for --changed."),
+    hunks: bool = typer.Option(False, "--hunks", help="With --staged, validate only contracts touched by hunks."),
     manifest: Path | None = typer.Option(None, "--manifest"),
     fmt: str = typer.Option("text", "--format", help="text|json|sarif"),
     output: Path | None = typer.Option(None, "--output"),
@@ -116,14 +117,25 @@ def check(
 
     files: list[str] = []
     if staged:
-        report, files, _hunks = staged_check(path, manifest=manifest_path)
+        report, files, _hunks = staged_check(path, manifest=manifest_path, hunk_filter=hunks)
         report.project_path = str(path)
     elif changed:
         report, files = changed_check(path, base_ref=base, manifest=manifest_path)
         report.project_path = str(path)
     else:
         report = validate_project(path, manifest_path=manifest_path)
-    decision = decide_policy(report, fail_on=config.fail_on, warn_on=config.warn_on)
+
+    graph = None
+    if manifest_path and any(token in config.fail_on for token in ("missing_required_p1",)):
+        graph = build_graph(path, manifest=manifest_path)
+
+    decision = decide_policy(
+        report,
+        fail_on=config.fail_on,
+        warn_on=config.warn_on,
+        graph=graph,
+        manifest_path=manifest_path,
+    )
 
     if planfile:
         _export_tickets(path, report)
