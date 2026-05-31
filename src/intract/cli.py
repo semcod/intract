@@ -301,8 +301,36 @@ def planfile_sync(
     )
     result = adapter.sync_from_report(report)
     console.print(
-        f"[bold]Sync complete:[/] pushed={result.pushed} pulled={result.pulled} status={result.remote_status}"
+        f"[bold]Sync complete:[/] pushed={result.pushed} pulled={result.pulled} "
+        f"status={result.remote_status} webhook={result.webhook_status}"
     )
+
+
+@planfile_app.command("webhook-test")
+def planfile_webhook_test(
+    webhook_url: str = typer.Option(..., "--url", envvar="PLANFILE_WEBHOOK_URL"),
+    secret: str | None = typer.Option(None, "--secret", envvar="PLANFILE_WEBHOOK_SECRET"),
+):
+    """Send a test webhook payload to verify connectivity."""
+    from .integrations.planfile_adapter import PlanfileApiAdapter, PlanfileConfig
+
+    adapter = PlanfileApiAdapter(PlanfileConfig(webhook_url=webhook_url, webhook_secret=secret))
+    result = adapter.emit_webhook("ping", {"message": "intract webhook test"})
+    console.print(f"[green]Webhook delivered[/] event={result.event} status={result.status_code}")
+
+
+@planfile_app.command("webhook-apply")
+def planfile_webhook_apply(
+    path: Path = typer.Argument(Path(".")),
+    event_file: Path = typer.Argument(..., help="JSON file with inbound planfile webhook payload"),
+):
+    """Apply inbound planfile ticket status updates to local .intract export."""
+    from .integrations.planfile_adapter import PlanfileApiAdapter, PlanfileConfig
+
+    payload = json.loads(event_file.read_text(encoding="utf-8"))
+    adapter = PlanfileApiAdapter(PlanfileConfig(output_dir=Path(path) / ".intract"))
+    changed = adapter.apply_webhook_event(payload)
+    console.print(f"[bold]Updated tickets:[/] {changed}")
 
 
 @app.command()

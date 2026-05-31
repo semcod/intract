@@ -1,7 +1,7 @@
 # code2llm call graph | /home/tom/github/semcod/intract
-# generated in 0.06s
-# nodes: 144 | edges: 172 | modules: 40
-# CC̄=4.2
+# generated in 0.08s
+# nodes: 185 | edges: 223 | modules: 54
+# CC̄=4.1
 
 HUBS[20]:
   src.intract.parsers.manifest.contract_from_mapping
@@ -17,31 +17,31 @@ HUBS[20]:
   src.intract.parsers.manifest.load_manifest_records
     CC=11  in:7  out:19  total:26
   src.intract.integrations.planfile.tickets_from_report
-    CC=11  in:2  out:21  total:23
+    CC=11  in:3  out:21  total:24
+  src.intract.integrations.planfile_adapter._ticket_from_dict
+    CC=2  in:2  out:21  total:23
+  src.intract.graph.build_graph
+    CC=9  in:4  out:18  total:22
+  src.intract.project.validate_project
+    CC=4  in:13  out:8  total:21
+  src.intract.policy.decide_policy
+    CC=15  in:2  out:19  total:21
   src.intract.cli.engine_drift
     CC=4  in:0  out:21  total:21
-  src.intract.policy.decide_policy
-    CC=15  in:1  out:19  total:20
-  src.intract.graph.build_graph
-    CC=9  in:2  out:18  total:20
+  src.intract.validators.artifacts.validate_artifact
+    CC=9  in:3  out:17  total:20
   src.intract.cli.engine_run
     CC=4  in:0  out:20  total:20
-  src.intract.validators.artifacts.validate_artifact
-    CC=9  in:2  out:17  total:19
   src.intract.validators.engine.validate_contract_against_source
     CC=8  in:5  out:14  total:19
-  src.intract.engine.analyzer.analyze_source_units
-    CC=12  in:1  out:17  total:18
-  examples.integration_tests.run_examples.run_example_03
-    CC=2  in:1  out:17  total:18
-  src.intract.project.validate_project
-    CC=4  in:10  out:8  total:18
+  src.intract.check.block_extent
+    CC=20  in:1  out:18  total:19
   src.intract.cli.engine_suggest
     CC=3  in:0  out:18  total:18
-  src.intract.duplicates.grouping.pairs_to_intent_groups
-    CC=6  in:1  out:16  total:17
-  src.intract.cli.duplicates
-    CC=4  in:0  out:17  total:17
+  examples.integration_tests.run_examples.run_example_03
+    CC=2  in:1  out:17  total:18
+  src.intract.engine.analyzer.analyze_source_units
+    CC=12  in:1  out:17  total:18
   src.intract.parsers.openapi.parse_openapi_contracts
     CC=8  in:1  out:16  total:17
 
@@ -52,6 +52,9 @@ MODULES:
     run_example_01  CC=1  out:4
     run_example_02  CC=2  out:10
     run_example_03  CC=2  out:17
+  extensions.vscode-intract.extension  [2 funcs]
+    activate  CC=7  out:5
+    runIntract  CC=1  out:6
   sdks.go.intractsdk.sdk  [2 funcs]
     Inline  CC=11  out:5
     csv  CC=1  out:1
@@ -64,9 +67,35 @@ MODULES:
   sdks.typescript.src  [2 funcs]
     csv  CC=4  out:1
     inlineContract  CC=10  out:3
+  src.intract.analyzers.blocks  [2 funcs]
+    block_extent_from_patterns  CC=7  out:7
+    scan_braced_block  CC=8  out:2
+  src.intract.analyzers.csharp  [3 funcs]
+    _scan_braced_block  CC=8  out:2
+    _treesitter_csharp_extent  CC=2  out:1
+    csharp_block_extent  CC=8  out:8
+  src.intract.analyzers.go  [1 funcs]
+    go_block_extent  CC=1  out:1
+  src.intract.analyzers.java  [1 funcs]
+    java_block_extent  CC=4  out:7
+  src.intract.analyzers.python_ast  [3 funcs]
+    _decorator_lines  CC=3  out:2
+    python_block_extent  CC=14  out:11
+    python_function_extent  CC=8  out:8
+  src.intract.analyzers.rust  [1 funcs]
+    rust_block_extent  CC=1  out:1
+  src.intract.analyzers.treesitter  [4 funcs]
+    _find_extent  CC=7  out:8
+    _load_parser  CC=3  out:4
+    csharp_method_extent  CC=1  out:1
+    typescript_function_extent  CC=1  out:1
+  src.intract.analyzers.typescript  [3 funcs]
+    _scan_braced_block  CC=11  out:5
+    _treesitter_typescript_extent  CC=2  out:1
+    typescript_block_extent  CC=7  out:7
   src.intract.check  [10 funcs]
     _manifest_changed  CC=2  out:2
-    block_extent  CC=13  out:10
+    block_extent  CC=20  out:18
     changed_check  CC=1  out:4
     changed_lines_by_file  CC=4  out:4
     load_selected_sources  CC=5  out:4
@@ -75,7 +104,7 @@ MODULES:
     staged_check  CC=4  out:8
     validate_selected_paths  CC=8  out:10
     validate_sources_for_hunks  CC=14  out:15
-  src.intract.cli  [13 funcs]
+  src.intract.cli  [15 funcs]
     _export_tickets  CC=1  out:6
     _print_validation_report  CC=4  out:15
     artifact_validate  CC=4  out:11
@@ -86,6 +115,8 @@ MODULES:
     engine_run  CC=4  out:20
     engine_suggest  CC=3  out:18
     graph  CC=5  out:16
+  src.intract.config  [1 funcs]
+    load_config  CC=11  out:14
   src.intract.core.artifact  [3 funcs]
     from_path  CC=2  out:8
     infer_artifact_kind  CC=17  out:8
@@ -145,6 +176,10 @@ MODULES:
     build_graph  CC=9  out:18
   src.intract.integrations.planfile  [1 funcs]
     tickets_from_report  CC=11  out:21
+  src.intract.integrations.planfile_adapter  [3 funcs]
+    pull  CC=7  out:10
+    sync_from_report  CC=3  out:9
+    _ticket_from_dict  CC=2  out:21
   src.intract.integrations.redup  [10 funcs]
     _with_block_lines  CC=1  out:3
     block_end_line  CC=3  out:4
@@ -164,6 +199,21 @@ MODULES:
   src.intract.manifest_schema  [2 funcs]
     _load_schema  CC=2  out:5
     validate_manifest  CC=15  out:35
+  src.intract.mcp.handlers  [8 funcs]
+    _resolve_manifest  CC=4  out:6
+    _resolve_path  CC=1  out:4
+    handle_build_graph  CC=1  out:5
+    handle_find_duplicates  CC=2  out:7
+    handle_scan_artifacts  CC=1  out:4
+    handle_validate_intent_snippet  CC=1  out:5
+    handle_validate_project  CC=1  out:5
+    handle_validate_staged  CC=4  out:11
+  src.intract.mcp.server  [5 funcs]
+    handle_initialize  CC=1  out:0
+    handle_request  CC=5  out:6
+    handle_tools_call  CC=4  out:2
+    handle_tools_list  CC=2  out:1
+    run_server  CC=5  out:14
   src.intract.parsers.inline  [6 funcs]
     clean_comment_line  CC=8  out:14
     extract_contract_records_from_text  CC=3  out:5
@@ -194,9 +244,12 @@ MODULES:
     decide_policy  CC=15  out:19
   src.intract.project  [4 funcs]
     extract_signatures_from_sources  CC=2  out:4
-    load_project_sources  CC=7  out:6
+    load_project_sources  CC=9  out:8
     validate_project  CC=4  out:8
     validate_sources  CC=16  out:15
+  src.intract.scan_artifacts  [2 funcs]
+    discover_artifact_paths  CC=7  out:11
+    scan_all_artifacts  CC=3  out:7
   src.intract.validators.artifacts  [5 funcs]
     validate_artifact  CC=9  out:17
     validate_dockerfile  CC=6  out:14
@@ -243,39 +296,39 @@ EDGES:
   src.intract.watch.snapshot_tree → src.intract.watch.hash_file
   src.intract.watch.watch_tree → src.intract.watch.snapshot_tree
   src.intract.watch.watch_tree → src.intract.watch.diff_snapshots
-  src.intract.project.extract_signatures_from_sources → src.intract.core.signatures.build_signatures
-  src.intract.project.extract_signatures_from_sources → src.intract.parsers.inline.extract_contract_records_from_text
-  src.intract.project.validate_sources → src.intract.project.extract_signatures_from_sources
-  src.intract.project.validate_sources → src.intract.core.signatures.build_signatures
-  src.intract.project.validate_sources → src.intract.validators.engine.validate_contract_against_source
-  src.intract.project.validate_sources → src.intract.validators.requirements.validate_required_contracts
-  src.intract.project.validate_project → src.intract.project.load_project_sources
-  src.intract.project.validate_project → src.intract.project.validate_sources
-  src.intract.project.validate_project → src.intract.parsers.manifest.load_manifest_records
-  src.intract.coverage.calculate_coverage → src.intract.project.load_project_sources
-  src.intract.coverage.calculate_coverage → src.intract.project.extract_signatures_from_sources
-  src.intract.graph.ContractGraph.to_mermaid → src.intract.graph._safe
-  src.intract.graph.build_graph → src.intract.project.load_project_sources
-  src.intract.graph.build_graph → src.intract.project.extract_signatures_from_sources
-  src.intract.git.staged_files → src.intract.git._run_git
-  src.intract.git.changed_files → src.intract.git._run_git
-  src.intract.git.staged_hunks → src.intract.git._run_git
-  src.intract.manifest_schema.validate_manifest → src.intract.manifest_schema._load_schema
-  src.intract.duplicates.scoring.object_similarity → src.intract.duplicates.scoring.jaccard
-  src.intract.duplicates.scoring.score_similarity → src.intract.duplicates.scoring.object_similarity
-  src.intract.duplicates.scoring.score_similarity → src.intract.duplicates.scoring.jaccard
-  src.intract.duplicates.matcher.find_intent_pairs → src.intract.duplicates.matcher.bucket_signatures
-  src.intract.duplicates.matcher.find_intent_pairs → src.intract.duplicates.scoring.score_similarity
-  src.intract.duplicates.grouping.pairs_to_intent_groups → src.intract.duplicates.grouping.union_find_groups
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.project.load_project_sources
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.project.extract_signatures_from_sources
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.duplicates.matcher.find_intent_pairs
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.duplicates.grouping.pairs_to_duplicate_contracts
-  src.intract.validators.artifacts.validate_openapi → src.intract.parsers.openapi.parse_openapi_contracts
-  src.intract.validators.artifacts.validate_openapi → src.intract.core.signatures.build_signature
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_dockerfile
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_github_actions
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_openapi
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_kubernetes
-  src.intract.validators.input_output.contains_token_like → src.intract.core.normalizer.normalize_label
-  src.intract.validators.input_output.InputPresenceRule.validate → src.intract.validators.input_output.contains_token_like
+  src.intract.cli.init → src.intract.parsers.manifest.create_sample_manifest
+  src.intract.cli.validate → src.intract.project.validate_project
+  src.intract.cli.validate → src.intract.cli._print_validation_report
+  src.intract.cli.validate → src.intract.cli._export_tickets
+  src.intract.cli.coverage → src.intract.coverage.calculate_coverage
+  src.intract.cli.duplicates → src.intract.duplicates.grouping.find_duplicate_contracts
+  src.intract.cli.graph → src.intract.graph.build_graph
+  src.intract.cli.tickets → src.intract.project.validate_project
+  src.intract.cli.tickets → src.intract.cli._export_tickets
+  src.intract.cli.planfile_push → src.intract.project.validate_project
+  src.intract.cli.planfile_sync → src.intract.project.validate_project
+  src.intract.cli.engine_suggest → src.intract.engine.monitor.scan_suggest_and_validate
+  src.intract.cli.engine_drift → src.intract.engine.monitor.scan_suggest_and_validate
+  src.intract.cli.engine_run → src.intract.engine.monitor.scan_suggest_and_validate
+  src.intract.cli._export_tickets → src.intract.integrations.planfile.tickets_from_report
+  src.intract.cli.check_manifest → src.intract.manifest_schema.validate_manifest
+  src.intract.cli.artifact_validate → src.intract.validators.artifacts.validate_artifact
+  src.intract.scan_artifacts.discover_artifact_paths → src.intract.core.artifact.infer_artifact_kind
+  src.intract.scan_artifacts.scan_all_artifacts → src.intract.scan_artifacts.discover_artifact_paths
+  src.intract.scan_artifacts.scan_all_artifacts → src.intract.validators.artifacts.validate_artifact
+  src.intract.check.block_extent → src.intract.analyzers.python_ast.python_block_extent
+  src.intract.check.block_extent → src.intract.analyzers.typescript.typescript_block_extent
+  src.intract.check.block_extent → src.intract.analyzers.csharp.csharp_block_extent
+  src.intract.check.block_extent → src.intract.analyzers.java.java_block_extent
+  src.intract.check.block_extent → src.intract.analyzers.go.go_block_extent
+  src.intract.check.signature_touched → src.intract.check.block_extent
+  src.intract.check.validate_sources_for_hunks → src.intract.check.load_selected_sources
+  src.intract.check.validate_sources_for_hunks → src.intract.check.changed_lines_by_file
+  src.intract.check.validate_sources_for_hunks → src.intract.parsers.inline.extract_contract_records_from_text
+  src.intract.check.validate_sources_for_hunks → src.intract.validators.engine.validate_contract_against_source
+  src.intract.check.validate_sources_for_hunks → src.intract.core.signatures.build_signatures
+  src.intract.check.validate_selected_paths → src.intract.check.load_selected_sources
+  src.intract.check.validate_selected_paths → src.intract.project.validate_sources
+  src.intract.check.validate_selected_paths → src.intract.project.validate_project
+  src.intract.check.validate_selected_paths → src.intract.parsers.manifest.load_manifest_records
+  src.intract.check.staged_check → src.intract.git.staged_files

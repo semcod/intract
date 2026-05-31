@@ -1,9 +1,11 @@
 const vscode = require("vscode");
 
 function runIntract(args) {
+  const config = vscode.workspace.getConfiguration("intract");
+  const python = config.get("pythonPath", "python");
   const terminal = vscode.window.createTerminal({ name: "Intract" });
   terminal.show();
-  terminal.sendText(`python -m intract ${args.join(" ")}`);
+  terminal.sendText(`${python} -m intract ${args.join(" ")}`);
 }
 
 function activate(context) {

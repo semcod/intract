@@ -45,3 +45,58 @@ def test_block_extent_uses_csharp_analyzer():
     )
     start, end = block_extent(source, 1, file_path="AuthService.cs")
     assert end == 5
+
+
+def test_java_block_extent():
+    from intract.analyzers.java import java_block_extent
+
+    source = (
+        "// @intract.v1 scope:method intent:validate:user forbid:network\n"
+        "public boolean validateUser() {\n"
+        "    return true;\n"
+        "}\n"
+    )
+    start, end = java_block_extent(source, 1)
+    assert start == 1
+    assert end == 4
+
+
+def test_go_block_extent():
+    from intract.analyzers.go import go_block_extent
+
+    source = (
+        "// @intract.v1 scope:function intent:validate:user\n"
+        "func validateUser() {\n"
+        "    return true\n"
+        "}\n"
+    )
+    start, end = go_block_extent(source, 1)
+    assert end == 4
+
+
+def test_rust_block_extent():
+    from intract.analyzers.rust import rust_block_extent
+
+    source = (
+        "/// @intract.v1 scope:function intent:validate:user\n"
+        "pub fn validate_user() -> bool {\n"
+        "    true\n"
+        "}\n"
+    )
+    start, end = rust_block_extent(source, 2)
+    assert start == 2
+    assert end == 4
+
+
+def test_block_extent_routes_java_go_rust():
+    java = "// @intract.v1 scope:method intent:x\npublic void run() {\n    return;\n}\n"
+    go = "// @intract.v1 scope:function intent:x\nfunc run() {\n    return\n}\n"
+    rust = "// @intract.v1 scope:function intent:x\nfn run() {\n    true\n}\n"
+    for source, name in (
+        (java, "App.java"),
+        (go, "main.go"),
+        (rust, "lib.rs"),
+    ):
+        start, end = block_extent(source, 1, file_path=name)
+        assert start == 1
+        assert end >= 3

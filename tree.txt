@@ -1,4 +1,5 @@
 .
+├── action.yml
 ├── app.doql.less
 ├── CHANGELOG.md
 ├── Dockerfile
@@ -31,8 +32,36 @@
 │   │   └── run_examples.py
 │   ├── python
 │   │   └── parse_extensions.py
-│   └── typescript
-│       └── permission.ts
+│   ├── typescript
+│   │   └── permission.ts
+│   └── web-app
+│       ├── intract.yaml
+│       └── iterations
+│           ├── v1-pass
+│           │   ├── backend
+│           │   │   ├── auth.py
+│           │   │   └── routes.py
+│           │   ├── Dockerfile
+│           │   ├── frontend
+│           │   │   └── dashboard.ts
+│           │   ├── openapi.yaml
+│           │   └── README.md
+│           └── v2-violation
+│               ├── backend
+│               │   ├── auth.py
+│               │   └── routes.py
+│               ├── Dockerfile
+│               ├── frontend
+│               │   └── dashboard.ts
+│               ├── openapi.yaml
+│               └── README.md
+├── extensions
+│   └── vscode-intract
+│       ├── extension.js
+│       ├── package.json
+│       ├── README.md
+│       └── syntaxes
+│           └── intract.tmLanguage.json
 ├── goal.yaml
 ├── LICENSE
 ├── Makefile
@@ -59,6 +88,7 @@
 │   └── README.md
 ├── project.sh
 ├── pyproject.toml
+├── pyqual.yaml
 ├── README.md
 ├── schemas
 │   └── intract.schema.json
@@ -99,6 +129,16 @@
 │       └── tsconfig.json
 ├── src
 │   └── intract
+│       ├── analyzers
+│       │   ├── blocks.py
+│       │   ├── csharp.py
+│       │   ├── go.py
+│       │   ├── __init__.py
+│       │   ├── java.py
+│       │   ├── python_ast.py
+│       │   ├── rust.py
+│       │   ├── treesitter.py
+│       │   └── typescript.py
 │       ├── artifacts.py
 │       ├── check.py
 │       ├── cli.py
@@ -131,11 +171,18 @@
 │       ├── __init__.py
 │       ├── integrations
 │       │   ├── __init__.py
+│       │   ├── planfile_adapter.py
 │       │   ├── planfile.py
 │       │   ├── redup.py
 │       │   └── vallm.py
 │       ├── __main__.py
 │       ├── manifest_schema.py
+│       ├── mcp
+│       │   ├── handlers.py
+│       │   ├── __init__.py
+│       │   ├── schemas.py
+│       │   └── server.py
+│       ├── mcp_server.py
 │       ├── models.py
 │       ├── normalizer.py
 │       ├── parser.py
@@ -154,6 +201,7 @@
 │       ├── reporters
 │       │   ├── __init__.py
 │       │   └── sarif.py
+│       ├── scan_artifacts.py
 │       ├── sdk.py
 │       ├── signature.py
 │       ├── validation.py
@@ -182,12 +230,17 @@
 │   ├── test_full_stack.py
 │   ├── test_hunk_filter.py
 │   ├── test_integrations.py
+│   ├── test_language_analyzers.py
 │   ├── test_manifest.py
+│   ├── test_mcp.py
 │   ├── test_new_modules.py
 │   ├── test_next_stage.py
 │   ├── test_parser.py
+│   ├── test_planfile_adapter.py
 │   ├── test_policy.py
+│   ├── test_python_ast.py
 │   ├── test_rule_registry.py
+│   ├── test_scan_artifacts.py
 │   ├── test_staged_e2e.py
 │   └── test_validation.py
 ├── TODO
@@ -201,4 +254,4 @@
 ├── uv.lock
 └── VERSION
 
-47 directories, 155 files
+60 directories, 195 files

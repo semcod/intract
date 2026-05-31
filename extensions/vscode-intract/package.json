@@ -4,6 +4,22 @@
   "description": "Highlight @intract.v1 intent contract comments and run validation tasks.",
   "version": "0.1.0",
   "publisher": "semcod",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/semcod/intract.git"
+  },
+  "bugs": {
+    "url": "https://github.com/semcod/intract/issues"
+  },
+  "homepage": "https://github.com/semcod/intract#readme",
+  "keywords": [
+    "intract",
+    "intent",
+    "contracts",
+    "validation",
+    "lint"
+  ],
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -12,7 +28,10 @@
     "onLanguage:python",
     "onLanguage:typescript",
     "onLanguage:javascript",
-    "onLanguage:csharp"
+    "onLanguage:csharp",
+    "onLanguage:java",
+    "onLanguage:go",
+    "onLanguage:rust"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -26,7 +45,10 @@
           "source.tsx",
           "source.js",
           "source.jsx",
-          "source.cs"
+          "source.cs",
+          "source.java",
+          "source.go",
+          "source.rust"
         ]
       }
     ],
@@ -37,6 +59,11 @@
           "type": "string",
           "default": "intract.yaml",
           "description": "Default manifest path for validation tasks."
+        },
+        "intract.pythonPath": {
+          "type": "string",
+          "default": "python",
+          "description": "Python executable used to run the intract CLI."
         }
       }
     },
@@ -49,22 +76,10 @@
         "command": "intract.checkStaged",
         "title": "Intract: Check Staged (Hunks)"
       }
-    ],
-    "taskDefinitions": {
-      "intract": {
-        "type": "intract",
-        "required": ["command"],
-        "properties": {
-          "command": {
-            "type": "string",
-            "description": "intract CLI command to run"
-          },
-          "args": {
-            "type": "array",
-            "description": "Additional CLI arguments"
-          }
-        }
-      }
-    }
+    ]
+  },
+  "scripts": {
+    "package": "vsce package --no-dependencies",
+    "publish": "vsce publish --no-dependencies"
   }
 }

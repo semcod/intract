@@ -1,10 +1,10 @@
-# intract | 95f 5431L | python:83,typescript:5,shell:3,go:2,less:1,rust:1 | 2026-05-30
-# stats: 180 func | 60 cls | 95 mod | CC̄=4.8 | critical:19 | cycles:0
-# alerts[5]: CC parse_contract_line=42; CC infer_artifact_kind=17; CC validate_sources=16; CC build_signature=15; CC validate_manifest=15
-# hotspots[5]: check fan=21; scan fan=18; validate_manifest fan=17; watch fan=16; parse_contract_line fan=16
+# intract | 125f 7114L | python:109,typescript:7,shell:4,go:2,less:1,javascript:1,rust:1 | 2026-05-31
+# stats: 251 func | 65 cls | 125 mod | CC̄=4.4 | critical:21 | cycles:0
+# alerts[5]: CC parse_contract_line=42; CC block_extent=20; CC infer_artifact_kind=17; CC validate_sources=16; CC scan=15
+# hotspots[5]: scan fan=22; check fan=21; validate_manifest fan=17; watch fan=16; parse_contract_line fan=16
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[95]:
+M[125]:
   app.doql.less,49
   examples/full-stack/src/analyzer.py,4
   examples/full-stack/src/parser_a.py,4
@@ -17,6 +17,14 @@ M[95]:
   examples/integration_tests/run_examples.py,102
   examples/python/parse_extensions.py,9
   examples/typescript/permission.ts,6
+  examples/web-app/iterations/v1-pass/backend/auth.py,6
+  examples/web-app/iterations/v1-pass/backend/routes.py,5
+  examples/web-app/iterations/v1-pass/frontend/dashboard.ts,9
+  examples/web-app/iterations/v2-violation/backend/auth.py,7
+  examples/web-app/iterations/v2-violation/backend/routes.py,5
+  examples/web-app/iterations/v2-violation/frontend/dashboard.ts,11
+  examples/web-app/run-demo.sh,21
+  extensions/vscode-intract/extension.js,28
   project.sh,50
   scripts/ci-full-stack.sh,59
   sdks/go/examples/main.go,23
@@ -28,9 +36,18 @@ M[95]:
   sdks/typescript/src/index.ts,43
   src/intract/__init__.py,32
   src/intract/__main__.py,5
+  src/intract/analyzers/__init__.py,21
+  src/intract/analyzers/blocks.py,47
+  src/intract/analyzers/csharp.py,66
+  src/intract/analyzers/go.py,14
+  src/intract/analyzers/java.py,28
+  src/intract/analyzers/python_ast.py,71
+  src/intract/analyzers/rust.py,16
+  src/intract/analyzers/treesitter.py,63
+  src/intract/analyzers/typescript.py,67
   src/intract/artifacts.py,6
-  src/intract/check.py,247
-  src/intract/cli.py,398
+  src/intract/check.py,274
+  src/intract/cli.py,510
   src/intract/config.py,65
   src/intract/core/__init__.py,36
   src/intract/core/artifact.py,94
@@ -54,11 +71,17 @@ M[95]:
   src/intract/engine/scanner.py,54
   src/intract/git.py,54
   src/intract/graph.py,69
-  src/intract/integrations/__init__.py,16
+  src/intract/integrations/__init__.py,21
   src/intract/integrations/planfile.py,142
+  src/intract/integrations/planfile_adapter.py,256
   src/intract/integrations/redup.py,170
   src/intract/integrations/vallm.py,117
   src/intract/manifest_schema.py,95
+  src/intract/mcp/__init__.py,22
+  src/intract/mcp/handlers.py,125
+  src/intract/mcp/schemas.py,92
+  src/intract/mcp/server.py,119
+  src/intract/mcp_server.py,7
   src/intract/models.py,4
   src/intract/normalizer.py,4
   src/intract/parser.py,4
@@ -71,9 +94,10 @@ M[95]:
   src/intract/plugins/builtins.py,112
   src/intract/plugins/manager.py,62
   src/intract/policy.py,73
-  src/intract/project.py,89
+  src/intract/project.py,97
   src/intract/reporters/__init__.py,1
   src/intract/reporters/sarif.py,63
+  src/intract/scan_artifacts.py,71
   src/intract/sdk.py,48
   src/intract/signature.py,4
   src/intract/validation.py,14
@@ -91,14 +115,20 @@ M[95]:
   tests/test_full_stack.py,28
   tests/test_hunk_filter.py,89
   tests/test_integrations.py,61
+  tests/test_language_analyzers.py,103
   tests/test_manifest.py,27
+  tests/test_mcp.py,63
   tests/test_new_modules.py,49
   tests/test_next_stage.py,37
   tests/test_parser.py,30
+  tests/test_planfile_adapter.py,98
   tests/test_policy.py,46
+  tests/test_python_ast.py,38
   tests/test_rule_registry.py,53
+  tests/test_scan_artifacts.py,20
   tests/test_staged_e2e.py,65
   tests/test_validation.py,40
+  tests/test_web_app.py,32
   tree.sh,2
 D:
   examples/full-stack/src/analyzer.py:
@@ -132,12 +162,59 @@ D:
   examples/python/parse_extensions.py:
     e: parse_extensions
     parse_extensions(raw_extensions)
+  examples/web-app/iterations/v1-pass/backend/auth.py:
+    e: check_permission
+    check_permission(user;resource)
+  examples/web-app/iterations/v1-pass/backend/routes.py:
+    e: read_profile
+    read_profile(user_id;users)
+  examples/web-app/iterations/v2-violation/backend/auth.py:
+    e: check_permission
+    check_permission(user;resource)
+  examples/web-app/iterations/v2-violation/backend/routes.py:
+    e: read_profile
+    read_profile(user_id;users)
   sdks/python/src/intract_plugin_example/__init__.py:
     e: ExampleParserPlugin,ExampleValidatorPlugin
     ExampleParserPlugin: supports(1),parse(1)
     ExampleValidatorPlugin: supports(1),validate(2)
   src/intract/__init__.py:
   src/intract/__main__.py:
+  src/intract/analyzers/__init__.py:
+  src/intract/analyzers/blocks.py:
+    e: scan_braced_block,block_extent_from_patterns
+    scan_braced_block(lines;start_line)
+    block_extent_from_patterns(source;start_line;start_patterns)
+  src/intract/analyzers/csharp.py:
+    e: csharp_block_extent,_scan_braced_block,_treesitter_csharp_extent
+    csharp_block_extent(source;start_line)
+    _scan_braced_block(lines;start_line)
+    _treesitter_csharp_extent(source;start_line)
+  src/intract/analyzers/go.py:
+    e: go_block_extent
+    go_block_extent(source;start_line)
+  src/intract/analyzers/java.py:
+    e: java_block_extent
+    java_block_extent(source;start_line)
+  src/intract/analyzers/python_ast.py:
+    e: _decorator_lines,python_function_extent,python_block_extent
+    _decorator_lines(node)
+    python_function_extent(source;start_line)
+    python_block_extent(source;start_line)
+  src/intract/analyzers/rust.py:
+    e: rust_block_extent
+    rust_block_extent(source;start_line)
+  src/intract/analyzers/treesitter.py:
+    e: _load_parser,_find_extent,typescript_function_extent,csharp_method_extent
+    _load_parser(language)
+    _find_extent(source;start_line;language;node_types)
+    typescript_function_extent(source;start_line)
+    csharp_method_extent(source;start_line)
+  src/intract/analyzers/typescript.py:
+    e: typescript_block_extent,_scan_braced_block,_treesitter_typescript_extent
+    typescript_block_extent(source;start_line)
+    _scan_braced_block(lines;start_line)
+    _treesitter_typescript_extent(source;start_line)
   src/intract/artifacts.py:
   src/intract/check.py:
     e: parse_unified_diff_hunks,load_selected_sources,_manifest_changed,changed_lines_by_file,block_extent,signature_touched,validate_sources_for_hunks,validate_selected_paths,staged_check,changed_check,ChangedHunk
@@ -153,16 +230,21 @@ D:
     staged_check(root)
     changed_check(root)
   src/intract/cli.py:
-    e: main,init,scan,validate,check,coverage,duplicates,graph,tickets,watch,engine_suggest,engine_drift,engine_run,_export_tickets,_print_validation_report,_format_check_text,check_manifest,artifact_validate
+    e: main,init,scan,validate,check,coverage,duplicates,graph,tickets,planfile_push,planfile_pull,planfile_sync,planfile_webhook_test,planfile_webhook_apply,watch,engine_suggest,engine_drift,engine_run,_export_tickets,_print_validation_report,_format_check_text,check_manifest,artifact_validate
     main(version)
     init(path;force)
-    scan(path;json_output)
+    scan(path;json_output;all_artifacts)
     validate(path;manifest;json_output;planfile)
     check(path;staged;changed;base;hunks;manifest;fmt;output;planfile)
     coverage(path;json_output)
     duplicates(path;threshold;json_output)
     graph(path;manifest;fmt;output)
     tickets(path;manifest)
+    planfile_push(path;manifest;api_url;token;project)
+    planfile_pull(path;api_url;token;project;json_output)
+    planfile_sync(path;manifest;api_url;token;project)
+    planfile_webhook_test(webhook_url;secret)
+    planfile_webhook_apply(path;event_file)
     watch(path;manifest;interval;planfile;once;json_output)
     engine_suggest(path;json_output)
     engine_drift(path;manifest;json_output)
@@ -285,6 +367,14 @@ D:
     PlanfileExporter: __init__(1),export(1),_write_yaml(2),_write_json(2),_write_todo(2)
     _severity_from_status(status)
     tickets_from_report(report)
+  src/intract/integrations/planfile_adapter.py:
+    e: _ticket_from_dict,_default_created_at,PlanfileConfig,PlanfileSyncResult,PlanfileWebhookResult,PlanfileApiAdapter
+    PlanfileConfig: from_env(1)
+    PlanfileSyncResult:
+    PlanfileWebhookResult:
+    PlanfileApiAdapter: __init__(1),export_local(1),push(1),pull(0),sync_from_report(1),emit_webhook(2),apply_webhook_event(1),_webhook_label(1),_endpoint(1),_request(3)  # Sync Intract tickets with a planfile-compatible HTTP API or 
+    _ticket_from_dict(data)
+    _default_created_at()
   src/intract/integrations/redup.py:
     e: block_text,block_file_path,block_start_line,block_end_line,signatures_from_text,signatures_from_blocks,signatures_from_manifest,_with_block_lines,find_intent_duplicate_groups,scan_blocks_for_intent_duplicates,CodeBlockLike,BlockAdapter,RedupScanResult
     CodeBlockLike:
@@ -314,6 +404,27 @@ D:
     ManifestValidationReport: to_dict(0)
     _load_schema()
     validate_manifest(path)
+  src/intract/mcp/__init__.py:
+  src/intract/mcp/handlers.py:
+    e: _resolve_path,_resolve_manifest,handle_validate_project,handle_validate_staged,handle_validate_intent_snippet,handle_find_duplicates,handle_build_graph,handle_scan_artifacts,handle_project_info
+    _resolve_path(params)
+    _resolve_manifest(root;params)
+    handle_validate_project(params)
+    handle_validate_staged(params)
+    handle_validate_intent_snippet(params)
+    handle_find_duplicates(params)
+    handle_build_graph(params)
+    handle_scan_artifacts(params)
+    handle_project_info(_)
+  src/intract/mcp/schemas.py:
+  src/intract/mcp/server.py:
+    e: handle_initialize,handle_tools_list,handle_tools_call,handle_request,run_server
+    handle_initialize(request_id)
+    handle_tools_list(request_id)
+    handle_tools_call(request_id;params)
+    handle_request(request)
+    run_server()
+  src/intract/mcp_server.py:
   src/intract/models.py:
   src/intract/normalizer.py:
   src/intract/parser.py:
@@ -375,6 +486,11 @@ D:
   src/intract/reporters/sarif.py:
     e: report_to_sarif
     report_to_sarif(report)
+  src/intract/scan_artifacts.py:
+    e: discover_artifact_paths,scan_all_artifacts,ArtifactScanReport
+    ArtifactScanReport: violations(0),to_dict(0)
+    discover_artifact_paths(root)
+    scan_all_artifacts(root)
   src/intract/sdk.py:
     e: contract,ContractBuilder
     ContractBuilder: to_inline(1)
@@ -451,9 +567,27 @@ D:
     test_redup_finds_intent_duplicate_groups()
     test_duplicate_contracts_cli_parity(tmp_path)
     test_find_intent_duplicate_groups_from_blocks()
+  tests/test_language_analyzers.py:
+    e: test_typescript_block_extent_finds_async_function,test_block_extent_uses_typescript_analyzer_for_ts_files,test_csharp_block_extent_finds_method,test_block_extent_uses_csharp_analyzer,test_java_block_extent,test_go_block_extent,test_rust_block_extent,test_block_extent_routes_java_go_rust
+    test_typescript_block_extent_finds_async_function()
+    test_block_extent_uses_typescript_analyzer_for_ts_files()
+    test_csharp_block_extent_finds_method()
+    test_block_extent_uses_csharp_analyzer()
+    test_java_block_extent()
+    test_go_block_extent()
+    test_rust_block_extent()
+    test_block_extent_routes_java_go_rust()
   tests/test_manifest.py:
     e: test_load_manifest_records
     test_load_manifest_records(tmp_path)
+  tests/test_mcp.py:
+    e: test_tool_schema_lists_core_tools,test_initialize_response,test_tools_list_response,test_validate_intent_snippet_handler,test_validate_project_on_full_stack,test_tools_call_routes_handler
+    test_tool_schema_lists_core_tools()
+    test_initialize_response()
+    test_tools_list_response()
+    test_validate_intent_snippet_handler()
+    test_validate_project_on_full_stack()
+    test_tools_call_routes_handler()
   tests/test_new_modules.py:
     e: test_coverage,test_duplicates,test_graph_missing_requirement
     test_coverage(tmp_path)
@@ -468,16 +602,31 @@ D:
     e: test_parse_full_contract_line,test_parse_comment_prefix_ts
     test_parse_full_contract_line()
     test_parse_comment_prefix_ts()
+  tests/test_planfile_adapter.py:
+    e: test_planfile_push_local_only,test_planfile_pull_reads_local_export,test_planfile_webhook_apply_updates_local_status,test_planfile_webhook_emit_delivers
+    test_planfile_push_local_only(tmp_path)
+    test_planfile_pull_reads_local_export(tmp_path)
+    test_planfile_webhook_apply_updates_local_status(tmp_path)
+    test_planfile_webhook_emit_delivers()
   tests/test_policy.py:
     e: test_missing_required_p1_fails_policy,test_full_stack_passes_without_p1_gate
     test_missing_required_p1_fails_policy(tmp_path)
     test_full_stack_passes_without_p1_gate()
+  tests/test_python_ast.py:
+    e: test_python_function_extent_finds_async_def,test_python_block_extent_includes_decorators_and_imports,test_block_extent_uses_ast_for_python_files
+    test_python_function_extent_finds_async_def()
+    test_python_block_extent_includes_decorators_and_imports()
+    test_block_extent_uses_ast_for_python_files()
   tests/test_rule_registry.py:
     e: test_rule_registry_lists_builtin_rules,test_rule_registry_reports_per_rule_status,test_rule_registry_discovers_entry_points,test_custom_rule_can_be_registered
     test_rule_registry_lists_builtin_rules()
     test_rule_registry_reports_per_rule_status()
     test_rule_registry_discovers_entry_points()
     test_custom_rule_can_be_registered()
+  tests/test_scan_artifacts.py:
+    e: test_discover_dockerfile,test_scan_all_artifacts_reports_violation
+    test_discover_dockerfile(tmp_path)
+    test_scan_all_artifacts_reports_violation(tmp_path)
   tests/test_staged_e2e.py:
     e: _git,test_staged_hunk_check_fails_on_network_violation,test_staged_hunk_check_passes_clean_contract
     _git(cwd)
@@ -487,3 +636,8 @@ D:
     e: test_python_contract_passes,test_typescript_contract_detects_network_violation
     test_python_contract_passes()
     test_typescript_contract_detects_network_violation()
+  tests/test_web_app.py:
+    e: test_web_app_v1_overall_pass,test_web_app_v2_has_network_violations,test_web_app_graph_has_no_missing_requires
+    test_web_app_v1_overall_pass()
+    test_web_app_v2_has_network_violations()
+    test_web_app_graph_has_no_missing_requires()

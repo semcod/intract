@@ -33,7 +33,16 @@ python -m intract planfile pull .
 python -m intract planfile sync .
 ```
 
-Zmienne środowiskowe: `PLANFILE_URL`, `PLANFILE_TOKEN`, `PLANFILE_PROJECT`.
+Zmienne środowiskowe: `PLANFILE_URL`, `PLANFILE_TOKEN`, `PLANFILE_PROJECT`, `PLANFILE_WEBHOOK_URL`, `PLANFILE_WEBHOOK_SECRET`.
+
+Webhook:
+
+```bash
+intract planfile webhook-test --url https://hooks.example/intract
+intract planfile webhook-apply . event.json
+```
+
+Outbound events: `tickets.exported`, `tickets.pushed`, `tickets.synced`. Inbound: `ticket.updated` / `tickets.updated` aktualizuje status w `.intract/planfile-tickets.json`.
 
 Pliki:
 

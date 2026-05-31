@@ -105,6 +105,18 @@ def block_extent(source: str, start_line: int, *, file_path: str | None = None) 
             from intract.analyzers.csharp import csharp_block_extent
 
             return csharp_block_extent(source, start_line)
+        if suffix == ".java":
+            from intract.analyzers.java import java_block_extent
+
+            return java_block_extent(source, start_line)
+        if suffix == ".go":
+            from intract.analyzers.go import go_block_extent
+
+            return go_block_extent(source, start_line)
+        if suffix == ".rs":
+            from intract.analyzers.rust import rust_block_extent
+
+            return rust_block_extent(source, start_line)
 
     lines = source.splitlines()
     if start_line < 1 or start_line > len(lines):

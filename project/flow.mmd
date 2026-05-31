@@ -1,34 +1,35 @@
 flowchart TD
-%% generated in 0.01s
+%% generated in 0.02s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
         src__intract__config__IntractConfig__from_mapping["from_mapping"]
-        src__intract__project__extract_signatures_from_sources["extract_signatures_from_source"]
-        src__intract__project__validate_sources{{validate_sources CC=16}}
-        src__intract__project__validate_project["validate_project"]
-        src__intract__coverage__CoverageReport__to_dict["to_dict"]
-        src__intract__graph__ContractGraph__to_dict["to_dict"]
-        src__intract__graph__ContractGraph__to_mermaid["to_mermaid"]
-        src__intract__sdk__ContractBuilder__to_inline["to_inline"]
-        src__intract__sdk__contract["contract"]
-        src__intract__manifest_schema__ManifestValidationReport__to_dict["to_dict"]
-        src__intract__manifest_schema__validate_manifest{{validate_manifest CC=15}}
-        src__intract__duplicates__grouping__DuplicateContract__to_dict["to_dict"]
-        src__intract__duplicates__grouping__IntentDuplicateGroup__to_dict["to_dict"]
-        src__intract__validators__artifacts__ArtifactValidationReport__to_dict["to_dict"]
-        src__intract__validators__input_output__InputPresenceRule__supports["supports"]
-        ...["+86 more"]
+        src__intract__cli__main["main"]
+        src__intract__cli__init["init"]
+        src__intract__cli__scan["scan"]
+        src__intract__cli__validate["validate"]
+        src__intract__cli__check["check"]
+        src__intract__cli__coverage["coverage"]
+        src__intract__cli__duplicates["duplicates"]
+        src__intract__cli__graph["graph"]
+        src__intract__cli__tickets["tickets"]
+        src__intract__cli__planfile_push["planfile_push"]
+        src__intract__cli__planfile_pull["planfile_pull"]
+        src__intract__cli__planfile_sync["planfile_sync"]
+        src__intract__cli__planfile_webhook_test["planfile_webhook_test"]
+        src__intract__cli__planfile_webhook_apply["planfile_webhook_apply"]
+        ...["+117 more"]
     end
 
     subgraph Exporters
+        src__intract__cli___export_tickets["_export_tickets"]
         src__intract__integrations__planfile__PlanfileExporter__export["export"]
         src__intract__integrations__planfile__PlanfileExporter___write_yaml["_write_yaml"]
         src__intract__integrations__planfile__PlanfileExporter___write_json["_write_json"]
         src__intract__integrations__planfile__PlanfileExporter___write_todo["_write_todo"]
-        src__intract__cli___export_tickets["_export_tickets"]
+        src__intract__integrations__planfile_adapter__PlanfileApiAdapter__export_local["export_local"]
     end
 
-    class src__intract__config__IntractConfig__from_mapping,src__intract__coverage__CoverageReport__to_dict,src__intract__graph__ContractGraph__to_dict,src__intract__graph__ContractGraph__to_mermaid,src__intract__sdk__ContractBuilder__to_inline,src__intract__sdk__contract,src__intract__manifest_schema__ManifestValidationReport__to_dict,src__intract__duplicates__grouping__DuplicateContract__to_dict,src__intract__duplicates__grouping__IntentDuplicateGroup__to_dict,src__intract__validators__artifacts__ArtifactValidationReport__to_dict entry
+    class src__intract__config__IntractConfig__from_mapping,src__intract__cli__main,src__intract__cli__init,src__intract__cli__scan,src__intract__cli__validate,src__intract__cli__check,src__intract__cli__coverage,src__intract__cli__duplicates,src__intract__cli__graph,src__intract__cli__tickets entry

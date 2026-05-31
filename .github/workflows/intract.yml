@@ -49,3 +49,17 @@ jobs:
         env:
           VALLM_ROOT: ${{ github.workspace }}/vallm
           REDUP_ROOT: ${{ github.workspace }}/redup
+
+  test-composite-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - uses: ./
+        with:
+          path: examples/full-stack
+          manifest: examples/full-stack/intract.yaml
+          fail-on-error: "true"

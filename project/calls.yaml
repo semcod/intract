@@ -1,58 +1,51 @@
 project: /home/tom/github/semcod/intract
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 144
-  total_edges: 172
-  modules_count: 40
+  total_nodes: 185
+  total_edges: 223
+  modules_count: 54
 nodes:
-  src.intract.engine.assigner.suggest_contracts_for_fragments:
-    name: suggest_contracts_for_fragments
-    module: src.intract.engine.assigner
-    line: 103
-    cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 1
-  src.intract.validators.input_output.OutputPresenceRule.validate:
-    name: validate
-    module: src.intract.validators.input_output
-    line: 45
-    cyclomatic_complexity: 5
-    calls_out: 7
+  src.intract.cli.engine_suggest:
+    name: engine_suggest
+    module: src.intract.cli
+    line: 370
+    cyclomatic_complexity: 3
+    calls_out: 18
     calls_in: 0
-  src.intract.duplicates.scoring.object_similarity:
-    name: object_similarity
-    module: src.intract.duplicates.scoring
+  src.intract.project.validate_project:
+    name: validate_project
+    module: src.intract.project
+    line: 82
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 13
+  src.intract.mcp.handlers._resolve_path:
+    name: _resolve_path
+    module: src.intract.mcp.handlers
+    line: 22
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 5
+  src.intract.parsers.openapi.parse_openapi_contracts:
+    name: parse_openapi_contracts
+    module: src.intract.parsers.openapi
     line: 12
-    cyclomatic_complexity: 2
-    calls_out: 5
+    cyclomatic_complexity: 8
+    calls_out: 16
     calls_in: 1
-  src.intract.engine.drift.detect_drift:
-    name: detect_drift
+  src.intract.engine.drift.hash_text:
+    name: hash_text
     module: src.intract.engine.drift
-    line: 66
-    cyclomatic_complexity: 5
-    calls_out: 12
-    calls_in: 1
-  src.intract.integrations.redup.signatures_from_manifest:
-    name: signatures_from_manifest
-    module: src.intract.integrations.redup
-    line: 89
+    line: 31
     cyclomatic_complexity: 1
     calls_out: 3
-    calls_in: 2
-  src.intract.policy.decide_policy:
-    name: decide_policy
-    module: src.intract.policy
-    line: 35
-    cyclomatic_complexity: 15
-    calls_out: 19
     calls_in: 1
-  src.intract.engine.drift.load_state:
-    name: load_state
-    module: src.intract.engine.drift
-    line: 57
+  src.intract.parsers.inline.marker_payload:
+    name: marker_payload
+    module: src.intract.parsers.inline
+    line: 56
     cyclomatic_complexity: 3
-    calls_out: 6
+    calls_out: 3
     calls_in: 1
   sdks.go.intractsdk.sdk.csv:
     name: csv
@@ -61,34 +54,230 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 1
     calls_in: 1
-  src.intract.duplicates.grouping.pairs_to_intent_groups:
-    name: pairs_to_intent_groups
-    module: src.intract.duplicates.grouping
-    line: 90
-    cyclomatic_complexity: 6
-    calls_out: 16
-    calls_in: 1
-  src.intract.integrations.redup._with_block_lines:
-    name: _with_block_lines
-    module: src.intract.integrations.redup
+  src.intract.cli.check_manifest:
+    name: check_manifest
+    module: src.intract.cli
+    line: 470
+    cyclomatic_complexity: 4
+    calls_out: 12
+    calls_in: 0
+  src.intract.plugins.builtins.ArtifactStructureValidatorPlugin.validate:
+    name: validate
+    module: src.intract.plugins.builtins
     line: 94
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 0
+  src.intract.mcp.handlers.handle_scan_artifacts:
+    name: handle_scan_artifacts
+    module: src.intract.mcp.handlers
+    line: 97
     cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  src.intract.mcp.server.handle_tools_list:
+    name: handle_tools_list
+    module: src.intract.mcp.server
+    line: 26
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  src.intract.analyzers.csharp.csharp_block_extent:
+    name: csharp_block_extent
+    module: src.intract.analyzers.csharp
+    line: 16
+    cyclomatic_complexity: 8
+    calls_out: 8
+    calls_in: 1
+  src.intract.cli._print_validation_report:
+    name: _print_validation_report
+    module: src.intract.cli
+    line: 429
+    cyclomatic_complexity: 4
+    calls_out: 15
+    calls_in: 1
+  src.intract.mcp.handlers.handle_validate_staged:
+    name: handle_validate_staged
+    module: src.intract.mcp.handlers
+    line: 43
+    cyclomatic_complexity: 4
+    calls_out: 11
+    calls_in: 0
+  src.intract.engine.assigner.suggest_contract_for_fragment:
+    name: suggest_contract_for_fragment
+    module: src.intract.engine.assigner
+    line: 68
+    cyclomatic_complexity: 3
+    calls_out: 7
+    calls_in: 1
+  src.intract.validators.artifacts.validate_kubernetes:
+    name: validate_kubernetes
+    module: src.intract.validators.artifacts
+    line: 137
+    cyclomatic_complexity: 8
+    calls_out: 13
+    calls_in: 1
+  src.intract.integrations.redup.block_text:
+    name: block_text
+    module: src.intract.integrations.redup
+    line: 29
+    cyclomatic_complexity: 4
     calls_out: 3
     calls_in: 1
-  src.intract.cli.engine_drift:
-    name: engine_drift
-    module: src.intract.cli
-    line: 275
-    cyclomatic_complexity: 4
-    calls_out: 21
-    calls_in: 0
-  src.intract.engine.analyzer._slice_until_next_match:
-    name: _slice_until_next_match
-    module: src.intract.engine.analyzer
-    line: 34
-    cyclomatic_complexity: 3
+  src.intract.analyzers.blocks.block_extent_from_patterns:
+    name: block_extent_from_patterns
+    module: src.intract.analyzers.blocks
+    line: 27
+    cyclomatic_complexity: 7
+    calls_out: 7
+    calls_in: 4
+  src.intract.check.signature_touched:
+    name: signature_touched
+    module: src.intract.check
+    line: 159
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  sdks.rust.src.csv:
+    name: csv
+    module: sdks.rust.src
+    line: 16
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.intract.validators.requirements.validate_required_contracts:
+    name: validate_required_contracts
+    module: src.intract.validators.requirements
+    line: 6
+    cyclomatic_complexity: 6
     calls_out: 2
     calls_in: 1
+  src.intract.parsers.manifest.contract_from_mapping:
+    name: contract_from_mapping
+    module: src.intract.parsers.manifest
+    line: 33
+    cyclomatic_complexity: 3
+    calls_out: 59
+    calls_in: 4
+  sdks.typescript.src.inlineContract:
+    name: inlineContract
+    module: sdks.typescript.src
+    line: 20
+    cyclomatic_complexity: 10
+    calls_out: 3
+    calls_in: 0
+  src.intract.validators.input_output.has_return_value:
+    name: has_return_value
+    module: src.intract.validators.input_output
+    line: 21
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.intract.analyzers.go.go_block_extent:
+    name: go_block_extent
+    module: src.intract.analyzers.go
+    line: 12
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.intract.analyzers.treesitter.typescript_function_extent:
+    name: typescript_function_extent
+    module: src.intract.analyzers.treesitter
+    line: 47
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.intract.parsers.manifest.load_manifest_records:
+    name: load_manifest_records
+    module: src.intract.parsers.manifest
+    line: 60
+    cyclomatic_complexity: 11
+    calls_out: 19
+    calls_in: 7
+  src.intract.duplicates.grouping.find_duplicate_contracts:
+    name: find_duplicate_contracts
+    module: src.intract.duplicates.grouping
+    line: 131
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 2
+  src.intract.integrations.vallm.validate_for_vallm:
+    name: validate_for_vallm
+    module: src.intract.integrations.vallm
+    line: 78
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  src.intract.project.extract_signatures_from_sources:
+    name: extract_signatures_from_sources
+    module: src.intract.project
+    line: 40
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 4
+  src.intract.duplicates.scoring.object_similarity:
+    name: object_similarity
+    module: src.intract.duplicates.scoring
+    line: 12
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 1
+  src.intract.analyzers.typescript._treesitter_typescript_extent:
+    name: _treesitter_typescript_extent
+    module: src.intract.analyzers.typescript
+    line: 61
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  src.intract.scan_artifacts.discover_artifact_paths:
+    name: discover_artifact_paths
+    module: src.intract.scan_artifacts
+    line: 42
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 1
+  src.intract.cli.coverage:
+    name: coverage
+    module: src.intract.cli
+    line: 183
+    cyclomatic_complexity: 2
+    calls_out: 12
+    calls_in: 0
+  src.intract.validators.input_output.ReturnValueRule.validate:
+    name: validate
+    module: src.intract.validators.input_output
+    line: 59
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 0
+  src.intract.cli.init:
+    name: init
+    module: src.intract.cli
+    line: 41
+    cyclomatic_complexity: 3
+    calls_out: 10
+    calls_in: 0
+  src.intract.watch.snapshot_tree:
+    name: snapshot_tree
+    module: src.intract.watch
+    line: 77
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 5
+  src.intract.watch.hash_file:
+    name: hash_file
+    module: src.intract.watch
+    line: 47
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 1
+  src.intract.mcp.handlers._resolve_manifest:
+    name: _resolve_manifest
+    module: src.intract.mcp.handlers
+    line: 26
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 3
   src.intract.core.normalizer.normalize_many:
     name: normalize_many
     module: src.intract.core.normalizer
@@ -96,12 +285,19 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 4
     calls_in: 8
-  src.intract.parsers.inline.marker_payload:
-    name: marker_payload
-    module: src.intract.parsers.inline
-    line: 56
-    cyclomatic_complexity: 3
-    calls_out: 3
+  src.intract.mcp.handlers.handle_validate_intent_snippet:
+    name: handle_validate_intent_snippet
+    module: src.intract.mcp.handlers
+    line: 73
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 0
+  src.intract.analyzers.python_ast.python_block_extent:
+    name: python_block_extent
+    module: src.intract.analyzers.python_ast
+    line: 35
+    cyclomatic_complexity: 14
+    calls_out: 11
     calls_in: 1
   src.intract.watch.should_scan:
     name: should_scan
@@ -110,27 +306,83 @@ nodes:
     cyclomatic_complexity: 10
     calls_out: 8
     calls_in: 1
-  src.intract.integrations.vallm.map_project_report:
-    name: map_project_report
-    module: src.intract.integrations.vallm
-    line: 56
+  src.intract.analyzers.rust.rust_block_extent:
+    name: rust_block_extent
+    module: src.intract.analyzers.rust
+    line: 14
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.intract.policy.decide_policy:
+    name: decide_policy
+    module: src.intract.policy
+    line: 35
+    cyclomatic_complexity: 15
+    calls_out: 19
+    calls_in: 2
+  src.intract.validators.input_output.contains_token_like:
+    name: contains_token_like
+    module: src.intract.validators.input_output
+    line: 10
     cyclomatic_complexity: 7
+    calls_out: 5
+    calls_in: 2
+  src.intract.validators.artifacts.validate_github_actions:
+    name: validate_github_actions
+    module: src.intract.validators.artifacts
+    line: 98
+    cyclomatic_complexity: 8
+    calls_out: 12
+    calls_in: 1
+  src.intract.engine.drift.state_from_fragments:
+    name: state_from_fragments
+    module: src.intract.engine.drift
+    line: 35
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  src.intract.parsers.inline.clean_comment_line:
+    name: clean_comment_line
+    module: src.intract.parsers.inline
+    line: 11
+    cyclomatic_complexity: 8
+    calls_out: 14
+    calls_in: 1
+  src.intract.check.parse_unified_diff_hunks:
+    name: parse_unified_diff_hunks
+    module: src.intract.check
+    line: 32
+    cyclomatic_complexity: 6
+    calls_out: 16
+    calls_in: 1
+  src.intract.core.signatures.build_signatures:
+    name: build_signatures
+    module: src.intract.core.signatures
+    line: 77
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 11
+  src.intract.check.load_selected_sources:
+    name: load_selected_sources
+    module: src.intract.check
+    line: 59
+    cyclomatic_complexity: 5
+    calls_out: 4
+    calls_in: 2
+  src.intract.integrations.redup.block_start_line:
+    name: block_start_line
+    module: src.intract.integrations.redup
+    line: 42
+    cyclomatic_complexity: 3
     calls_out: 3
     calls_in: 2
-  src.intract.core.artifact.Artifact.from_path:
-    name: from_path
-    module: src.intract.core.artifact
-    line: 33
-    cyclomatic_complexity: 2
-    calls_out: 8
+  src.intract.graph.ContractGraph.to_mermaid:
+    name: to_mermaid
+    module: src.intract.graph
+    line: 21
+    cyclomatic_complexity: 5
+    calls_out: 9
     calls_in: 0
-  src.intract.parsers.inline.parse_key_value:
-    name: parse_key_value
-    module: src.intract.parsers.inline
-    line: 49
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 1
   src.intract.core.normalizer.normalize_label:
     name: normalize_label
     module: src.intract.core.normalizer
@@ -138,6 +390,83 @@ nodes:
     cyclomatic_complexity: 7
     calls_out: 16
     calls_in: 11
+  src.intract.watch.watch_tree:
+    name: watch_tree
+    module: src.intract.watch
+    line: 127
+    cyclomatic_complexity: 7
+    calls_out: 10
+    calls_in: 1
+  src.intract.manifest_schema._load_schema:
+    name: _load_schema
+    module: src.intract.manifest_schema
+    line: 31
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 1
+  src.intract.check.changed_lines_by_file:
+    name: changed_lines_by_file
+    module: src.intract.check
+    line: 82
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  src.intract.duplicates.scoring.score_similarity:
+    name: score_similarity
+    module: src.intract.duplicates.scoring
+    line: 18
+    cyclomatic_complexity: 5
+    calls_out: 14
+    calls_in: 1
+  src.intract.core.signatures.build_signature:
+    name: build_signature
+    module: src.intract.core.signatures
+    line: 14
+    cyclomatic_complexity: 15
+    calls_out: 40
+    calls_in: 3
+  src.intract.validators.effects.detect_effects:
+    name: detect_effects
+    module: src.intract.validators.effects
+    line: 15
+    cyclomatic_complexity: 9
+    calls_out: 13
+    calls_in: 1
+  src.intract.core.artifact.infer_artifact_kind:
+    name: infer_artifact_kind
+    module: src.intract.core.artifact
+    line: 67
+    cyclomatic_complexity: 17
+    calls_out: 8
+    calls_in: 3
+  extensions.vscode-intract.extension.runIntract:
+    name: runIntract
+    module: extensions.vscode-intract.extension
+    line: 3
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 1
+  src.intract.engine.assigner._infer_object:
+    name: _infer_object
+    module: src.intract.engine.assigner
+    line: 41
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 1
+  src.intract.check.staged_check:
+    name: staged_check
+    module: src.intract.check
+    line: 246
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 2
+  src.intract.analyzers.typescript.typescript_block_extent:
+    name: typescript_block_extent
+    module: src.intract.analyzers.typescript
+    line: 15
+    cyclomatic_complexity: 7
+    calls_out: 7
+    calls_in: 1
   src.intract.integrations.redup.signatures_from_blocks:
     name: signatures_from_blocks
     module: src.intract.integrations.redup
@@ -145,48 +474,27 @@ nodes:
     cyclomatic_complexity: 5
     calls_out: 6
     calls_in: 2
-  examples.integration_tests.run_examples.print_result:
-    name: print_result
+  src.intract.cli.graph:
+    name: graph
+    module: src.intract.cli
+    line: 218
+    cyclomatic_complexity: 5
+    calls_out: 16
+    calls_in: 0
+  src.intract.cli.planfile_push:
+    name: planfile_push
+    module: src.intract.cli
+    line: 247
+    cyclomatic_complexity: 1
+    calls_out: 14
+    calls_in: 0
+  examples.integration_tests.run_examples.main:
+    name: main
     module: examples.integration_tests.run_examples
-    line: 20
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  sdks.rust.src.inline_contract:
-    name: inline_contract
-    module: sdks.rust.src
-    line: 20
-    cyclomatic_complexity: 10
-    calls_out: 6
+    line: 79
+    cyclomatic_complexity: 7
+    calls_out: 8
     calls_in: 0
-  sdks.go.intractsdk.sdk.Inline:
-    name: Inline
-    module: sdks.go.intractsdk.sdk
-    line: 26
-    cyclomatic_complexity: 11
-    calls_out: 5
-    calls_in: 0
-  sdks.typescript.src.inlineContract:
-    name: inlineContract
-    module: sdks.typescript.src
-    line: 20
-    cyclomatic_complexity: 10
-    calls_out: 3
-    calls_in: 0
-  src.intract.engine.drift.hash_text:
-    name: hash_text
-    module: src.intract.engine.drift
-    line: 31
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  src.intract.core.artifact.infer_language:
-    name: infer_language
-    module: src.intract.core.artifact
-    line: 44
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 2
   src.intract.graph._safe:
     name: _safe
     module: src.intract.graph
@@ -194,53 +502,165 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 2
     calls_in: 4
-  src.intract.parsers.inline.extract_contract_records_from_text:
-    name: extract_contract_records_from_text
-    module: src.intract.parsers.inline
-    line: 181
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 8
-  src.intract.parsers.inline.parse_priority:
-    name: parse_priority
-    module: src.intract.parsers.inline
-    line: 38
-    cyclomatic_complexity: 5
-    calls_out: 9
+  src.intract.project.load_project_sources:
+    name: load_project_sources
+    module: src.intract.project
+    line: 18
+    cyclomatic_complexity: 9
+    calls_out: 8
+    calls_in: 4
+  src.intract.plugins.builtins.ManifestParserPlugin.parse:
+    name: parse
+    module: src.intract.plugins.builtins
+    line: 47
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  examples.integration_tests.run_examples.run_example_03:
+    name: run_example_03
+    module: examples.integration_tests.run_examples
+    line: 50
+    cyclomatic_complexity: 2
+    calls_out: 17
     calls_in: 1
+  src.intract.validators.registry.get_rule_registry:
+    name: get_rule_registry
+    module: src.intract.validators.registry
+    line: 74
+    cyclomatic_complexity: 6
+    calls_out: 6
+    calls_in: 1
+  src.intract.integrations.vallm.map_validation_result:
+    name: map_validation_result
+    module: src.intract.integrations.vallm
+    line: 32
+    cyclomatic_complexity: 6
+    calls_out: 4
+    calls_in: 1
+  sdks.typescript.src.csv:
+    name: csv
+    module: sdks.typescript.src
+    line: 15
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  src.intract.plugins.manager._register_unique:
+    name: _register_unique
+    module: src.intract.plugins.manager
+    line: 16
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 10
+  src.intract.parsers.openapi.parse_openapi_text:
+    name: parse_openapi_text
+    module: src.intract.parsers.openapi
+    line: 39
+    cyclomatic_complexity: 8
+    calls_out: 14
+    calls_in: 1
+  src.intract.validators.input_output.OutputPresenceRule.validate:
+    name: validate
+    module: src.intract.validators.input_output
+    line: 45
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 0
+  src.intract.project.validate_sources:
+    name: validate_sources
+    module: src.intract.project
+    line: 47
+    cyclomatic_complexity: 16
+    calls_out: 15
+    calls_in: 2
+  src.intract.integrations.planfile.tickets_from_report:
+    name: tickets_from_report
+    module: src.intract.integrations.planfile
+    line: 34
+    cyclomatic_complexity: 11
+    calls_out: 21
+    calls_in: 3
+  src.intract.analyzers.java.java_block_extent:
+    name: java_block_extent
+    module: src.intract.analyzers.java
+    line: 17
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 1
+  src.intract.integrations.planfile_adapter.PlanfileApiAdapter.pull:
+    name: pull
+    module: src.intract.integrations.planfile_adapter
+    line: 108
+    cyclomatic_complexity: 7
+    calls_out: 10
+    calls_in: 0
+  src.intract.watch.diff_snapshots:
+    name: diff_snapshots
+    module: src.intract.watch
+    line: 98
+    cyclomatic_complexity: 5
+    calls_out: 11
+    calls_in: 3
+  src.intract.duplicates.matcher.find_intent_pairs:
+    name: find_intent_pairs
+    module: src.intract.duplicates.matcher
+    line: 23
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 2
+  src.intract.duplicates.scoring.jaccard:
+    name: jaccard
+    module: src.intract.duplicates.scoring
+    line: 4
+    cyclomatic_complexity: 5
+    calls_out: 2
+    calls_in: 5
   src.intract.cli.duplicates:
     name: duplicates
     module: src.intract.cli
-    line: 174
+    line: 196
     cyclomatic_complexity: 4
     calls_out: 17
     calls_in: 0
-  src.intract.validators.base.merge_rule_results:
-    name: merge_rule_results
-    module: src.intract.validators.base
+  src.intract.mcp.server.handle_tools_call:
+    name: handle_tools_call
+    module: src.intract.mcp.server
     line: 38
-    cyclomatic_complexity: 2
-    calls_out: 4
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 1
+  src.intract.core.normalizer.normalize_requirement:
+    name: normalize_requirement
+    module: src.intract.core.normalizer
+    line: 60
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 3
+  src.intract.engine.analyzer._slice_until_next_match:
+    name: _slice_until_next_match
+    module: src.intract.engine.analyzer
+    line: 34
+    cyclomatic_complexity: 3
+    calls_out: 2
     calls_in: 1
   src.intract.check.validate_selected_paths:
     name: validate_selected_paths
     module: src.intract.check
-    line: 186
+    line: 213
     cyclomatic_complexity: 8
     calls_out: 10
     calls_in: 3
-  src.intract.parsers.openapi.parse_openapi_contracts:
-    name: parse_openapi_contracts
-    module: src.intract.parsers.openapi
-    line: 12
-    cyclomatic_complexity: 8
-    calls_out: 16
-    calls_in: 1
-  src.intract.plugins.builtins.BasicContractValidatorPlugin.validate:
-    name: validate
-    module: src.intract.plugins.builtins
-    line: 73
-    cyclomatic_complexity: 3
+  extensions.vscode-intract.extension.activate:
+    name: activate
+    module: extensions.vscode-intract.extension
+    line: 11
+    cyclomatic_complexity: 7
+    calls_out: 5
+    calls_in: 0
+  src.intract.mcp.handlers.handle_validate_project:
+    name: handle_validate_project
+    module: src.intract.mcp.handlers
+    line: 36
+    cyclomatic_complexity: 1
     calls_out: 5
     calls_in: 0
   src.intract.engine.assigner._split_name:
@@ -250,89 +670,19 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 3
     calls_in: 2
-  src.intract.git._run_git:
-    name: _run_git
-    module: src.intract.git
-    line: 14
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 3
-  src.intract.parsers.manifest.create_sample_manifest:
-    name: create_sample_manifest
-    module: src.intract.parsers.manifest
-    line: 77
+  src.intract.integrations.redup.signatures_from_manifest:
+    name: signatures_from_manifest
+    module: src.intract.integrations.redup
+    line: 89
     cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 1
-  src.intract.git.staged_hunks:
-    name: staged_hunks
-    module: src.intract.git
-    line: 45
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  src.intract.project.validate_sources:
-    name: validate_sources
-    module: src.intract.project
-    line: 39
-    cyclomatic_complexity: 16
-    calls_out: 15
+    calls_out: 3
     calls_in: 2
-  src.intract.core.artifact.infer_artifact_kind:
-    name: infer_artifact_kind
-    module: src.intract.core.artifact
-    line: 67
-    cyclomatic_complexity: 17
-    calls_out: 8
-    calls_in: 1
-  src.intract.check.changed_check:
-    name: changed_check
-    module: src.intract.check
-    line: 241
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 1
-  src.intract.cli.artifact_validate:
-    name: artifact_validate
-    module: src.intract.cli
-    line: 380
-    cyclomatic_complexity: 4
-    calls_out: 11
-    calls_in: 0
-  src.intract.engine.drift.save_state:
-    name: save_state
-    module: src.intract.engine.drift
-    line: 50
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 1
-  src.intract.integrations.vallm.validate_for_vallm:
-    name: validate_for_vallm
-    module: src.intract.integrations.vallm
-    line: 78
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 0
-  src.intract.plugins.builtins.InlineContractParserPlugin.parse:
-    name: parse
-    module: src.intract.plugins.builtins
-    line: 19
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  src.intract.parsers.inline.clean_comment_line:
-    name: clean_comment_line
-    module: src.intract.parsers.inline
-    line: 11
-    cyclomatic_complexity: 8
-    calls_out: 14
-    calls_in: 1
-  src.intract.duplicates.grouping.pairs_to_duplicate_contracts:
-    name: pairs_to_duplicate_contracts
-    module: src.intract.duplicates.grouping
-    line: 66
+  src.intract.analyzers.python_ast._decorator_lines:
+    name: _decorator_lines
+    module: src.intract.analyzers.python_ast
+    line: 7
     cyclomatic_complexity: 3
-    calls_out: 6
+    calls_out: 2
     calls_in: 1
   src.intract.policy._p1_missing_reasons:
     name: _p1_missing_reasons
@@ -341,90 +691,41 @@ nodes:
     cyclomatic_complexity: 7
     calls_out: 6
     calls_in: 1
-  src.intract.graph.build_graph:
-    name: build_graph
-    module: src.intract.graph
-    line: 39
-    cyclomatic_complexity: 9
-    calls_out: 18
-    calls_in: 2
-  src.intract.engine.analyzer._line_number:
-    name: _line_number
-    module: src.intract.engine.analyzer
-    line: 25
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 2
-  src.intract.check.changed_lines_by_file:
-    name: changed_lines_by_file
-    module: src.intract.check
-    line: 82
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 1
-  src.intract.git.paths_from_changes:
-    name: paths_from_changes
-    module: src.intract.git
-    line: 52
+  src.intract.mcp.handlers.handle_find_duplicates:
+    name: handle_find_duplicates
+    module: src.intract.mcp.handlers
+    line: 78
     cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  src.intract.cli._print_validation_report:
-    name: _print_validation_report
-    module: src.intract.cli
-    line: 317
-    cyclomatic_complexity: 4
-    calls_out: 15
-    calls_in: 1
-  src.intract.check.signature_touched:
-    name: signature_touched
-    module: src.intract.check
-    line: 132
+    calls_out: 7
+    calls_in: 0
+  src.intract.engine.drift.save_state:
+    name: save_state
+    module: src.intract.engine.drift
+    line: 50
     cyclomatic_complexity: 2
-    calls_out: 4
+    calls_out: 7
     calls_in: 1
-  src.intract.validators.input_output.has_return_value:
-    name: has_return_value
-    module: src.intract.validators.input_output
-    line: 21
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.intract.validators.effects.detect_effects:
-    name: detect_effects
-    module: src.intract.validators.effects
-    line: 15
-    cyclomatic_complexity: 9
-    calls_out: 13
-    calls_in: 1
-  src.intract.integrations.redup.block_file_path:
-    name: block_file_path
-    module: src.intract.integrations.redup
-    line: 38
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  examples.integration_tests.run_examples.run_example_02:
-    name: run_example_02
-    module: examples.integration_tests.run_examples
-    line: 36
+  src.intract.parsers.inline.parse_key_value:
+    name: parse_key_value
+    module: src.intract.parsers.inline
+    line: 49
     cyclomatic_complexity: 2
-    calls_out: 10
+    calls_out: 5
     calls_in: 1
-  src.intract.engine.monitor.scan_suggest_and_validate:
-    name: scan_suggest_and_validate
-    module: src.intract.engine.monitor
-    line: 15
-    cyclomatic_complexity: 4
-    calls_out: 10
-    calls_in: 4
-  src.intract.duplicates.scoring.jaccard:
-    name: jaccard
-    module: src.intract.duplicates.scoring
-    line: 4
-    cyclomatic_complexity: 5
-    calls_out: 2
-    calls_in: 5
+  src.intract.integrations.vallm.validate_proposal:
+    name: validate_proposal
+    module: src.intract.integrations.vallm
+    line: 87
+    cyclomatic_complexity: 12
+    calls_out: 9
+    calls_in: 1
+  sdks.go.intractsdk.sdk.Inline:
+    name: Inline
+    module: sdks.go.intractsdk.sdk
+    line: 26
+    cyclomatic_complexity: 11
+    calls_out: 5
+    calls_in: 0
   src.intract.validators.artifacts.validate_dockerfile:
     name: validate_dockerfile
     module: src.intract.validators.artifacts
@@ -432,104 +733,6 @@ nodes:
     cyclomatic_complexity: 6
     calls_out: 14
     calls_in: 1
-  src.intract.validators.effects.NoForbiddenEffectRule.validate:
-    name: validate
-    module: src.intract.validators.effects
-    line: 34
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 0
-  src.intract.integrations.planfile.tickets_from_report:
-    name: tickets_from_report
-    module: src.intract.integrations.planfile
-    line: 34
-    cyclomatic_complexity: 11
-    calls_out: 21
-    calls_in: 2
-  src.intract.cli.engine_run:
-    name: engine_run
-    module: src.intract.cli
-    line: 295
-    cyclomatic_complexity: 4
-    calls_out: 20
-    calls_in: 0
-  src.intract.integrations.redup.block_end_line:
-    name: block_end_line
-    module: src.intract.integrations.redup
-    line: 46
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.intract.cli.validate:
-    name: validate
-    module: src.intract.cli
-    line: 84
-    cyclomatic_complexity: 3
-    calls_out: 12
-    calls_in: 0
-  src.intract.coverage.calculate_coverage:
-    name: calculate_coverage
-    module: src.intract.coverage
-    line: 21
-    cyclomatic_complexity: 3
-    calls_out: 14
-    calls_in: 1
-  src.intract.plugins.builtins.ManifestParserPlugin.parse:
-    name: parse
-    module: src.intract.plugins.builtins
-    line: 47
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 0
-  src.intract.duplicates.grouping.union_find_groups:
-    name: union_find_groups
-    module: src.intract.duplicates.grouping
-    line: 41
-    cyclomatic_complexity: 5
-    calls_out: 10
-    calls_in: 1
-  examples.integration_tests.run_examples.main:
-    name: main
-    module: examples.integration_tests.run_examples
-    line: 79
-    cyclomatic_complexity: 7
-    calls_out: 8
-    calls_in: 0
-  src.intract.integrations.redup.scan_blocks_for_intent_duplicates:
-    name: scan_blocks_for_intent_duplicates
-    module: src.intract.integrations.redup
-    line: 159
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  src.intract.duplicates.scoring.score_similarity:
-    name: score_similarity
-    module: src.intract.duplicates.scoring
-    line: 18
-    cyclomatic_complexity: 5
-    calls_out: 14
-    calls_in: 1
-  src.intract.validators.requirements.validate_required_contracts:
-    name: validate_required_contracts
-    module: src.intract.validators.requirements
-    line: 6
-    cyclomatic_complexity: 6
-    calls_out: 2
-    calls_in: 1
-  src.intract.parsers.inline.parse_contract_line:
-    name: parse_contract_line
-    module: src.intract.parsers.inline
-    line: 64
-    cyclomatic_complexity: 42
-    calls_out: 51
-    calls_in: 1
-  src.intract.parsers.manifest.load_manifest_records:
-    name: load_manifest_records
-    module: src.intract.parsers.manifest
-    line: 60
-    cyclomatic_complexity: 11
-    calls_out: 19
-    calls_in: 7
   src.intract.engine.analyzer.analyze_source_units:
     name: analyze_source_units
     module: src.intract.engine.analyzer
@@ -537,41 +740,13 @@ nodes:
     cyclomatic_complexity: 12
     calls_out: 17
     calls_in: 1
-  src.intract.validators.artifacts.validate_kubernetes:
-    name: validate_kubernetes
-    module: src.intract.validators.artifacts
-    line: 137
-    cyclomatic_complexity: 8
-    calls_out: 13
-    calls_in: 1
-  src.intract.check.load_selected_sources:
-    name: load_selected_sources
-    module: src.intract.check
-    line: 59
-    cyclomatic_complexity: 5
-    calls_out: 4
-    calls_in: 2
-  src.intract.check.parse_unified_diff_hunks:
-    name: parse_unified_diff_hunks
-    module: src.intract.check
-    line: 32
-    cyclomatic_complexity: 6
-    calls_out: 16
-    calls_in: 1
-  src.intract.project.extract_signatures_from_sources:
-    name: extract_signatures_from_sources
-    module: src.intract.project
-    line: 32
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 4
-  src.intract.validators.artifacts.validate_openapi:
-    name: validate_openapi
-    module: src.intract.validators.artifacts
-    line: 26
-    cyclomatic_complexity: 9
-    calls_out: 16
-    calls_in: 1
+  src.intract.cli.tickets:
+    name: tickets
+    module: src.intract.cli
+    line: 239
+    cyclomatic_complexity: 1
+    calls_out: 7
+    calls_in: 0
   src.intract.core.normalizer.normalize_action:
     name: normalize_action
     module: src.intract.core.normalizer
@@ -579,167 +754,6 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 3
     calls_in: 2
-  src.intract.git.changed_files:
-    name: changed_files
-    module: src.intract.git
-    line: 33
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 1
-  sdks.rust.src.csv:
-    name: csv
-    module: sdks.rust.src
-    line: 16
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  src.intract.check.staged_check:
-    name: staged_check
-    module: src.intract.check
-    line: 219
-    cyclomatic_complexity: 4
-    calls_out: 8
-    calls_in: 1
-  src.intract.cli.tickets:
-    name: tickets
-    module: src.intract.cli
-    line: 217
-    cyclomatic_complexity: 1
-    calls_out: 7
-    calls_in: 0
-  src.intract.engine.assigner._infer_effects:
-    name: _infer_effects
-    module: src.intract.engine.assigner
-    line: 47
-    cyclomatic_complexity: 8
-    calls_out: 8
-    calls_in: 1
-  src.intract.duplicates.matcher.bucket_signatures:
-    name: bucket_signatures
-    module: src.intract.duplicates.matcher
-    line: 16
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  src.intract.validators.artifacts.validate_github_actions:
-    name: validate_github_actions
-    module: src.intract.validators.artifacts
-    line: 98
-    cyclomatic_complexity: 8
-    calls_out: 12
-    calls_in: 1
-  src.intract.cli.check_manifest:
-    name: check_manifest
-    module: src.intract.cli
-    line: 358
-    cyclomatic_complexity: 4
-    calls_out: 12
-    calls_in: 0
-  examples.integration_tests.run_examples.run_example_03:
-    name: run_example_03
-    module: examples.integration_tests.run_examples
-    line: 50
-    cyclomatic_complexity: 2
-    calls_out: 17
-    calls_in: 1
-  src.intract.watch.watch_tree:
-    name: watch_tree
-    module: src.intract.watch
-    line: 127
-    cyclomatic_complexity: 7
-    calls_out: 10
-    calls_in: 1
-  src.intract.engine.scanner.collect_source_units:
-    name: collect_source_units
-    module: src.intract.engine.scanner
-    line: 20
-    cyclomatic_complexity: 9
-    calls_out: 14
-    calls_in: 1
-  src.intract.validators.input_output.ReturnValueRule.validate:
-    name: validate
-    module: src.intract.validators.input_output
-    line: 59
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 0
-  src.intract.engine.drift.state_from_fragments:
-    name: state_from_fragments
-    module: src.intract.engine.drift
-    line: 35
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 2
-  src.intract.validators.artifacts.validate_artifact:
-    name: validate_artifact
-    module: src.intract.validators.artifacts
-    line: 167
-    cyclomatic_complexity: 9
-    calls_out: 17
-    calls_in: 2
-  src.intract.integrations.vallm.validate_proposal:
-    name: validate_proposal
-    module: src.intract.integrations.vallm
-    line: 87
-    cyclomatic_complexity: 12
-    calls_out: 9
-    calls_in: 0
-  src.intract.engine.assigner._infer_action:
-    name: _infer_action
-    module: src.intract.engine.assigner
-    line: 24
-    cyclomatic_complexity: 10
-    calls_out: 5
-    calls_in: 1
-  src.intract.plugins.manager._register_unique:
-    name: _register_unique
-    module: src.intract.plugins.manager
-    line: 16
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 10
-  src.intract.validators.engine.validate_contract_against_source:
-    name: validate_contract_against_source
-    module: src.intract.validators.engine
-    line: 13
-    cyclomatic_complexity: 8
-    calls_out: 14
-    calls_in: 5
-  src.intract.core.signatures.build_signatures:
-    name: build_signatures
-    module: src.intract.core.signatures
-    line: 77
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 11
-  src.intract.cli.init:
-    name: init
-    module: src.intract.cli
-    line: 39
-    cyclomatic_complexity: 3
-    calls_out: 10
-    calls_in: 0
-  src.intract.engine.assigner.suggest_contract_for_fragment:
-    name: suggest_contract_for_fragment
-    module: src.intract.engine.assigner
-    line: 68
-    cyclomatic_complexity: 3
-    calls_out: 7
-    calls_in: 1
-  src.intract.manifest_schema._load_schema:
-    name: _load_schema
-    module: src.intract.manifest_schema
-    line: 31
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 1
-  src.intract.git.staged_files:
-    name: staged_files
-    module: src.intract.git
-    line: 21
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 1
   sdks.java.src.main.java.io.intract.sdk.IntractContract.IntractContract.join:
     name: join
     module: sdks.java.src.main.java.io.intract.sdk.IntractContract
@@ -747,25 +761,116 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 3
     calls_in: 1
-  src.intract.cli.graph:
-    name: graph
-    module: src.intract.cli
-    line: 196
-    cyclomatic_complexity: 5
-    calls_out: 16
+  src.intract.integrations.planfile_adapter._ticket_from_dict:
+    name: _ticket_from_dict
+    module: src.intract.integrations.planfile_adapter
+    line: 236
+    cyclomatic_complexity: 2
+    calls_out: 21
+    calls_in: 2
+  src.intract.plugins.builtins.BasicContractValidatorPlugin.validate:
+    name: validate
+    module: src.intract.plugins.builtins
+    line: 73
+    cyclomatic_complexity: 3
+    calls_out: 5
     calls_in: 0
-  src.intract.integrations.redup.find_intent_duplicate_groups:
-    name: find_intent_duplicate_groups
-    module: src.intract.integrations.redup
-    line: 104
-    cyclomatic_complexity: 8
-    calls_out: 10
+  src.intract.engine.drift.detect_drift:
+    name: detect_drift
+    module: src.intract.engine.drift
+    line: 66
+    cyclomatic_complexity: 5
+    calls_out: 12
     calls_in: 1
-  sdks.java.src.main.java.io.intract.sdk.IntractContract.IntractContract.inline:
-    name: inline
-    module: sdks.java.src.main.java.io.intract.sdk.IntractContract
-    line: 20
-    cyclomatic_complexity: 11
+  src.intract.validators.artifacts.validate_artifact:
+    name: validate_artifact
+    module: src.intract.validators.artifacts
+    line: 167
+    cyclomatic_complexity: 9
+    calls_out: 17
+    calls_in: 3
+  src.intract.git.staged_files:
+    name: staged_files
+    module: src.intract.git
+    line: 21
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 1
+  src.intract.validators.artifacts.validate_openapi:
+    name: validate_openapi
+    module: src.intract.validators.artifacts
+    line: 26
+    cyclomatic_complexity: 9
+    calls_out: 16
+    calls_in: 1
+  src.intract.analyzers.treesitter.csharp_method_extent:
+    name: csharp_method_extent
+    module: src.intract.analyzers.treesitter
+    line: 56
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.intract.plugins.manager.load_builtin_plugins:
+    name: load_builtin_plugins
+    module: src.intract.plugins.manager
+    line: 24
+    cyclomatic_complexity: 1
+    calls_out: 13
+    calls_in: 1
+  src.intract.cli.planfile_sync:
+    name: planfile_sync
+    module: src.intract.cli
+    line: 288
+    cyclomatic_complexity: 1
+    calls_out: 13
+    calls_in: 0
+  src.intract.integrations.vallm.map_project_report:
+    name: map_project_report
+    module: src.intract.integrations.vallm
+    line: 56
+    cyclomatic_complexity: 7
+    calls_out: 3
+    calls_in: 2
+  src.intract.duplicates.grouping.pairs_to_duplicate_contracts:
+    name: pairs_to_duplicate_contracts
+    module: src.intract.duplicates.grouping
+    line: 66
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 1
+  src.intract.analyzers.python_ast.python_function_extent:
+    name: python_function_extent
+    module: src.intract.analyzers.python_ast
+    line: 13
+    cyclomatic_complexity: 8
+    calls_out: 8
+    calls_in: 1
+  src.intract.core.artifact.Artifact.from_path:
+    name: from_path
+    module: src.intract.core.artifact
+    line: 33
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 0
+  src.intract.parsers.inline.parse_contract_line:
+    name: parse_contract_line
+    module: src.intract.parsers.inline
+    line: 64
+    cyclomatic_complexity: 42
+    calls_out: 51
+    calls_in: 1
+  src.intract.plugins.builtins.OpenAPIParserPlugin.parse:
+    name: parse
+    module: src.intract.plugins.builtins
+    line: 35
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  src.intract.integrations.redup.scan_blocks_for_intent_duplicates:
+    name: scan_blocks_for_intent_duplicates
+    module: src.intract.integrations.redup
+    line: 159
+    cyclomatic_complexity: 2
     calls_out: 4
     calls_in: 0
   src.intract.plugins.manager.discover_plugins:
@@ -775,19 +880,159 @@ nodes:
     cyclomatic_complexity: 6
     calls_out: 15
     calls_in: 0
-  src.intract.integrations.vallm.map_validation_result:
-    name: map_validation_result
-    module: src.intract.integrations.vallm
-    line: 32
-    cyclomatic_complexity: 6
+  src.intract.parsers.manifest._parse_intent:
+    name: _parse_intent
+    module: src.intract.parsers.manifest
+    line: 23
+    cyclomatic_complexity: 3
+    calls_out: 7
+    calls_in: 1
+  examples.integration_tests.run_examples.run_example_01:
+    name: run_example_01
+    module: examples.integration_tests.run_examples
+    line: 25
+    cyclomatic_complexity: 1
     calls_out: 4
     calls_in: 1
-  src.intract.validators.registry.get_rule_registry:
-    name: get_rule_registry
-    module: src.intract.validators.registry
-    line: 74
-    cyclomatic_complexity: 6
+  src.intract.analyzers.blocks.scan_braced_block:
+    name: scan_braced_block
+    module: src.intract.analyzers.blocks
+    line: 6
+    cyclomatic_complexity: 8
+    calls_out: 2
+    calls_in: 1
+  src.intract.analyzers.csharp._treesitter_csharp_extent:
+    name: _treesitter_csharp_extent
+    module: src.intract.analyzers.csharp
+    line: 60
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  src.intract.git.staged_hunks:
+    name: staged_hunks
+    module: src.intract.git
+    line: 45
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  src.intract.engine.analyzer._line_number:
+    name: _line_number
+    module: src.intract.engine.analyzer
+    line: 25
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  src.intract.parsers.inline.extract_contract_records_from_text:
+    name: extract_contract_records_from_text
+    module: src.intract.parsers.inline
+    line: 181
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 8
+  src.intract.engine.assigner._infer_effects:
+    name: _infer_effects
+    module: src.intract.engine.assigner
+    line: 47
+    cyclomatic_complexity: 8
+    calls_out: 8
+    calls_in: 1
+  src.intract.validators.base.merge_rule_results:
+    name: merge_rule_results
+    module: src.intract.validators.base
+    line: 38
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  src.intract.duplicates.matcher.bucket_signatures:
+    name: bucket_signatures
+    module: src.intract.duplicates.matcher
+    line: 16
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  src.intract.engine.scanner.collect_source_units:
+    name: collect_source_units
+    module: src.intract.engine.scanner
+    line: 20
+    cyclomatic_complexity: 9
+    calls_out: 14
+    calls_in: 1
+  src.intract.integrations.redup.block_end_line:
+    name: block_end_line
+    module: src.intract.integrations.redup
+    line: 46
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.intract.mcp.handlers.handle_build_graph:
+    name: handle_build_graph
+    module: src.intract.mcp.handlers
+    line: 90
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 0
+  src.intract.cli.engine_run:
+    name: engine_run
+    module: src.intract.cli
+    line: 407
+    cyclomatic_complexity: 4
+    calls_out: 20
+    calls_in: 0
+  src.intract.validators.engine.validate_contract_against_source:
+    name: validate_contract_against_source
+    module: src.intract.validators.engine
+    line: 13
+    cyclomatic_complexity: 8
+    calls_out: 14
+    calls_in: 5
+  sdks.java.src.main.java.io.intract.sdk.IntractContract.IntractContract.inline:
+    name: inline
+    module: sdks.java.src.main.java.io.intract.sdk.IntractContract
+    line: 20
+    cyclomatic_complexity: 11
+    calls_out: 4
+    calls_in: 0
+  src.intract.check.block_extent:
+    name: block_extent
+    module: src.intract.check
+    line: 92
+    cyclomatic_complexity: 20
+    calls_out: 18
+    calls_in: 1
+  src.intract.config.load_config:
+    name: load_config
+    module: src.intract.config
+    line: 38
+    cyclomatic_complexity: 11
+    calls_out: 14
+    calls_in: 3
+  src.intract.mcp.server.handle_request:
+    name: handle_request
+    module: src.intract.mcp.server
+    line: 64
+    cyclomatic_complexity: 5
     calls_out: 6
+    calls_in: 1
+  src.intract.check.changed_check:
+    name: changed_check
+    module: src.intract.check
+    line: 268
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  src.intract.integrations.planfile_adapter.PlanfileApiAdapter.sync_from_report:
+    name: sync_from_report
+    module: src.intract.integrations.planfile_adapter
+    line: 123
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 0
+  src.intract.engine.assigner.suggest_contracts_for_fragments:
+    name: suggest_contracts_for_fragments
+    module: src.intract.engine.assigner
+    line: 103
+    cyclomatic_complexity: 4
+    calls_out: 1
     calls_in: 1
   src.intract.validators.input_output.InputPresenceRule.validate:
     name: validate
@@ -796,166 +1041,33 @@ nodes:
     cyclomatic_complexity: 5
     calls_out: 7
     calls_in: 0
-  src.intract.watch.snapshot_tree:
-    name: snapshot_tree
-    module: src.intract.watch
-    line: 77
-    cyclomatic_complexity: 4
-    calls_out: 9
-    calls_in: 5
-  src.intract.validators.registry._discover_entry_point_rules:
-    name: _discover_entry_point_rules
-    module: src.intract.validators.registry
-    line: 12
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 1
-  src.intract.validators.input_output.contains_token_like:
-    name: contains_token_like
-    module: src.intract.validators.input_output
-    line: 10
-    cyclomatic_complexity: 7
-    calls_out: 5
-    calls_in: 2
-  examples.integration_tests.run_examples.run_example_01:
-    name: run_example_01
-    module: examples.integration_tests.run_examples
-    line: 25
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 1
-  src.intract.check.block_extent:
-    name: block_extent
-    module: src.intract.check
-    line: 92
-    cyclomatic_complexity: 13
-    calls_out: 10
-    calls_in: 1
-  src.intract.project.load_project_sources:
-    name: load_project_sources
-    module: src.intract.project
-    line: 15
-    cyclomatic_complexity: 7
-    calls_out: 6
-    calls_in: 4
-  src.intract.plugins.builtins.ArtifactStructureValidatorPlugin.validate:
-    name: validate
-    module: src.intract.plugins.builtins
-    line: 94
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 0
-  src.intract.watch.diff_snapshots:
-    name: diff_snapshots
-    module: src.intract.watch
-    line: 98
-    cyclomatic_complexity: 5
-    calls_out: 11
-    calls_in: 3
-  src.intract.project.validate_project:
-    name: validate_project
-    module: src.intract.project
-    line: 74
-    cyclomatic_complexity: 4
-    calls_out: 8
-    calls_in: 10
-  src.intract.check.validate_sources_for_hunks:
-    name: validate_sources_for_hunks
-    module: src.intract.check
-    line: 139
-    cyclomatic_complexity: 14
-    calls_out: 15
-    calls_in: 1
-  src.intract.manifest_schema.validate_manifest:
-    name: validate_manifest
-    module: src.intract.manifest_schema
-    line: 48
-    cyclomatic_complexity: 15
-    calls_out: 35
-    calls_in: 2
-  src.intract.plugins.manager.load_builtin_plugins:
-    name: load_builtin_plugins
-    module: src.intract.plugins.manager
-    line: 24
-    cyclomatic_complexity: 1
-    calls_out: 13
-    calls_in: 1
-  src.intract.graph.ContractGraph.to_mermaid:
-    name: to_mermaid
-    module: src.intract.graph
-    line: 21
-    cyclomatic_complexity: 5
-    calls_out: 9
-    calls_in: 0
-  src.intract.watch.hash_file:
-    name: hash_file
-    module: src.intract.watch
-    line: 47
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 1
-  src.intract.plugins.builtins.OpenAPIParserPlugin.parse:
-    name: parse
-    module: src.intract.plugins.builtins
-    line: 35
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
   src.intract.cli._export_tickets:
     name: _export_tickets
     module: src.intract.cli
-    line: 310
+    line: 422
     cyclomatic_complexity: 1
     calls_out: 6
     calls_in: 5
-  src.intract.integrations.redup.block_text:
-    name: block_text
-    module: src.intract.integrations.redup
-    line: 29
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 1
-  src.intract.parsers.openapi.parse_openapi_text:
-    name: parse_openapi_text
-    module: src.intract.parsers.openapi
-    line: 39
-    cyclomatic_complexity: 8
-    calls_out: 14
-    calls_in: 1
-  src.intract.duplicates.matcher.find_intent_pairs:
-    name: find_intent_pairs
-    module: src.intract.duplicates.matcher
-    line: 23
-    cyclomatic_complexity: 6
-    calls_out: 8
-    calls_in: 2
-  src.intract.check._manifest_changed:
-    name: _manifest_changed
-    module: src.intract.check
-    line: 78
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 2
-  src.intract.core.normalizer.normalize_requirement:
-    name: normalize_requirement
-    module: src.intract.core.normalizer
-    line: 60
-    cyclomatic_complexity: 6
-    calls_out: 10
-    calls_in: 3
-  src.intract.integrations.redup.block_start_line:
-    name: block_start_line
-    module: src.intract.integrations.redup
-    line: 42
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 2
-  src.intract.cli.engine_suggest:
-    name: engine_suggest
+  src.intract.cli.validate:
+    name: validate
     module: src.intract.cli
-    line: 258
+    line: 106
     cyclomatic_complexity: 3
-    calls_out: 18
+    calls_out: 12
+    calls_in: 0
+  src.intract.git.paths_from_changes:
+    name: paths_from_changes
+    module: src.intract.git
+    line: 52
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  src.intract.plugins.builtins.InlineContractParserPlugin.parse:
+    name: parse
+    module: src.intract.plugins.builtins
+    line: 19
+    cyclomatic_complexity: 1
+    calls_out: 3
     calls_in: 0
   src.intract.integrations.redup.signatures_from_text:
     name: signatures_from_text
@@ -964,54 +1076,229 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 2
     calls_in: 0
-  sdks.typescript.src.csv:
-    name: csv
-    module: sdks.typescript.src
+  src.intract.mcp.server.run_server:
+    name: run_server
+    module: src.intract.mcp.server
+    line: 83
+    cyclomatic_complexity: 5
+    calls_out: 14
+    calls_in: 0
+  src.intract.analyzers.typescript._scan_braced_block:
+    name: _scan_braced_block
+    module: src.intract.analyzers.typescript
+    line: 38
+    cyclomatic_complexity: 11
+    calls_out: 5
+    calls_in: 1
+  src.intract.engine.assigner._infer_action:
+    name: _infer_action
+    module: src.intract.engine.assigner
+    line: 24
+    cyclomatic_complexity: 10
+    calls_out: 5
+    calls_in: 1
+  src.intract.engine.monitor.scan_suggest_and_validate:
+    name: scan_suggest_and_validate
+    module: src.intract.engine.monitor
     line: 15
     cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 1
-  src.intract.engine.assigner._infer_object:
-    name: _infer_object
-    module: src.intract.engine.assigner
-    line: 41
-    cyclomatic_complexity: 4
+    calls_out: 10
+    calls_in: 4
+  src.intract.analyzers.csharp._scan_braced_block:
+    name: _scan_braced_block
+    module: src.intract.analyzers.csharp
+    line: 39
+    cyclomatic_complexity: 8
     calls_out: 2
     calls_in: 1
-  src.intract.parsers.manifest._parse_intent:
-    name: _parse_intent
+  src.intract.parsers.inline.parse_priority:
+    name: parse_priority
+    module: src.intract.parsers.inline
+    line: 38
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 1
+  examples.integration_tests.run_examples.print_result:
+    name: print_result
+    module: examples.integration_tests.run_examples
+    line: 20
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  src.intract.mcp.server.handle_initialize:
+    name: handle_initialize
+    module: src.intract.mcp.server
+    line: 14
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  src.intract.analyzers.treesitter._load_parser:
+    name: _load_parser
+    module: src.intract.analyzers.treesitter
+    line: 6
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.intract.duplicates.grouping.pairs_to_intent_groups:
+    name: pairs_to_intent_groups
+    module: src.intract.duplicates.grouping
+    line: 90
+    cyclomatic_complexity: 6
+    calls_out: 16
+    calls_in: 1
+  src.intract.parsers.manifest.create_sample_manifest:
+    name: create_sample_manifest
     module: src.intract.parsers.manifest
-    line: 23
+    line: 77
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  src.intract.scan_artifacts.scan_all_artifacts:
+    name: scan_all_artifacts
+    module: src.intract.scan_artifacts
+    line: 62
     cyclomatic_complexity: 3
     calls_out: 7
-    calls_in: 1
-  src.intract.cli.coverage:
-    name: coverage
-    module: src.intract.cli
-    line: 161
-    cyclomatic_complexity: 2
-    calls_out: 12
+    calls_in: 2
+  sdks.rust.src.inline_contract:
+    name: inline_contract
+    module: sdks.rust.src
+    line: 20
+    cyclomatic_complexity: 10
+    calls_out: 6
     calls_in: 0
-  src.intract.parsers.manifest.contract_from_mapping:
-    name: contract_from_mapping
-    module: src.intract.parsers.manifest
-    line: 33
+  src.intract.integrations.redup._with_block_lines:
+    name: _with_block_lines
+    module: src.intract.integrations.redup
+    line: 94
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  src.intract.analyzers.treesitter._find_extent:
+    name: _find_extent
+    module: src.intract.analyzers.treesitter
+    line: 23
+    cyclomatic_complexity: 7
+    calls_out: 8
+    calls_in: 2
+  src.intract.integrations.redup.block_file_path:
+    name: block_file_path
+    module: src.intract.integrations.redup
+    line: 38
     cyclomatic_complexity: 3
-    calls_out: 59
-    calls_in: 4
-  src.intract.core.signatures.build_signature:
-    name: build_signature
-    module: src.intract.core.signatures
-    line: 14
-    cyclomatic_complexity: 15
-    calls_out: 40
-    calls_in: 3
-  src.intract.duplicates.grouping.find_duplicate_contracts:
-    name: find_duplicate_contracts
-    module: src.intract.duplicates.grouping
-    line: 131
+    calls_out: 3
+    calls_in: 1
+  src.intract.coverage.calculate_coverage:
+    name: calculate_coverage
+    module: src.intract.coverage
+    line: 21
+    cyclomatic_complexity: 3
+    calls_out: 14
+    calls_in: 1
+  src.intract.cli.engine_drift:
+    name: engine_drift
+    module: src.intract.cli
+    line: 387
+    cyclomatic_complexity: 4
+    calls_out: 21
+    calls_in: 0
+  src.intract.engine.drift.load_state:
+    name: load_state
+    module: src.intract.engine.drift
+    line: 57
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 1
+  examples.integration_tests.run_examples.run_example_02:
+    name: run_example_02
+    module: examples.integration_tests.run_examples
+    line: 36
     cyclomatic_complexity: 2
+    calls_out: 10
+    calls_in: 1
+  src.intract.duplicates.grouping.union_find_groups:
+    name: union_find_groups
+    module: src.intract.duplicates.grouping
+    line: 41
+    cyclomatic_complexity: 5
+    calls_out: 10
+    calls_in: 1
+  src.intract.manifest_schema.validate_manifest:
+    name: validate_manifest
+    module: src.intract.manifest_schema
+    line: 48
+    cyclomatic_complexity: 15
+    calls_out: 35
+    calls_in: 2
+  src.intract.cli.artifact_validate:
+    name: artifact_validate
+    module: src.intract.cli
+    line: 492
+    cyclomatic_complexity: 4
+    calls_out: 11
+    calls_in: 0
+  src.intract.git.changed_files:
+    name: changed_files
+    module: src.intract.git
+    line: 33
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 1
+  src.intract.integrations.redup.find_intent_duplicate_groups:
+    name: find_intent_duplicate_groups
+    module: src.intract.integrations.redup
+    line: 104
+    cyclomatic_complexity: 8
+    calls_out: 10
+    calls_in: 1
+  src.intract.graph.build_graph:
+    name: build_graph
+    module: src.intract.graph
+    line: 39
+    cyclomatic_complexity: 9
+    calls_out: 18
+    calls_in: 4
+  src.intract.validators.registry._discover_entry_point_rules:
+    name: _discover_entry_point_rules
+    module: src.intract.validators.registry
+    line: 12
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
+  src.intract.git._run_git:
+    name: _run_git
+    module: src.intract.git
+    line: 14
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 3
+  src.intract.core.artifact.infer_language:
+    name: infer_language
+    module: src.intract.core.artifact
+    line: 44
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  src.intract.check._manifest_changed:
+    name: _manifest_changed
+    module: src.intract.check
+    line: 78
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  src.intract.validators.effects.NoForbiddenEffectRule.validate:
+    name: validate
+    module: src.intract.validators.effects
+    line: 34
+    cyclomatic_complexity: 3
     calls_out: 5
+    calls_in: 0
+  src.intract.check.validate_sources_for_hunks:
+    name: validate_sources_for_hunks
+    module: src.intract.check
+    line: 166
+    cyclomatic_complexity: 14
+    calls_out: 15
     calls_in: 1
 edges:
 - caller: examples.integration_tests.run_examples.run_example_01
@@ -1056,32 +1343,143 @@ edges:
 - caller: src.intract.watch.watch_tree
   callee: src.intract.watch.diff_snapshots
   call_type: resolved
-- caller: src.intract.project.extract_signatures_from_sources
-  callee: src.intract.core.signatures.build_signatures
+- caller: src.intract.cli.init
+  callee: src.intract.parsers.manifest.create_sample_manifest
   call_type: resolved
-- caller: src.intract.project.extract_signatures_from_sources
+- caller: src.intract.cli.validate
+  callee: src.intract.project.validate_project
+  call_type: resolved
+- caller: src.intract.cli.validate
+  callee: src.intract.cli._print_validation_report
+  call_type: resolved
+- caller: src.intract.cli.validate
+  callee: src.intract.cli._export_tickets
+  call_type: resolved
+- caller: src.intract.cli.coverage
+  callee: src.intract.coverage.calculate_coverage
+  call_type: resolved
+- caller: src.intract.cli.duplicates
+  callee: src.intract.duplicates.grouping.find_duplicate_contracts
+  call_type: resolved
+- caller: src.intract.cli.graph
+  callee: src.intract.graph.build_graph
+  call_type: resolved
+- caller: src.intract.cli.tickets
+  callee: src.intract.project.validate_project
+  call_type: resolved
+- caller: src.intract.cli.tickets
+  callee: src.intract.cli._export_tickets
+  call_type: resolved
+- caller: src.intract.cli.planfile_push
+  callee: src.intract.project.validate_project
+  call_type: resolved
+- caller: src.intract.cli.planfile_sync
+  callee: src.intract.project.validate_project
+  call_type: resolved
+- caller: src.intract.cli.engine_suggest
+  callee: src.intract.engine.monitor.scan_suggest_and_validate
+  call_type: resolved
+- caller: src.intract.cli.engine_drift
+  callee: src.intract.engine.monitor.scan_suggest_and_validate
+  call_type: resolved
+- caller: src.intract.cli.engine_run
+  callee: src.intract.engine.monitor.scan_suggest_and_validate
+  call_type: resolved
+- caller: src.intract.cli._export_tickets
+  callee: src.intract.integrations.planfile.tickets_from_report
+  call_type: resolved
+- caller: src.intract.cli.check_manifest
+  callee: src.intract.manifest_schema.validate_manifest
+  call_type: resolved
+- caller: src.intract.cli.artifact_validate
+  callee: src.intract.validators.artifacts.validate_artifact
+  call_type: resolved
+- caller: src.intract.scan_artifacts.discover_artifact_paths
+  callee: src.intract.core.artifact.infer_artifact_kind
+  call_type: resolved
+- caller: src.intract.scan_artifacts.scan_all_artifacts
+  callee: src.intract.scan_artifacts.discover_artifact_paths
+  call_type: resolved
+- caller: src.intract.scan_artifacts.scan_all_artifacts
+  callee: src.intract.validators.artifacts.validate_artifact
+  call_type: resolved
+- caller: src.intract.check.block_extent
+  callee: src.intract.analyzers.python_ast.python_block_extent
+  call_type: resolved
+- caller: src.intract.check.block_extent
+  callee: src.intract.analyzers.typescript.typescript_block_extent
+  call_type: resolved
+- caller: src.intract.check.block_extent
+  callee: src.intract.analyzers.csharp.csharp_block_extent
+  call_type: resolved
+- caller: src.intract.check.block_extent
+  callee: src.intract.analyzers.java.java_block_extent
+  call_type: resolved
+- caller: src.intract.check.block_extent
+  callee: src.intract.analyzers.go.go_block_extent
+  call_type: resolved
+- caller: src.intract.check.signature_touched
+  callee: src.intract.check.block_extent
+  call_type: resolved
+- caller: src.intract.check.validate_sources_for_hunks
+  callee: src.intract.check.load_selected_sources
+  call_type: resolved
+- caller: src.intract.check.validate_sources_for_hunks
+  callee: src.intract.check.changed_lines_by_file
+  call_type: resolved
+- caller: src.intract.check.validate_sources_for_hunks
   callee: src.intract.parsers.inline.extract_contract_records_from_text
   call_type: resolved
-- caller: src.intract.project.validate_sources
-  callee: src.intract.project.extract_signatures_from_sources
-  call_type: resolved
-- caller: src.intract.project.validate_sources
-  callee: src.intract.core.signatures.build_signatures
-  call_type: resolved
-- caller: src.intract.project.validate_sources
+- caller: src.intract.check.validate_sources_for_hunks
   callee: src.intract.validators.engine.validate_contract_against_source
   call_type: resolved
-- caller: src.intract.project.validate_sources
-  callee: src.intract.validators.requirements.validate_required_contracts
+- caller: src.intract.check.validate_sources_for_hunks
+  callee: src.intract.core.signatures.build_signatures
   call_type: resolved
-- caller: src.intract.project.validate_project
-  callee: src.intract.project.load_project_sources
+- caller: src.intract.check.validate_selected_paths
+  callee: src.intract.check.load_selected_sources
   call_type: resolved
-- caller: src.intract.project.validate_project
+- caller: src.intract.check.validate_selected_paths
   callee: src.intract.project.validate_sources
   call_type: resolved
-- caller: src.intract.project.validate_project
+- caller: src.intract.check.validate_selected_paths
+  callee: src.intract.project.validate_project
+  call_type: resolved
+- caller: src.intract.check.validate_selected_paths
   callee: src.intract.parsers.manifest.load_manifest_records
+  call_type: resolved
+- caller: src.intract.check.staged_check
+  callee: src.intract.git.staged_files
+  call_type: resolved
+- caller: src.intract.check.staged_check
+  callee: src.intract.git.paths_from_changes
+  call_type: resolved
+- caller: src.intract.check.staged_check
+  callee: src.intract.git.staged_hunks
+  call_type: resolved
+- caller: src.intract.check.staged_check
+  callee: src.intract.check.parse_unified_diff_hunks
+  call_type: resolved
+- caller: src.intract.check.staged_check
+  callee: src.intract.check._manifest_changed
+  call_type: resolved
+- caller: src.intract.check.staged_check
+  callee: src.intract.check.validate_selected_paths
+  call_type: resolved
+- caller: src.intract.check.staged_check
+  callee: src.intract.check.validate_sources_for_hunks
+  call_type: resolved
+- caller: src.intract.check.changed_check
+  callee: src.intract.git.changed_files
+  call_type: resolved
+- caller: src.intract.check.changed_check
+  callee: src.intract.git.paths_from_changes
+  call_type: resolved
+- caller: src.intract.check.changed_check
+  callee: src.intract.check._manifest_changed
+  call_type: resolved
+- caller: src.intract.check.changed_check
+  callee: src.intract.check.validate_selected_paths
   call_type: resolved
 - caller: src.intract.coverage.calculate_coverage
   callee: src.intract.project.load_project_sources
@@ -1097,6 +1495,18 @@ edges:
   call_type: resolved
 - caller: src.intract.graph.build_graph
   callee: src.intract.project.extract_signatures_from_sources
+  call_type: resolved
+- caller: src.intract.policy._p1_missing_reasons
+  callee: src.intract.core.signatures.build_signatures
+  call_type: resolved
+- caller: src.intract.policy._p1_missing_reasons
+  callee: src.intract.parsers.manifest.load_manifest_records
+  call_type: resolved
+- caller: src.intract.policy._p1_missing_reasons
+  callee: src.intract.core.normalizer.normalize_requirement
+  call_type: resolved
+- caller: src.intract.policy.decide_policy
+  callee: src.intract.manifest_schema.validate_manifest
   call_type: resolved
 - caller: src.intract.git.staged_files
   callee: src.intract.git._run_git
@@ -1158,6 +1568,12 @@ edges:
 - caller: src.intract.validators.artifacts.validate_artifact
   callee: src.intract.validators.artifacts.validate_kubernetes
   call_type: resolved
+- caller: src.intract.validators.engine.validate_contract_against_source
+  callee: src.intract.validators.base.merge_rule_results
+  call_type: resolved
+- caller: src.intract.validators.engine.validate_contract_against_source
+  callee: src.intract.validators.registry.get_rule_registry
+  call_type: resolved
 - caller: src.intract.validators.input_output.contains_token_like
   callee: src.intract.core.normalizer.normalize_label
   call_type: resolved
@@ -1172,6 +1588,9 @@ edges:
   call_type: resolved
 - caller: src.intract.validators.effects.NoForbiddenEffectRule.validate
   callee: src.intract.validators.effects.detect_effects
+  call_type: resolved
+- caller: src.intract.validators.registry.get_rule_registry
+  callee: src.intract.validators.registry._discover_entry_point_rules
   call_type: resolved
 - caller: src.intract.core.normalizer.normalize_action
   callee: src.intract.core.normalizer.normalize_label
@@ -1233,6 +1652,72 @@ edges:
 - caller: src.intract.plugins.manager.discover_plugins
   callee: src.intract.plugins.manager._register_unique
   call_type: resolved
+- caller: src.intract.mcp.server.handle_request
+  callee: src.intract.mcp.server.handle_initialize
+  call_type: resolved
+- caller: src.intract.mcp.server.handle_request
+  callee: src.intract.mcp.server.handle_tools_list
+  call_type: resolved
+- caller: src.intract.mcp.server.handle_request
+  callee: src.intract.mcp.server.handle_tools_call
+  call_type: resolved
+- caller: src.intract.mcp.server.run_server
+  callee: src.intract.mcp.server.handle_request
+  call_type: resolved
+- caller: src.intract.mcp.handlers._resolve_manifest
+  callee: src.intract.config.load_config
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_validate_project
+  callee: src.intract.mcp.handlers._resolve_path
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_validate_project
+  callee: src.intract.mcp.handlers._resolve_manifest
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_validate_project
+  callee: src.intract.project.validate_project
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_validate_staged
+  callee: src.intract.mcp.handlers._resolve_path
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_validate_staged
+  callee: src.intract.mcp.handlers._resolve_manifest
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_validate_staged
+  callee: src.intract.check.staged_check
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_validate_staged
+  callee: src.intract.config.load_config
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_validate_staged
+  callee: src.intract.policy.decide_policy
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_validate_staged
+  callee: src.intract.graph.build_graph
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_validate_intent_snippet
+  callee: src.intract.integrations.vallm.validate_proposal
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_find_duplicates
+  callee: src.intract.mcp.handlers._resolve_path
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_find_duplicates
+  callee: src.intract.duplicates.grouping.find_duplicate_contracts
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_build_graph
+  callee: src.intract.mcp.handlers._resolve_path
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_build_graph
+  callee: src.intract.mcp.handlers._resolve_manifest
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_build_graph
+  callee: src.intract.graph.build_graph
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_scan_artifacts
+  callee: src.intract.mcp.handlers._resolve_path
+  call_type: resolved
+- caller: src.intract.mcp.handlers.handle_scan_artifacts
+  callee: src.intract.scan_artifacts.scan_all_artifacts
+  call_type: resolved
 - caller: src.intract.engine.analyzer.analyze_source_units
   callee: src.intract.engine.analyzer._slice_until_next_match
   call_type: resolved
@@ -1286,6 +1771,51 @@ edges:
   call_type: resolved
 - caller: src.intract.engine.monitor.scan_suggest_and_validate
   callee: src.intract.project.validate_project
+  call_type: resolved
+- caller: src.intract.analyzers.blocks.block_extent_from_patterns
+  callee: src.intract.analyzers.blocks.scan_braced_block
+  call_type: resolved
+- caller: src.intract.analyzers.rust.rust_block_extent
+  callee: src.intract.analyzers.blocks.block_extent_from_patterns
+  call_type: resolved
+- caller: src.intract.analyzers.treesitter._find_extent
+  callee: src.intract.analyzers.treesitter._load_parser
+  call_type: resolved
+- caller: src.intract.analyzers.treesitter.typescript_function_extent
+  callee: src.intract.analyzers.treesitter._find_extent
+  call_type: resolved
+- caller: src.intract.analyzers.treesitter.csharp_method_extent
+  callee: src.intract.analyzers.treesitter._find_extent
+  call_type: resolved
+- caller: src.intract.analyzers.go.go_block_extent
+  callee: src.intract.analyzers.blocks.block_extent_from_patterns
+  call_type: resolved
+- caller: src.intract.analyzers.python_ast.python_function_extent
+  callee: src.intract.analyzers.python_ast._decorator_lines
+  call_type: resolved
+- caller: src.intract.analyzers.python_ast.python_block_extent
+  callee: src.intract.analyzers.python_ast.python_function_extent
+  call_type: resolved
+- caller: src.intract.analyzers.csharp.csharp_block_extent
+  callee: src.intract.analyzers.csharp._treesitter_csharp_extent
+  call_type: resolved
+- caller: src.intract.analyzers.csharp.csharp_block_extent
+  callee: src.intract.analyzers.csharp._scan_braced_block
+  call_type: resolved
+- caller: src.intract.analyzers.csharp._treesitter_csharp_extent
+  callee: src.intract.analyzers.treesitter.csharp_method_extent
+  call_type: resolved
+- caller: src.intract.analyzers.java.java_block_extent
+  callee: src.intract.analyzers.blocks.block_extent_from_patterns
+  call_type: resolved
+- caller: src.intract.analyzers.typescript.typescript_block_extent
+  callee: src.intract.analyzers.typescript._treesitter_typescript_extent
+  call_type: resolved
+- caller: src.intract.analyzers.typescript.typescript_block_extent
+  callee: src.intract.analyzers.typescript._scan_braced_block
+  call_type: resolved
+- caller: src.intract.analyzers.typescript._treesitter_typescript_extent
+  callee: src.intract.analyzers.treesitter.typescript_function_extent
   call_type: resolved
 - caller: src.intract.parsers.inline.marker_payload
   callee: src.intract.parsers.inline.clean_comment_line
@@ -1389,6 +1919,15 @@ edges:
 - caller: src.intract.integrations.redup.scan_blocks_for_intent_duplicates
   callee: src.intract.integrations.redup.signatures_from_manifest
   call_type: resolved
+- caller: src.intract.integrations.planfile_adapter.PlanfileApiAdapter.pull
+  callee: src.intract.integrations.planfile_adapter._ticket_from_dict
+  call_type: resolved
+- caller: src.intract.integrations.planfile_adapter.PlanfileApiAdapter.sync_from_report
+  callee: src.intract.integrations.planfile.tickets_from_report
+  call_type: resolved
+- caller: extensions.vscode-intract.extension.activate
+  callee: extensions.vscode-intract.extension.runIntract
+  call_type: resolved
 - caller: sdks.java.src.main.java.io.intract.sdk.IntractContract.IntractContract.inline
   callee: sdks.java.src.main.java.io.intract.sdk.IntractContract.IntractContract.join
   call_type: resolved
@@ -1401,134 +1940,35 @@ edges:
 - caller: sdks.rust.src.inline_contract
   callee: sdks.rust.src.csv
   call_type: resolved
-- caller: src.intract.cli.init
-  callee: src.intract.parsers.manifest.create_sample_manifest
+- caller: src.intract.project.load_project_sources
+  callee: src.intract.core.artifact.infer_artifact_kind
   call_type: resolved
-- caller: src.intract.cli.validate
-  callee: src.intract.project.validate_project
+- caller: src.intract.project.extract_signatures_from_sources
+  callee: src.intract.core.signatures.build_signatures
   call_type: resolved
-- caller: src.intract.cli.validate
-  callee: src.intract.cli._print_validation_report
-  call_type: resolved
-- caller: src.intract.cli.validate
-  callee: src.intract.cli._export_tickets
-  call_type: resolved
-- caller: src.intract.cli.coverage
-  callee: src.intract.coverage.calculate_coverage
-  call_type: resolved
-- caller: src.intract.cli.duplicates
-  callee: src.intract.duplicates.grouping.find_duplicate_contracts
-  call_type: resolved
-- caller: src.intract.cli.graph
-  callee: src.intract.graph.build_graph
-  call_type: resolved
-- caller: src.intract.cli.tickets
-  callee: src.intract.project.validate_project
-  call_type: resolved
-- caller: src.intract.cli.tickets
-  callee: src.intract.cli._export_tickets
-  call_type: resolved
-- caller: src.intract.cli.engine_suggest
-  callee: src.intract.engine.monitor.scan_suggest_and_validate
-  call_type: resolved
-- caller: src.intract.cli.engine_drift
-  callee: src.intract.engine.monitor.scan_suggest_and_validate
-  call_type: resolved
-- caller: src.intract.cli.engine_run
-  callee: src.intract.engine.monitor.scan_suggest_and_validate
-  call_type: resolved
-- caller: src.intract.cli._export_tickets
-  callee: src.intract.integrations.planfile.tickets_from_report
-  call_type: resolved
-- caller: src.intract.cli.check_manifest
-  callee: src.intract.manifest_schema.validate_manifest
-  call_type: resolved
-- caller: src.intract.cli.artifact_validate
-  callee: src.intract.validators.artifacts.validate_artifact
-  call_type: resolved
-- caller: src.intract.check.signature_touched
-  callee: src.intract.check.block_extent
-  call_type: resolved
-- caller: src.intract.check.validate_sources_for_hunks
-  callee: src.intract.check.load_selected_sources
-  call_type: resolved
-- caller: src.intract.check.validate_sources_for_hunks
-  callee: src.intract.check.changed_lines_by_file
-  call_type: resolved
-- caller: src.intract.check.validate_sources_for_hunks
+- caller: src.intract.project.extract_signatures_from_sources
   callee: src.intract.parsers.inline.extract_contract_records_from_text
   call_type: resolved
-- caller: src.intract.check.validate_sources_for_hunks
+- caller: src.intract.project.validate_sources
+  callee: src.intract.project.extract_signatures_from_sources
+  call_type: resolved
+- caller: src.intract.project.validate_sources
+  callee: src.intract.core.signatures.build_signatures
+  call_type: resolved
+- caller: src.intract.project.validate_sources
   callee: src.intract.validators.engine.validate_contract_against_source
   call_type: resolved
-- caller: src.intract.check.validate_sources_for_hunks
-  callee: src.intract.core.signatures.build_signatures
+- caller: src.intract.project.validate_sources
+  callee: src.intract.validators.requirements.validate_required_contracts
   call_type: resolved
-- caller: src.intract.check.validate_selected_paths
-  callee: src.intract.check.load_selected_sources
+- caller: src.intract.project.validate_project
+  callee: src.intract.project.load_project_sources
   call_type: resolved
-- caller: src.intract.check.validate_selected_paths
+- caller: src.intract.project.validate_project
   callee: src.intract.project.validate_sources
   call_type: resolved
-- caller: src.intract.check.validate_selected_paths
-  callee: src.intract.project.validate_project
-  call_type: resolved
-- caller: src.intract.check.validate_selected_paths
+- caller: src.intract.project.validate_project
   callee: src.intract.parsers.manifest.load_manifest_records
-  call_type: resolved
-- caller: src.intract.check.staged_check
-  callee: src.intract.git.staged_files
-  call_type: resolved
-- caller: src.intract.check.staged_check
-  callee: src.intract.git.paths_from_changes
-  call_type: resolved
-- caller: src.intract.check.staged_check
-  callee: src.intract.git.staged_hunks
-  call_type: resolved
-- caller: src.intract.check.staged_check
-  callee: src.intract.check.parse_unified_diff_hunks
-  call_type: resolved
-- caller: src.intract.check.staged_check
-  callee: src.intract.check._manifest_changed
-  call_type: resolved
-- caller: src.intract.check.staged_check
-  callee: src.intract.check.validate_selected_paths
-  call_type: resolved
-- caller: src.intract.check.staged_check
-  callee: src.intract.check.validate_sources_for_hunks
-  call_type: resolved
-- caller: src.intract.check.changed_check
-  callee: src.intract.git.changed_files
-  call_type: resolved
-- caller: src.intract.check.changed_check
-  callee: src.intract.git.paths_from_changes
-  call_type: resolved
-- caller: src.intract.check.changed_check
-  callee: src.intract.check._manifest_changed
-  call_type: resolved
-- caller: src.intract.check.changed_check
-  callee: src.intract.check.validate_selected_paths
-  call_type: resolved
-- caller: src.intract.policy._p1_missing_reasons
-  callee: src.intract.core.signatures.build_signatures
-  call_type: resolved
-- caller: src.intract.policy._p1_missing_reasons
-  callee: src.intract.parsers.manifest.load_manifest_records
-  call_type: resolved
-- caller: src.intract.policy._p1_missing_reasons
-  callee: src.intract.core.normalizer.normalize_requirement
-  call_type: resolved
-- caller: src.intract.policy.decide_policy
-  callee: src.intract.manifest_schema.validate_manifest
-  call_type: resolved
-- caller: src.intract.validators.engine.validate_contract_against_source
-  callee: src.intract.validators.base.merge_rule_results
-  call_type: resolved
-- caller: src.intract.validators.engine.validate_contract_against_source
-  callee: src.intract.validators.registry.get_rule_registry
-  call_type: resolved
-- caller: src.intract.validators.registry.get_rule_registry
-  callee: src.intract.validators.registry._discover_entry_point_rules
   call_type: resolved
 modules:
   examples.integration_tests.run_examples:
@@ -1537,6 +1977,9 @@ modules:
   - examples.integration_tests.run_examples.run_example_01
   - examples.integration_tests.run_examples.run_example_02
   - examples.integration_tests.run_examples.run_example_03
+  extensions.vscode-intract.extension:
+  - extensions.vscode-intract.extension.activate
+  - extensions.vscode-intract.extension.runIntract
   sdks.go.intractsdk.sdk:
   - sdks.go.intractsdk.sdk.Inline
   - sdks.go.intractsdk.sdk.csv
@@ -1549,6 +1992,32 @@ modules:
   sdks.typescript.src:
   - sdks.typescript.src.csv
   - sdks.typescript.src.inlineContract
+  src.intract.analyzers.blocks:
+  - src.intract.analyzers.blocks.block_extent_from_patterns
+  - src.intract.analyzers.blocks.scan_braced_block
+  src.intract.analyzers.csharp:
+  - src.intract.analyzers.csharp._scan_braced_block
+  - src.intract.analyzers.csharp._treesitter_csharp_extent
+  - src.intract.analyzers.csharp.csharp_block_extent
+  src.intract.analyzers.go:
+  - src.intract.analyzers.go.go_block_extent
+  src.intract.analyzers.java:
+  - src.intract.analyzers.java.java_block_extent
+  src.intract.analyzers.python_ast:
+  - src.intract.analyzers.python_ast._decorator_lines
+  - src.intract.analyzers.python_ast.python_block_extent
+  - src.intract.analyzers.python_ast.python_function_extent
+  src.intract.analyzers.rust:
+  - src.intract.analyzers.rust.rust_block_extent
+  src.intract.analyzers.treesitter:
+  - src.intract.analyzers.treesitter._find_extent
+  - src.intract.analyzers.treesitter._load_parser
+  - src.intract.analyzers.treesitter.csharp_method_extent
+  - src.intract.analyzers.treesitter.typescript_function_extent
+  src.intract.analyzers.typescript:
+  - src.intract.analyzers.typescript._scan_braced_block
+  - src.intract.analyzers.typescript._treesitter_typescript_extent
+  - src.intract.analyzers.typescript.typescript_block_extent
   src.intract.check:
   - src.intract.check._manifest_changed
   - src.intract.check.block_extent
@@ -1572,8 +2041,12 @@ modules:
   - src.intract.cli.engine_suggest
   - src.intract.cli.graph
   - src.intract.cli.init
+  - src.intract.cli.planfile_push
+  - src.intract.cli.planfile_sync
   - src.intract.cli.tickets
   - src.intract.cli.validate
+  src.intract.config:
+  - src.intract.config.load_config
   src.intract.core.artifact:
   - src.intract.core.artifact.Artifact.from_path
   - src.intract.core.artifact.infer_artifact_kind
@@ -1633,6 +2106,10 @@ modules:
   - src.intract.graph.build_graph
   src.intract.integrations.planfile:
   - src.intract.integrations.planfile.tickets_from_report
+  src.intract.integrations.planfile_adapter:
+  - src.intract.integrations.planfile_adapter.PlanfileApiAdapter.pull
+  - src.intract.integrations.planfile_adapter.PlanfileApiAdapter.sync_from_report
+  - src.intract.integrations.planfile_adapter._ticket_from_dict
   src.intract.integrations.redup:
   - src.intract.integrations.redup._with_block_lines
   - src.intract.integrations.redup.block_end_line
@@ -1652,6 +2129,21 @@ modules:
   src.intract.manifest_schema:
   - src.intract.manifest_schema._load_schema
   - src.intract.manifest_schema.validate_manifest
+  src.intract.mcp.handlers:
+  - src.intract.mcp.handlers._resolve_manifest
+  - src.intract.mcp.handlers._resolve_path
+  - src.intract.mcp.handlers.handle_build_graph
+  - src.intract.mcp.handlers.handle_find_duplicates
+  - src.intract.mcp.handlers.handle_scan_artifacts
+  - src.intract.mcp.handlers.handle_validate_intent_snippet
+  - src.intract.mcp.handlers.handle_validate_project
+  - src.intract.mcp.handlers.handle_validate_staged
+  src.intract.mcp.server:
+  - src.intract.mcp.server.handle_initialize
+  - src.intract.mcp.server.handle_request
+  - src.intract.mcp.server.handle_tools_call
+  - src.intract.mcp.server.handle_tools_list
+  - src.intract.mcp.server.run_server
   src.intract.parsers.inline:
   - src.intract.parsers.inline.clean_comment_line
   - src.intract.parsers.inline.extract_contract_records_from_text
@@ -1685,6 +2177,9 @@ modules:
   - src.intract.project.load_project_sources
   - src.intract.project.validate_project
   - src.intract.project.validate_sources
+  src.intract.scan_artifacts:
+  - src.intract.scan_artifacts.discover_artifact_paths
+  - src.intract.scan_artifacts.scan_all_artifacts
   src.intract.validators.artifacts:
   - src.intract.validators.artifacts.validate_artifact
   - src.intract.validators.artifacts.validate_dockerfile
@@ -1730,6 +2225,22 @@ entry_points:
 - examples.integration_tests.run_examples.main
 - examples.typescript.permission.allowed
 - examples.typescript.permission.canUpdateResource
+- examples.web-app.iterations.v1-pass.backend.auth.check_permission
+- examples.web-app.iterations.v1-pass.backend.routes.read_profile
+- examples.web-app.iterations.v1-pass.frontend.dashboard.renderDashboard
+- examples.web-app.iterations.v2-violation.backend.auth.check_permission
+- examples.web-app.iterations.v2-violation.backend.routes.read_profile
+- examples.web-app.iterations.v2-violation.frontend.dashboard.metrics
+- examples.web-app.iterations.v2-violation.frontend.dashboard.renderDashboard
+- examples.web-app.iterations.v2-violation.frontend.dashboard.response
+- extensions.vscode-intract.extension.activate
+- extensions.vscode-intract.extension.config
+- extensions.vscode-intract.extension.deactivate
+- extensions.vscode-intract.extension.folder
+- extensions.vscode-intract.extension.manifest
+- extensions.vscode-intract.extension.python
+- extensions.vscode-intract.extension.terminal
+- extensions.vscode-intract.extension.vscode
 - scripts.ci-full-stack.install_extra
 - sdks.csharp.IntractContract.IntractContract.Inline
 - sdks.go.examples.main.main
@@ -1754,6 +2265,11 @@ entry_points:
 - src.intract.cli.graph
 - src.intract.cli.init
 - src.intract.cli.main
+- src.intract.cli.planfile_pull
+- src.intract.cli.planfile_push
+- src.intract.cli.planfile_sync
+- src.intract.cli.planfile_webhook_apply
+- src.intract.cli.planfile_webhook_test
 - src.intract.cli.scan
 - src.intract.cli.tickets
 - src.intract.cli.validate
@@ -1772,13 +2288,31 @@ entry_points:
 - src.intract.integrations.planfile.PlanfileExporter._write_todo
 - src.intract.integrations.planfile.PlanfileExporter._write_yaml
 - src.intract.integrations.planfile.PlanfileExporter.export
+- src.intract.integrations.planfile_adapter.PlanfileApiAdapter.__init__
+- src.intract.integrations.planfile_adapter.PlanfileApiAdapter._endpoint
+- src.intract.integrations.planfile_adapter.PlanfileApiAdapter._request
+- src.intract.integrations.planfile_adapter.PlanfileApiAdapter._webhook_label
+- src.intract.integrations.planfile_adapter.PlanfileApiAdapter.apply_webhook_event
+- src.intract.integrations.planfile_adapter.PlanfileApiAdapter.emit_webhook
+- src.intract.integrations.planfile_adapter.PlanfileApiAdapter.export_local
+- src.intract.integrations.planfile_adapter.PlanfileApiAdapter.pull
+- src.intract.integrations.planfile_adapter.PlanfileApiAdapter.push
+- src.intract.integrations.planfile_adapter.PlanfileApiAdapter.sync_from_report
+- src.intract.integrations.planfile_adapter.PlanfileConfig.from_env
 - src.intract.integrations.redup.RedupScanResult.to_dict
 - src.intract.integrations.redup.scan_blocks_for_intent_duplicates
 - src.intract.integrations.redup.signatures_from_text
 - src.intract.integrations.vallm.MappedValidationResult.to_dict
 - src.intract.integrations.vallm.validate_for_vallm
-- src.intract.integrations.vallm.validate_proposal
 - src.intract.manifest_schema.ManifestValidationReport.to_dict
+- src.intract.mcp.handlers.handle_build_graph
+- src.intract.mcp.handlers.handle_find_duplicates
+- src.intract.mcp.handlers.handle_project_info
+- src.intract.mcp.handlers.handle_scan_artifacts
+- src.intract.mcp.handlers.handle_validate_intent_snippet
+- src.intract.mcp.handlers.handle_validate_project
+- src.intract.mcp.handlers.handle_validate_staged
+- src.intract.mcp.server.run_server
 - src.intract.plugins.base.IntegrationPlugin.install
 - src.intract.plugins.base.ParserPlugin.parse
 - src.intract.plugins.base.ParserPlugin.supports
@@ -1803,6 +2337,7 @@ entry_points:
 - src.intract.plugins.builtins.OpenAPIParserPlugin.parse
 - src.intract.plugins.builtins.OpenAPIParserPlugin.supports
 - src.intract.plugins.manager.discover_plugins
+- src.intract.scan_artifacts.ArtifactScanReport.to_dict
 - src.intract.sdk.ContractBuilder.to_inline
 - src.intract.sdk.contract
 - src.intract.validators.artifacts.ArtifactValidationReport.to_dict

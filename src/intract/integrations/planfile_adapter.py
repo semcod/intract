@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import hmac
 import json
 import os
 import urllib.error
@@ -16,6 +18,8 @@ class PlanfileConfig:
     url: str | None = None
     token: str | None = None
     project: str | None = None
+    webhook_url: str | None = None
+    webhook_secret: str | None = None
     output_dir: Path = Path(".intract")
 
     @classmethod
@@ -24,6 +28,8 @@ class PlanfileConfig:
             url=os.environ.get("PLANFILE_URL") or os.environ.get("INTRACT_PLANFILE_URL"),
             token=os.environ.get("PLANFILE_TOKEN") or os.environ.get("INTRACT_PLANFILE_TOKEN"),
             project=os.environ.get("PLANFILE_PROJECT") or os.environ.get("INTRACT_PLANFILE_PROJECT"),
+            webhook_url=os.environ.get("PLANFILE_WEBHOOK_URL") or os.environ.get("INTRACT_PLANFILE_WEBHOOK_URL"),
+            webhook_secret=os.environ.get("PLANFILE_WEBHOOK_SECRET") or os.environ.get("INTRACT_PLANFILE_WEBHOOK_SECRET"),
             output_dir=Path(os.environ.get("INTRACT_PLANFILE_DIR", ".intract")),
         )
 
@@ -34,6 +40,14 @@ class PlanfileSyncResult:
     pulled: int
     local_files: dict[str, Path]
     remote_status: str
+    webhook_status: str = "skipped"
+
+
+@dataclass(frozen=True)
+class PlanfileWebhookResult:
+    delivered: bool
+    status_code: int | None
+    event: str
 
 
 class PlanfileApiAdapter:
@@ -49,11 +63,20 @@ class PlanfileApiAdapter:
     def push(self, tickets: list[Ticket]) -> PlanfileSyncResult:
         local_files = self.export_local(tickets)
         if not self.config.url:
+            webhook_status = "skipped"
+            if self.config.webhook_url:
+                webhook_status = self._webhook_label(
+                    self.emit_webhook(
+                        "tickets.exported",
+                        {"project": self.config.project, "count": len(tickets)},
+                    )
+                )
             return PlanfileSyncResult(
                 pushed=len(tickets),
                 pulled=0,
                 local_files=local_files,
                 remote_status="local-only",
+                webhook_status=webhook_status,
             )
 
         payload = {
@@ -62,11 +85,24 @@ class PlanfileApiAdapter:
             "tickets": [asdict(ticket) for ticket in tickets],
         }
         self._request("POST", self._endpoint("/tickets/bulk"), payload)
+        webhook_status = "skipped"
+        if self.config.webhook_url:
+            webhook_status = self._webhook_label(
+                self.emit_webhook(
+                    "tickets.pushed",
+                    {
+                        "project": self.config.project,
+                        "count": len(tickets),
+                        "tickets": [asdict(t) for t in tickets],
+                    },
+                )
+            )
         return PlanfileSyncResult(
             pushed=len(tickets),
             pulled=0,
             local_files=local_files,
             remote_status="pushed",
+            webhook_status=webhook_status,
         )
 
     def pull(self) -> list[Ticket]:
@@ -87,12 +123,90 @@ class PlanfileApiAdapter:
     def sync_from_report(self, report: Any) -> PlanfileSyncResult:
         tickets = tickets_from_report(report)
         result = self.push(tickets)
+        webhook = None
+        if self.config.webhook_url:
+            webhook = self.emit_webhook(
+                "tickets.synced",
+                {"project": self.config.project, "pushed": result.pushed, "pulled": len(self.pull())},
+            )
         return PlanfileSyncResult(
             pushed=result.pushed,
             pulled=len(self.pull()),
             local_files=result.local_files,
             remote_status=result.remote_status,
+            webhook_status=self._webhook_label(webhook) if webhook else result.webhook_status,
         )
+
+    def emit_webhook(self, event: str, payload: dict[str, Any]) -> PlanfileWebhookResult:
+        if not self.config.webhook_url:
+            return PlanfileWebhookResult(delivered=False, status_code=None, event=event)
+
+        body = {
+            "event": event,
+            "source": "intract",
+            "project": self.config.project,
+            "payload": payload,
+        }
+        raw = json.dumps(body, ensure_ascii=False).encode("utf-8")
+        headers = {"Content-Type": "application/json", "User-Agent": "intract/planfile-webhook"}
+        if self.config.webhook_secret:
+            signature = hmac.new(
+                self.config.webhook_secret.encode("utf-8"),
+                raw,
+                hashlib.sha256,
+            ).hexdigest()
+            headers["X-Intract-Signature"] = f"sha256={signature}"
+
+        request = urllib.request.Request(self.config.webhook_url, data=raw, headers=headers, method="POST")
+        try:
+            with urllib.request.urlopen(request, timeout=15) as response:
+                return PlanfileWebhookResult(
+                    delivered=True,
+                    status_code=response.status,
+                    event=event,
+                )
+        except urllib.error.HTTPError as exc:
+            raise RuntimeError(f"Planfile webhook failed: {exc.code}") from exc
+        except urllib.error.URLError as exc:
+            raise RuntimeError(f"Planfile webhook failed: {exc.reason}") from exc
+
+    def apply_webhook_event(self, payload: dict[str, Any]) -> int:
+        """Apply inbound planfile ticket status updates to the local JSON export."""
+        event = str(payload.get("event", ""))
+        if event not in {"ticket.updated", "tickets.updated", "ticket.closed"}:
+            return 0
+
+        json_path = self.config.output_dir / "planfile-tickets.json"
+        if not json_path.exists():
+            return 0
+
+        data = json.loads(json_path.read_text(encoding="utf-8"))
+        tickets = data.get("tickets", [])
+        updates = payload.get("tickets") or payload.get("payload", {}).get("tickets") or []
+        if isinstance(updates, dict):
+            updates = [updates]
+
+        by_id = {str(item.get("id")): item for item in tickets if item.get("id")}
+        changed = 0
+        for update in updates:
+            ticket_id = str(update.get("id", ""))
+            if ticket_id not in by_id:
+                continue
+            new_status = update.get("status")
+            if new_status and by_id[ticket_id].get("status") != new_status:
+                by_id[ticket_id]["status"] = new_status
+                changed += 1
+
+        if changed:
+            data["tickets"] = list(by_id.values())
+            json_path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+        return changed
+
+    @staticmethod
+    def _webhook_label(result: PlanfileWebhookResult | None) -> str:
+        if result is None:
+            return "skipped"
+        return "delivered" if result.delivered else "failed"
 
     def _endpoint(self, path: str) -> str:
         base = self.config.url.rstrip("/")
