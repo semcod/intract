@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    {
+      "name": "semcod.intract-intent-contracts",
+      "when": "onLanguage:python"
+    }
+  ]
+}

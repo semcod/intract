@@ -67,6 +67,8 @@ fi
 if "$PYTHON" -m redup scan --help >/dev/null 2>&1; then
   echo "==> redup scan ${DEMO} --intent"
   "$PYTHON" -m redup scan "$DEMO" --intent --intent-threshold 0.5 --format json >/dev/null
+  echo "==> redup intract ${DEMO}"
+  "$PYTHON" -m redup intract "$DEMO" --manifest "$DEMO/intract.yaml" --fail-on violation,missing_required_p1 --no-intent
 else
   echo "SKIP: redup not installed"
 fi

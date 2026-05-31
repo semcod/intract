@@ -2,7 +2,7 @@
   "name": "intract-intent-contracts",
   "displayName": "Intract Intent Contracts",
   "description": "Highlight @intract.v1 intent contract comments and run validation tasks.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "semcod",
   "license": "Apache-2.0",
   "repository": {

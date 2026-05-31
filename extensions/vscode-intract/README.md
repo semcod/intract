@@ -15,16 +15,26 @@ code --install-extension intract-intent-contracts-0.1.0.vsix
 
 1. Create a publisher at https://marketplace.visualstudio.com/manage
 2. Generate a Personal Access Token with **Marketplace → Manage**
-3. Add repository secret `VSCE_PAT`
-4. Tag and push: `git tag vscode-v0.1.0 && git push origin vscode-v0.1.0`
-5. Workflow `.github/workflows/vscode-extension.yml` packages and publishes the VSIX
-
-Manual publish:
+3. Add repository secret `VSCE_PAT` in GitHub → Settings → Secrets
+4. Bump `version` in `package.json` and update `CHANGELOG.md`
+5. Tag and push:
 
 ```bash
-vsce login semcod
-vsce publish --no-dependencies
+git tag vscode-v0.1.1
+git push origin vscode-v0.1.1
 ```
+
+Workflow `.github/workflows/vscode-extension.yml` packages on PR/push and publishes on tag `vscode-v*`.
+
+Local install without Marketplace:
+
+```bash
+cd extensions/vscode-intract
+vsce package --no-dependencies
+code --install-extension intract-intent-contracts-0.1.1.vsix
+```
+
+Or use workspace recommendation (`.vscode/extensions.json`) and **Extensions: Install from VSIX**.
 
 ## Features
 

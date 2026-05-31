@@ -201,7 +201,13 @@ CLI:
 ```bash
 redup scan . --intent --intent-threshold 0.84
 redup scan . --intent --intent-manifest intract.yaml
+redup scan . --intent --intent-fail-on violation,intent_duplicate
+redup intract .
+redup intract . --manifest intract.yaml --fail-on violation,missing_required_p1,intent_duplicate
+redup intract . --format json
 ```
+
+Policy tokens (`fail_on` / `warn_on`): `violation`, `partial`, `fail`, `intent_duplicate`, `missing_required_p1`, `invalid_manifest`.
 
 MCP scan params: `intent`, `intent_threshold`, `intent_manifest`.
 
