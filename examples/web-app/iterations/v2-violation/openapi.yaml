@@ -1,0 +1,21 @@
+openapi: 3.1.0
+info:
+  title: Web App Demo API
+  version: 2.0.0
+
+paths:
+  /profiles/{user_id}:
+    get:
+      summary: Read user profile
+      x-intract:
+        scope: endpoint
+        intent: api:read_profile
+        priority: 2
+        domain: api
+        input: [user_id]
+        output: [profile]
+        effect: [read]
+        forbid: [write, network]
+      responses:
+        "200":
+          description: Profile payload

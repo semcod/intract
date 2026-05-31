@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Intract — Web App Demo Mock</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #1a2332;
+      --border: #2d3a4f;
+      --text: #e6edf3;
+      --muted: #8b9cb3;
+      --pass: #3fb950;
+      --partial: #d29922;
+      --violation: #f85149;
+      --accent: #58a6ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    h1 { margin: 0; font-size: 1.25rem; font-weight: 600; }
+    .subtitle { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+    .tabs { display: flex; gap: 0.5rem; }
+    .tabs button {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .tabs button.active {
+      border-color: var(--accent);
+      background: #1f2d44;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem 2rem 2rem;
+    }
+    @media (max-width: 960px) { main { grid-template-columns: 1fr; } }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+    }
+    .panel h2 {
+      margin: 0 0 1rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .browser {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .browser-bar {
+      background: #111820;
+      padding: 0.5rem 0.75rem;
+      display: flex;
+      gap: 0.35rem;
+      align-items: center;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+    .url {
+      flex: 1;
+      margin-left: 0.5rem;
+      background: #0d1117;
+      border-radius: 6px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .app-screen {
+      padding: 1.5rem;
+      min-height: 220px;
+      background: linear-gradient(160deg, #152238 0%, #0f1419 100%);
+    }
+    .app-screen h3 { margin: 0 0 0.5rem; font-size: 1.35rem; }
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+    .badge-pass { background: rgba(63,185,80,0.2); color: var(--pass); }
+    .badge-violation { background: rgba(248,81,73,0.2); color: var(--violation); }
+    .widgets { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .widget {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      min-width: 120px;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .status-pass { background: rgba(63,185,80,0.15); color: var(--pass); }
+    .status-partial { background: rgba(210,153,34,0.15); color: var(--partial); }
+    .status-violation { background: rgba(248,81,73,0.15); color: var(--violation); }
+    .contract {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.82rem;
+    }
+    .contract-head { display: flex; justify-content: space-between; gap: 0.5rem; }
+    .contract code { color: var(--accent); font-size: 0.78rem; }
+    .st-pass { color: var(--pass); }
+    .st-partial { color: var(--partial); }
+    .st-violation { color: var(--violation); }
+    .graph { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+    .graph span { color: var(--accent); }
+    footer {
+      padding: 1rem 2rem 2rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    footer code { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Intract Web App Demo</h1>
+      <p class="subtitle">Mock produktu — iteracja v1 (release OK) vs v2 (Intract blokuje)</p>
+    </div>
+    <div class="tabs">
+      <button type="button" id="tab-v1" class="active">Iteration v1 — pass</button>
+      <button type="button" id="tab-v2">Iteration v2 — violation</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Mock aplikacji (UI)</h2>
+      <div class="browser">
+        <div class="browser-bar">
+          <span class="dot dot-r"></span>
+          <span class="dot dot-y"></span>
+          <span class="dot dot-g"></span>
+          <div class="url" id="mock-url">https://app.example/dashboard</div>
+        </div>
+        <div class="app-screen" id="app-screen"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Intract validation</h2>
+      <div id="status-pill"></div>
+      <div id="summary"></div>
+      <div id="contracts"></div>
+    </section>
+
+    <section class="panel" style="grid-column: 1 / -1;">
+      <h2>Manifest graph (require → provide)</h2>
+      <div class="graph" id="graph"></div>
+    </section>
+  </main>
+
+  <footer>
+    Wygeneruj świeże dane: <code>bash examples/web-app/run-demo.sh</code>.
+    Otwórz ten plik przez lokalny serwer jeśli przeglądarka blokuje fetch (np.
+    <code>python -m http.server --directory examples/web-app</code>).
+  </footer>
+
+  <script>
+    const ITERATIONS = {
+      v1: {
+        label: "v1-pass",
+        mode: "mock-v1",
+        title: "Welcome, Alex",
+        badge: "Release candidate",
+        badgeClass: "badge-pass",
+        url: "https://app.example/dashboard",
+        widgets: ["recent-activity", "permissions"],
+        note: "Backend lokalny, brak fetch/requests.",
+      },
+      v2: {
+        label: "v2-violation",
+        mode: "mock-v2",
+        title: "Welcome, Alex",
+        badge: "Blocked by Intract",
+        badgeClass: "badge-violation",
+        url: "https://app.example/dashboard ⚠ external calls",
+        widgets: ["metrics (fetch)", "permissions"],
+        note: "auth.py → requests, dashboard.ts → fetch, Dockerfile :latest",
+      },
+    };
+
+    let current = "v1";
+
+    async function loadReports(label) {
+      const base = "reports/" + label;
+      try {
+        const [validate, graph] = await Promise.all([
+          fetch(base + ".validate.json").then((r) => r.json()),
+          fetch(base + ".graph.json").then((r) => r.json()),
+        ]);
+        return { validate, graph };
+      } catch (e) {
+        console.warn("Using embedded fallback", e);
+        return null;
+      }
+    }
+
+    function renderApp(meta) {
+      const el = document.getElementById("app-screen");
+      el.innerHTML = `
+        <span class="badge ${meta.badgeClass}">${meta.badge}</span>
+        <h3>${meta.title}</h3>
+        <p style="color:var(--muted);font-size:0.85rem;margin:0 0 1rem">${meta.note}</p>
+        <div class="widgets">
+          ${meta.widgets.map((w) => `<div class="widget">${w}</div>`).join("")}
+        </div>
+      `;
+      document.getElementById("mock-url").textContent = meta.url;
+    }
+
+    function renderValidation(data) {
+      const status = data.status;
+      const pill = document.getElementById("status-pill");
+      pill.innerHTML = `<span class="status-pill status-${status}">● ${status.toUpperCase()}</span>`;
+      const s = data.summary;
+      document.getElementById("summary").innerHTML = `
+        <p style="font-size:0.85rem;color:var(--muted);margin:0 0 1rem">
+          pass ${s.passed} · partial ${s.partial} · violations ${s.violations}
+        </p>`;
+      const fn = data.results.filter((r) => r.scope === "function");
+      document.getElementById("contracts").innerHTML = fn
+        .map(
+          (r) => `
+        <div class="contract">
+          <div class="contract-head">
+            <code>${r.contract}</code>
+            <span class="st-${r.status}">${r.status}</span>
+          </div>
+          <div style="color:var(--muted);margin-top:0.35rem">${r.file_path || ""}</div>
+          ${(r.violations || []).map((v) => `<div style="color:var(--violation);margin-top:0.25rem">${v.message || v}</div>`).join("")}
+        </div>`
+        )
+        .join("");
+    }
+
+    function renderGraph(graph) {
+      const edges = (graph.edges || [])
+        .map(([a, b]) => `<span>${a}</span> → ${b}`)
+        .join("<br/>");
+      const missing = (graph.missing || []).length
+        ? `<br/><br/>Missing: ${graph.missing.join(", ")}`
+        : "<br/><br/>Missing: none";
+      document.getElementById("graph").innerHTML = edges + missing;
+    }
+
+    async function showIteration(key) {
+      current = key;
+      document.getElementById("tab-v1").classList.toggle("active", key === "v1");
+      document.getElementById("tab-v2").classList.toggle("active", key === "v2");
+      const meta = ITERATIONS[key];
+      renderApp(meta);
+      const reports = await loadReports(meta.label);
+      if (reports) {
+        renderValidation(reports.validate);
+        renderGraph(reports.graph);
+      }
+    }
+
+    document.getElementById("tab-v1").onclick = () => showIteration("v1");
+    document.getElementById("tab-v2").onclick = () => showIteration("v2");
+    showIteration("v1");
+  </script>
+</body>
+</html>

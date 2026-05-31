@@ -1,0 +1,66 @@
+{
+  "root": "/home/tom/github/semcod/intract/examples/web-app/iterations/v2-violation",
+  "artifacts_scanned": 2,
+  "violations": 1,
+  "artifacts": [
+    "Dockerfile",
+    "openapi.yaml"
+  ],
+  "reports": [
+    {
+      "path": "/home/tom/github/semcod/intract/examples/web-app/iterations/v2-violation/Dockerfile",
+      "kind": "dockerfile",
+      "results": [
+        {
+          "contract": "package.container",
+          "scope": "container",
+          "status": "violation",
+          "score": 0.0,
+          "file_path": "/home/tom/github/semcod/intract/examples/web-app/iterations/v2-violation/Dockerfile",
+          "lines": [
+            1,
+            1
+          ],
+          "matched": {},
+          "missing": [],
+          "violations": [
+            {
+              "kind": "latest_tag",
+              "message": "Dockerfile uses latest tag.",
+              "severity": "error"
+            },
+            {
+              "kind": "root_user",
+              "message": "Dockerfile does not set non-root USER.",
+              "severity": "error"
+            }
+          ],
+          "evidence": {}
+        }
+      ]
+    },
+    {
+      "path": "/home/tom/github/semcod/intract/examples/web-app/iterations/v2-violation/openapi.yaml",
+      "kind": "openapi",
+      "results": [
+        {
+          "contract": "api.read_profile",
+          "scope": "endpoint",
+          "status": "pass",
+          "score": 1.0,
+          "file_path": "/home/tom/github/semcod/intract/examples/web-app/iterations/v2-violation/openapi.yaml",
+          "lines": [
+            1,
+            1
+          ],
+          "matched": {},
+          "missing": [],
+          "violations": [],
+          "evidence": {
+            "owner": "GET /profiles/{user_id}"
+          }
+        }
+      ]
+    }
+  ]
+}

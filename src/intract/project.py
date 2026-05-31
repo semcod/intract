@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from intract.core.artifact import ArtifactKind, infer_artifact_kind
+
 from .models import ProjectReport, ValidationResult, ValidationStatus
 from .parser import extract_contract_records_from_text
 from .signature import build_signatures
@@ -9,6 +11,7 @@ from .validation import validate_contract_against_source, validate_required_cont
 from .yaml_manifest import load_manifest_records
 
 DEFAULT_EXTENSIONS = (".py", ".js", ".ts", ".tsx", ".jsx", ".java", ".cs", ".go", ".rs", ".php", ".rb", ".sh", ".sql", ".html", ".css", ".md", ".yaml", ".yml")
+EXTRA_ARTIFACT_KINDS = frozenset({ArtifactKind.DOCKERFILE})
 SKIP_DIRS = {".git", ".venv", "venv", "__pycache__", "node_modules", "dist", "build"}
 
 
@@ -19,9 +22,14 @@ def load_project_sources(root: Path, *, extensions: tuple[str, ...] = DEFAULT_EX
             continue
         if any(part in SKIP_DIRS for part in path.parts):
             continue
-        if path.suffix not in extensions:
-            continue
         rel_path = str(path.relative_to(root))
+        if path.suffix not in extensions:
+            try:
+                preview = path.read_text(encoding="utf-8")
+            except UnicodeDecodeError:
+                continue
+            if infer_artifact_kind(rel_path, preview) not in EXTRA_ARTIFACT_KINDS:
+                continue
         try:
             sources[rel_path] = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:

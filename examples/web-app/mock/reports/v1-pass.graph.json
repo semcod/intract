@@ -1,0 +1,25 @@
+{
+  "nodes": [
+    "api.read_profile",
+    "auth.check_permission",
+    "deploy.container_image",
+    "document.public_api",
+    "ship.user_dashboard",
+    "ui.render_dashboard"
+  ],
+  "edges": [
+    [
+      "ship.user_dashboard",
+      "deploy.container_image"
+    ],
+    [
+      "ship.user_dashboard",
+      "auth.check_permission"
+    ],
+    [
+      "ship.user_dashboard",
+      "api.read_profile"
+    ]
+  ],
+  "missing": []
+}

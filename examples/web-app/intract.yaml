@@ -1,0 +1,35 @@
+project:
+  name: web-app-demo
+
+contracts:
+  - id: web.release
+    scope: project
+    intent: ship:user_dashboard
+    priority: 1
+    domain: web
+    require:
+      - auth.check_permission
+      - api.read_profile
+      - deploy.container_image
+    validate:
+      - required_intents
+      - no_forbidden_effect
+    meaning: "Web stack exposes auth, profile API and deployable container."
+
+files:
+  openapi.yaml:
+    - scope: artifact
+      intent: document:public_api
+      priority: 2
+      domain: api
+      validate:
+        - input_presence
+        - output_presence
+        - no_forbidden_effect
+  Dockerfile:
+    - scope: artifact
+      intent: deploy:container_image
+      priority: 1
+      domain: devops
+      validate:
+        - no_forbidden_effect

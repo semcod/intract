@@ -1,0 +1,229 @@
+{
+  "project_path": "/home/tom/github/semcod/intract/examples/web-app/iterations/v1-pass",
+  "status": "pass",
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "partial": 0,
+    "failed": 0,
+    "violations": 0
+  },
+  "results": [
+    {
+      "contract": "deploy.container_image",
+      "scope": "block",
+      "status": "pass",
+      "score": 1.0,
+      "file_path": "Dockerfile",
+      "lines": [
+        1,
+        1
+      ],
+      "matched": {
+        "observed_effects": [
+          "log"
+        ]
+      },
+      "missing": [],
+      "violations": [],
+      "evidence": {
+        "meaning": "Production container image",
+        "validators": [
+          "no_forbidden_effect"
+        ],
+        "rules": {
+          "no_forbidden_effect": "pass"
+        }
+      }
+    },
+    {
+      "contract": "api.read_profile",
+      "scope": "function",
+      "status": "pass",
+      "score": 1.0,
+      "file_path": "backend/routes.py",
+      "lines": [
+        1,
+        1
+      ],
+      "matched": {
+        "has_return": true,
+        "observed_effects": []
+      },
+      "missing": [],
+      "violations": [],
+      "evidence": {
+        "meaning": "Build profile payload from in-memory user store",
+        "validators": [
+          "no_forbidden_effect",
+          "return_value"
+        ],
+        "rules": {
+          "return_value": "pass",
+          "no_forbidden_effect": "pass"
+        }
+      }
+    },
+    {
+      "contract": "auth.check_permission",
+      "scope": "function",
+      "status": "pass",
+      "score": 1.0,
+      "file_path": "backend/auth.py",
+      "lines": [
+        1,
+        1
+      ],
+      "matched": {
+        "inputs_found": [
+          "user",
+          "resource"
+        ],
+        "outputs_found": [
+          "allowed"
+        ],
+        "has_return": true,
+        "observed_effects": []
+      },
+      "missing": [],
+      "violations": [],
+      "evidence": {
+        "meaning": "Check permission locally without network or writes",
+        "validators": [
+          "input_presence",
+          "no_forbidden_effect",
+          "output_presence",
+          "return_value"
+        ],
+        "rules": {
+          "input_presence": "pass",
+          "output_presence": "pass",
+          "return_value": "pass",
+          "no_forbidden_effect": "pass"
+        }
+      }
+    },
+    {
+      "contract": "ui.render_dashboard",
+      "scope": "function",
+      "status": "pass",
+      "score": 1.0,
+      "file_path": "frontend/dashboard.ts",
+      "lines": [
+        1,
+        1
+      ],
+      "matched": {
+        "has_return": true,
+        "observed_effects": []
+      },
+      "missing": [],
+      "violations": [],
+      "evidence": {
+        "meaning": "Render dashboard view model from profile data passed from backend",
+        "validators": [
+          "no_forbidden_effect",
+          "return_value"
+        ],
+        "rules": {
+          "return_value": "pass",
+          "no_forbidden_effect": "pass"
+        }
+      }
+    },
+    {
+      "contract": "ship.user_dashboard",
+      "scope": "project",
+      "status": "pass",
+      "score": 1.0,
+      "file_path": "/home/tom/github/semcod/intract/examples/web-app/intract.yaml",
+      "lines": [
+        1,
+        1
+      ],
+      "matched": {
+        "observed_effects": [],
+        "satisfied_requirements": [
+          "api.read_profile",
+          "auth.check_permission",
+          "deploy.container_image"
+        ]
+      },
+      "missing": [],
+      "violations": [],
+      "evidence": {
+        "meaning": "Web stack exposes auth, profile API and deployable container.",
+        "validators": [
+          "no_forbidden_effect",
+          "required_intent"
+        ],
+        "rules": {
+          "no_forbidden_effect": "pass"
+        },
+        "manifest_contract": true
+      }
+    },
+    {
+      "contract": "document.public_api",
+      "scope": "artifact",
+      "status": "pass",
+      "score": 1.0,
+      "file_path": "openapi.yaml",
+      "lines": [
+        1,
+        1
+      ],
+      "matched": {
+        "inputs_found": [],
+        "outputs_found": [],
+        "observed_effects": [],
+        "satisfied_requirements": []
+      },
+      "missing": [],
+      "violations": [],
+      "evidence": {
+        "meaning": "",
+        "validators": [
+          "input_presence",
+          "no_forbidden_effect",
+          "output_presence"
+        ],
+        "rules": {
+          "input_presence": "pass",
+          "output_presence": "pass",
+          "no_forbidden_effect": "pass"
+        },
+        "manifest_contract": true
+      }
+    },
+    {
+      "contract": "deploy.container_image",
+      "scope": "artifact",
+      "status": "pass",
+      "score": 1.0,
+      "file_path": "Dockerfile",
+      "lines": [
+        1,
+        1
+      ],
+      "matched": {
+        "observed_effects": [
+          "log"
+        ],
+        "satisfied_requirements": []
+      },
+      "missing": [],
+      "violations": [],
+      "evidence": {
+        "meaning": "",
+        "validators": [
+          "no_forbidden_effect"
+        ],
+        "rules": {
+          "no_forbidden_effect": "pass"
+        },
+        "manifest_contract": true
+      }
+    }
+  ]
+}

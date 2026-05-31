@@ -1,14 +1,47 @@
 # Examples
 
-Główne przykłady znajdują się w:
+Główne przykłady znajdują się w [`examples/`](../examples/) — indeks: [`examples/README.md`](../examples/README.md).
 
-- [`examples/integration_tests/`](../examples/integration_tests/)
-
-Uruchom wszystkie:
+Uruchom integracje:
 
 ```bash
 python examples/integration_tests/run_examples.py
 ```
+
+## Web App (mock produktu + iteracje)
+
+Folder:
+
+- [`examples/web-app/`](../examples/web-app/)
+
+Wizualny mock:
+
+```bash
+bash examples/web-app/run-demo.sh
+python -m http.server 8765 --directory examples/web-app
+# → http://localhost:8765/mock/index.html
+```
+
+Iteracje:
+
+| Folder | Intract | Opis |
+|--------|---------|------|
+| `iterations/v1-pass/` | funkcje pass | Release candidate bez sieci |
+| `iterations/v2-violation/` | violation | requests + fetch + Dockerfile |
+
+Komendy:
+
+```bash
+python -m intract validate examples/web-app/iterations/v1-pass \
+  --manifest examples/web-app/intract.yaml
+python -m intract validate examples/web-app/iterations/v2-violation \
+  --manifest examples/web-app/intract.yaml --planfile
+python -m intract scan examples/web-app/iterations/v1-pass --all-artifacts
+```
+
+## Full-stack pipeline
+
+- [`examples/full-stack/`](../examples/full-stack/)
 
 ## 01 — Python PASS
 
