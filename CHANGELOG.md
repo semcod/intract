@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.6] - 2026-05-31
+
+### Docs
+- Update docs/github-action.md
+
+### Other
+- Update extensions/vscode-intract/.vscodeignore
+
+## [0.5.5] - 2026-05-31
+
+### Docs
+- Update docs/github-action.md
+
+### Other
+- Update extensions/vscode-intract/.vscodeignore
+
 ## [0.5.4] - 2026-05-31
 
 ### Docs

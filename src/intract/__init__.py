@@ -28,4 +28,4 @@ __all__ = [
     "validate_sources",
 ]
 
-__version__ = "0.5.4"
+__version__ = "0.5.6"
