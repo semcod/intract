@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "comment.intract.injection",
+  "injectionSelector": "L:comment",
+  "patterns": [
+    {
+      "name": "keyword.control.intract",
+      "match": "@intract\\.v1"
+    },
+    {
+      "name": "entity.name.tag.intract",
+      "match": "\\b(?:scope|intent|priority|domain|input|output|effect|forbid|require|validate|meaning):"
+    },
+    {
+      "name": "string.unquoted.intract",
+      "match": ":[A-Za-z0-9_.,:/-]+"
+    }
+  ]
+}

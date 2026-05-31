@@ -21,16 +21,19 @@ GitHub Actions job `full-stack-integration` runs the intract-only subset by defa
 
 ## planfile
 
-Intract generuje planfile-compatible tickety.
+Intract generuje planfile-compatible tickety i może synchronizować je z HTTP API.
 
 Komendy:
 
 ```bash
 python -m intract tickets .
 python -m intract validate . --planfile
-python -m intract watch . --planfile
-python -m intract engine run . --planfile
+python -m intract planfile push . --url https://planfile.example/api
+python -m intract planfile pull .
+python -m intract planfile sync .
 ```
+
+Zmienne środowiskowe: `PLANFILE_URL`, `PLANFILE_TOKEN`, `PLANFILE_PROJECT`.
 
 Pliki:
 
@@ -43,6 +46,28 @@ Pliki:
 Kod:
 
 - [`src/intract/integrations/planfile.py`](../src/intract/integrations/planfile.py)
+- [`src/intract/integrations/planfile_adapter.py`](../src/intract/integrations/planfile_adapter.py)
+
+## GitHub Action (Marketplace-ready)
+
+Composite action w repozytorium:
+
+```yaml
+- uses: semcod/intract@v0
+  with:
+    path: .
+    manifest: intract.yaml
+    staged: "false"
+```
+
+Plik: [`action.yml`](../action.yml)
+
+## VS Code
+
+Extension: [`extensions/vscode-intract/`](../extensions/vscode-intract/)
+
+- podświetlanie `@intract.v1` w komentarzach
+- komendy Validate Project / Check Staged
 
 ## pre-commit
 
@@ -165,6 +190,20 @@ Adapter:
 - [`../redup/src/redup/integrations/intract/adapter.py`](../../redup/src/redup/integrations/intract/adapter.py)
 
 Intent duplicate groups are tagged with `engine: intract` in JSON/Markdown/TOON reporters.
+
+## Intract MCP server
+
+Standalone JSON-RPC MCP server:
+
+```bash
+intract-mcp
+# or
+python -m intract.mcp.server
+```
+
+Tools: `validate_project`, `validate_staged`, `validate_intent_snippet`, `find_duplicates`, `build_graph`, `scan_artifacts`, `project_info`.
+
+Kod: [`src/intract/mcp/`](../src/intract/mcp/)
 
 ## Policy gates
 

@@ -1,0 +1,70 @@
+{
+  "name": "intract-intent-contracts",
+  "displayName": "Intract Intent Contracts",
+  "description": "Highlight @intract.v1 intent contract comments and run validation tasks.",
+  "version": "0.1.0",
+  "publisher": "semcod",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Linters", "Other"],
+  "activationEvents": [
+    "onLanguage:python",
+    "onLanguage:typescript",
+    "onLanguage:javascript",
+    "onLanguage:csharp"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "grammars": [
+      {
+        "scopeName": "comment.intract.injection",
+        "path": "./syntaxes/intract.tmLanguage.json",
+        "injectTo": [
+          "source.python",
+          "source.ts",
+          "source.tsx",
+          "source.js",
+          "source.jsx",
+          "source.cs"
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "Intract",
+      "properties": {
+        "intract.manifest": {
+          "type": "string",
+          "default": "intract.yaml",
+          "description": "Default manifest path for validation tasks."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "intract.validateProject",
+        "title": "Intract: Validate Project"
+      },
+      {
+        "command": "intract.checkStaged",
+        "title": "Intract: Check Staged (Hunks)"
+      }
+    ],
+    "taskDefinitions": {
+      "intract": {
+        "type": "intract",
+        "required": ["command"],
+        "properties": {
+          "command": {
+            "type": "string",
+            "description": "intract CLI command to run"
+          },
+          "args": {
+            "type": "array",
+            "description": "Additional CLI arguments"
+          }
+        }
+      }
+    }
+  }
+}

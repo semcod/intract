@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.4] - 2026-05-31
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update docs/integrations.md
+- Update docs/missing-files-and-roadmap.md
+- Update docs/roadmap.md
+- Update extensions/vscode-intract/README.md
+- Update project/README.md
+
+### Test
+- Update tests/test_language_analyzers.py
+- Update tests/test_mcp.py
+- Update tests/test_planfile_adapter.py
+- Update tests/test_python_ast.py
+- Update tests/test_scan_artifacts.py
+
+### Other
+- Update action.yml
+- Update app.doql.less
+- Update extensions/vscode-intract/extension.js
+- Update extensions/vscode-intract/package.json
+- Update extensions/vscode-intract/syntaxes/intract.tmLanguage.json
+- Update project/calls.png
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- Update project/flow.png
+- Update project/index.html
+- ... and 7 more files
+
 ## [0.5.3] - 2026-05-30
 
 ### Docs

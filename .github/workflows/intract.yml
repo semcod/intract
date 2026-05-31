@@ -27,11 +27,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout vallm
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/vallm
+          path: vallm
+          fetch-depth: 1
+        continue-on-error: true
+      - name: Checkout redup
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/redup
+          path: redup
+          fetch-depth: 1
+        continue-on-error: true
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: chmod +x scripts/ci-full-stack.sh
       - run: bash scripts/ci-full-stack.sh
         env:
-          SKIP_VALLM: "1"
-          SKIP_REDUP: "1"
+          VALLM_ROOT: ${{ github.workspace }}/vallm
+          REDUP_ROOT: ${{ github.workspace }}/redup

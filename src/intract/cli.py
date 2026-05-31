@@ -24,7 +24,9 @@ from .yaml_manifest import create_sample_manifest
 
 app = typer.Typer(help="Intract — intent contracts for codebases.")
 engine_app = typer.Typer(help="Intract engine: scan, suggest contracts and detect logic drift.")
+planfile_app = typer.Typer(help="Planfile ticket export and API sync.")
 app.add_typer(engine_app, name="engine")
+app.add_typer(planfile_app, name="planfile")
 console = Console()
 
 
@@ -47,8 +49,28 @@ def init(path: Path = typer.Argument(Path(".")), force: bool = typer.Option(Fals
 
 
 @app.command()
-def scan(path: Path = typer.Argument(Path(".")), json_output: bool = typer.Option(False, "--json")):
+def scan(
+    path: Path = typer.Argument(Path(".")),
+    json_output: bool = typer.Option(False, "--json"),
+    all_artifacts: bool = typer.Option(False, "--all-artifacts", help="Also scan and validate non-code artifacts."),
+):
     """Scan files for inline @intract contracts."""
+    if all_artifacts:
+        from .scan_artifacts import scan_all_artifacts
+
+        artifact_report = scan_all_artifacts(path)
+        if json_output:
+            console.print_json(json.dumps(artifact_report.to_dict(), ensure_ascii=False))
+            return
+        console.print(f"[bold]Artifacts scanned:[/] {len(artifact_report.artifacts)}")
+        console.print(f"[bold]Violations:[/] {len(artifact_report.violations)}")
+        for report in artifact_report.reports:
+            for result in report.results:
+                console.print(f"- {report.path}: {result.status.value} {result.contract}")
+        if artifact_report.violations:
+            raise typer.Exit(1)
+        return
+
     records = []
     if path.is_file():
         records.extend(extract_contract_records_from_text(path.read_text(encoding="utf-8"), file_path=str(path)))
@@ -219,6 +241,68 @@ def tickets(path: Path = typer.Argument(Path(".")), manifest: Path | None = type
     report = validate_project(path, manifest_path=manifest)
     paths = _export_tickets(path, report)
     console.print(f"[bold]Ticket files:[/] {paths}")
+
+
+@planfile_app.command("push")
+def planfile_push(
+    path: Path = typer.Argument(Path(".")),
+    manifest: Path | None = typer.Option(None, "--manifest"),
+    api_url: str | None = typer.Option(None, "--url", envvar="PLANFILE_URL"),
+    token: str | None = typer.Option(None, "--token", envvar="PLANFILE_TOKEN"),
+    project: str | None = typer.Option(None, "--project", envvar="PLANFILE_PROJECT"),
+):
+    """Export validation tickets locally and optionally push to a planfile API."""
+    from .integrations.planfile_adapter import PlanfileApiAdapter, PlanfileConfig
+
+    report = validate_project(path, manifest_path=manifest)
+    adapter = PlanfileApiAdapter(
+        PlanfileConfig(url=api_url, token=token, project=project, output_dir=Path(path) / ".intract")
+    )
+    result = adapter.sync_from_report(report)
+    console.print(f"[bold]Pushed:[/] {result.pushed} tickets ({result.remote_status})")
+    console.print(f"[bold]Files:[/] {result.local_files}")
+
+
+@planfile_app.command("pull")
+def planfile_pull(
+    path: Path = typer.Argument(Path(".")),
+    api_url: str | None = typer.Option(None, "--url", envvar="PLANFILE_URL"),
+    token: str | None = typer.Option(None, "--token", envvar="PLANFILE_TOKEN"),
+    project: str | None = typer.Option(None, "--project", envvar="PLANFILE_PROJECT"),
+    json_output: bool = typer.Option(False, "--json"),
+):
+    """Pull planfile tickets from API or local .intract export."""
+    from .integrations.planfile_adapter import PlanfileApiAdapter, PlanfileConfig
+
+    adapter = PlanfileApiAdapter(
+        PlanfileConfig(url=api_url, token=token, project=project, output_dir=Path(path) / ".intract")
+    )
+    tickets_ = adapter.pull()
+    if json_output:
+        console.print_json(json.dumps([ticket.__dict__ for ticket in tickets_], ensure_ascii=False))
+        return
+    console.print(f"[bold]Tickets:[/] {len(tickets_)}")
+
+
+@planfile_app.command("sync")
+def planfile_sync(
+    path: Path = typer.Argument(Path(".")),
+    manifest: Path | None = typer.Option(None, "--manifest"),
+    api_url: str | None = typer.Option(None, "--url", envvar="PLANFILE_URL"),
+    token: str | None = typer.Option(None, "--token", envvar="PLANFILE_TOKEN"),
+    project: str | None = typer.Option(None, "--project", envvar="PLANFILE_PROJECT"),
+):
+    """Validate project, export tickets, and push to planfile API when configured."""
+    from .integrations.planfile_adapter import PlanfileApiAdapter, PlanfileConfig
+
+    report = validate_project(path, manifest_path=manifest)
+    adapter = PlanfileApiAdapter(
+        PlanfileConfig(url=api_url, token=token, project=project, output_dir=Path(path) / ".intract")
+    )
+    result = adapter.sync_from_report(report)
+    console.print(
+        f"[bold]Sync complete:[/] pushed={result.pushed} pulled={result.pulled} status={result.remote_status}"
+    )
 
 
 @app.command()

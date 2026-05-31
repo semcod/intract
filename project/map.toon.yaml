@@ -1,154 +1,146 @@
-# intract | 103f 6002L | yaml:10,txt:1,shell:2,json:3,intract:1,toml:4,typescript:5,python:69,csharp:2,java:1,go:2,rust:1 | 2026-05-30
-# generated in 0.01s
-# stats: 227 func | 0 cls | 103 mod | CC̄=4.2 | critical:6 | cycles:0
-# alerts[5]: CC parse_contract_line=42; fan-out parse_contract_line=28; fan-out check=21; fan-out scan=20; CC infer_artifact_kind=17
-# hotspots[5]: parse_contract_line fan=28; check fan=21; scan fan=20; validate_manifest fan=17; watch fan=16
-# evolution: CC̄ 4.4→4.2 (improved -0.2)
+# intract | 95f 5431L | python:83,typescript:5,shell:3,go:2,less:1,rust:1 | 2026-05-30
+# stats: 180 func | 60 cls | 95 mod | CC̄=4.8 | critical:19 | cycles:0
+# alerts[5]: CC parse_contract_line=42; CC infer_artifact_kind=17; CC validate_sources=16; CC build_signature=15; CC validate_manifest=15
+# hotspots[5]: check fan=21; scan fan=18; validate_manifest fan=17; watch fan=16; parse_contract_line fan=16
+# evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[103]:
-  .pre-commit-hooks.yaml,6
-  Dockerfile,9
-  Makefile,13
-  examples/configs/intent.yaml,22
-  examples/csharp/ScanPipeline.cs,7
-  examples/full-stack/intract.yaml,27
-  examples/full-stack/src/analyzer.py,3
-  examples/full-stack/src/parser_a.py,3
-  examples/full-stack/src/parser_b.py,3
-  examples/full-stack/src/scanner.py,4
-  examples/integration_tests/01_python_pass/app.py,8
-  examples/integration_tests/02_typescript_violation_planfile/intent.yaml,19
-  examples/integration_tests/02_typescript_violation_planfile/permission.ts,6
-  examples/integration_tests/03_watch_engine_drift/intent.yaml,20
-  examples/integration_tests/03_watch_engine_drift/reporter.py,4
-  examples/integration_tests/03_watch_engine_drift/scanner.py,8
-  examples/integration_tests/run_examples.py,101
-  examples/typescript/permission.ts,5
-  goal.yaml,511
+M[95]:
+  app.doql.less,49
+  examples/full-stack/src/analyzer.py,4
+  examples/full-stack/src/parser_a.py,4
+  examples/full-stack/src/parser_b.py,4
+  examples/full-stack/src/scanner.py,5
+  examples/integration_tests/01_python_pass/app.py,9
+  examples/integration_tests/02_typescript_violation_planfile/permission.ts,7
+  examples/integration_tests/03_watch_engine_drift/reporter.py,5
+  examples/integration_tests/03_watch_engine_drift/scanner.py,9
+  examples/integration_tests/run_examples.py,102
+  examples/python/parse_extensions.py,9
+  examples/typescript/permission.ts,6
   project.sh,50
-  pyproject.toml,98
-  schemas/intract.schema.json,99
-  scripts/ci-full-stack.sh,58
-  sdks/csharp/IntractContract.cs,38
-  sdks/go/examples/main.go,22
-  sdks/go/intractsdk/sdk.go,68
-  sdks/java/src/main/java/io/intract/sdk/IntractContract.java,50
-  sdks/python/pyproject.toml,19
-  sdks/python/src/intract_plugin_example/__init__.py,26
-  sdks/rust/Cargo.toml,9
-  sdks/rust/src/lib.rs,54
-  sdks/typescript/examples/basic.ts,13
-  sdks/typescript/intract.config.ts,8
-  sdks/typescript/package.json,16
-  sdks/typescript/src/index.ts,42
-  sdks/typescript/tsconfig.json,10
-  src/intract/__init__.py,31
-  src/intract/__main__.py,4
-  src/intract/artifacts.py,5
-  src/intract/check.py,246
-  src/intract/cli.py,397
-  src/intract/config.py,64
-  src/intract/core/__init__.py,35
-  src/intract/core/artifact.py,93
-  src/intract/core/models.py,153
-  src/intract/core/normalizer.py,69
-  src/intract/core/registry.py,6
-  src/intract/core/signatures.py,78
-  src/intract/coverage.py,34
-  src/intract/duplicates/__init__.py,15
-  src/intract/duplicates/grouping.py,138
-  src/intract/duplicates/matcher.py,55
-  src/intract/duplicates/scoring.py,37
-  src/intract/effects.py,5
-  src/intract/engine/__init__.py,21
-  src/intract/engine/analyzer.py,85
-  src/intract/engine/assigner.py,109
-  src/intract/engine/context.py,36
-  src/intract/engine/drift.py,113
-  src/intract/engine/monitor.py,32
-  src/intract/engine/scanner.py,53
-  src/intract/git.py,53
-  src/intract/graph.py,68
-  src/intract/integrations/__init__.py,15
-  src/intract/integrations/planfile.py,141
-  src/intract/integrations/redup.py,169
-  src/intract/integrations/vallm.py,116
-  src/intract/manifest_schema.py,94
-  src/intract/models.py,3
-  src/intract/normalizer.py,3
-  src/intract/parser.py,3
-  src/intract/parsers/__init__.py,10
-  src/intract/parsers/inline.py,193
-  src/intract/parsers/manifest.py,113
-  src/intract/parsers/openapi.py,63
-  src/intract/plugins/__init__.py,24
-  src/intract/plugins/base.py,109
-  src/intract/plugins/builtins.py,111
-  src/intract/plugins/manager.py,61
-  src/intract/policy.py,72
-  src/intract/project.py,88
-  src/intract/reporters/__init__.py,0
-  src/intract/reporters/sarif.py,62
-  src/intract/sdk.py,47
-  src/intract/signature.py,3
-  src/intract/validation.py,13
-  src/intract/validators/__init__.py,21
-  src/intract/validators/artifacts.py,181
-  src/intract/validators/base.py,50
-  src/intract/validators/effects.py,52
-  src/intract/validators/engine.py,54
-  src/intract/validators/input_output.py,74
-  src/intract/validators/registry.py,85
-  src/intract/validators/requirements.py,13
-  src/intract/watch.py,160
-  src/intract/yaml_manifest.py,3
-  templates/.pre-commit-config.yaml,9
-  templates/Dockerfile.intract,12
-  templates/intract.yaml,36
-  templates/openapi.intract.yaml,21
-  templates/pyproject-intract.toml,16
-  testql-scenarios/generated-cli-tests.testql.toon.yaml,20
-  tree.txt,188
+  scripts/ci-full-stack.sh,59
+  sdks/go/examples/main.go,23
+  sdks/go/intractsdk/sdk.go,69
+  sdks/python/src/intract_plugin_example/__init__.py,27
+  sdks/rust/src/lib.rs,55
+  sdks/typescript/examples/basic.ts,14
+  sdks/typescript/intract.config.ts,9
+  sdks/typescript/src/index.ts,43
+  src/intract/__init__.py,32
+  src/intract/__main__.py,5
+  src/intract/artifacts.py,6
+  src/intract/check.py,247
+  src/intract/cli.py,398
+  src/intract/config.py,65
+  src/intract/core/__init__.py,36
+  src/intract/core/artifact.py,94
+  src/intract/core/models.py,154
+  src/intract/core/normalizer.py,70
+  src/intract/core/registry.py,7
+  src/intract/core/signatures.py,79
+  src/intract/coverage.py,35
+  src/intract/duplicates/__init__.py,16
+  src/intract/duplicates/grouping.py,139
+  src/intract/duplicates/matcher.py,56
+  src/intract/duplicates/scoring.py,38
+  src/intract/duplicates.py,6
+  src/intract/effects.py,6
+  src/intract/engine/__init__.py,22
+  src/intract/engine/analyzer.py,86
+  src/intract/engine/assigner.py,110
+  src/intract/engine/context.py,37
+  src/intract/engine/drift.py,114
+  src/intract/engine/monitor.py,33
+  src/intract/engine/scanner.py,54
+  src/intract/git.py,54
+  src/intract/graph.py,69
+  src/intract/integrations/__init__.py,16
+  src/intract/integrations/planfile.py,142
+  src/intract/integrations/redup.py,170
+  src/intract/integrations/vallm.py,117
+  src/intract/manifest_schema.py,95
+  src/intract/models.py,4
+  src/intract/normalizer.py,4
+  src/intract/parser.py,4
+  src/intract/parsers/__init__.py,11
+  src/intract/parsers/inline.py,194
+  src/intract/parsers/manifest.py,114
+  src/intract/parsers/openapi.py,64
+  src/intract/plugins/__init__.py,25
+  src/intract/plugins/base.py,110
+  src/intract/plugins/builtins.py,112
+  src/intract/plugins/manager.py,62
+  src/intract/policy.py,73
+  src/intract/project.py,89
+  src/intract/reporters/__init__.py,1
+  src/intract/reporters/sarif.py,63
+  src/intract/sdk.py,48
+  src/intract/signature.py,4
+  src/intract/validation.py,14
+  src/intract/validators/__init__.py,22
+  src/intract/validators/artifacts.py,182
+  src/intract/validators/base.py,51
+  src/intract/validators/effects.py,53
+  src/intract/validators/engine.py,55
+  src/intract/validators/input_output.py,75
+  src/intract/validators/registry.py,86
+  src/intract/validators/requirements.py,14
+  src/intract/watch.py,161
+  src/intract/yaml_manifest.py,4
+  tests/test_check_staged.py,35
+  tests/test_full_stack.py,28
+  tests/test_hunk_filter.py,89
+  tests/test_integrations.py,61
+  tests/test_manifest.py,27
+  tests/test_new_modules.py,49
+  tests/test_next_stage.py,37
+  tests/test_parser.py,30
+  tests/test_policy.py,46
+  tests/test_rule_registry.py,53
+  tests/test_staged_e2e.py,65
+  tests/test_validation.py,40
+  tree.sh,2
 D:
-  src/intract/parsers/inline.py:
-    e: clean_comment_line,split_csv,parse_priority,parse_key_value,marker_payload,parse_contract_line,extract_contract_records_from_text
-    clean_comment_line(line)
-    split_csv(value)
-    parse_priority(token)
-    parse_key_value(token)
-    marker_payload(line)
-    parse_contract_line(line)
-    extract_contract_records_from_text(source)
-  src/intract/core/artifact.py:
-    e: ArtifactKind,Artifact,infer_language,infer_artifact_kind
-    ArtifactKind(str,Enum):
-    Artifact: from_path(1)
-    infer_language(path)
-    infer_artifact_kind(path;content)
-  src/intract/project.py:
-    e: load_project_sources,extract_signatures_from_sources,validate_sources,validate_project
-    load_project_sources(root)
-    extract_signatures_from_sources(sources)
-    validate_sources(sources)
-    validate_project(root)
-  src/intract/manifest_schema.py:
-    e: ManifestIssue,ManifestValidationReport,_load_schema,validate_manifest
-    ManifestIssue:
-    ManifestValidationReport: to_dict(0)
-    _load_schema()
-    validate_manifest(path)
-  src/intract/core/signatures.py:
-    e: make_block_id,build_signature,build_signatures
-    make_block_id(file_path;start_line;end_line;scope)
-    build_signature(record)
-    build_signatures(records)
-  src/intract/policy.py:
-    e: PolicyDecision,_p1_missing_reasons,decide_policy
-    PolicyDecision:
-    _p1_missing_reasons(graph;manifest_path)
-    decide_policy(report)
+  examples/full-stack/src/analyzer.py:
+    e: detect_duplicates
+    detect_duplicates(blocks)
+  examples/full-stack/src/parser_a.py:
+    e: parse_extensions
+    parse_extensions(raw)
+  examples/full-stack/src/parser_b.py:
+    e: load_extension_list
+    load_extension_list(value)
+  examples/full-stack/src/scanner.py:
+    e: scan_project_files
+    scan_project_files(config)
+  examples/integration_tests/01_python_pass/app.py:
+    e: parse_extensions
+    parse_extensions(raw_extensions)
+  examples/integration_tests/03_watch_engine_drift/reporter.py:
+    e: render_summary
+    render_summary(file_list)
+  examples/integration_tests/03_watch_engine_drift/scanner.py:
+    e: collect_project_files
+    collect_project_files(source_tree)
+  examples/integration_tests/run_examples.py:
+    e: print_result,run_example_01,run_example_02,run_example_03,main
+    print_result(name;payload)
+    run_example_01(base)
+    run_example_02(base)
+    run_example_03(base)
+    main()
+  examples/python/parse_extensions.py:
+    e: parse_extensions
+    parse_extensions(raw_extensions)
+  sdks/python/src/intract_plugin_example/__init__.py:
+    e: ExampleParserPlugin,ExampleValidatorPlugin
+    ExampleParserPlugin: supports(1),parse(1)
+    ExampleValidatorPlugin: supports(1),validate(2)
+  src/intract/__init__.py:
+  src/intract/__main__.py:
+  src/intract/artifacts.py:
   src/intract/check.py:
-    e: ChangedHunk,parse_unified_diff_hunks,load_selected_sources,_manifest_changed,changed_lines_by_file,block_extent,signature_touched,validate_sources_for_hunks,validate_selected_paths,staged_check,changed_check
+    e: parse_unified_diff_hunks,load_selected_sources,_manifest_changed,changed_lines_by_file,block_extent,signature_touched,validate_sources_for_hunks,validate_selected_paths,staged_check,changed_check,ChangedHunk
     ChangedHunk: to_dict(0)
     parse_unified_diff_hunks(diff_text)
     load_selected_sources(root;files)
@@ -180,60 +172,70 @@ D:
     _format_check_text(report;decision;files)
     check_manifest(manifest;json_output)
     artifact_validate(path;json_output)
+  src/intract/config.py:
+    e: load_config,IntractConfig
+    IntractConfig: from_mapping(2)
+    load_config(root)
+  src/intract/core/__init__.py:
+  src/intract/core/artifact.py:
+    e: infer_language,infer_artifact_kind,ArtifactKind,Artifact
+    ArtifactKind:
+    Artifact: from_path(2)
+    infer_language(path)
+    infer_artifact_kind(path;content)
+  src/intract/core/models.py:
+    e: ValidationStatus,Contract,ContractRecord,ContractSignature,ValidationIssue,ValidationResult,ProjectReport
+    ValidationStatus:
+    Contract: key(0)
+    ContractRecord:
+    ContractSignature: key(0)
+    ValidationIssue:
+    ValidationResult: to_dict(0)
+    ProjectReport: passed(0),partial(0),failed(0),violations(0),to_dict(0)
+  src/intract/core/normalizer.py:
+    e: normalize_label,normalize_action,normalize_many,normalize_requirement
+    normalize_label(value)
+    normalize_action(action)
+    normalize_many(values)
+    normalize_requirement(value)
+  src/intract/core/registry.py:
+  src/intract/core/signatures.py:
+    e: make_block_id,build_signature,build_signatures
+    make_block_id(file_path;start_line;end_line;scope)
+    build_signature(record)
+    build_signatures(records)
+  src/intract/coverage.py:
+    e: calculate_coverage,CoverageReport
+    CoverageReport: to_dict(0)
+    calculate_coverage(root)
+  src/intract/duplicates/__init__.py:
+  src/intract/duplicates/grouping.py:
+    e: union_find_groups,pairs_to_duplicate_contracts,pairs_to_intent_groups,find_duplicate_contracts,DuplicateContract,IntentDuplicateGroup
+    DuplicateContract: to_dict(0)
+    IntentDuplicateGroup: to_dict(0)
+    union_find_groups(pairs)
+    pairs_to_duplicate_contracts(pairs;signatures_by_id)
+    pairs_to_intent_groups(pairs;signatures_by_id)
+    find_duplicate_contracts(root;threshold)
+  src/intract/duplicates/matcher.py:
+    e: bucket_signatures,find_intent_pairs,IntentPair
+    IntentPair:
+    bucket_signatures(signatures)
+    find_intent_pairs(signatures;threshold)
+  src/intract/duplicates/scoring.py:
+    e: jaccard,object_similarity,score_similarity
+    jaccard(a;b)
+    object_similarity(left;right)
+    score_similarity(left;right)
+  src/intract/duplicates.py:
+  src/intract/effects.py:
+  src/intract/engine/__init__.py:
   src/intract/engine/analyzer.py:
     e: _line_number,_fragment_id,_slice_until_next_match,analyze_source_units
     _line_number(text;pos)
     _fragment_id(path;kind;name;start;end)
     _slice_until_next_match(text;start_pos;next_positions)
     analyze_source_units(units)
-  src/intract/integrations/vallm.py:
-    e: MappedIssue,MappedValidationResult,map_validation_result,map_project_report,validate_for_vallm,validate_proposal
-    MappedIssue:
-    MappedValidationResult: to_dict(0)
-    map_validation_result(result)
-    map_project_report(report)
-    validate_for_vallm(root)
-    validate_proposal(code)
-  src/intract/config.py:
-    e: IntractConfig,load_config
-    IntractConfig: from_mapping(1)
-    load_config(root)
-  src/intract/reporters/sarif.py:
-    e: report_to_sarif
-    report_to_sarif(report)
-  src/intract/parsers/manifest.py:
-    e: _to_tuple,_parse_intent,contract_from_mapping,load_manifest_records,create_sample_manifest
-    _to_tuple(value)
-    _parse_intent(value)
-    contract_from_mapping(data)
-    load_manifest_records(path)
-    create_sample_manifest()
-  src/intract/integrations/planfile.py:
-    e: Ticket,PlanfileExporter,_severity_from_status,tickets_from_report
-    Ticket:
-    PlanfileExporter: __init__(1),export(1),_write_yaml(2),_write_json(2),_write_todo(2)
-    _severity_from_status(status)
-    tickets_from_report(report)
-  sdks/java/src/main/java/io/intract/sdk/IntractContract.java:
-    i: java.util.ArrayList,java.util.List,java.util.StringJoiner
-    e: IntractContract
-    IntractContract: inline(-1),join(-1)
-  sdks/go/intractsdk/sdk.go:
-    e: Contract,csv,Inline
-    Contract:
-    csv()
-    Inline()
-  src/intract/watch.py:
-    e: FileState,FileChange,WatchConfig,hash_file,should_scan,snapshot_tree,diff_snapshots,watch_tree,changes_to_paths
-    FileState:
-    FileChange:
-    WatchConfig:
-    hash_file(path)
-    should_scan(path;root;config)
-    snapshot_tree(root;config)
-    diff_snapshots(old;new)
-    watch_tree(root;callback)
-    changes_to_paths(changes)
   src/intract/engine/assigner.py:
     e: _split_name,_infer_action,_infer_object,_infer_effects,suggest_contract_for_fragment,suggest_contracts_for_fragments
     _split_name(name)
@@ -242,51 +244,50 @@ D:
     _infer_effects(text)
     suggest_contract_for_fragment(fragment)
     suggest_contracts_for_fragments(fragments)
-  sdks/typescript/src/index.ts:
-    e: csv,inlineContract,manifestContract
-    csv()
-    inlineContract()
-    manifestContract()
-  sdks/rust/src/lib.rs:
-    e: Contract,csv,inline_contract
-    Contract:
-    csv()
-    inline_contract()
+  src/intract/engine/context.py:
+    e: EngineConfig,LogicalFragment,ContractSuggestion
+    EngineConfig:
+    LogicalFragment:
+    ContractSuggestion:
+  src/intract/engine/drift.py:
+    e: hash_text,state_from_fragments,save_state,load_state,detect_drift,FragmentState,DriftIssue
+    FragmentState:
+    DriftIssue:
+    hash_text(text)
+    state_from_fragments(fragments)
+    save_state(path;fragments)
+    load_state(path)
+    detect_drift(previous;current_fragments)
+  src/intract/engine/monitor.py:
+    e: scan_suggest_and_validate
+    scan_suggest_and_validate(config)
+  src/intract/engine/scanner.py:
+    e: collect_source_units,SourceUnit
+    SourceUnit:
+    collect_source_units(root)
+  src/intract/git.py:
+    e: _run_git,staged_files,changed_files,staged_hunks,paths_from_changes,GitChange
+    GitChange:
+    _run_git(args;root)
+    staged_files(root)
+    changed_files(root;base_ref)
+    staged_hunks(root;path)
+    paths_from_changes(changes)
   src/intract/graph.py:
-    e: ContractGraph,_safe,build_graph
+    e: _safe,build_graph,ContractGraph
     ContractGraph: to_dict(0),to_mermaid(0)
     _safe(value)
     build_graph(root;manifest)
-  src/intract/sdk.py:
-    e: ContractBuilder,contract
-    ContractBuilder: to_inline(1)
-    contract()
-  src/intract/validators/artifacts.py:
-    e: ArtifactValidationReport,validate_openapi,validate_dockerfile,validate_github_actions,validate_kubernetes,validate_artifact
-    ArtifactValidationReport: to_dict(0)
-    validate_openapi(path)
-    validate_dockerfile(path)
-    validate_github_actions(path)
-    validate_kubernetes(path)
-    validate_artifact(path)
-  src/intract/validators/effects.py:
-    e: NoForbiddenEffectRule,detect_effects
-    NoForbiddenEffectRule: supports(1),validate(3)
-    detect_effects(source)
-  src/intract/engine/scanner.py:
-    e: SourceUnit,collect_source_units
-    SourceUnit:
-    collect_source_units(root)
-  sdks/csharp/IntractContract.cs:
-    e: IntractContract
-    IntractContract: Inline(-1)
-  src/intract/parsers/openapi.py:
-    e: parse_openapi_contracts,parse_openapi_text
-    parse_openapi_contracts(path)
-    parse_openapi_text(content)
+  src/intract/integrations/__init__.py:
+  src/intract/integrations/planfile.py:
+    e: _severity_from_status,tickets_from_report,Ticket,PlanfileExporter
+    Ticket:
+    PlanfileExporter: __init__(1),export(1),_write_yaml(2),_write_json(2),_write_todo(2)
+    _severity_from_status(status)
+    tickets_from_report(report)
   src/intract/integrations/redup.py:
-    e: CodeBlockLike,BlockAdapter,RedupScanResult,block_text,block_file_path,block_start_line,block_end_line,signatures_from_text,signatures_from_blocks,signatures_from_manifest,_with_block_lines,find_intent_duplicate_groups,scan_blocks_for_intent_duplicates
-    CodeBlockLike(Protocol):
+    e: block_text,block_file_path,block_start_line,block_end_line,signatures_from_text,signatures_from_blocks,signatures_from_manifest,_with_block_lines,find_intent_duplicate_groups,scan_blocks_for_intent_duplicates,CodeBlockLike,BlockAdapter,RedupScanResult
+    CodeBlockLike:
     BlockAdapter:
     RedupScanResult: to_dict(0)
     block_text(block)
@@ -299,98 +300,53 @@ D:
     _with_block_lines(signature;block)
     find_intent_duplicate_groups(blocks)
     scan_blocks_for_intent_duplicates(blocks)
-  src/intract/validators/engine.py:
-    e: validate_contract_against_source
-    validate_contract_against_source(signature;source)
-  examples/integration_tests/run_examples.py:
-    e: print_result,run_example_01,run_example_02,run_example_03,main
-    print_result(name;payload)
-    run_example_01(base)
-    run_example_02(base)
-    run_example_03(base)
-    main()
-  src/intract/validators/input_output.py:
-    e: InputPresenceRule,OutputPresenceRule,ReturnValueRule,contains_token_like,has_return_value
-    InputPresenceRule: supports(1),validate(3)
-    OutputPresenceRule: supports(1),validate(3)
-    ReturnValueRule: supports(1),validate(3)
-    contains_token_like(source;token)
-    has_return_value(source)
-  src/intract/core/normalizer.py:
-    e: normalize_label,normalize_action,normalize_many,normalize_requirement
-    normalize_label(value)
-    normalize_action(action)
-    normalize_many(values)
-    normalize_requirement(value)
-  src/intract/validators/registry.py:
-    e: RuleRegistry,_discover_entry_point_rules,get_rule_registry
-    RuleRegistry: __init__(1),register(1),rules(0),run(4),rule_status(1),summarize(2)  # Registry of contract validation rules with optional plugin d...
-    _discover_entry_point_rules()
-    get_rule_registry()
-  src/intract/duplicates/matcher.py:
-    e: IntentPair,bucket_signatures,find_intent_pairs
-    IntentPair:
-    bucket_signatures(signatures)
-    find_intent_pairs(signatures;threshold)
-  src/intract/duplicates/grouping.py:
-    e: DuplicateContract,IntentDuplicateGroup,union_find_groups,pairs_to_duplicate_contracts,pairs_to_intent_groups,find_duplicate_contracts
-    DuplicateContract: to_dict(0)
-    IntentDuplicateGroup: to_dict(0)
-    union_find_groups(pairs)
-    pairs_to_duplicate_contracts(pairs;signatures_by_id)
-    pairs_to_intent_groups(pairs;signatures_by_id)
-    find_duplicate_contracts(root;threshold)
-  src/intract/validators/requirements.py:
-    e: validate_required_contracts
-    validate_required_contracts(required_signature;observed_signatures)
-  src/intract/plugins/manager.py:
-    e: _register_unique,load_builtin_plugins,discover_plugins
-    _register_unique(registry;kind;plugin)
-    load_builtin_plugins()
-    discover_plugins()
-  src/intract/duplicates/scoring.py:
-    e: jaccard,object_similarity,score_similarity
-    jaccard(a;b)
-    object_similarity(left;right)
-    score_similarity(left;right)
+  src/intract/integrations/vallm.py:
+    e: map_validation_result,map_project_report,validate_for_vallm,validate_proposal,MappedIssue,MappedValidationResult
+    MappedIssue:
+    MappedValidationResult: to_dict(0)
+    map_validation_result(result)
+    map_project_report(report)
+    validate_for_vallm(root)
+    validate_proposal(code)
+  src/intract/manifest_schema.py:
+    e: _load_schema,validate_manifest,ManifestIssue,ManifestValidationReport
+    ManifestIssue:
+    ManifestValidationReport: to_dict(0)
+    _load_schema()
+    validate_manifest(path)
+  src/intract/models.py:
+  src/intract/normalizer.py:
+  src/intract/parser.py:
+  src/intract/parsers/__init__.py:
+  src/intract/parsers/inline.py:
+    e: clean_comment_line,split_csv,parse_priority,parse_key_value,marker_payload,parse_contract_line,extract_contract_records_from_text
+    clean_comment_line(line)
+    split_csv(value)
+    parse_priority(token)
+    parse_key_value(token)
+    marker_payload(line)
+    parse_contract_line(line)
+    extract_contract_records_from_text(source)
+  src/intract/parsers/manifest.py:
+    e: _to_tuple,_parse_intent,contract_from_mapping,load_manifest_records,create_sample_manifest
+    _to_tuple(value)
+    _parse_intent(value)
+    contract_from_mapping(data)
+    load_manifest_records(path)
+    create_sample_manifest()
+  src/intract/parsers/openapi.py:
+    e: parse_openapi_contracts,parse_openapi_text
+    parse_openapi_contracts(path)
+    parse_openapi_text(content)
+  src/intract/plugins/__init__.py:
   src/intract/plugins/base.py:
     e: PluginResult,ParserPlugin,ValidatorPlugin,ReporterPlugin,IntegrationPlugin,PluginRegistry
     PluginResult:
-    ParserPlugin(Protocol): supports(1),parse(1)
-    ValidatorPlugin(Protocol): supports(1),validate(2)
-    ReporterPlugin(Protocol): render(1)
-    IntegrationPlugin(Protocol): install(1)
+    ParserPlugin: supports(1),parse(1)
+    ValidatorPlugin: supports(1),validate(2)
+    ReporterPlugin: render(1)
+    IntegrationPlugin: install(1)
     PluginRegistry: add_parser(1),add_validator(1),add_reporter(1),add_integration(1),parse_artifact(1),validate_artifact(2)
-  src/intract/engine/drift.py:
-    e: FragmentState,DriftIssue,hash_text,state_from_fragments,save_state,load_state,detect_drift
-    FragmentState:
-    DriftIssue:
-    hash_text(text)
-    state_from_fragments(fragments)
-    save_state(path;fragments)
-    load_state(path)
-    detect_drift(previous;current_fragments)
-  src/intract/git.py:
-    e: GitChange,_run_git,staged_files,changed_files,staged_hunks,paths_from_changes
-    GitChange:
-    _run_git(args;root)
-    staged_files(root)
-    changed_files(root;base_ref)
-    staged_hunks(root;path)
-    paths_from_changes(changes)
-  src/intract/engine/monitor.py:
-    e: scan_suggest_and_validate
-    scan_suggest_and_validate(config)
-  examples/integration_tests/03_watch_engine_drift/scanner.py:
-    e: collect_project_files
-    collect_project_files(source_tree)
-  examples/integration_tests/01_python_pass/app.py:
-    e: parse_extensions
-    parse_extensions(raw_extensions)
-  src/intract/coverage.py:
-    e: CoverageReport,calculate_coverage
-    CoverageReport: to_dict(0)
-    calculate_coverage(root)
   src/intract/plugins/builtins.py:
     e: InlineContractParserPlugin,OpenAPIParserPlugin,ManifestParserPlugin,BasicContractValidatorPlugin,ArtifactStructureValidatorPlugin,JsonReporterPlugin
     InlineContractParserPlugin: supports(1),parse(1)
@@ -399,105 +355,135 @@ D:
     BasicContractValidatorPlugin: supports(1),validate(2)
     ArtifactStructureValidatorPlugin: supports(1),validate(2)
     JsonReporterPlugin: render(1)
-  examples/full-stack/src/parser_a.py:
-    e: parse_extensions
-    parse_extensions(raw)
-  examples/typescript/permission.ts:
-    e: canUpdateResource,allowed
-    canUpdateResource()
-    allowed()
+  src/intract/plugins/manager.py:
+    e: _register_unique,load_builtin_plugins,discover_plugins
+    _register_unique(registry;kind;plugin)
+    load_builtin_plugins()
+    discover_plugins()
+  src/intract/policy.py:
+    e: _p1_missing_reasons,decide_policy,PolicyDecision
+    PolicyDecision:
+    _p1_missing_reasons(graph;manifest_path)
+    decide_policy(report)
+  src/intract/project.py:
+    e: load_project_sources,extract_signatures_from_sources,validate_sources,validate_project
+    load_project_sources(root)
+    extract_signatures_from_sources(sources)
+    validate_sources(sources)
+    validate_project(root)
+  src/intract/reporters/__init__.py:
+  src/intract/reporters/sarif.py:
+    e: report_to_sarif
+    report_to_sarif(report)
+  src/intract/sdk.py:
+    e: contract,ContractBuilder
+    ContractBuilder: to_inline(1)
+    contract()
+  src/intract/signature.py:
+  src/intract/validation.py:
+  src/intract/validators/__init__.py:
+  src/intract/validators/artifacts.py:
+    e: validate_openapi,validate_dockerfile,validate_github_actions,validate_kubernetes,validate_artifact,ArtifactValidationReport
+    ArtifactValidationReport: to_dict(0)
+    validate_openapi(path)
+    validate_dockerfile(path)
+    validate_github_actions(path)
+    validate_kubernetes(path)
+    validate_artifact(path)
   src/intract/validators/base.py:
-    e: RuleResult,ValidationContext,ValidationRule,merge_rule_results
+    e: merge_rule_results,RuleResult,ValidationContext,ValidationRule
     RuleResult:
     ValidationContext:
-    ValidationRule(Protocol): supports(1),validate(3)
+    ValidationRule: supports(1),validate(3)
     merge_rule_results(results)
-  src/intract/core/models.py:
-    e: ValidationStatus,Contract,ContractRecord,ContractSignature,ValidationIssue,ValidationResult,ProjectReport
-    ValidationStatus(str,Enum):
-    Contract:
-    ContractRecord:
-    ContractSignature:
-    ValidationIssue:
-    ValidationResult: to_dict(0)
-    ProjectReport: to_dict(0)
-  sdks/python/src/intract_plugin_example/__init__.py:
-    e: ExampleParserPlugin,ExampleValidatorPlugin
-    ExampleParserPlugin: supports(1),parse(1)
-    ExampleValidatorPlugin: supports(1),validate(2)
-  examples/integration_tests/02_typescript_violation_planfile/permission.ts:
-    e: canUpdateResource,response,allowed
-    canUpdateResource()
-    response()
-    allowed()
-  examples/integration_tests/03_watch_engine_drift/reporter.py:
-    e: render_summary
-    render_summary(file_list)
-  examples/csharp/ScanPipeline.cs:
-    e: CollectFiles
-    CollectFiles()
-  sdks/go/examples/main.go:
-    e: main
-    main()
-  examples/full-stack/src/analyzer.py:
-    e: detect_duplicates
-    detect_duplicates(blocks)
-  examples/full-stack/src/parser_b.py:
-    e: load_extension_list
-    load_extension_list(value)
-  examples/full-stack/src/scanner.py:
-    e: scan_project_files
-    scan_project_files(config)
-  goal.yaml:
-  Makefile:
-  tree.txt:
-  Dockerfile:
-  project.sh:
-  schemas/intract.schema.json:
-  templates/Dockerfile.intract:
-  templates/intract.yaml:
-  templates/pyproject-intract.toml:
-  templates/openapi.intract.yaml:
-  examples/configs/intent.yaml:
-  examples/integration_tests/02_typescript_violation_planfile/intent.yaml:
-  examples/integration_tests/03_watch_engine_drift/intent.yaml:
-  src/intract/artifacts.py:
-  src/intract/normalizer.py:
-  src/intract/effects.py:
-  src/intract/signature.py:
-  src/intract/__init__.py:
-  src/intract/duplicates/__init__.py:
-  src/intract/__main__.py:
-  src/intract/parser.py:
-  src/intract/validation.py:
-  src/intract/models.py:
+  src/intract/validators/effects.py:
+    e: detect_effects,NoForbiddenEffectRule
+    NoForbiddenEffectRule: supports(1),validate(3)
+    detect_effects(source)
+  src/intract/validators/engine.py:
+    e: validate_contract_against_source
+    validate_contract_against_source(signature;source)
+  src/intract/validators/input_output.py:
+    e: contains_token_like,has_return_value,InputPresenceRule,OutputPresenceRule,ReturnValueRule
+    InputPresenceRule: supports(1),validate(3)
+    OutputPresenceRule: supports(1),validate(3)
+    ReturnValueRule: supports(1),validate(3)
+    contains_token_like(source;token)
+    has_return_value(source)
+  src/intract/validators/registry.py:
+    e: _discover_entry_point_rules,get_rule_registry,RuleRegistry
+    RuleRegistry: __init__(1),register(1),rules(0),run(4),rule_status(2),summarize(2)  # Registry of contract validation rules with optional plugin d
+    _discover_entry_point_rules()
+    get_rule_registry()
+  src/intract/validators/requirements.py:
+    e: validate_required_contracts
+    validate_required_contracts(required_signature;observed_signatures)
+  src/intract/watch.py:
+    e: hash_file,should_scan,snapshot_tree,diff_snapshots,watch_tree,changes_to_paths,FileState,FileChange,WatchConfig
+    FileState:
+    FileChange:
+    WatchConfig:
+    hash_file(path)
+    should_scan(path;root;config)
+    snapshot_tree(root;config)
+    diff_snapshots(old;new)
+    watch_tree(root;callback)
+    changes_to_paths(changes)
   src/intract/yaml_manifest.py:
-  src/intract/validators/__init__.py:
-  src/intract/core/registry.py:
-  src/intract/core/__init__.py:
-  src/intract/plugins/__init__.py:
-  src/intract/reporters/__init__.py:
-  src/intract/engine/__init__.py:
-  src/intract/engine/context.py:
-    e: EngineConfig,LogicalFragment,ContractSuggestion
-    EngineConfig:
-    LogicalFragment:
-    ContractSuggestion:
-  src/intract/parsers/__init__.py:
-  src/intract/integrations/__init__.py:
-  testql-scenarios/generated-cli-tests.testql.toon.yaml:
-  sdks/typescript/tsconfig.json:
-  sdks/typescript/intract.config.ts:
-    i: ./src/index
-  sdks/typescript/package.json:
-  sdks/typescript/examples/basic.ts:
-    i: ../src/index
-  sdks/rust/Cargo.toml:
-  sdks/python/pyproject.toml:
-  .pre-commit-hooks.yaml:
-  pyproject.toml:
-  templates/.pre-commit-config.yaml:
-  examples/full-stack/intract.yaml:
-  scripts/ci-full-stack.sh:
-    e: install_extra
-    install_extra()
+  tests/test_check_staged.py:
+    e: test_manifest_changed_helper,test_validate_selected_paths_full_graph
+    test_manifest_changed_helper()
+    test_validate_selected_paths_full_graph(tmp_path)
+  tests/test_full_stack.py:
+    e: test_full_stack_validate_passes,test_full_stack_graph_covers_requires,test_full_stack_finds_intent_duplicates
+    test_full_stack_validate_passes()
+    test_full_stack_graph_covers_requires()
+    test_full_stack_finds_intent_duplicates()
+  tests/test_hunk_filter.py:
+    e: test_changed_lines_by_file,test_block_extent_finds_function_body,test_signature_touched_by_body_change,test_validate_sources_for_hunks_only_touched_contract,test_validate_sources_for_hunks_catches_violation_in_touched_block
+    test_changed_lines_by_file()
+    test_block_extent_finds_function_body()
+    test_signature_touched_by_body_change()
+    test_validate_sources_for_hunks_only_touched_contract(tmp_path)
+    test_validate_sources_for_hunks_catches_violation_in_touched_block(tmp_path)
+  tests/test_integrations.py:
+    e: test_redup_finds_intent_duplicate_groups,test_duplicate_contracts_cli_parity,test_find_intent_duplicate_groups_from_blocks
+    test_redup_finds_intent_duplicate_groups()
+    test_duplicate_contracts_cli_parity(tmp_path)
+    test_find_intent_duplicate_groups_from_blocks()
+  tests/test_manifest.py:
+    e: test_load_manifest_records
+    test_load_manifest_records(tmp_path)
+  tests/test_new_modules.py:
+    e: test_coverage,test_duplicates,test_graph_missing_requirement
+    test_coverage(tmp_path)
+    test_duplicates(tmp_path)
+    test_graph_missing_requirement(tmp_path)
+  tests/test_next_stage.py:
+    e: test_manifest_schema_valid,test_parse_hunks,test_dockerfile_artifact_violation
+    test_manifest_schema_valid(tmp_path)
+    test_parse_hunks()
+    test_dockerfile_artifact_violation(tmp_path)
+  tests/test_parser.py:
+    e: test_parse_full_contract_line,test_parse_comment_prefix_ts
+    test_parse_full_contract_line()
+    test_parse_comment_prefix_ts()
+  tests/test_policy.py:
+    e: test_missing_required_p1_fails_policy,test_full_stack_passes_without_p1_gate
+    test_missing_required_p1_fails_policy(tmp_path)
+    test_full_stack_passes_without_p1_gate()
+  tests/test_rule_registry.py:
+    e: test_rule_registry_lists_builtin_rules,test_rule_registry_reports_per_rule_status,test_rule_registry_discovers_entry_points,test_custom_rule_can_be_registered
+    test_rule_registry_lists_builtin_rules()
+    test_rule_registry_reports_per_rule_status()
+    test_rule_registry_discovers_entry_points()
+    test_custom_rule_can_be_registered()
+  tests/test_staged_e2e.py:
+    e: _git,test_staged_hunk_check_fails_on_network_violation,test_staged_hunk_check_passes_clean_contract
+    _git(cwd)
+    test_staged_hunk_check_fails_on_network_violation(tmp_path)
+    test_staged_hunk_check_passes_clean_contract(tmp_path)
+  tests/test_validation.py:
+    e: test_python_contract_passes,test_typescript_contract_detects_network_violation
+    test_python_contract_passes()
+    test_typescript_contract_detects_network_violation()

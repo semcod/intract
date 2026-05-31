@@ -1,0 +1,91 @@
+name: 'Intract Validate'
+description: 'Validate Intract intent contracts in CI'
+branding:
+  icon: 'check-circle'
+  color: 'blue'
+
+inputs:
+  path:
+    description: 'Project root to validate'
+    required: false
+    default: '.'
+  manifest:
+    description: 'Path to intract.yaml / intent.yaml'
+    required: false
+    default: ''
+  python-version:
+    description: 'Python version for the runner'
+    required: false
+    default: '3.12'
+  staged:
+    description: 'Validate staged files only'
+    required: false
+    default: 'false'
+  hunks:
+    description: 'With staged=true, validate only hunk-touched contracts'
+    required: false
+    default: 'true'
+  fail-on-error:
+    description: 'Exit non-zero when policy fails'
+    required: false
+    default: 'true'
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install Intract
+      shell: bash
+      run: pip install intract
+
+    - name: Validate contracts
+      shell: bash
+      run: |
+        set -euo pipefail
+        ROOT="${{ inputs.path }}"
+        MANIFEST="${{ inputs.manifest }}"
+        MANIFEST_ARGS=()
+        if [ -n "$MANIFEST" ]; then
+          MANIFEST_ARGS=(--manifest "$MANIFEST")
+        fi
+
+        if [ "${{ inputs.staged }}" = "true" ]; then
+          CHECK_ARGS=(check "$ROOT" --staged "${MANIFEST_ARGS[@]}")
+          if [ "${{ inputs.hunks }}" = "true" ]; then
+            CHECK_ARGS+=(--hunks)
+          fi
+          python -m intract "${CHECK_ARGS[@]}"
+        else
+          python -m intract validate "$ROOT" "${MANIFEST_ARGS[@]}"
+          python -m intract check "$ROOT" "${MANIFEST_ARGS[@]}"
+        fi
+
+    - name: Fail on policy error
+      if: inputs.fail-on-error == 'true'
+      shell: bash
+      run: |
+        ROOT="${{ inputs.path }}"
+        MANIFEST="${{ inputs.manifest }}"
+        MANIFEST_ARGS=()
+        if [ -n "$MANIFEST" ]; then
+          MANIFEST_ARGS=(--manifest "$MANIFEST")
+        fi
+        if [ "${{ inputs.staged }}" = "true" ]; then
+          CHECK_ARGS=(check "$ROOT" --staged "${MANIFEST_ARGS[@]}")
+          if [ "${{ inputs.hunks }}" = "true" ]; then
+            CHECK_ARGS+=(--hunks)
+          fi
+          python -m intract "${CHECK_ARGS[@]}" --format json > intract-check.json
+        else
+          python -m intract check "$ROOT" "${MANIFEST_ARGS[@]}" --format json > intract-check.json
+        fi
+        python - <<'PY'
+        import json, sys
+        data = json.load(open("intract-check.json"))
+        if data.get("policy", {}).get("should_fail"):
+            sys.exit(1)
+        PY

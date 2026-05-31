@@ -25,17 +25,19 @@ Do zrobienia:
 - pełna obsługa `fail_on` / `warn_on` w vallm/redup,
 - AST mapowanie hunk → kontrakt (Python).
 
-## 0.7.x — pluginy artefaktów
+## 0.7.x — lepsza analiza języków
+
+Zrobione (MVP):
+
+- Python AST (`analyzers/python_ast.py`)
+- TypeScript/JavaScript block mapping (`analyzers/typescript.py`)
+- C# block mapping (`analyzers/csharp.py`)
+- opcjonalny tree-sitter (`pip install intract[treesitter]`)
 
 Do zrobienia:
 
-- wydzielenie `artifacts.py` do pluginów:
-  - `intract-openapi`
-  - `intract-docker`
-  - `intract-kubernetes`
-  - `intract-github-actions`
-- plugin discovery przez entry points,
-- testy pluginów.
+- Java / Go / Rust adaptery,
+- pełna integracja tree-sitter w engine drift.
 
 ## 0.8.x — AST / tree-sitter
 
@@ -48,14 +50,17 @@ Do zrobienia:
 
 ## 0.9.x — ecosystem
 
+Zrobione (MVP):
+
+- GitHub Action [`action.yml`](../action.yml)
+- VS Code extension [`extensions/vscode-intract/`](../extensions/vscode-intract/)
+- Planfile HTTP adapter (`planfile push|pull|sync`)
+
 Do zrobienia:
 
-- prawdziwy planfile API adapter,
-- vallm validator,
-- reDUP detector,
-- MCP server,
-- VS Code extension,
-- GitHub Action marketplace.
+- publikacja VS Code extension w Marketplace,
+- publikacja GitHub Action w Marketplace,
+- pełny planfile API (webhooks, status sync).
 
 ## 1.0.0 — stable spec
 

@@ -1,0 +1,30 @@
+pipeline:
+  name: intract-quality
+
+  metrics:
+    coverage_min: 50
+
+  stages:
+    - name: test
+      run: python -m pytest -q --tb=short
+      timeout: 600
+
+    - name: intract_contracts
+      run: |
+        python -m intract validate examples/full-stack --manifest examples/full-stack/intract.yaml
+        python -m intract check examples/full-stack --manifest examples/full-stack/intract.yaml
+        python -m intract duplicates examples/full-stack --threshold 0.5
+      timeout: 120
+
+    - name: intract_artifacts
+      run: |
+        mkdir -p .pyqual
+        python -m intract scan . --all-artifacts --json > .pyqual/artifacts.json
+      timeout: 120
+
+    - name: intract_demo_ci
+      run: bash scripts/ci-full-stack.sh
+      env:
+        SKIP_VALLM: "1"
+        SKIP_REDUP: "1"
+      timeout: 300

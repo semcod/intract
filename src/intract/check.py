@@ -89,8 +89,23 @@ def changed_lines_by_file(hunks: list[ChangedHunk]) -> dict[str, set[int]]:
     return result
 
 
-def block_extent(source: str, start_line: int) -> tuple[int, int]:
+def block_extent(source: str, start_line: int, *, file_path: str | None = None) -> tuple[int, int]:
     """Approximate block extent after an @intract comment (function/class body)."""
+    if file_path:
+        suffix = Path(file_path).suffix.lower()
+        if suffix == ".py":
+            from intract.analyzers.python_ast import python_block_extent
+
+            return python_block_extent(source, start_line)
+        if suffix in {".ts", ".tsx", ".js", ".jsx"}:
+            from intract.analyzers.typescript import typescript_block_extent
+
+            return typescript_block_extent(source, start_line)
+        if suffix == ".cs":
+            from intract.analyzers.csharp import csharp_block_extent
+
+            return csharp_block_extent(source, start_line)
+
     lines = source.splitlines()
     if start_line < 1 or start_line > len(lines):
         return start_line, start_line
@@ -132,7 +147,7 @@ def block_extent(source: str, start_line: int) -> tuple[int, int]:
 def signature_touched(signature, changed_lines: set[int], source: str) -> bool:
     if signature.start_line in changed_lines:
         return True
-    start, end = block_extent(source, signature.start_line)
+    start, end = block_extent(source, signature.start_line, file_path=signature.file_path)
     return bool(changed_lines.intersection(range(start, end + 1)))
 
 
