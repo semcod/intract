@@ -22,6 +22,14 @@ pipeline:
         python -m intract scan . --all-artifacts --json > .pyqual/artifacts.json
       timeout: 120
 
+    - name: intract_web_app
+      run: |
+        python -m intract validate examples/web-app/iterations/v1-pass \
+          --manifest examples/web-app/intract.yaml
+        python -m intract scan examples/web-app/iterations/v1-pass --all-artifacts
+        bash examples/web-app/run-demo.sh
+      timeout: 120
+
     - name: intract_demo_ci
       run: bash scripts/ci-full-stack.sh
       env:

@@ -16,6 +16,13 @@ jobs:
       - run: pip install -e .[dev]
       - run: pytest -q
       - run: python -m intract validate examples/full-stack --manifest examples/full-stack/intract.yaml
+      - run: python -m intract check examples/web-app/iterations/v1-pass --manifest examples/web-app/intract.yaml
+      - run: |
+          if python -m intract check examples/web-app/iterations/v2-violation \
+            --manifest examples/web-app/intract.yaml; then
+            echo "expected policy failure for v2-violation"
+            exit 1
+          fi
       - run: python -m intract duplicates examples/full-stack --threshold 0.5
       - run: python -m intract check . --format sarif --output intract.sarif
       - uses: github/codeql-action/upload-sarif@v3

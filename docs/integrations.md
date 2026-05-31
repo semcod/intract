@@ -14,10 +14,11 @@ Installs sibling repos when present (`../vallm`, `../redup`) and runs:
 intract validate examples/full-stack
 intract duplicates examples/full-stack
 vallm intract examples/full-stack
+vallm intract examples/web-app/iterations/v1-pass --manifest examples/web-app/intract.yaml
 redup scan examples/full-stack --intent
 ```
 
-GitHub Actions job `full-stack-integration` runs the intract-only subset by default. For full integration in CI, checkout sibling repos and unset `SKIP_VALLM` / `SKIP_REDUP`.
+GitHub Actions job `full-stack-integration` checkoutuje sibling repos (`vallm`, `redup`) i uruchamia pełny skrypt (bez `SKIP_VALLM` / `SKIP_REDUP`).
 
 ## planfile
 

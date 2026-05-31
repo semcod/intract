@@ -7,6 +7,8 @@ PYTHON="${PYTHON:-python3}"
 DEMO="${DEMO:-$ROOT/examples/full-stack}"
 VALLM_ROOT="${VALLM_ROOT:-$ROOT/../vallm}"
 REDUP_ROOT="${REDUP_ROOT:-$ROOT/../redup}"
+WEB_APP="${WEB_APP:-$ROOT/examples/web-app}"
+WEB_MANIFEST="${WEB_MANIFEST:-$WEB_APP/intract.yaml}"
 
 echo "==> Installing intract"
 "$PYTHON" -m pip install -q -e "$ROOT[dev]"
@@ -40,6 +42,20 @@ echo "==> intract duplicates ${DEMO}"
 
 echo "==> intract graph ${DEMO}"
 "$PYTHON" -m intract graph "$DEMO" --manifest "$DEMO/intract.yaml" --format json >/dev/null
+
+if [[ -f "$WEB_MANIFEST" ]]; then
+  echo "==> intract validate web-app v1-pass"
+  "$PYTHON" -m intract validate "$WEB_APP/iterations/v1-pass" --manifest "$WEB_MANIFEST"
+  echo "==> intract validate web-app v2-violation (expect violation)"
+  if "$PYTHON" -m intract check "$WEB_APP/iterations/v2-violation" --manifest "$WEB_MANIFEST"; then
+    echo "ERROR: v2-violation should fail policy check"
+    exit 1
+  fi
+  if "$PYTHON" -m vallm intract --help >/dev/null 2>&1; then
+    echo "==> vallm intract web-app v1-pass"
+    "$PYTHON" -m vallm intract "$WEB_APP/iterations/v1-pass" --manifest "$WEB_MANIFEST"
+  fi
+fi
 
 if "$PYTHON" -m vallm intract --help >/dev/null 2>&1; then
   echo "==> vallm intract ${DEMO}"
