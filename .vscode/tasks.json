@@ -1,0 +1,64 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Intract: Validate Project",
+      "type": "shell",
+      "command": "python -m intract validate . --manifest ${input:manifestPath}",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Intract: Check Staged (Hunks)",
+      "type": "shell",
+      "command": "python -m intract check . --staged --hunks --manifest ${input:manifestPath}",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Intract: Web App Demo (generate reports)",
+      "type": "shell",
+      "command": "bash examples/web-app/run-demo.sh",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Intract: Web App Mock Server",
+      "type": "shell",
+      "command": "bash examples/web-app/run-demo.sh && python -m http.server 8765 --directory examples/web-app",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "vallm: intract web-app v1",
+      "type": "shell",
+      "command": "python -m vallm intract examples/web-app/iterations/v1-pass --manifest examples/web-app/intract.yaml",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "manifestPath",
+      "type": "promptString",
+      "description": "Manifest path",
+      "default": "intract.yaml"
+    }
+  ]
+}

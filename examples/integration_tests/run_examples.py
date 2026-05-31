@@ -76,12 +76,25 @@ def run_example_03(base: Path) -> dict:
     }
 
 
+def run_example_04(base: Path) -> dict:
+    web = base.parent / "web-app"
+    manifest = web / "intract.yaml"
+    v1 = validate_project(web / "iterations/v1-pass", manifest_path=manifest)
+    v2 = validate_project(web / "iterations/v2-violation", manifest_path=manifest)
+    return {
+        "v1_status": v1.status.value,
+        "v2_status": v2.status.value,
+        "v2_violations": len(v2.violations),
+    }
+
+
 def main() -> int:
     base = Path(__file__).resolve().parent
     results = {
         "example_01": run_example_01(base),
         "example_02": run_example_02(base),
         "example_03": run_example_03(base),
+        "example_04": run_example_04(base),
     }
 
     for name, payload in results.items():
@@ -92,6 +105,9 @@ def main() -> int:
     assert results["example_02"]["tickets"] >= 1
     assert results["example_03"]["watch_changes"] >= 1
     assert results["example_03"]["engine_fragments"] >= 1
+    assert results["example_04"]["v1_status"] == "pass"
+    assert results["example_04"]["v2_status"] == "violation"
+    assert results["example_04"]["v2_violations"] >= 2
 
     print("\nAll integration examples passed.")
     return 0

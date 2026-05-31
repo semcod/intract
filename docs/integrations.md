@@ -18,6 +18,17 @@ vallm intract examples/web-app/iterations/v1-pass --manifest examples/web-app/in
 redup scan examples/full-stack --intent
 ```
 
+Policy (`fail_on` / `warn_on`) — vallm łączy ustawienia z `intract.yaml` / `intract.config.yaml`:
+
+```bash
+# env (vallm)
+export VALLM_INTRACT_FAIL_ON=violation,missing_required_p1,invalid_manifest
+export VALLM_INTRACT_WARN_ON=partial,unknown
+
+# CLI override
+vallm intract . --fail-on violation --warn-on partial
+```
+
 GitHub Actions job `full-stack-integration` checkoutuje sibling repos (`vallm`, `redup`) i uruchamia pełny skrypt (bez `SKIP_VALLM` / `SKIP_REDUP`).
 
 ## planfile

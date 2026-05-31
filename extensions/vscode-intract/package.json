@@ -75,6 +75,26 @@
       {
         "command": "intract.checkStaged",
         "title": "Intract: Check Staged (Hunks)"
+      },
+      {
+        "command": "intract.webAppDemo",
+        "title": "Intract: Web App Demo (reports)"
+      },
+      {
+        "command": "intract.webAppMock",
+        "title": "Intract: Open Web App Mock"
+      }
+    ],
+    "taskDefinitions": [
+      {
+        "type": "intract",
+        "required": ["task"],
+        "properties": {
+          "task": {
+            "type": "string",
+            "description": "Intract task name"
+          }
+        }
       }
     ]
   },

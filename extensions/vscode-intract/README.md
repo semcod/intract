@@ -30,6 +30,13 @@ vsce publish --no-dependencies
 
 - Syntax injection for `@intract.v1` in Python, TypeScript, JavaScript, C#, Java, Go, Rust
 - Commands: **Intract: Validate Project**, **Intract: Check Staged (Hunks)**
+- Commands: **Intract: Web App Demo**, **Intract: Open Web App Mock** (runs `run-demo.sh` + local server)
+
+Workspace tasks (`.vscode/tasks.json`):
+
+- `Intract: Web App Demo (generate reports)`
+- `Intract: Web App Mock Server` → http://localhost:8765/mock/index.html
+- `vallm: intract web-app v1`
 
 ## Settings
 
