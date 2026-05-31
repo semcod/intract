@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.8] - 2026-05-31
+
+### Docs
+- Update README.md
+- Update docs/integrations.md
+
+### Test
+- Update tests/test_manifest_ops.py
+- Update tests/test_parser.py
+- Update tests/test_proposals.py
+- Update tests/test_staged_e2e.py
+- Update tests/test_validate_snippet.py
+
+### Other
+- Update .gitignore
+- Update examples/integration_tests/02_typescript_violation_planfile/.intract/planfile-tickets.json
+- Update examples/integration_tests/02_typescript_violation_planfile/.intract/planfile-tickets.yaml
+- Update tree.txt
+- Update uv.lock
+
 ## [0.5.6] - 2026-05-31
 
 ### Docs

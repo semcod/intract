@@ -1,8 +1,20 @@
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def _subprocess_env() -> dict[str, str]:
+    env = os.environ.copy()
+    src = str(ROOT / "src")
+    env["PYTHONPATH"] = (
+        src if not env.get("PYTHONPATH") else os.pathsep.join([src, env["PYTHONPATH"]])
+    )
+    return env
 
 
 def _git(cwd: Path, *args: str) -> subprocess.CompletedProcess[str]:
@@ -33,6 +45,7 @@ def test_staged_hunk_check_fails_on_network_violation(tmp_path: Path):
     result = subprocess.run(
         [sys.executable, "-m", "intract", "check", str(tmp_path), "--staged", "--hunks"],
         capture_output=True,
+        env=_subprocess_env(),
         text=True,
     )
 
@@ -57,6 +70,7 @@ def test_staged_hunk_check_passes_clean_contract(tmp_path: Path):
     result = subprocess.run(
         [sys.executable, "-m", "intract", "check", str(tmp_path), "--staged", "--hunks"],
         capture_output=True,
+        env=_subprocess_env(),
         text=True,
     )
 

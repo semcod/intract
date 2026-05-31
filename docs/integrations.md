@@ -158,6 +158,50 @@ Walidacja:
 python -m intract artifact k8s/deployment.yaml
 ```
 
+## Nexu Cinema + manifest merge
+
+Cinema (Nexu) proposes contracts via `intract.proposals` and appends them to
+`intract_policy_ledger.json`. After each iteration with annotations, Intract
+validates the evolved HTML together with proposed `@intract.v1` lines.
+
+CLI — propose from KEEP/DELETE:
+
+```bash
+intract propose delta --delete Mod,deg --keep screen --stage 0 --capsule scientific_calc
+```
+
+CLI — propose from artifact via LLM (`pip install 'intract[llm]'`):
+
+```bash
+intract propose llm --file stage0.html --goal "scientific calculator UI"
+```
+
+CLI — merge evolved ledger entries into project manifest:
+
+```bash
+intract manifest apply-ledger \
+  --manifest examples/web_app_calculator/workspace/intract.yaml \
+  --ledger .nexu/capsules/scientific_calc/cinema/intract_policy_ledger.json
+```
+
+Dry-run:
+
+```bash
+intract manifest apply-ledger -m intract.yaml -l cinema/intract_policy_ledger.json --dry-run
+```
+
+Project + capsule manifests (`--target both`):
+
+```bash
+intract manifest apply-ledger \
+  -w examples/web_app_calculator/workspace \
+  -c scientific_calc \
+  -l .nexu/capsules/scientific_calc/cinema/intract_policy_ledger.json \
+  --target both
+```
+
+Cinema player: **Project** / **Capsule** / **Both** buttons call `POST /manifest/apply-ledger` with `target`; **Verify** calls `POST /capsule/verify` (nexu `verify_capsule`). Stop stale servers: `make cinema-stop` in the nexu repo.
+
 ## vallm
 
 Zainstalowanie:

@@ -27,3 +27,9 @@ def test_parse_comment_prefix_ts():
     assert contract is not None
     assert contract.action == "parse"
     assert contract.object == "extensions"
+
+
+def test_parse_malformed_quoted_contract_returns_none():
+    line = '# @intract.v1 scope:function intent:parse:broken meaning:"unterminated'
+
+    assert parse_contract_line(line) is None

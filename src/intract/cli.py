@@ -25,8 +25,12 @@ from .yaml_manifest import create_sample_manifest
 app = typer.Typer(help="Intract — intent contracts for codebases.")
 engine_app = typer.Typer(help="Intract engine: scan, suggest contracts and detect logic drift.")
 planfile_app = typer.Typer(help="Planfile ticket export and API sync.")
+propose_app = typer.Typer(help="Propose @intract.v1 contracts from deltas or LLM.")
+manifest_app = typer.Typer(help="intract.yaml manifest operations.")
 app.add_typer(engine_app, name="engine")
 app.add_typer(planfile_app, name="planfile")
+app.add_typer(propose_app, name="propose")
+app.add_typer(manifest_app, name="manifest")
 console = Console()
 
 
@@ -507,3 +511,113 @@ def artifact_validate(
         console.print(f"- {result.status.value}: {result.contract}")
         for issue in result.violations:
             console.print(f"  - {issue.severity}: {issue.kind}: {issue.message}")
+
+
+@propose_app.command("delta")
+def propose_delta(
+    keep: list[str] = typer.Option([], "--keep", help="Element ids to KEEP."),
+    delete: list[str] = typer.Option([], "--delete", help="Element ids to DELETE."),
+    stage: int = typer.Option(0, "--stage", help="Cinema stage number."),
+    capsule: str = typer.Option("capsule", "--capsule", help="Capsule name."),
+    json_output: bool = typer.Option(False, "--json"),
+):
+    """Propose @intract.v1 lines from cinema-style KEEP/DELETE feedback."""
+    from .proposals import propose_ui_delta_contracts
+
+    proposals = propose_ui_delta_contracts(
+        stage=stage, keep=keep, delete=delete, capsule=capsule, domain="ui"
+    )
+    if json_output:
+        console.print_json(json.dumps([p.to_dict() for p in proposals], ensure_ascii=False))
+        return
+    for item in proposals:
+        console.print(item.line)
+
+
+@propose_app.command("llm")
+def propose_llm_cmd(
+    file: Path | None = typer.Option(None, "--file", "-f", help="Artifact file to analyze."),
+    goal: str = typer.Option("", "--goal", "-g", help="Goal/context for the LLM."),
+    model: str | None = typer.Option(None, "--model", "-m", help="LLM model override."),
+    json_output: bool = typer.Option(False, "--json"),
+):
+    """Propose @intract.v1 lines using an LLM (requires intract[llm])."""
+    from .propose_llm import propose_contracts_llm
+
+    if file is None:
+        console.print("[red]--file is required[/]")
+        raise typer.Exit(1)
+    source = file.read_text(encoding="utf-8")
+    try:
+        proposals = propose_contracts_llm(
+            source, goal=goal, fragment_name=str(file), model=model
+        )
+    except RuntimeError as exc:
+        console.print(f"[red]{exc}[/]")
+        raise typer.Exit(1) from exc
+
+    if json_output:
+        console.print_json(json.dumps([p.to_dict() for p in proposals], ensure_ascii=False))
+        return
+    for item in proposals:
+        console.print(item.line)
+
+
+@manifest_app.command("apply-ledger")
+def manifest_apply_ledger(
+    manifest: Path = typer.Option(Path("intract.yaml"), "--manifest", "-m", help="Target intract.yaml."),
+    ledger: Path = typer.Option(..., "--ledger", "-l", help="Cinema intract_policy_ledger.json."),
+    workspace: Path | None = typer.Option(
+        None, "--workspace", "-w", help="Workspace root (with --capsule for multi-target apply)."
+    ),
+    capsule: str = typer.Option("", "--capsule", "-c", help="Capsule name for --target capsule|both."),
+    target: str = typer.Option(
+        "project",
+        "--target",
+        "-t",
+        help="project | capsule | both (requires -w and -c for capsule/both).",
+    ),
+    dry_run: bool = typer.Option(False, "--dry-run", help="Show changes without writing."),
+    json_output: bool = typer.Option(False, "--json"),
+):
+    """Merge evolved cinema ledger contracts into intract.yaml (by id)."""
+    from .manifest_ops import apply_ledger_to_manifest, apply_ledger_to_manifests
+
+    normalized_target = target.strip().lower()
+    if normalized_target not in {"project", "capsule", "both"}:
+        console.print("[red]--target must be project, capsule, or both[/]")
+        raise typer.Exit(1)
+
+    if workspace and capsule:
+        batch = apply_ledger_to_manifests(
+            workspace_root=workspace,
+            capsule_name=capsule,
+            ledger_path=ledger,
+            target=normalized_target,  # type: ignore[arg-type]
+            dry_run=dry_run,
+        )
+        if json_output:
+            console.print_json(json.dumps(batch.to_dict(), ensure_ascii=False))
+            return
+        console.print(f"[bold]Target:[/] {normalized_target} · added total: {batch.added_total}")
+        for result in batch.results:
+            console.print(f"  [cyan]{result.target}[/] {result.manifest_path}")
+            for contract_id in result.added:
+                console.print(f"    + {contract_id}")
+        return
+
+    result = apply_ledger_to_manifest(
+        manifest,
+        ledger,
+        dry_run=dry_run,
+        target="project",
+    )
+    if json_output:
+        console.print_json(json.dumps(result.to_dict(), ensure_ascii=False))
+        return
+    console.print(f"[bold]Manifest:[/] {result.manifest_path}")
+    console.print(f"[green]Added:[/] {len(result.added)}")
+    for contract_id in result.added:
+        console.print(f"  + {contract_id}")
+    if result.skipped:
+        console.print(f"[yellow]Skipped:[/] {len(result.skipped)}")

@@ -32,29 +32,41 @@
 │   │   └── run_examples.py
 │   ├── python
 │   │   └── parse_extensions.py
+│   ├── README.md
 │   ├── typescript
 │   │   └── permission.ts
 │   └── web-app
 │       ├── intract.yaml
-│       └── iterations
-│           ├── v1-pass
-│           │   ├── backend
-│           │   │   ├── auth.py
-│           │   │   └── routes.py
-│           │   ├── Dockerfile
-│           │   ├── frontend
-│           │   │   └── dashboard.ts
-│           │   ├── openapi.yaml
-│           │   └── README.md
-│           └── v2-violation
-│               ├── backend
-│               │   ├── auth.py
-│               │   └── routes.py
-│               ├── Dockerfile
-│               ├── frontend
-│               │   └── dashboard.ts
-│               ├── openapi.yaml
-│               └── README.md
+│       ├── iterations
+│       │   ├── v1-pass
+│       │   │   ├── backend
+│       │   │   │   ├── auth.py
+│       │   │   │   └── routes.py
+│       │   │   ├── Dockerfile
+│       │   │   ├── frontend
+│       │   │   │   └── dashboard.ts
+│       │   │   ├── openapi.yaml
+│       │   │   └── README.md
+│       │   └── v2-violation
+│       │       ├── backend
+│       │       │   ├── auth.py
+│       │       │   └── routes.py
+│       │       ├── Dockerfile
+│       │       ├── frontend
+│       │       │   └── dashboard.ts
+│       │       ├── openapi.yaml
+│       │       └── README.md
+│       ├── mock
+│       │   ├── index.html
+│       │   └── reports
+│       │       ├── v1-pass.artifacts.json
+│       │       ├── v1-pass.graph.json
+│       │       ├── v1-pass.validate.json
+│       │       ├── v2-violation.artifacts.json
+│       │       ├── v2-violation.graph.json
+│       │       └── v2-violation.validate.json
+│       ├── README.md
+│       └── run-demo.sh
 ├── extensions
 │   └── vscode-intract
 │       ├── extension.js
@@ -242,7 +254,8 @@
 │   ├── test_rule_registry.py
 │   ├── test_scan_artifacts.py
 │   ├── test_staged_e2e.py
-│   └── test_validation.py
+│   ├── test_validation.py
+│   └── test_web_app.py
 ├── TODO
 │   ├── 1.md
 │   ├── 2.md
@@ -254,4 +267,4 @@
 ├── uv.lock
 └── VERSION
 
-60 directories, 195 files
+62 directories, 206 files

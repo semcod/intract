@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 import shlex
 
-from intract.core.models import Contract, ContractRecord, VALID_SCOPES
+from intract.core.models import VALID_SCOPES, Contract, ContractRecord
 
 CONTRACT_MARKERS = ("@intract.v1", "@intract", "@ridl.v1")
 
@@ -66,7 +66,10 @@ def parse_contract_line(line: str, *, default_scope: str = "block") -> Contract 
     if payload is None or not payload:
         return None
 
-    tokens = shlex.split(payload, comments=False, posix=True)
+    try:
+        tokens = shlex.split(payload, comments=False, posix=True)
+    except ValueError:
+        return None
     action = ""
     object_name = ""
     priority = 3
@@ -189,5 +192,12 @@ def extract_contract_records_from_text(
         contract = parse_contract_line(line, default_scope=default_scope)
         if contract is None:
             continue
-        records.append(ContractRecord(contract=contract, file_path=file_path, start_line=index, end_line=index))
+        records.append(
+            ContractRecord(
+                contract=contract,
+                file_path=file_path,
+                start_line=index,
+                end_line=index,
+            )
+        )
     return records

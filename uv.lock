@@ -1010,7 +1010,7 @@ wheels = [
 
 [[package]]
 name = "intract"
-version = "0.5.6"
+version = "0.5.8"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
@@ -1026,6 +1026,9 @@ dev = [
     { name = "pfix" },
     { name = "pytest" },
     { name = "ruff" },
+]
+llm = [
+    { name = "litellm" },
 ]
 schema = [
     { name = "jsonschema" },
@@ -1043,6 +1046,7 @@ requires-dist = [
     { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
     { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
     { name = "jsonschema", marker = "extra == 'schema'", specifier = ">=4.0" },
+    { name = "litellm", marker = "extra == 'llm'", specifier = ">=1.0" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.8" },
     { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
@@ -1054,7 +1058,7 @@ requires-dist = [
     { name = "typer", specifier = ">=0.12.0" },
     { name = "watchdog", marker = "extra == 'watch'", specifier = ">=4.0" },
 ]
-provides-extras = ["dev", "watch", "schema", "treesitter"]
+provides-extras = ["dev", "llm", "watch", "schema", "treesitter"]
 
 [[package]]
 name = "ipython"

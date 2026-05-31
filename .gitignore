@@ -1,6 +1,4 @@
 extensions/vscode-intract/.vscodeignore
-.env
-.env.example
 .idea/inspectionProfiles/Project_Default.xml
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/intract-plugin-example.iml
@@ -23,7 +21,6 @@ build/
 htmlcov/
 
 # Environment variables
-.env
 .code2llm_cache
 .env
 frontend/.playwright-browsers

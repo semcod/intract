@@ -23,6 +23,7 @@ VALID_SCOPES = {
     "module",
     "package",
     "project",
+    "ui",
 }
 
 

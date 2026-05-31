@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "intract"
-version = "0.5.7"
+version = "0.5.8"
 description = "Intent contract tagging, validation and semantic mapping for codebases."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -29,6 +29,7 @@ dev = ["pytest>=7.0", "ruff>=0.4", "mypy>=1.8",
     "costs>=0.1.20",
     "pfix>=0.1.60",
 ]
+llm = ["litellm>=1.0"]
 watch = ["watchdog>=4.0"]
 schema = ["jsonschema>=4.0"]
 treesitter = ["tree-sitter>=0.22", "tree-sitter-languages>=1.10.2"]
