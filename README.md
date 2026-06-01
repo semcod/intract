@@ -2,11 +2,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.10-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.64-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.5h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.11-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$3.14-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-9.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $2.6414 (15 commits)
-- 👤 **Human dev:** ~$849 (8.5h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $3.1429 (16 commits)
+- 👤 **Human dev:** ~$899 (9.0h @ $100/h, 30min dedup)
 
 Generated on 2026-06-01 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -248,6 +248,44 @@ Start here:
 - [Plugins](docs/plugins.md)
 - [Integrations](docs/integrations.md)
 - [Roadmap](docs/roadmap.md)
+- [SUMD Descriptor](SUMD.md)
+
+## SUMD-based operational view
+
+Dokument `SUMD.md` jest źródłem opisu operacyjnego projektu (workflow, pipeline jakości, interfejsy, env).
+
+Architecture flow:
+
+```text
+SUMD (description) -> DOQL/source (code) -> taskfile (automation) -> testql (verification)
+```
+
+Interfaces:
+
+- CLI entry points: `intract`, `intract-mcp`
+- testql scenarios: `testql-scenarios/generated-cli-tests.testql.toon.yaml`
+
+Quality pipeline (`pyqual.yaml`) — najważniejsze etapy:
+
+- `test` (`python -m pytest -q --tb=short`)
+- `intract_contracts` (`validate`, `check`, `duplicates` na `examples/full-stack`)
+- `intract_artifacts` (`scan --all-artifacts --json` do `.pyqual/artifacts.json`)
+- `intract_web_app` (`validate` i `scan` dla `examples/web-app/iterations/v1-pass` + `run-demo.sh`)
+- `intract_demo_ci` (`bash scripts/ci-full-stack.sh`)
+
+Environment variables (`.env.example`) używane w automatyzacji:
+
+- `OPENROUTER_API_KEY`
+- `LLM_MODEL`
+- `PFIX_AUTO_APPLY`, `PFIX_AUTO_INSTALL_DEPS`, `PFIX_AUTO_RESTART`
+- `PFIX_MAX_RETRIES`, `PFIX_DRY_RUN`, `PFIX_ENABLED`
+- `PFIX_GIT_COMMIT`, `PFIX_GIT_PREFIX`, `PFIX_CREATE_BACKUPS`
+
+Release and build references:
+
+- `goal.yaml` (semver, conventional commits, changelog)
+- `Makefile` targets: `install`, `test`, `lint`, `format`
+- analysis artifacts: `project/map.toon.yaml`, `project/context.md`, `project/prompt.txt`
 
 ## Important project locations
 

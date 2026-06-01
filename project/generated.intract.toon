@@ -1,6 +1,5 @@
 # Auto-generated from code2llm map.toon.yaml
 # source: project/map.toon.yaml
-intract://.#id=project.auto.overview&intent=analyze:project&scope=project&priority=2&domain=governance&validate=required_intents&meaning=project-level%20auto-generated%20governance%20contract
 intract://app.doql.less#id=file.app.doql.less&intent=implement:file_module&scope=file&priority=3&domain=architecture&validate=no_forbidden_effect&meaning=auto-generated%20file%20contract
 intract://examples/full-stack/src/analyzer.py#id=file.examples.full.stack.src.analyzer.py&intent=implement:file_module&scope=file&priority=3&domain=architecture&validate=no_forbidden_effect&meaning=auto-generated%20file%20contract
 intract://examples/full-stack/src/parser_a.py#id=file.examples.full.stack.src.parser.a.py&intent=implement:file_module&scope=file&priority=3&domain=architecture&validate=no_forbidden_effect&meaning=auto-generated%20file%20contract

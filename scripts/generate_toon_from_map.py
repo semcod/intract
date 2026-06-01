@@ -19,6 +19,58 @@ class FunctionTarget:
     function_name: str
 
 
+_FILE_HEADER_RE = re.compile(r"^ {2}([^:\n]+):$")
+_SIGNATURE_RE = re.compile(r"^ {4}([A-Za-z_]\w*)\([^)]*\)")
+_CLASS_METHODS_RE = re.compile(r"^ {4}([A-Za-z_]\w*):\s*(.+)$")
+_METHOD_NAME_RE = re.compile(r"\s*([A-Za-z_]\w*)\(")
+_SKIP_SYMBOLS = {"if", "for", "while", "switch", "catch"}
+_OUTPUT_PROFILES = {"dev", "ci-security"}
+
+
+@dataclass(frozen=True)
+class OutputProfileConfig:
+    include_project: bool
+    include_files: bool
+    include_functions: bool
+    function_domain: str
+    function_validate: tuple[str, ...]
+    function_meaning: str
+    fallback_function_meaning: str
+
+
+_DEFAULT_PROFILE = OutputProfileConfig(
+    include_project=True,
+    include_files=True,
+    include_functions=True,
+    function_domain="auto",
+    function_validate=("return_value", "no_forbidden_effect"),
+    function_meaning="auto-generated function contract",
+    fallback_function_meaning="fallback auto-generated function contract",
+)
+
+
+_PROFILE_OVERRIDES: dict[str, OutputProfileConfig] = {
+    "dev": OutputProfileConfig(
+        include_project=False,
+        include_files=True,
+        include_functions=True,
+        function_domain="development",
+        function_validate=("return_value",),
+        function_meaning="dev-focused auto-generated function contract",
+        fallback_function_meaning="dev-focused fallback auto-generated function contract",
+    ),
+    "ci-security": OutputProfileConfig(
+        include_project=True,
+        include_files=True,
+        include_functions=True,
+        function_domain="security",
+        function_validate=("no_forbidden_effect",),
+        function_meaning="ci-security-focused auto-generated function contract",
+        fallback_function_meaning="ci-security-focused fallback auto-generated function contract",
+    ),
+}
+
+
 def _slug(value: str) -> str:
     cleaned = re.sub(r"[^a-zA-Z0-9]+", ".", value.strip().lower())
     cleaned = re.sub(r"\.+", ".", cleaned).strip(".")
@@ -36,68 +88,71 @@ def _parse_intent_from_name(name: str) -> str:
     return f"{parts[0]}:{'_'.join(parts[1:])}"
 
 
+def _iter_section_lines(
+    lines: list[str],
+    *,
+    start_marker: str,
+    end_marker: str | None = None,
+) -> Iterable[str]:
+    started = False
+    for line in lines:
+        if not started:
+            if line.startswith(start_marker):
+                started = True
+            continue
+        if end_marker and line.startswith(end_marker):
+            break
+        yield line
+
+
 def _parse_modules(lines: list[str]) -> list[str]:
     modules: list[str] = []
-    in_modules = False
-    for line in lines:
-        if line.startswith("M["):
-            in_modules = True
+    for line in _iter_section_lines(lines, start_marker="M[", end_marker="D:"):
+        if not line.startswith("  "):
             continue
-        if in_modules and line.startswith("D:"):
-            break
-        if not in_modules:
+        value = line.strip()
+        if not value:
             continue
-        if line.startswith("  "):
-            value = line.strip()
-            if not value:
-                continue
-            if "," in value:
-                value = value.split(",", 1)[0]
-            modules.append(value)
+        modules.append(value.split(",", 1)[0])
     return modules
+
+
+def _extract_symbol_names(line: str) -> list[str]:
+    signature = _SIGNATURE_RE.match(line)
+    if signature:
+        return [signature.group(1)]
+
+    class_methods = _CLASS_METHODS_RE.match(line)
+    if not class_methods:
+        return []
+
+    methods_blob = class_methods.group(2)
+    names: list[str] = []
+    for chunk in methods_blob.split(","):
+        method_match = _METHOD_NAME_RE.match(chunk)
+        if method_match:
+            names.append(method_match.group(1))
+    return names
 
 
 def _parse_functions(lines: list[str]) -> list[FunctionTarget]:
     targets: list[FunctionTarget] = []
-    in_details = False
     current_file: str | None = None
 
-    def add_name(name: str) -> None:
-        symbol = name.strip()
-        if not symbol or not current_file:
-            return
-        if symbol.startswith("_"):
-            return
-        if symbol in {"if", "for", "while", "switch", "catch"}:
-            return
-        targets.append(FunctionTarget(file_path=current_file, function_name=symbol))
-
-    for raw in lines:
-        line = raw.rstrip("\n")
-        if line.startswith("D:"):
-            in_details = True
-            continue
-        if not in_details:
-            continue
-        file_match = re.match(r"^ {2}([^:\n]+):$", line)
+    for line in _iter_section_lines(lines, start_marker="D:"):
+        raw = line.rstrip("\n")
+        file_match = _FILE_HEADER_RE.match(raw)
         if file_match:
             current_file = file_match.group(1)
             continue
         if current_file is None:
             continue
 
-        signature = re.match(r"^ {4}([A-Za-z_]\w*)\([^)]*\)", line)
-        if signature:
-            add_name(signature.group(1))
-            continue
-
-        class_methods = re.match(r"^ {4}([A-Za-z_]\w*):\s*(.+)$", line)
-        if class_methods:
-            methods_blob = class_methods.group(2)
-            for chunk in methods_blob.split(","):
-                method_match = re.match(r"\s*([A-Za-z_]\w*)\(", chunk)
-                if method_match:
-                    add_name(method_match.group(1))
+        for symbol in _extract_symbol_names(raw):
+            symbol_name = symbol.strip()
+            if not symbol_name or symbol_name.startswith("_") or symbol_name in _SKIP_SYMBOLS:
+                continue
+            targets.append(FunctionTarget(file_path=current_file, function_name=symbol_name))
 
     unique = {(item.file_path, item.function_name): item for item in targets}
     return list(unique.values())
@@ -183,6 +238,74 @@ def _llm_contract_fragment(
     )
 
 
+def _resolve_output_profile(profile: str | None) -> OutputProfileConfig:
+    if not profile:
+        return _DEFAULT_PROFILE
+    if profile not in _OUTPUT_PROFILES:
+        raise ValueError(f"unsupported output profile: {profile}")
+    return _PROFILE_OVERRIDES[profile]
+
+
+def _effective_include(
+    *,
+    profile_include: bool,
+    explicit_include: bool,
+) -> bool:
+    return profile_include and explicit_include
+
+
+def _default_function_fragment(
+    *,
+    file_path: str,
+    function_name: str,
+    profile: OutputProfileConfig,
+    fallback: bool = False,
+) -> str:
+    fn_slug = _slug(function_name)
+    file_slug = _slug(file_path)
+    return _contract_fragment(
+        contract_id=f"fn.{file_slug}.{fn_slug}",
+        intent=_parse_intent_from_name(function_name),
+        scope="function",
+        priority=3,
+        domain=profile.function_domain,
+        validate=profile.function_validate,
+        meaning=profile.fallback_function_meaning if fallback else profile.function_meaning,
+    )
+
+
+def _function_fragment(
+    *,
+    target: FunctionTarget,
+    profile: OutputProfileConfig,
+    use_llm: bool,
+    llm_goal: str,
+    llm_model: str | None,
+) -> str:
+    if not use_llm:
+        return _default_function_fragment(
+            file_path=target.file_path,
+            function_name=target.function_name,
+            profile=profile,
+            fallback=False,
+        )
+
+    fragment = _llm_contract_fragment(
+        file_path=target.file_path,
+        symbol=target.function_name,
+        goal=llm_goal,
+        model=llm_model,
+    )
+    if fragment is not None:
+        return fragment
+    return _default_function_fragment(
+        file_path=target.file_path,
+        function_name=target.function_name,
+        profile=profile,
+        fallback=True,
+    )
+
+
 def generate_toon_lines(
     *,
     map_file: Path,
@@ -192,11 +315,26 @@ def generate_toon_lines(
     llm: bool,
     llm_goal: str,
     llm_model: str | None,
+    output_profile: str | None = None,
 ) -> list[str]:
     content = map_file.read_text(encoding="utf-8")
     lines = content.splitlines()
     modules = _parse_modules(lines)
     functions = _parse_functions(lines)
+    profile = _resolve_output_profile(output_profile)
+
+    include_project = _effective_include(
+        profile_include=profile.include_project,
+        explicit_include=include_project,
+    )
+    include_files = _effective_include(
+        profile_include=profile.include_files,
+        explicit_include=include_files,
+    )
+    include_functions = _effective_include(
+        profile_include=profile.include_functions,
+        explicit_include=include_functions,
+    )
 
     out: list[str] = []
     out.append("# Auto-generated from code2llm map.toon.yaml")
@@ -230,35 +368,13 @@ def generate_toon_lines(
 
     if include_functions:
         for target in sorted(functions, key=lambda x: (x.file_path, x.function_name)):
-            fn_slug = _slug(target.function_name)
-            file_slug = _slug(target.file_path)
-            if llm:
-                fragment = _llm_contract_fragment(
-                    file_path=target.file_path,
-                    symbol=target.function_name,
-                    goal=llm_goal,
-                    model=llm_model,
-                )
-                if fragment is None:
-                    fragment = _contract_fragment(
-                        contract_id=f"fn.{file_slug}.{fn_slug}",
-                        intent=_parse_intent_from_name(target.function_name),
-                        scope="function",
-                        priority=3,
-                        domain="auto",
-                        validate=("return_value", "no_forbidden_effect"),
-                        meaning="fallback auto-generated function contract",
-                    )
-            else:
-                fragment = _contract_fragment(
-                    contract_id=f"fn.{file_slug}.{fn_slug}",
-                    intent=_parse_intent_from_name(target.function_name),
-                    scope="function",
-                    priority=3,
-                    domain="auto",
-                    validate=("return_value", "no_forbidden_effect"),
-                    meaning="auto-generated function contract",
-                )
+            fragment = _function_fragment(
+                target=target,
+                profile=profile,
+                use_llm=llm,
+                llm_goal=llm_goal,
+                llm_model=llm_model,
+            )
 
             out.append(
                 _toon_uri(
@@ -289,6 +405,12 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--llm", action="store_true", help="Use LLM enrichment for function contracts")
     parser.add_argument("--llm-goal", default="", help="Goal/context passed to LLM")
     parser.add_argument("--llm-model", default=None, help="Optional model override for LLM")
+    parser.add_argument(
+        "--output-profile",
+        choices=sorted(_OUTPUT_PROFILES),
+        default=None,
+        help="Output profile preset: dev or ci-security",
+    )
     parser.add_argument(
         "--validate",
         action="store_true",
@@ -333,6 +455,7 @@ def main(argv: Iterable[str] | None = None) -> int:
             llm=args.llm,
             llm_goal=args.llm_goal,
             llm_model=args.llm_model,
+            output_profile=args.output_profile,
         )
     except RuntimeError as exc:
         print(f"[error] LLM enrichment failed: {exc}", file=sys.stderr)

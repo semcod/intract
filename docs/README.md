@@ -9,6 +9,7 @@ Dokumentacja projektu **Intract** — warstwy kontraktów intencji dla kodu, end
 - [Manifest: `intract.yaml`](manifest.md) — kontrakty wielu plików, relacje `require`, graf intencji.
 - [Commands Reference](commands.md) — pełna lista komend CLI.
 - [Examples Guide](examples.md) — opis przykładów testowych i jak je uruchomić.
+- [SUMD Descriptor](../SUMD.md) — metadata projektu, workflow, quality pipeline (`pyqual.yaml`), env i release.
 
 ## Główne obszary
 

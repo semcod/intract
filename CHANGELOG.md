@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.11] - 2026-06-01
+
+### Docs
+- Update README.md
+- Update docs/README.md
+- Update project/README.md
+
+### Test
+- Update tests/test_generate_toon_from_map.py
+
+### Other
+- Update project/generated.intract.ci-security.toon
+- Update project/generated.intract.dev.toon
+- Update project/generated.intract.toon
+- Update project/planfile-tickets.yaml
+- Update scripts/generate_toon_from_map.py
+
 ## [0.5.10] - 2026-06-01
 
 ### Docs

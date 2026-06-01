@@ -56,4 +56,4 @@ __all__ = [
     "load_toon_records",
 ]
 
-__version__ = "0.5.10"
+__version__ = "0.5.11"
