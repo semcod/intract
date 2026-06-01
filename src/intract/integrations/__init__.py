@@ -8,6 +8,15 @@ from .redup import (
     validate_for_redup,
 )
 from .vallm import map_project_report, validate_for_vallm, validate_proposal
+from .nexu import (
+    IntentContract,
+    format_intract_v1_line,
+    parse_intract_line,
+    scan_contracts_in_text,
+    scan_contracts_in_file,
+    read_manifest_contracts,
+    read_toon_manifest_contracts,
+)
 
 __all__ = [
     "PlanfileExporter",
@@ -25,4 +34,11 @@ __all__ = [
     "tickets_from_report",
     "validate_for_vallm",
     "validate_proposal",
+    "IntentContract",
+    "format_intract_v1_line",
+    "parse_intract_line",
+    "scan_contracts_in_text",
+    "scan_contracts_in_file",
+    "read_manifest_contracts",
+    "read_toon_manifest_contracts",
 ]

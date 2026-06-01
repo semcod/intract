@@ -1,0 +1,34 @@
+# Yaml-based Toon manifest with target coordinates (identical to intract.toon)
+version: intract.v1
+contracts:
+  - id: pure-addition
+    intent: pure:add
+    forbid:
+      - write
+    target:
+      file: src/calc.py
+      function: add
+
+  - id: log-write
+    intent: write:log
+    require:
+      - write
+    target:
+      file: src/calc.py
+      line: 13
+
+  - id: dom-button-check
+    intent: click:btn
+    require:
+      - auth
+    target:
+      file: src/index.html
+      xpath: //button[@id="btn-add"]
+
+  - id: auth-login
+    intent: perform:login
+    forbid:
+      - network
+    target:
+      file: src/auth.js
+      function: login

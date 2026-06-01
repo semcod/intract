@@ -62,7 +62,54 @@ def load_manifest_records(path: Path) -> list[ContractRecord]:
     records: list[ContractRecord] = []
     for index, item in enumerate(data.get("contracts", []) or [], start=1):
         if isinstance(item, dict):
-            records.append(ContractRecord(contract=contract_from_mapping(item), file_path=str(path), start_line=index, end_line=index))
+            target = item.get("target") or {}
+            target_file = target.get("file")
+            target_line_val = target.get("line")
+            target_line = None
+            if target_line_val is not None and str(target_line_val).isdigit():
+                target_line = int(target_line_val)
+            
+            contract = contract_from_mapping(item)
+            target_func = target.get("func", target.get("function"))
+            target_xpath = target.get("xpath", target.get("xpatch"))
+            if target_func or target_xpath:
+                new_tags = list(contract.tags)
+                if target_func:
+                    new_tags.append(f"target_func:{target_func}")
+                if target_xpath:
+                    new_tags.append(f"target_xpath:{target_xpath}")
+                # Reconstruct contract with updated tags
+                contract = Contract(
+                    action=contract.action,
+                    object=contract.object,
+                    scope=contract.scope,
+                    priority=contract.priority,
+                    domain=contract.domain,
+                    inputs=contract.inputs,
+                    outputs=contract.outputs,
+                    effects=contract.effects,
+                    forbidden=contract.forbidden,
+                    required=contract.required,
+                    validators=contract.validators,
+                    tags=tuple(new_tags),
+                    algorithms=contract.algorithms,
+                    relations=contract.relations,
+                    contract_id=contract.contract_id,
+                    meaning=contract.meaning,
+                    raw=contract.raw,
+                )
+                
+            file_path = str(target_file) if target_file else str(path)
+            start_line = target_line if target_line is not None else index
+            end_line = start_line
+            records.append(
+                ContractRecord(
+                    contract=contract,
+                    file_path=file_path,
+                    start_line=start_line,
+                    end_line=end_line,
+                )
+            )
     files = data.get("files", {}) or {}
     if isinstance(files, dict):
         for file_path, file_contracts in files.items():
@@ -70,7 +117,14 @@ def load_manifest_records(path: Path) -> list[ContractRecord]:
                 continue
             for index, item in enumerate(file_contracts, start=1):
                 if isinstance(item, dict):
-                    records.append(ContractRecord(contract=contract_from_mapping(item), file_path=str(file_path), start_line=index, end_line=index))
+                    records.append(
+                        ContractRecord(
+                            contract=contract_from_mapping(item),
+                            file_path=str(file_path),
+                            start_line=index,
+                            end_line=index,
+                        )
+                    )
     return records
 
 

@@ -9,6 +9,7 @@ from .parser import extract_contract_records_from_text
 from .signature import build_signatures
 from .validation import validate_contract_against_source, validate_required_contracts
 from .yaml_manifest import load_manifest_records
+from .parsers.toon import load_toon_records
 
 DEFAULT_EXTENSIONS = (".py", ".js", ".ts", ".tsx", ".jsx", ".java", ".cs", ".go", ".rs", ".php", ".rb", ".sh", ".sql", ".html", ".css", ".md", ".yaml", ".yml")
 EXTRA_ARTIFACT_KINDS = frozenset({ArtifactKind.DOCKERFILE})
@@ -82,15 +83,33 @@ def validate_sources(sources: dict[str, str], *, manifest_records=None) -> Proje
 def validate_project(root: Path | str, *, manifest_path: Path | str | None = None) -> ProjectReport:
     project_root = Path(root)
     sources = load_project_sources(project_root)
-    manifest_records = None
+    manifest_records = []
+    
     if manifest_path:
-        manifest_records = load_manifest_records(Path(manifest_path))
+        path = Path(manifest_path)
+        if path.suffix == ".toon":
+            manifest_records = load_toon_records(path)
+        else:
+            manifest_records = load_manifest_records(path)
     else:
-        for candidate in ("intent.yaml", "intract.yaml", ".intract.yaml"):
-            path = project_root / candidate
+        # Search candidates
+        candidates = [
+            ("intract.toon", "toon"),
+            ("intent.toon", "toon"),
+            ("intract.toon.yaml", "yaml"),
+            ("intract.yaml", "yaml"),
+            ("intent.yaml", "yaml"),
+            (".intract.yaml", "yaml"),
+        ]
+        for name, kind in candidates:
+            path = project_root / name
             if path.exists():
-                manifest_records = load_manifest_records(path)
+                if kind == "toon":
+                    manifest_records = load_toon_records(path)
+                else:
+                    manifest_records = load_manifest_records(path)
                 break
+                
     report = validate_sources(sources, manifest_records=manifest_records)
     report.project_path = str(project_root)
     return report

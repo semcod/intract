@@ -6,6 +6,8 @@ Katalog `examples/` pokazuje jak używać paczki **intract** w realistycznych sc
 
 | Folder | Dla kogo | Co pokazuje |
 |--------|----------|-------------|
+| [`showcase/`](showcase/) | **Przeglądarka / UX** | **Interaktywny Dashboard** prezentujący Intract live z edytorem i symulatorem |
+| [`toon/`](toon/) | Integracja / CI | Zewnętrzne adresowanie (.toon / intract.toon.yaml) z Makefile i skryptami |
 | [`web-app/`](web-app/) | **Aplikacje webowe** | Dwie iteracji produktu (pass vs violation), mock UI, OpenAPI, Dockerfile |
 | [`full-stack/`](full-stack/) | Pipeline / analiza | Manifest `require`, duplikaty intencji, graf |
 | [`integration_tests/`](integration_tests/) | CI / QA | 3 automatyczne scenariusze (`run_examples.py`) |

@@ -1,0 +1,5 @@
+# Flat line-by-line Toon URI contracts (identical to intract.toon.yaml)
+intract://src/calc.py?func=add#id=pure-addition&intent=pure-add&forbid=write
+intract://src/calc.py?func=write_to_log&line=13#id=log-write&intent=write-log&req=write
+intract://src/index.html?xpath=//button[@id="btn-add"]#id=dom-button-check&intent=click-btn&req=auth
+intract://src/auth.js?func=login#id=auth-login&intent=perform-login&forbid=network

@@ -3,13 +3,13 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.8-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.51-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-7.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.5.9-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.56-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-7.5h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $2.5107 (13 commits)
-- 👤 **Human dev:** ~$699 (7.0h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $2.5558 (14 commits)
+- 👤 **Human dev:** ~$749 (7.5h @ $100/h, 30min dedup)
 
-Generated on 2026-05-31 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
+Generated on 2026-06-01 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
 ---
 
@@ -46,6 +46,35 @@ Run:
 python -m intract scan .
 python -m intract validate .
 ```
+
+## External Target Addressing (Toon Manifests)
+
+In addition to inline annotations, Intract supports **two ways** of defining quality gates and intent contracts:
+1. **Inline Comments**: Using `@intract.v1` in source files.
+2. **External manifests (Toon Manifests)**: Decoupled files (`.toon` or `intract.toon.yaml`) that specify precise coordinates (targets) for files, functions, lines, and XPaths.
+
+### 1. Płaski format URI linia po linii (`.toon`)
+Pliki `.toon` używają struktury URI do prostego i przejrzystego przypisywania kontraktów na poziomie konkretnych linii, funkcji lub selektorów:
+```text
+# Flat target-based URI rules
+intract://src/calc.py?func=add#id=pure-addition&intent=pure-add&forbid=write
+intract://src/calc.py?func=write_to_log&line=13#id=log-write&intent=write-log&require=write
+```
+
+### 2. Manifest YAML z targetowaniem (`intract.toon.yaml`)
+Możesz również zdefiniować zasady w formacie YAML, podając sekcję `target`:
+```yaml
+version: intract.v1
+contracts:
+  - id: addition-check
+    intent: pure:addition
+    forbid: [write]
+    target:
+      file: src/calc.py
+      function: add
+```
+
+Więcej informacji i pełne przykłady znajdziesz w katalogu [`examples/toon/`](examples/toon/).
 
 ## Documentation
 

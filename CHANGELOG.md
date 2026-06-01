@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.9] - 2026-06-01
+
+### Docs
+- Update README.md
+- Update examples/README.md
+- Update examples/showcase/README.md
+- Update examples/toon/README.md
+
+### Test
+- Update tests/test_toon.py
+
+### Other
+- Update examples/showcase/index.html
+- Update examples/toon/Makefile
+- Update examples/toon/intract.toon
+- Update examples/toon/intract.toon.yaml
+- Update examples/toon/src/auth.js
+- Update examples/toon/src/calc.py
+- Update examples/toon/src/index.html
+- Update examples/toon/validate.sh
+
 ## [0.5.8] - 2026-05-31
 
 ### Docs

