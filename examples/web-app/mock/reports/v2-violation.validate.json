@@ -76,8 +76,8 @@
       ],
       "matched": {
         "inputs_found": [
-          "resource",
-          "user"
+          "user",
+          "resource"
         ],
         "outputs_found": [
           "allowed"

@@ -88,6 +88,20 @@ def test_rust_block_extent():
     assert end == 4
 
 
+def test_rust_decorator_block_extent():
+    from intract.analyzers.rust import rust_block_extent
+
+    source = (
+        '@intract.v1 uri="intract://src/decoder.rs?func=decode_header#id=safe-decoder&forbid=unsafe"\n'
+        "pub fn decode_header(raw_data: &[u8]) -> Header {\n"
+        "    true\n"
+        "}\n"
+    )
+    start, end = rust_block_extent(source, 1)
+    assert start == 1
+    assert end == 4
+
+
 def test_block_extent_routes_java_go_rust():
     java = "// @intract.v1 scope:method intent:x\npublic void run() {\n    return;\n}\n"
     go = "// @intract.v1 scope:function intent:x\nfunc run() {\n    return\n}\n"

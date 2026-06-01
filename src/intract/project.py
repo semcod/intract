@@ -11,7 +11,7 @@ from .validation import validate_contract_against_source, validate_required_cont
 from .yaml_manifest import load_manifest_records
 from .parsers.toon import load_toon_records
 
-DEFAULT_EXTENSIONS = (".py", ".js", ".ts", ".tsx", ".jsx", ".java", ".cs", ".go", ".rs", ".php", ".rb", ".sh", ".sql", ".html", ".css", ".md", ".yaml", ".yml")
+DEFAULT_EXTENSIONS = (".py", ".js", ".ts", ".tsx", ".jsx", ".java", ".cs", ".go", ".rs", ".php", ".rb", ".sh", ".sql", ".html", ".css", ".yaml", ".yml")
 EXTRA_ARTIFACT_KINDS = frozenset({ArtifactKind.DOCKERFILE})
 SKIP_DIRS = {".git", ".venv", "venv", "__pycache__", "node_modules", "dist", "build"}
 

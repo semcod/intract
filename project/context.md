@@ -5,18 +5,27 @@
 
 - **Project**: /home/tom/github/semcod/intract
 - **Primary Language**: python
-- **Languages**: python: 89, yaml: 14, json: 11, typescript: 7, toml: 4
+- **Languages**: python: 97, yaml: 15, json: 11, typescript: 7, shell: 4
 - **Analysis Mode**: static
-- **Total Functions**: 297
-- **Total Classes**: 69
-- **Modules**: 142
-- **Entry Points**: 146
+- **Total Functions**: 353
+- **Total Classes**: 77
+- **Modules**: 154
+- **Entry Points**: 180
 
 ## Architecture by Module
 
 ### src.intract.cli
-- **Functions**: 23
+- **Functions**: 26
 - **File**: `cli.py`
+
+### extensions.vscode-intract.extension
+- **Functions**: 16
+- **File**: `extension.js`
+
+### src.intract.integrations.redup
+- **Functions**: 14
+- **Classes**: 4
+- **File**: `redup.py`
 
 ### src.intract.integrations.planfile_adapter
 - **Functions**: 13
@@ -38,18 +47,14 @@
 - **Classes**: 6
 - **File**: `builtins.py`
 
-### src.intract.integrations.redup
-- **Functions**: 11
-- **Classes**: 3
-- **File**: `redup.py`
-
-### extensions.vscode-intract.extension
-- **Functions**: 10
-- **File**: `extension.js`
-
 ### src.intract.mcp.handlers
 - **Functions**: 9
 - **File**: `handlers.py`
+
+### src.intract.manifest_ops
+- **Functions**: 9
+- **Classes**: 2
+- **File**: `manifest_ops.py`
 
 ### src.intract.validators.input_output
 - **Functions**: 8
@@ -62,13 +67,23 @@
 - **File**: `registry.py`
 
 ### src.intract.parsers.inline
-- **Functions**: 7
+- **Functions**: 8
 - **File**: `inline.py`
 
 ### src.intract.integrations.planfile
 - **Functions**: 7
 - **Classes**: 2
 - **File**: `planfile.py`
+
+### src.intract.core.cache
+- **Functions**: 7
+- **Classes**: 2
+- **File**: `cache.py`
+
+### examples.showcase.server
+- **Functions**: 7
+- **Classes**: 1
+- **File**: `server.py`
 
 ### src.intract.watch
 - **Functions**: 6
@@ -89,35 +104,35 @@
 - **Functions**: 6
 - **File**: `assigner.py`
 
-### examples.integration_tests.run_examples
-- **Functions**: 5
-- **File**: `run_examples.py`
-
-### src.intract.git
-- **Functions**: 5
+### src.intract.integrations.nexu
+- **Functions**: 6
 - **Classes**: 1
-- **File**: `git.py`
-
-### src.intract.mcp.server
-- **Functions**: 5
-- **File**: `server.py`
-
-### src.intract.engine.drift
-- **Functions**: 5
-- **Classes**: 2
-- **File**: `drift.py`
+- **File**: `nexu.py`
 
 ## Key Entry Points
 
 Main execution flows into the system:
 
+### src.intract.integrations.nexu.read_toon_manifest_contracts
+- **Calls**: path.exists, data.get, str, str, str, target.get, str, IntentContract
+
 ### src.intract.cli.scan
 > Scan files for inline @intract contracts.
 - **Calls**: app.command, typer.Argument, typer.Option, typer.Option, path.is_file, Table, table.add_column, table.add_column
 
+### src.intract.integrations.nexu.read_manifest_contracts
+- **Calls**: path.exists, yaml.safe_load, data.get, str, IntentContract, contracts.append, path.read_text, item.get
+
 ### src.intract.cli.check
 > Policy-aware validation for pre-commit/CI.
 - **Calls**: app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
+
+### src.intract.cli.manifest_apply_ledger
+> Merge evolved cinema ledger contracts into intract.yaml (by id).
+- **Calls**: manifest_app.command, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
+
+### examples.showcase.server.ShowcaseHandler.do_POST
+- **Calls**: examples.showcase.server.resolve_runtime_config, int, Request, self._write_json, self._write_json, self.headers.get, self.rfile.read, json.loads
 
 ### src.intract.cli.watch
 > Watch folder and re-validate Intract contracts when logical files change.
@@ -126,12 +141,16 @@ Main execution flows into the system:
 ### src.intract.config.IntractConfig.from_mapping
 - **Calls**: None.get, tool.get, plugins.get, cls, data.get, tool.get, data.get, str
 
-### src.intract.cli.engine_drift
-- **Calls**: engine_app.command, typer.Argument, typer.Option, typer.Option, src.intract.engine.monitor.scan_suggest_and_validate, console.print, console.print, console.print
+### src.intract.integrations.redup.validate_for_redup
+> Apply Intract project policy for reDUP consumers (scan gates / CLI).
+- **Calls**: Path, src.intract.config.load_config, src.intract.project.validate_project, src.intract.policy.decide_policy, list, list, RedupPolicyResult, Path
 
 ### src.intract.integrations.planfile_adapter.PlanfileApiAdapter.apply_webhook_event
 > Apply inbound planfile ticket status updates to the local JSON export.
 - **Calls**: str, json.loads, data.get, isinstance, payload.get, json_path.exists, json_path.read_text, payload.get
+
+### src.intract.cli.engine_drift
+- **Calls**: engine_app.command, typer.Argument, typer.Option, typer.Option, src.intract.engine.monitor.scan_suggest_and_validate, console.print, console.print, console.print
 
 ### src.intract.cli.engine_run
 - **Calls**: engine_app.command, typer.Argument, typer.Option, typer.Option, typer.Option, src.intract.engine.monitor.scan_suggest_and_validate, console.print, console.print
@@ -147,9 +166,9 @@ Main execution flows into the system:
 > Build require/provide graph from contracts.
 - **Calls**: app.command, typer.Argument, typer.Option, typer.Option, typer.Option, src.intract.graph.build_graph, Path, json.dumps
 
-### src.intract.cli.planfile_pull
-> Pull planfile tickets from API or local .intract export.
-- **Calls**: planfile_app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, PlanfileApiAdapter, adapter.pull
+### src.intract.cli.propose_llm_cmd
+> Propose @intract.v1 lines using an LLM (requires intract[llm]).
+- **Calls**: propose_app.command, typer.Option, typer.Option, typer.Option, typer.Option, file.read_text, console.print, typer.Exit
 
 ### src.intract.sdk.ContractBuilder.to_inline
 - **Calls**: parts.append, parts.append, parts.append, parts.append, parts.append, parts.append, parts.append, parts.append
@@ -163,19 +182,23 @@ Main execution flows into the system:
 ### src.intract.integrations.planfile_adapter.PlanfileApiAdapter.push
 - **Calls**: self.export_local, self._request, PlanfileSyncResult, PlanfileSyncResult, self._endpoint, self._webhook_label, self._webhook_label, asdict
 
-### src.intract.cli.planfile_push
-> Export validation tickets locally and optionally push to a planfile API.
-- **Calls**: planfile_app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, src.intract.project.validate_project, PlanfileApiAdapter
+### src.intract.cli.planfile_pull
+> Pull planfile tickets from API or local .intract export.
+- **Calls**: planfile_app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, PlanfileApiAdapter, adapter.pull
 
 ### src.intract.mcp.server.run_server
 - **Calls**: print, print, line.strip, json.loads, src.intract.mcp.server.handle_request, print, None.join, json.dumps
 
-### src.intract.cli.planfile_sync
-> Validate project, export tickets, and push to planfile API when configured.
+### src.intract.cli.planfile_push
+> Export validation tickets locally and optionally push to a planfile API.
 - **Calls**: planfile_app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, src.intract.project.validate_project, PlanfileApiAdapter
 
 ### src.intract.integrations.planfile_adapter.PlanfileConfig.from_env
 - **Calls**: cls, Path, os.environ.get, os.environ.get, os.environ.get, os.environ.get, os.environ.get, os.environ.get
+
+### src.intract.cli.planfile_sync
+> Validate project, export tickets, and push to planfile API when configured.
+- **Calls**: planfile_app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, src.intract.project.validate_project, PlanfileApiAdapter
 
 ### src.intract.cli.validate
 > Validate project contracts.
@@ -189,97 +212,72 @@ Main execution flows into the system:
 > Validate intract.yaml against the Intract schema.
 - **Calls**: app.command, typer.Argument, typer.Option, src.intract.manifest_schema.validate_manifest, Path, console.print_json, console.print, console.print
 
-### src.intract.cli.planfile_webhook_apply
-> Apply inbound planfile ticket status updates to local .intract export.
-- **Calls**: planfile_app.command, typer.Argument, typer.Argument, json.loads, PlanfileApiAdapter, adapter.apply_webhook_event, console.print, Path
-
-### src.intract.cli.artifact_validate
-> Validate a non-code artifact: OpenAPI, Dockerfile, GitHub Actions or Kubernetes.
-- **Calls**: app.command, typer.Argument, typer.Option, src.intract.validators.artifacts.validate_artifact, console.print, console.print, console.print_json, console.print
-
 ### src.intract.mcp.handlers.handle_validate_staged
 - **Calls**: src.intract.mcp.handlers._resolve_path, src.intract.mcp.handlers._resolve_manifest, bool, src.intract.check.staged_check, src.intract.config.load_config, src.intract.policy.decide_policy, json.dumps, params.get
 
 ### src.intract.integrations.planfile_adapter.PlanfileApiAdapter.emit_webhook
 - **Calls**: None.encode, urllib.request.Request, PlanfileWebhookResult, None.hexdigest, json.dumps, urllib.request.urlopen, PlanfileWebhookResult, RuntimeError
 
-### src.intract.integrations.planfile_adapter.PlanfileApiAdapter._request
-- **Calls**: urllib.request.Request, None.encode, urllib.request.urlopen, None.decode, None.decode, RuntimeError, RuntimeError, json.dumps
-
-### src.intract.cli.init
-> Create a sample intract.yaml manifest.
-- **Calls**: app.command, typer.Argument, typer.Option, target.write_text, console.print, Path, target.exists, console.print
-
-### src.intract.integrations.planfile_adapter.PlanfileApiAdapter.pull
-- **Calls**: self._request, data.get, json.loads, self._endpoint, src.intract.integrations.planfile_adapter._ticket_from_dict, json_path.exists, json_path.read_text, src.intract.integrations.planfile_adapter._ticket_from_dict
-
-### src.intract.graph.ContractGraph.to_mermaid
-- **Calls**: None.join, src.intract.graph._safe, lines.append, lines.append, lines.append, lines.append, src.intract.graph._safe, src.intract.graph._safe
-
 ## Process Flows
 
 Key execution flows identified:
 
-### Flow 1: scan
+### Flow 1: read_toon_manifest_contracts
+```
+read_toon_manifest_contracts [src.intract.integrations.nexu]
+```
+
+### Flow 2: scan
 ```
 scan [src.intract.cli]
 ```
 
-### Flow 2: check
+### Flow 3: read_manifest_contracts
+```
+read_manifest_contracts [src.intract.integrations.nexu]
+```
+
+### Flow 4: check
 ```
 check [src.intract.cli]
 ```
 
-### Flow 3: watch
+### Flow 5: manifest_apply_ledger
+```
+manifest_apply_ledger [src.intract.cli]
+```
+
+### Flow 6: do_POST
+```
+do_POST [examples.showcase.server.ShowcaseHandler]
+  └─ →> resolve_runtime_config
+      └─> load_env_file
+```
+
+### Flow 7: watch
 ```
 watch [src.intract.cli]
 ```
 
-### Flow 4: from_mapping
+### Flow 8: from_mapping
 ```
 from_mapping [src.intract.config.IntractConfig]
 ```
 
-### Flow 5: engine_drift
+### Flow 9: validate_for_redup
 ```
-engine_drift [src.intract.cli]
-  └─ →> scan_suggest_and_validate
-      └─ →> collect_source_units
-      └─ →> analyze_source_units
-          └─> _slice_until_next_match
+validate_for_redup [src.intract.integrations.redup]
+  └─ →> load_config
+  └─ →> validate_project
+      └─> load_project_sources
+      └─> validate_sources
+          └─> extract_signatures_from_sources
+  └─ →> decide_policy
 ```
 
-### Flow 6: apply_webhook_event
+### Flow 10: apply_webhook_event
 ```
 apply_webhook_event [src.intract.integrations.planfile_adapter.PlanfileApiAdapter]
-```
-
-### Flow 7: engine_run
-```
-engine_run [src.intract.cli]
-```
-
-### Flow 8: engine_suggest
-```
-engine_suggest [src.intract.cli]
-  └─ →> scan_suggest_and_validate
-      └─ →> collect_source_units
-      └─ →> analyze_source_units
-          └─> _slice_until_next_match
-```
-
-### Flow 9: duplicates
-```
-duplicates [src.intract.cli]
-  └─ →> find_duplicate_contracts
-      └─> pairs_to_duplicate_contracts
-      └─ →> load_project_sources
-      └─ →> extract_signatures_from_sources
-```
-
-### Flow 10: graph
-```
-graph [src.intract.cli]
 ```
 
 ## Key Classes
@@ -288,6 +286,13 @@ graph [src.intract.cli]
 > Sync Intract tickets with a planfile-compatible HTTP API or local export.
 - **Methods**: 10
 - **Key Methods**: src.intract.integrations.planfile_adapter.PlanfileApiAdapter.__init__, src.intract.integrations.planfile_adapter.PlanfileApiAdapter.export_local, src.intract.integrations.planfile_adapter.PlanfileApiAdapter.push, src.intract.integrations.planfile_adapter.PlanfileApiAdapter.pull, src.intract.integrations.planfile_adapter.PlanfileApiAdapter.sync_from_report, src.intract.integrations.planfile_adapter.PlanfileApiAdapter.emit_webhook, src.intract.integrations.planfile_adapter.PlanfileApiAdapter.apply_webhook_event, src.intract.integrations.planfile_adapter.PlanfileApiAdapter._webhook_label, src.intract.integrations.planfile_adapter.PlanfileApiAdapter._endpoint, src.intract.integrations.planfile_adapter.PlanfileApiAdapter._request
+
+### src.intract.core.cache.IntractDecisionCache
+> Git-friendly, text-based JSON ledger cache for Intract's decision-making system.
+
+This cache stores 
+- **Methods**: 7
+- **Key Methods**: src.intract.core.cache.IntractDecisionCache.__init__, src.intract.core.cache.IntractDecisionCache._hash, src.intract.core.cache.IntractDecisionCache._get_key, src.intract.core.cache.IntractDecisionCache.load, src.intract.core.cache.IntractDecisionCache.save, src.intract.core.cache.IntractDecisionCache.get_decision, src.intract.core.cache.IntractDecisionCache.set_decision
 
 ### src.intract.validators.registry.RuleRegistry
 > Registry of contract validation rules with optional plugin discovery.
@@ -298,13 +303,18 @@ graph [src.intract.cli]
 - **Methods**: 6
 - **Key Methods**: src.intract.plugins.base.PluginRegistry.add_parser, src.intract.plugins.base.PluginRegistry.add_validator, src.intract.plugins.base.PluginRegistry.add_reporter, src.intract.plugins.base.PluginRegistry.add_integration, src.intract.plugins.base.PluginRegistry.parse_artifact, src.intract.plugins.base.PluginRegistry.validate_artifact
 
+### src.intract.integrations.planfile.PlanfileExporter
+- **Methods**: 5
+- **Key Methods**: src.intract.integrations.planfile.PlanfileExporter.__init__, src.intract.integrations.planfile.PlanfileExporter.export, src.intract.integrations.planfile.PlanfileExporter._write_yaml, src.intract.integrations.planfile.PlanfileExporter._write_json, src.intract.integrations.planfile.PlanfileExporter._write_todo
+
 ### src.intract.core.models.ProjectReport
 - **Methods**: 5
 - **Key Methods**: src.intract.core.models.ProjectReport.passed, src.intract.core.models.ProjectReport.partial, src.intract.core.models.ProjectReport.failed, src.intract.core.models.ProjectReport.violations, src.intract.core.models.ProjectReport.to_dict
 
-### src.intract.integrations.planfile.PlanfileExporter
-- **Methods**: 5
-- **Key Methods**: src.intract.integrations.planfile.PlanfileExporter.__init__, src.intract.integrations.planfile.PlanfileExporter.export, src.intract.integrations.planfile.PlanfileExporter._write_yaml, src.intract.integrations.planfile.PlanfileExporter._write_json, src.intract.integrations.planfile.PlanfileExporter._write_todo
+### examples.showcase.server.ShowcaseHandler
+- **Methods**: 4
+- **Key Methods**: examples.showcase.server.ShowcaseHandler.__init__, examples.showcase.server.ShowcaseHandler._write_json, examples.showcase.server.ShowcaseHandler.do_GET, examples.showcase.server.ShowcaseHandler.do_POST
+- **Inherits**: SimpleHTTPRequestHandler
 
 ### src.intract.scan_artifacts.ArtifactScanReport
 - **Methods**: 2
@@ -361,14 +371,6 @@ graph [src.intract.cli]
 - **Methods**: 2
 - **Key Methods**: src.intract.plugins.builtins.BasicContractValidatorPlugin.supports, src.intract.plugins.builtins.BasicContractValidatorPlugin.validate
 
-### src.intract.plugins.builtins.ArtifactStructureValidatorPlugin
-- **Methods**: 2
-- **Key Methods**: src.intract.plugins.builtins.ArtifactStructureValidatorPlugin.supports, src.intract.plugins.builtins.ArtifactStructureValidatorPlugin.validate
-
-### sdks.java.src.main.java.io.intract.sdk.IntractContract.IntractContract
-- **Methods**: 2
-- **Key Methods**: sdks.java.src.main.java.io.intract.sdk.IntractContract.IntractContract.inline, sdks.java.src.main.java.io.intract.sdk.IntractContract.IntractContract.join
-
 ## Data Transformation Functions
 
 Key functions that process and transform data:
@@ -378,17 +380,6 @@ Key functions that process and transform data:
 
 ### examples.integration_tests.01_python_pass.app.parse_extensions
 - **Output to**: None.lower, raw_extensions.split, item.strip, item.strip
-
-### src.intract.cli.validate
-> Validate project contracts.
-- **Output to**: app.command, typer.Argument, typer.Option, typer.Option, typer.Option
-
-### src.intract.cli._format_check_text
-- **Output to**: lines.append, lines.append, lines.append, lines.append, lines.append
-
-### src.intract.cli.artifact_validate
-> Validate a non-code artifact: OpenAPI, Dockerfile, GitHub Actions or Kubernetes.
-- **Output to**: app.command, typer.Argument, typer.Option, src.intract.validators.artifacts.validate_artifact, console.print
 
 ### src.intract.check.parse_unified_diff_hunks
 - **Output to**: diff_text.splitlines, line.startswith, HUNK_RE.match, hunks.append, ChangedHunk
@@ -447,50 +438,59 @@ Key functions that process and transform data:
 ### src.intract.plugins.base.PluginRegistry.parse_artifact
 - **Output to**: parser.supports, parser.parse, contracts.extend
 
+### src.intract.plugins.base.PluginRegistry.validate_artifact
+- **Output to**: validator.supports, results.append, validator.validate
+
+### src.intract.plugins.builtins.InlineContractParserPlugin.parse
+- **Output to**: src.intract.parsers.inline.extract_contract_records_from_text, PluginResult, src.intract.core.signatures.build_signatures
+
+### src.intract.plugins.builtins.OpenAPIParserPlugin.parse
+- **Output to**: src.intract.parsers.openapi.parse_openapi_text, PluginResult, src.intract.core.signatures.build_signatures
+
 ## Public API Surface
 
 Functions exposed as public API (no underscore prefix):
 
+- `src.intract.parsers.toon.parse_toon_uri_line` - 72 calls
 - `src.intract.parsers.manifest.contract_from_mapping` - 59 calls
-- `src.intract.parsers.inline.parse_contract_line` - 51 calls
+- `src.intract.parsers.inline.parse_contract_line` - 55 calls
+- `src.intract.integrations.nexu.read_toon_manifest_contracts` - 42 calls
 - `src.intract.cli.scan` - 41 calls
 - `src.intract.core.signatures.build_signature` - 40 calls
 - `src.intract.manifest_schema.validate_manifest` - 35 calls
+- `src.intract.parsers.manifest.load_manifest_records` - 35 calls
+- `src.intract.integrations.nexu.read_manifest_contracts` - 32 calls
 - `src.intract.cli.check` - 32 calls
+- `src.intract.manifest_ops.apply_ledger_to_manifest` - 30 calls
+- `src.intract.cli.manifest_apply_ledger` - 30 calls
+- `src.intract.propose_llm.propose_contracts_llm` - 28 calls
+- `examples.showcase.server.ShowcaseHandler.do_POST` - 28 calls
 - `src.intract.cli.watch` - 28 calls
 - `src.intract.config.IntractConfig.from_mapping` - 23 calls
-- `src.intract.cli.engine_drift` - 21 calls
+- `src.intract.integrations.redup.validate_for_redup` - 23 calls
 - `src.intract.integrations.planfile.tickets_from_report` - 21 calls
 - `src.intract.integrations.planfile_adapter.PlanfileApiAdapter.apply_webhook_event` - 21 calls
+- `src.intract.cli.engine_drift` - 21 calls
+- `src.intract.parsers.inline.clean_comment_line` - 20 calls
 - `src.intract.cli.engine_run` - 20 calls
 - `src.intract.policy.decide_policy` - 19 calls
 - `src.intract.reporters.sarif.report_to_sarif` - 19 calls
-- `src.intract.parsers.manifest.load_manifest_records` - 19 calls
-- `src.intract.cli.engine_suggest` - 18 calls
 - `src.intract.check.block_extent` - 18 calls
 - `src.intract.graph.build_graph` - 18 calls
-- `examples.integration_tests.run_examples.run_example_03` - 17 calls
-- `src.intract.cli.duplicates` - 17 calls
+- `src.intract.cli.engine_suggest` - 18 calls
 - `src.intract.validators.artifacts.validate_artifact` - 17 calls
 - `src.intract.engine.analyzer.analyze_source_units` - 17 calls
-- `src.intract.cli.graph` - 16 calls
+- `examples.integration_tests.run_examples.run_example_03` - 17 calls
+- `src.intract.cli.duplicates` - 17 calls
 - `src.intract.check.parse_unified_diff_hunks` - 16 calls
 - `src.intract.duplicates.grouping.pairs_to_intent_groups` - 16 calls
 - `src.intract.validators.artifacts.validate_openapi` - 16 calls
 - `src.intract.core.normalizer.normalize_label` - 16 calls
 - `src.intract.parsers.openapi.parse_openapi_contracts` - 16 calls
-- `src.intract.cli.planfile_pull` - 15 calls
+- `src.intract.cli.graph` - 16 calls
+- `src.intract.cli.propose_llm_cmd` - 16 calls
 - `src.intract.check.validate_sources_for_hunks` - 15 calls
 - `src.intract.sdk.ContractBuilder.to_inline` - 15 calls
-- `src.intract.plugins.manager.discover_plugins` - 15 calls
-- `src.intract.integrations.planfile_adapter.PlanfileApiAdapter.push` - 15 calls
-- `src.intract.project.validate_sources` - 15 calls
-- `src.intract.config.load_config` - 14 calls
-- `src.intract.cli.planfile_push` - 14 calls
-- `src.intract.coverage.calculate_coverage` - 14 calls
-- `src.intract.duplicates.scoring.score_similarity` - 14 calls
-- `src.intract.validators.artifacts.validate_dockerfile` - 14 calls
-- `src.intract.validators.engine.validate_contract_against_source` - 14 calls
 
 ## System Interactions
 
@@ -498,36 +498,36 @@ How components interact:
 
 ```mermaid
 graph TD
+    read_toon_manifest_c --> exists
+    read_toon_manifest_c --> get
+    read_toon_manifest_c --> str
     scan --> command
     scan --> Argument
     scan --> Option
     scan --> is_file
+    read_manifest_contra --> exists
+    read_manifest_contra --> safe_load
+    read_manifest_contra --> get
+    read_manifest_contra --> str
+    read_manifest_contra --> IntentContract
     check --> command
     check --> Argument
     check --> Option
+    manifest_apply_ledge --> command
+    manifest_apply_ledge --> Option
+    do_POST --> resolve_runtime_conf
+    do_POST --> int
+    do_POST --> Request
+    do_POST --> _write_json
     watch --> command
     watch --> Argument
     watch --> Option
     from_mapping --> get
     from_mapping --> cls
-    engine_drift --> command
-    engine_drift --> Argument
-    engine_drift --> Option
-    engine_drift --> scan_suggest_and_val
-    apply_webhook_event --> str
-    apply_webhook_event --> loads
-    apply_webhook_event --> get
-    apply_webhook_event --> isinstance
-    engine_run --> command
-    engine_run --> Argument
-    engine_run --> Option
-    engine_suggest --> command
-    engine_suggest --> Argument
-    engine_suggest --> Option
-    engine_suggest --> scan_suggest_and_val
-    engine_suggest --> Table
-    duplicates --> command
-    duplicates --> Argument
+    validate_for_redup --> Path
+    validate_for_redup --> load_config
+    validate_for_redup --> validate_project
+    validate_for_redup --> decide_policy
 ```
 
 ## Reverse Engineering Guidelines

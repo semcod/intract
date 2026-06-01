@@ -7,6 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.10] - 2026-06-01
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update docs/contract-format.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/test_cache.py
+- Update tests/test_language_analyzers.py
+- Update tests/test_parser.py
+- Update tests/test_toon.py
+
+### Other
+- Update app.doql.less
+- Update examples/integration_tests/02_typescript_violation_planfile/.intract/planfile-tickets.json
+- Update examples/integration_tests/02_typescript_violation_planfile/.intract/planfile-tickets.yaml
+- Update examples/showcase/index.html
+- Update examples/showcase/server.py
+- Update examples/web-app/mock/reports/v1-pass.graph.json
+- Update examples/web-app/mock/reports/v1-pass.validate.json
+- Update examples/web-app/mock/reports/v2-violation.graph.json
+- Update examples/web-app/mock/reports/v2-violation.validate.json
+- Update project/analysis.toon.yaml
+- ... and 20 more files
+
+## [0.5.10] - 2026-06-01
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update docs/contract-format.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/test_cache.py
+- Update tests/test_language_analyzers.py
+- Update tests/test_parser.py
+- Update tests/test_toon.py
+
+### Other
+- Update app.doql.less
+- Update examples/integration_tests/02_typescript_violation_planfile/.intract/planfile-tickets.json
+- Update examples/integration_tests/02_typescript_violation_planfile/.intract/planfile-tickets.yaml
+- Update examples/showcase/index.html
+- Update examples/showcase/server.py
+- Update examples/web-app/mock/reports/v1-pass.graph.json
+- Update examples/web-app/mock/reports/v1-pass.validate.json
+- Update examples/web-app/mock/reports/v2-violation.graph.json
+- Update examples/web-app/mock/reports/v2-violation.validate.json
+- Update project/analysis.toon.yaml
+- ... and 20 more files
+
 ## [0.5.9] - 2026-06-01
 
 ### Docs

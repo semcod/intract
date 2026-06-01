@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
+
+from intract.parsers.inline import clean_comment_line, parse_contract_line
 
 
 @dataclass
@@ -44,57 +45,47 @@ def format_intract_v1_line(contract: IntentContract) -> str:
     )
 
 
-def _split_csv(value: str) -> list[str]:
-    if value.lower() in {"", "none", "null", "-"}:
-        return []
-    return [item.strip() for item in value.split(",") if item.strip()]
-
-
-def _tokenize_contract(line: str) -> dict[str, str]:
-    # Small pragmatic tokenizer for @intract.v1 fields. Keeps quoted meaning text.
-    payload = line.split("@intract.v1", 1)[1].strip()
-    meaning = ""
-    match = re.search(r'meaning:"([^"]*)"', payload)
-    if match:
-        meaning = match.group(1)
-        payload = payload[: match.start()] + payload[match.end():]
-    fields: dict[str, str] = {}
-    for token in payload.split():
-        if ":" not in token:
-            continue
-        key, value = token.split(":", 1)
-        fields[key.strip()] = value.strip()
-    if meaning:
-        fields["meaning"] = meaning
-    return fields
-
-
 def parse_intract_line(
     line: str,
     *,
     source: str = "",
     line_number: int = 0,
 ) -> IntentContract | None:
-    if "@intract.v1" not in line:
+    cleaned = clean_comment_line(line)
+    if "@intract.v1" not in cleaned and "@intract" not in cleaned:
         return None
-    fields = _tokenize_contract(line)
-    raw = line.strip()
+
+    contract = parse_contract_line(line)
+    if contract is None:
+        return None
+
+    intent = f"{contract.action}:{contract.object}" if contract.object else contract.action
+    target_function = ""
+    target_xpath = ""
+    for tag in contract.tags:
+        if tag.startswith("target_func:"):
+            target_function = tag.split(":", 1)[1]
+        elif tag.startswith("target_xpath:"):
+            target_xpath = tag.split(":", 1)[1]
+
     return IntentContract(
-        raw=raw,
-        contract_id=fields.get("id", ""),
-        scope=fields.get("scope", "block"),
-        intent=fields.get("intent", ""),
-        priority=int(fields.get("priority", "3") or "3"),
-        domain=fields.get("domain", "general"),
-        input=_split_csv(fields.get("input", "")),
-        output=_split_csv(fields.get("output", "")),
-        effect=_split_csv(fields.get("effect", "")),
-        forbid=_split_csv(fields.get("forbid", "")),
-        require=_split_csv(fields.get("require", "")),
-        validate=_split_csv(fields.get("validate", "")),
-        meaning=fields.get("meaning", ""),
+        raw=line.strip(),
+        contract_id=contract.contract_id,
+        scope=contract.scope,
+        intent=intent,
+        priority=contract.priority,
+        domain=contract.domain or "general",
+        input=list(contract.inputs),
+        output=list(contract.outputs),
+        effect=list(contract.effects),
+        forbid=list(contract.forbidden),
+        require=list(contract.required),
+        validate=list(contract.validators),
+        meaning=contract.meaning,
         source=source,
         line=line_number,
+        target_function=target_function,
+        target_xpath=target_xpath,
     )
 
 

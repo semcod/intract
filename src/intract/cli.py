@@ -82,7 +82,7 @@ def scan(
         for file_path in path.rglob("*"):
             if not file_path.is_file():
                 continue
-            if file_path.suffix not in {".py", ".js", ".ts", ".cs", ".java", ".go", ".rs", ".md", ".yaml", ".yml", ".json", ".toml", ".sh", ".sql", ".html", ".css"} and file_path.name.lower() != "dockerfile":
+            if file_path.suffix not in {".py", ".js", ".ts", ".cs", ".java", ".go", ".rs", ".yaml", ".yml", ".json", ".toml", ".sh", ".sql", ".html", ".css"} and file_path.name.lower() != "dockerfile":
                 continue
             try:
                 records.extend(extract_contract_records_from_text(file_path.read_text(encoding="utf-8"), file_path=str(file_path.relative_to(path))))

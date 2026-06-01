@@ -44,6 +44,7 @@ def parse_toon_uri_line(line: str, line_num: int = 1) -> ContractRecord | None:
             out.extend(x.strip() for x in v.split(",") if x.strip())
         return tuple(out)
 
+    contract_id = get_first("id", get_first("contract_id"))
     intent = get_first("intent")
     action = get_first("action")
     object_name = get_first("object", get_first("obj"))
@@ -54,8 +55,17 @@ def parse_toon_uri_line(line: str, line_num: int = 1) -> ContractRecord | None:
             action, object_name = intent.split(".", 1)
         elif "-" in intent:
             action, object_name = intent.split("-", 1)
-        else:
+        elif intent:
             action, object_name = intent, "unknown"
+        elif contract_id:
+            if "-" in contract_id:
+                action, object_name = contract_id.split("-", 1)
+            elif "_" in contract_id:
+                action, object_name = contract_id.split("_", 1)
+            else:
+                action, object_name = "contract", contract_id
+        else:
+            action, object_name = "", "unknown"
             
     tags = list(get_list("tag") or get_list("tags"))
     if func_val:
@@ -78,7 +88,7 @@ def parse_toon_uri_line(line: str, line_num: int = 1) -> ContractRecord | None:
         tags=tuple(tags),
         algorithms=get_list("algorithm") or get_list("algorithms") or get_list("alg"),
         relations=get_list("relation") or get_list("relations") or get_list("rel"),
-        contract_id=get_first("id", get_first("contract_id")),
+        contract_id=contract_id,
         meaning=get_first("meaning"),
         raw=text,
     )

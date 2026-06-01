@@ -1,57 +1,57 @@
-# code2llm/evolution | 269 func | 59f | 2026-05-31
+# code2llm/evolution | 312 func | 66f | 2026-06-01
 # generated in 0.00s
 
 NEXT[10] (ranked by impact):
   [1] !! SPLIT           src/intract/cli.py
-      WHY: 509L, 0 classes, max CC=15
-      EFFORT: ~4h  IMPACT: 7635
+      WHY: 623L, 0 classes, max CC=15
+      EFFORT: ~4h  IMPACT: 9345
 
-  [2] !! SPLIT-FUNC      parse_contract_line  CC=42  fan=28
-      WHY: CC=42 exceeds 15
-      EFFORT: ~1h  IMPACT: 1176
+  [2] !! SPLIT-FUNC      parse_contract_line  CC=49  fan=31
+      WHY: CC=49 exceeds 15
+      EFFORT: ~1h  IMPACT: 1519
 
-  [3] !  SPLIT-FUNC      scan  CC=15  fan=24
+  [3] !! SPLIT-FUNC      parse_toon_uri_line  CC=34  fan=24
+      WHY: CC=34 exceeds 15
+      EFFORT: ~1h  IMPACT: 816
+
+  [4] !  SPLIT-FUNC      load_manifest_records  CC=20  fan=18
+      WHY: CC=20 exceeds 15
+      EFFORT: ~1h  IMPACT: 360
+
+  [5] !  SPLIT-FUNC      scan  CC=15  fan=24
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 360
 
-  [4] !  SPLIT-FUNC      block_extent  CC=20  fan=14
+  [6] !  SPLIT-FUNC      block_extent  CC=20  fan=14
       WHY: CC=20 exceeds 15
       EFFORT: ~1h  IMPACT: 280
 
-  [5] !  SPLIT-FUNC      validate_manifest  CC=15  fan=17
+  [7] !  SPLIT-FUNC      apply_ledger_to_manifest  CC=16  fan=17
+      WHY: CC=16 exceeds 15
+      EFFORT: ~1h  IMPACT: 272
+
+  [8] !  SPLIT-FUNC      validate_manifest  CC=15  fan=17
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 255
 
-  [6] !  SPLIT-FUNC      build_signature  CC=15  fan=14
+  [9] !  SPLIT-FUNC      validate_for_redup  CC=15  fan=16
       WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 210
+      EFFORT: ~1h  IMPACT: 240
 
-  [7] !  SPLIT-FUNC      decide_policy  CC=15  fan=12
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 180
-
-  [8] !  SPLIT-FUNC      validate_sources  CC=16  fan=11
-      WHY: CC=16 exceeds 15
-      EFFORT: ~1h  IMPACT: 176
-
-  [9] !  SPLIT-FUNC      infer_artifact_kind  CC=17  fan=6
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 102
-
-  [10] !! SPLIT           goal.yaml
-      WHY: 511L, 0 classes, max CC=0
-      EFFORT: ~4h  IMPACT: 0
+  [10] !  SPLIT-FUNC      propose_contracts_llm  CC=18  fan=13
+      WHY: CC=18 exceeds 15
+      EFFORT: ~1h  IMPACT: 234
 
 
 RISKS[2]:
+  ⚠ Splitting src/intract/cli.py may break 26 import paths
   ⚠ Splitting goal.yaml may break 0 import paths
-  ⚠ Splitting src/intract/cli.py may break 23 import paths
 
 METRICS-TARGET:
-  CC̄:          4.3 → ≤3.0
-  max-CC:      42 → ≤20
+  CC̄:          4.6 → ≤3.2
+  max-CC:      49 → ≤20
   god-modules: 2 → 0
-  high-CC(≥15): 8 → ≤4
+  high-CC(≥15): 14 → ≤7
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -79,4 +79,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.3 → now CC̄=4.3
+  prev CC̄=4.3 → now CC̄=4.6

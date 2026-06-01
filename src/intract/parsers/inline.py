@@ -2,10 +2,15 @@ from __future__ import annotations
 
 import re
 import shlex
+from dataclasses import replace
 
 from intract.core.models import VALID_SCOPES, Contract, ContractRecord
 
 CONTRACT_MARKERS = ("@intract.v1", "@intract", "@ridl.v1")
+_URI_VALUE_RE = re.compile(
+    r"""uri\s*=\s*(?:"([^"]+)"|'([^']+)'|(intract://\S+|toon://\S+))""",
+    re.IGNORECASE,
+)
 
 
 def clean_comment_line(line: str) -> str:
@@ -20,9 +25,17 @@ def clean_comment_line(line: str) -> str:
         text = text[:-2].strip()
     while text.startswith("*"):
         text = text[1:].strip()
-    for prefix in ("#", "//", "--", ";"):
-        if text.startswith(prefix):
-            return text[len(prefix):].strip()
+    # Rust-style attribute wrapper: #[intract.v1 ...] (before generic # comment strip)
+    if text.startswith("#["):
+        text = text[2:].strip()
+        if text.endswith("]"):
+            text = text[:-1].strip()
+    else:
+        for prefix in ("#", "//", "--", ";"):
+            if text.startswith(prefix):
+                return text[len(prefix):].strip()
+    if text.startswith("intract") and not text.startswith("@intract"):
+        text = "@" + text
     return text
 
 
@@ -61,10 +74,43 @@ def marker_payload(line: str) -> str | None:
     return None
 
 
+def extract_intract_uri(payload: str) -> str | None:
+    """Extract an intract:// URI from uri=... in an @intract.v1 payload."""
+    text = payload.strip()
+    match = _URI_VALUE_RE.search(text)
+    if match:
+        return (match.group(1) or match.group(2) or match.group(3)).strip()
+    try:
+        for token in shlex.split(text, comments=False, posix=True):
+            kv = parse_key_value(token)
+            if kv and kv[0] == "uri":
+                value = kv[1].strip().strip("\"'")
+                if value.startswith(("intract://", "toon://")):
+                    return value
+    except ValueError:
+        pass
+    return None
+
+
 def parse_contract_line(line: str, *, default_scope: str = "block") -> Contract | None:
     payload = marker_payload(line)
     if payload is None or not payload:
         return None
+
+    uri = extract_intract_uri(payload)
+    if uri:
+        from intract.parsers.toon import parse_toon_uri_line
+
+        record = parse_toon_uri_line(uri)
+        if record is None:
+            return None
+        contract = record.contract
+        contract = replace(contract, raw=payload)
+        if contract.scope == "block" and default_scope != "block":
+            contract = replace(contract, scope=default_scope)
+        if not contract.action or not contract.object:
+            return None
+        return contract
 
     try:
         tokens = shlex.split(payload, comments=False, posix=True)

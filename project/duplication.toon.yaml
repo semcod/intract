@@ -1,20 +1,20 @@
-# redup/duplication | 4 groups | 84f 5429L | 2026-05-31
+# redup/duplication | 4 groups | 93f 6842L | 2026-06-01
 
 SUMMARY:
-  files_scanned: 84
-  total_lines:   5429
+  files_scanned: 93
+  total_lines:   6842
   dup_groups:    4
   dup_fragments: 8
   saved_lines:   33
-  scan_ms:       2335
+  scan_ms:       2323
 
 HOTSPOTS[6] (files with most duplication):
-  src/intract/analyzers/csharp.py  dup=25L  groups=2  frags=2  (0.5%)
+  src/intract/analyzers/csharp.py  dup=25L  groups=2  frags=2  (0.4%)
   src/intract/analyzers/blocks.py  dup=19L  groups=1  frags=1  (0.3%)
-  src/intract/mcp/handlers.py  dup=10L  groups=1  frags=2  (0.2%)
+  src/intract/mcp/handlers.py  dup=10L  groups=1  frags=2  (0.1%)
   src/intract/analyzers/typescript.py  dup=6L  groups=1  frags=1  (0.1%)
-  examples/web-app/iterations/v1-pass/backend/routes.py  dup=3L  groups=1  frags=1  (0.1%)
-  examples/web-app/iterations/v2-violation/backend/routes.py  dup=3L  groups=1  frags=1  (0.1%)
+  examples/web-app/iterations/v1-pass/backend/routes.py  dup=3L  groups=1  frags=1  (0.0%)
+  examples/web-app/iterations/v2-violation/backend/routes.py  dup=3L  groups=1  frags=1  (0.0%)
 
 DUPLICATES[4] (ranked by impact):
   [ef612f5468430a71]   STRU  scan_braced_block  L=19 N=2 saved=19 sim=1.00

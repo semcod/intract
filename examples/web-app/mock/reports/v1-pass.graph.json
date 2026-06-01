@@ -10,11 +10,11 @@
   "edges": [
     [
       "ship.user_dashboard",
-      "deploy.container_image"
+      "auth.check_permission"
     ],
     [
       "ship.user_dashboard",
-      "auth.check_permission"
+      "deploy.container_image"
     ],
     [
       "ship.user_dashboard",

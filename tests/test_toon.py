@@ -33,6 +33,17 @@ def test_parse_toon_uri_line_without_scheme():
     assert "target_xpath://button" in record.contract.tags
 
 
+def test_parse_toon_uri_line_id_fallback_without_intent():
+    line = "intract://src/decoder.rs?func=decode_header#id=safe-decoder&forbid=unsafe"
+    record = parse_toon_uri_line(line)
+
+    assert record is not None
+    assert record.contract.contract_id == "safe-decoder"
+    assert record.contract.action == "safe"
+    assert record.contract.object == "decoder"
+    assert "unsafe" in record.contract.forbidden
+
+
 def test_load_toon_records(tmp_path: Path):
     toon_file = tmp_path / "intract.toon"
     toon_file.write_text(
