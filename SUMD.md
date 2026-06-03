@@ -23,7 +23,7 @@ Intent contract tagging, validation and semantic mapping for codebases.
 ## Metadata
 
 - **name**: `intract`
-- **version**: `0.5.9`
+- **version**: `0.5.11`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -43,7 +43,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: intract;
-  version: 0.5.9;
+  version: 0.5.11;
 }
 
 dependencies {
@@ -173,7 +173,7 @@ pipeline:
 ```yaml
 project:
   name: intract
-  version: 0.5.9
+  version: 0.5.11
   env: local
 ```
 
@@ -248,13 +248,13 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# intract | 143f 9020L | python:125,typescript:7,shell:5,javascript:2,go:2,less:1,rust:1 | 2026-06-01
-# stats: 307 func | 73 cls | 143 mod | CC̄=4.8 | critical:32 | cycles:0
+# intract | 145f 9593L | python:127,typescript:7,shell:5,javascript:2,go:2,less:1,rust:1 | 2026-06-03
+# stats: 330 func | 75 cls | 145 mod | CC̄=4.8 | critical:32 | cycles:0
 # alerts[5]: CC parse_contract_line=49; CC parse_toon_uri_line=34; CC block_extent=20; CC load_manifest_records=20; CC read_toon_manifest_contracts=19
 # hotspots[5]: scan fan=22; check fan=21; parse_contract_line fan=19; validate_manifest fan=17; watch fan=16
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[143]:
+M[145]:
   app.doql.less,49
   examples/full-stack/src/analyzer.py,4
   examples/full-stack/src/parser_a.py,4
@@ -281,6 +281,7 @@ M[143]:
   extensions/vscode-intract/extension.js,52
   project.sh,50
   scripts/ci-full-stack.sh,77
+  scripts/generate_toon_from_map.py,476
   sdks/go/examples/main.go,23
   sdks/go/intractsdk/sdk.go,69
   sdks/python/src/intract_plugin_example/__init__.py,27
@@ -375,6 +376,7 @@ M[143]:
   tests/test_cache.py,36
   tests/test_check_staged.py,35
   tests/test_full_stack.py,28
+  tests/test_generate_toon_from_map.py,97
   tests/test_hunk_filter.py,89
   tests/test_integrations.py,61
   tests/test_language_analyzers.py,117
@@ -454,6 +456,28 @@ D:
   examples/web-app/iterations/v2-violation/backend/routes.py:
     e: read_profile
     read_profile(user_id;users)
+  scripts/generate_toon_from_map.py:
+    e: _slug,_parse_intent_from_name,_iter_section_lines,_parse_modules,_extract_symbol_names,_parse_functions,_contract_fragment,_toon_uri,_llm_contract_fragment,_resolve_output_profile,_effective_include,_default_function_fragment,_function_fragment,generate_toon_lines,_build_parser,_run_validate,_ensure_parent,main,FunctionTarget,OutputProfileConfig
+    FunctionTarget:
+    OutputProfileConfig:
+    _slug(value)
+    _parse_intent_from_name(name)
+    _iter_section_lines(lines)
+    _parse_modules(lines)
+    _extract_symbol_names(line)
+    _parse_functions(lines)
+    _contract_fragment()
+    _toon_uri(file_path)
+    _llm_contract_fragment()
+    _resolve_output_profile(profile)
+    _effective_include()
+    _default_function_fragment()
+    _function_fragment()
+    generate_toon_lines()
+    _build_parser()
+    _run_validate(root;manifest)
+    _ensure_parent(path)
+    main(argv)
   sdks/python/src/intract_plugin_example/__init__.py:
     e: ExampleParserPlugin,ExampleValidatorPlugin
     ExampleParserPlugin: supports(1),parse(1)
@@ -887,6 +911,13 @@ D:
     test_full_stack_validate_passes()
     test_full_stack_graph_covers_requires()
     test_full_stack_finds_intent_duplicates()
+  tests/test_generate_toon_from_map.py:
+    e: _sample_map_text,test_parse_modules_reads_m_section_entries,test_parse_functions_extracts_symbols_and_skips_private,test_generate_toon_lines_dev_profile_filters_project_and_shapes_functions,test_generate_toon_lines_ci_security_profile_includes_project_and_security_validate
+    _sample_map_text()
+    test_parse_modules_reads_m_section_entries()
+    test_parse_functions_extracts_symbols_and_skips_private()
+    test_generate_toon_lines_dev_profile_filters_project_and_shapes_functions(tmp_path)
+    test_generate_toon_lines_ci_security_profile_includes_project_and_security_validate(tmp_path)
   tests/test_hunk_filter.py:
     e: test_changed_lines_by_file,test_block_extent_finds_function_body,test_signature_touched_by_body_change,test_validate_sources_for_hunks_only_touched_contract,test_validate_sources_for_hunks_catches_violation_in_touched_block
     test_changed_lines_by_file()
@@ -1011,7 +1042,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('intract', '0.5.9', 'python').
+project_metadata('intract', '0.5.11', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 49, 'less').
@@ -1040,6 +1071,7 @@ project_file('examples/web-app/run-demo.sh', 21, 'shell').
 project_file('extensions/vscode-intract/extension.js', 52, 'javascript').
 project_file('project.sh', 50, 'shell').
 project_file('scripts/ci-full-stack.sh', 77, 'shell').
+project_file('scripts/generate_toon_from_map.py', 476, 'python').
 project_file('sdks/go/examples/main.go', 23, 'go').
 project_file('sdks/go/intractsdk/sdk.go', 69, 'go').
 project_file('sdks/python/src/intract_plugin_example/__init__.py', 27, 'python').
@@ -1134,6 +1166,7 @@ project_file('src/intract/yaml_manifest.py', 4, 'python').
 project_file('tests/test_cache.py', 36, 'python').
 project_file('tests/test_check_staged.py', 35, 'python').
 project_file('tests/test_full_stack.py', 28, 'python').
+project_file('tests/test_generate_toon_from_map.py', 97, 'python').
 project_file('tests/test_hunk_filter.py', 89, 'python').
 project_file('tests/test_integrations.py', 61, 'python').
 project_file('tests/test_language_analyzers.py', 117, 'python').
@@ -1183,6 +1216,24 @@ python_function('examples/web-app/iterations/v1-pass/backend/auth.py', 'check_pe
 python_function('examples/web-app/iterations/v1-pass/backend/routes.py', 'read_profile', 2, 1, 1).
 python_function('examples/web-app/iterations/v2-violation/backend/auth.py', 'check_permission', 2, 1, 1).
 python_function('examples/web-app/iterations/v2-violation/backend/routes.py', 'read_profile', 2, 1, 1).
+python_function('scripts/generate_toon_from_map.py', '_slug', 1, 2, 3).
+python_function('scripts/generate_toon_from_map.py', '_parse_intent_from_name', 1, 5, 6).
+python_function('scripts/generate_toon_from_map.py', '_iter_section_lines', 1, 6, 1).
+python_function('scripts/generate_toon_from_map.py', '_parse_modules', 1, 4, 5).
+python_function('scripts/generate_toon_from_map.py', '_extract_symbol_names', 1, 5, 4).
+python_function('scripts/generate_toon_from_map.py', '_parse_functions', 1, 9, 11).
+python_function('scripts/generate_toon_from_map.py', '_contract_fragment', 0, 5, 4).
+python_function('scripts/generate_toon_from_map.py', '_toon_uri', 1, 2, 1).
+python_function('scripts/generate_toon_from_map.py', '_llm_contract_fragment', 0, 8, 6).
+python_function('scripts/generate_toon_from_map.py', '_resolve_output_profile', 1, 3, 1).
+python_function('scripts/generate_toon_from_map.py', '_effective_include', 0, 2, 0).
+python_function('scripts/generate_toon_from_map.py', '_default_function_fragment', 0, 2, 3).
+python_function('scripts/generate_toon_from_map.py', '_function_fragment', 0, 3, 2).
+python_function('scripts/generate_toon_from_map.py', 'generate_toon_lines', 0, 6, 13).
+python_function('scripts/generate_toon_from_map.py', '_build_parser', 0, 1, 4).
+python_function('scripts/generate_toon_from_map.py', '_run_validate', 2, 1, 3).
+python_function('scripts/generate_toon_from_map.py', '_ensure_parent', 1, 3, 2).
+python_function('scripts/generate_toon_from_map.py', 'main', 1, 5, 12).
 python_function('src/intract/analyzers/blocks.py', 'scan_braced_block', 2, 8, 2).
 python_function('src/intract/analyzers/blocks.py', 'block_extent_from_patterns', 3, 7, 6).
 python_function('src/intract/analyzers/csharp.py', 'csharp_block_extent', 2, 8, 6).
@@ -1392,6 +1443,11 @@ python_function('tests/test_check_staged.py', 'test_validate_selected_paths_full
 python_function('tests/test_full_stack.py', 'test_full_stack_validate_passes', 0, 2, 1).
 python_function('tests/test_full_stack.py', 'test_full_stack_graph_covers_requires', 0, 4, 1).
 python_function('tests/test_full_stack.py', 'test_full_stack_finds_intent_duplicates', 0, 5, 2).
+python_function('tests/test_generate_toon_from_map.py', '_sample_map_text', 0, 1, 0).
+python_function('tests/test_generate_toon_from_map.py', 'test_parse_modules_reads_m_section_entries', 0, 2, 3).
+python_function('tests/test_generate_toon_from_map.py', 'test_parse_functions_extracts_symbols_and_skips_private', 0, 8, 3).
+python_function('tests/test_generate_toon_from_map.py', 'test_generate_toon_lines_dev_profile_filters_project_and_shapes_functions', 1, 7, 4).
+python_function('tests/test_generate_toon_from_map.py', 'test_generate_toon_lines_ci_security_profile_includes_project_and_security_validate', 1, 4, 4).
 python_function('tests/test_hunk_filter.py', 'test_changed_lines_by_file', 0, 2, 2).
 python_function('tests/test_hunk_filter.py', 'test_block_extent_finds_function_body', 0, 3, 1).
 python_function('tests/test_hunk_filter.py', 'test_signature_touched_by_body_change', 0, 3, 3).
@@ -1473,6 +1529,8 @@ python_method('ShowcaseHandler', '__init__', 0, 1, 3).
 python_method('ShowcaseHandler', '_write_json', 2, 1, 8).
 python_method('ShowcaseHandler', 'do_GET', 0, 2, 5).
 python_method('ShowcaseHandler', 'do_POST', 0, 8, 18).
+python_class('scripts/generate_toon_from_map.py', 'FunctionTarget').
+python_class('scripts/generate_toon_from_map.py', 'OutputProfileConfig').
 python_class('sdks/python/src/intract_plugin_example/__init__.py', 'ExampleParserPlugin').
 python_method('ExampleParserPlugin', 'supports', 1, 1, 0).
 python_method('ExampleParserPlugin', 'parse', 1, 1, 1).
@@ -1688,7 +1746,7 @@ sumd_workflow_step('format', 1, 'ruff format .').
 
 ## Call Graph
 
-*216 nodes · 257 edges · 61 modules · CC̄=4.3*
+*233 nodes · 278 edges · 62 modules · CC̄=4.3*
 
 ### Hubs (by degree)
 
@@ -1696,7 +1754,7 @@ sumd_workflow_step('format', 1, 'ruff format .').
 |----------|----|----|-----|-------|
 | `parse_toon_uri_line` *(in src.intract.parsers.toon)* | 34 ⚠ | 2 | 72 | **74** |
 | `contract_from_mapping` *(in src.intract.parsers.manifest)* | 3 | 4 | 59 | **63** |
-| `parse_contract_line` *(in src.intract.parsers.inline)* | 49 ⚠ | 3 | 55 | **58** |
+| `parse_contract_line` *(in src.intract.parsers.inline)* | 49 ⚠ | 4 | 55 | **59** |
 | `build_signature` *(in src.intract.core.signatures)* | 15 ⚠ | 3 | 40 | **43** |
 | `load_manifest_records` *(in src.intract.parsers.manifest)* | 20 ⚠ | 7 | 35 | **42** |
 | `validate_manifest` *(in src.intract.manifest_schema)* | 15 ⚠ | 2 | 35 | **37** |
@@ -1705,8 +1763,8 @@ sumd_workflow_step('format', 1, 'ruff format .').
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/intract
-# generated in 0.10s
-# nodes: 216 | edges: 257 | modules: 61
+# generated in 0.27s
+# nodes: 233 | edges: 278 | modules: 62
 # CC̄=4.3
 
 HUBS[20]:
@@ -1715,7 +1773,7 @@ HUBS[20]:
   src.intract.parsers.manifest.contract_from_mapping
     CC=3  in:4  out:59  total:63
   src.intract.parsers.inline.parse_contract_line
-    CC=49  in:3  out:55  total:58
+    CC=49  in:4  out:55  total:59
   src.intract.core.signatures.build_signature
     CC=15  in:3  out:40  total:43
   src.intract.parsers.manifest.load_manifest_records
@@ -1727,7 +1785,7 @@ HUBS[20]:
   src.intract.cli.manifest_apply_ledger
     CC=10  in:0  out:30  total:30
   src.intract.propose_llm.propose_contracts_llm
-    CC=18  in:1  out:28  total:29
+    CC=18  in:2  out:28  total:30
   examples.showcase.server.ShowcaseHandler.do_POST
     CC=8  in:0  out:28  total:28
   src.intract.core.normalizer.normalize_label
@@ -1736,20 +1794,20 @@ HUBS[20]:
     CC=6  in:16  out:10  total:26
   src.intract.integrations.planfile.tickets_from_report
     CC=11  in:3  out:21  total:24
-  src.intract.integrations.planfile_adapter._ticket_from_dict
-    CC=2  in:2  out:21  total:23
+  scripts.generate_toon_from_map.generate_toon_lines
+    CC=6  in:1  out:23  total:24
   src.intract.integrations.redup.validate_for_redup
     CC=15  in:0  out:23  total:23
   src.intract.graph.build_graph
     CC=9  in:5  out:18  total:23
-  src.intract.parsers.inline.clean_comment_line
-    CC=12  in:2  out:20  total:22
+  src.intract.integrations.planfile_adapter._ticket_from_dict
+    CC=2  in:2  out:21  total:23
   src.intract.policy.decide_policy
     CC=15  in:3  out:19  total:22
+  src.intract.parsers.inline.clean_comment_line
+    CC=12  in:2  out:20  total:22
   src.intract.cli.engine_drift
     CC=4  in:0  out:21  total:21
-  src.intract.validators.artifacts.validate_artifact
-    CC=9  in:3  out:17  total:20
 
 MODULES:
   examples.integration_tests.run_examples  [6 funcs]
@@ -1771,6 +1829,17 @@ MODULES:
     runShell  CC=1  out:3
     uri  CC=1  out:1
     workspaceRoot  CC=4  out:0
+  scripts.generate_toon_from_map  [17 funcs]
+    _build_parser  CC=1  out:15
+    _contract_fragment  CC=5  out:9
+    _default_function_fragment  CC=2  out:4
+    _effective_include  CC=2  out:0
+    _ensure_parent  CC=3  out:2
+    _extract_symbol_names  CC=5  out:8
+    _function_fragment  CC=3  out:3
+    _iter_section_lines  CC=6  out:2
+    _llm_contract_fragment  CC=8  out:9
+    _parse_functions  CC=9  out:11
   sdks.go.intractsdk.sdk  [2 funcs]
     Inline  CC=11  out:5
     csv  CC=1  out:1
@@ -2022,13 +2091,26 @@ MODULES:
     watch_tree  CC=7  out:10
 
 EDGES:
-  src.intract.watch.snapshot_tree → src.intract.watch.should_scan
-  src.intract.watch.snapshot_tree → src.intract.watch.hash_file
-  src.intract.watch.watch_tree → src.intract.watch.snapshot_tree
-  src.intract.watch.watch_tree → src.intract.watch.diff_snapshots
+  examples.showcase.server.resolve_runtime_config → examples.showcase.server.load_env_file
+  examples.showcase.server.ShowcaseHandler.do_GET → examples.showcase.server.resolve_runtime_config
+  examples.showcase.server.ShowcaseHandler.do_POST → examples.showcase.server.resolve_runtime_config
+  examples.integration_tests.run_examples.run_example_01 → src.intract.project.validate_project
+  examples.integration_tests.run_examples.run_example_02 → src.intract.project.validate_project
+  examples.integration_tests.run_examples.run_example_02 → src.intract.integrations.planfile.tickets_from_report
+  examples.integration_tests.run_examples.run_example_03 → src.intract.watch.snapshot_tree
+  examples.integration_tests.run_examples.run_example_03 → src.intract.watch.diff_snapshots
+  examples.integration_tests.run_examples.run_example_03 → src.intract.engine.monitor.scan_suggest_and_validate
+  examples.integration_tests.run_examples.run_example_04 → src.intract.project.validate_project
+  examples.integration_tests.run_examples.main → examples.integration_tests.run_examples.run_example_01
+  examples.integration_tests.run_examples.main → examples.integration_tests.run_examples.run_example_02
+  examples.integration_tests.run_examples.main → examples.integration_tests.run_examples.run_example_03
+  examples.integration_tests.run_examples.main → examples.integration_tests.run_examples.run_example_04
+  examples.integration_tests.run_examples.main → examples.integration_tests.run_examples.print_result
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._lines_to_proposals
   src.intract.scan_artifacts.discover_artifact_paths → src.intract.core.artifact.infer_artifact_kind
   src.intract.scan_artifacts.scan_all_artifacts → src.intract.scan_artifacts.discover_artifact_paths
   src.intract.scan_artifacts.scan_all_artifacts → src.intract.validators.artifacts.validate_artifact
+  src.intract.proposals.propose_ui_delta_contract_dicts → src.intract.proposals.propose_ui_delta_contracts
   src.intract.check.block_extent → src.intract.analyzers.python_ast.python_block_extent
   src.intract.check.block_extent → src.intract.analyzers.typescript.typescript_block_extent
   src.intract.check.block_extent → src.intract.analyzers.csharp.csharp_block_extent
@@ -2059,19 +2141,6 @@ EDGES:
   src.intract.coverage.calculate_coverage → src.intract.project.extract_signatures_from_sources
   src.intract.graph.ContractGraph.to_mermaid → src.intract.graph._safe
   src.intract.graph.build_graph → src.intract.project.load_project_sources
-  src.intract.graph.build_graph → src.intract.project.extract_signatures_from_sources
-  src.intract.policy._p1_missing_reasons → src.intract.core.signatures.build_signatures
-  src.intract.policy._p1_missing_reasons → src.intract.parsers.manifest.load_manifest_records
-  src.intract.policy._p1_missing_reasons → src.intract.core.normalizer.normalize_requirement
-  src.intract.policy.decide_policy → src.intract.manifest_schema.validate_manifest
-  src.intract.git.staged_files → src.intract.git._run_git
-  src.intract.git.changed_files → src.intract.git._run_git
-  src.intract.git.staged_hunks → src.intract.git._run_git
-  src.intract.manifest_schema.validate_manifest → src.intract.manifest_schema._load_schema
-  src.intract.duplicates.scoring.object_similarity → src.intract.duplicates.scoring.jaccard
-  src.intract.duplicates.scoring.score_similarity → src.intract.duplicates.scoring.object_similarity
-  src.intract.duplicates.scoring.score_similarity → src.intract.duplicates.scoring.jaccard
-  src.intract.duplicates.matcher.find_intent_pairs → src.intract.duplicates.matcher.bucket_signatures
 ```
 
 ## Test Contracts

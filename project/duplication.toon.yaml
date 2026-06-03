@@ -1,15 +1,15 @@
-# redup/duplication | 4 groups | 93f 6842L | 2026-06-01
+# redup/duplication | 4 groups | 94f 7317L | 2026-06-03
 
 SUMMARY:
-  files_scanned: 93
-  total_lines:   6842
+  files_scanned: 94
+  total_lines:   7317
   dup_groups:    4
   dup_fragments: 8
   saved_lines:   33
-  scan_ms:       2323
+  scan_ms:       12917
 
 HOTSPOTS[6] (files with most duplication):
-  src/intract/analyzers/csharp.py  dup=25L  groups=2  frags=2  (0.4%)
+  src/intract/analyzers/csharp.py  dup=25L  groups=2  frags=2  (0.3%)
   src/intract/analyzers/blocks.py  dup=19L  groups=1  frags=1  (0.3%)
   src/intract/mcp/handlers.py  dup=10L  groups=1  frags=2  (0.1%)
   src/intract/analyzers/typescript.py  dup=6L  groups=1  frags=1  (0.1%)

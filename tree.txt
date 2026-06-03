@@ -105,6 +105,9 @@
 │   ├── evolution.toon.yaml
 │   ├── flow.mmd
 │   ├── flow.png
+│   ├── generated.intract.ci-security.toon
+│   ├── generated.intract.dev.toon
+│   ├── generated.intract.toon
 │   ├── index.html
 │   ├── logic.pl
 │   ├── map.toon.yaml
@@ -120,7 +123,8 @@
 ├── schemas
 │   └── intract.schema.json
 ├── scripts
-│   └── ci-full-stack.sh
+│   ├── ci-full-stack.sh
+│   └── generate_toon_from_map.py
 ├── sdks
 │   ├── csharp
 │   │   ├── IntractContract.cs
@@ -263,6 +267,7 @@
 │   ├── test_cache.py
 │   ├── test_check_staged.py
 │   ├── test_full_stack.py
+│   ├── test_generate_toon_from_map.py
 │   ├── test_hunk_filter.py
 │   ├── test_integrations.py
 │   ├── test_language_analyzers.py
@@ -296,4 +301,4 @@
 ├── uv.lock
 └── VERSION
 
-65 directories, 232 files
+65 directories, 237 files

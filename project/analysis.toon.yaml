@@ -1,27 +1,27 @@
-# code2llm | 154f 9939L | python:97,yaml:15,json:11,typescript:7,shell:4,toml:4,csharp:2,go:2,javascript:2,txt:1,yml:1,intract:1,java:1,rust:1 | 2026-06-01
-# generated in 0.02s
-# CC̅=4.3 | critical:14/353 | dups:0 | cycles:0
+# code2llm | 155f 10443L | python:98,yaml:15,json:11,typescript:7,shell:4,toml:4,javascript:2,csharp:2,go:2,txt:1,yml:1,intract:1,java:1,rust:1 | 2026-06-03
+# generated in 0.10s
+# CC̅=4.3 | critical:14/371 | dups:0 | cycles:0
 
 HEALTH[14]:
+  🟡 CC    propose_contracts_llm CC=18 (limit:15)
   🟡 CC    block_extent CC=20 (limit:15)
   🟡 CC    decide_policy CC=15 (limit:15)
   🟡 CC    validate_manifest CC=15 (limit:15)
+  🟡 CC    apply_ledger_to_manifest CC=16 (limit:15)
   🟡 CC    infer_artifact_kind CC=17 (limit:15)
   🟡 CC    build_signature CC=15 (limit:15)
-  🟡 CC    propose_contracts_llm CC=18 (limit:15)
-  🟡 CC    load_manifest_records CC=20 (limit:15)
   🟡 CC    parse_contract_line CC=49 (limit:15)
+  🟡 CC    load_manifest_records CC=20 (limit:15)
   🟡 CC    parse_toon_uri_line CC=34 (limit:15)
   🟡 CC    read_toon_manifest_contracts CC=19 (limit:15)
-  🟡 CC    apply_ledger_to_manifest CC=16 (limit:15)
-  🟡 CC    validate_sources CC=16 (limit:15)
-  🟡 CC    scan CC=15 (limit:15)
   🟡 CC    validate_for_redup CC=15 (limit:15)
+  🟡 CC    scan CC=15 (limit:15)
+  🟡 CC    validate_sources CC=16 (limit:15)
 
 REFACTOR[1]:
   1. split 14 high-CC methods  (CC>15)
 
-PIPELINES[145]:
+PIPELINES[146]:
   [1] Src [read_profile]: read_profile
       PURITY: 100% pure
   [2] Src [check_permission]: check_permission
@@ -38,89 +38,89 @@ PIPELINES[145]:
       PURITY: 100% pure
   [8] Src [parse_extensions]: parse_extensions
       PURITY: 100% pure
-  [9] Src [canUpdateResource]: canUpdateResource
+  [9] Src [__init__]: __init__
       PURITY: 100% pure
-  [10] Src [response]: response
+  [10] Src [_write_json]: _write_json
       PURITY: 100% pure
-  [11] Src [render_summary]: render_summary
+  [11] Src [do_GET]: do_GET → resolve_runtime_config → load_env_file
       PURITY: 100% pure
-  [12] Src [collect_project_files]: collect_project_files
+  [12] Src [do_POST]: do_POST → resolve_runtime_config → load_env_file
       PURITY: 100% pure
-  [13] Src [parse_extensions]: parse_extensions
+  [13] Src [main]: main
       PURITY: 100% pure
-  [14] Src [CollectFiles]: CollectFiles
+  [14] Src [fetchUserProfile]: fetchUserProfile
       PURITY: 100% pure
-  [15] Src [from_mapping]: from_mapping
+  [15] Src [divide]: divide
       PURITY: 100% pure
-  [16] Src [to_dict]: to_dict
+  [16] Src [write_to_log]: write_to_log
       PURITY: 100% pure
-  [17] Src [to_dict]: to_dict
+  [17] Src [main]: main → run_example_01 → validate_project → load_project_sources → ...(1 more)
       PURITY: 100% pure
-  [18] Src [to_dict]: to_dict
+  [18] Src [canUpdateResource]: canUpdateResource
       PURITY: 100% pure
-  [19] Src [to_dict]: to_dict
+  [19] Src [response]: response
       PURITY: 100% pure
-  [20] Src [to_mermaid]: to_mermaid → _safe
+  [20] Src [render_summary]: render_summary
       PURITY: 100% pure
-  [21] Src [to_inline]: to_inline
+  [21] Src [collect_project_files]: collect_project_files
       PURITY: 100% pure
-  [22] Src [contract]: contract
+  [22] Src [parse_extensions]: parse_extensions
       PURITY: 100% pure
-  [23] Src [to_dict]: to_dict
+  [23] Src [CollectFiles]: CollectFiles
       PURITY: 100% pure
-  [24] Src [to_dict]: to_dict
+  [24] Src [from_mapping]: from_mapping
       PURITY: 100% pure
   [25] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [26] Src [to_dict]: to_dict
+  [26] Src [propose_ui_delta_contract_dicts]: propose_ui_delta_contract_dicts → propose_ui_delta_contracts → _ui_contract_line
       PURITY: 100% pure
-  [27] Src [validate]: validate → contains_token_like → normalize_label
+  [27] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [28] Src [validate]: validate → contains_token_like → normalize_label
+  [28] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [29] Src [validate]: validate → has_return_value
+  [29] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [30] Src [validate]: validate → detect_effects
+  [30] Src [to_mermaid]: to_mermaid → _safe
       PURITY: 100% pure
-  [31] Src [__init__]: __init__
+  [31] Src [to_inline]: to_inline
       PURITY: 100% pure
-  [32] Src [register]: register
+  [32] Src [contract]: contract
       PURITY: 100% pure
-  [33] Src [rules]: rules
+  [33] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [34] Src [run]: run
+  [34] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [35] Src [summarize]: summarize
+  [35] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [36] Src [from_path]: from_path → infer_language
+  [36] Src [validate_artifact_with_proposals]: validate_artifact_with_proposals → validate_proposal → extract_contract_records_from_text → parse_contract_line → ...(2 more)
       PURITY: 100% pure
-  [37] Src [add_parser]: add_parser
+  [37] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [38] Src [add_validator]: add_validator
+  [38] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [39] Src [add_reporter]: add_reporter
+  [39] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [40] Src [add_integration]: add_integration
+  [40] Src [validate]: validate → contains_token_like → normalize_label
       PURITY: 100% pure
-  [41] Src [parse_artifact]: parse_artifact
+  [41] Src [validate]: validate → contains_token_like → normalize_label
       PURITY: 100% pure
-  [42] Src [validate_artifact]: validate_artifact
+  [42] Src [validate]: validate → has_return_value
       PURITY: 100% pure
-  [43] Src [parse]: parse → extract_contract_records_from_text → parse_contract_line → marker_payload → ...(1 more)
+  [43] Src [validate]: validate → detect_effects
       PURITY: 100% pure
-  [44] Src [parse]: parse → parse_openapi_text → contract_from_mapping → _parse_intent
+  [44] Src [__init__]: __init__
       PURITY: 100% pure
-  [45] Src [parse]: parse → load_manifest_records → contract_from_mapping → _parse_intent
+  [45] Src [register]: register
       PURITY: 100% pure
-  [46] Src [validate]: validate → validate_contract_against_source → merge_rule_results
+  [46] Src [rules]: rules
       PURITY: 100% pure
-  [47] Src [validate]: validate → validate_artifact → validate_dockerfile
+  [47] Src [run]: run
       PURITY: 100% pure
-  [48] Src [render]: render
+  [48] Src [summarize]: summarize
       PURITY: 100% pure
-  [49] Src [discover_plugins]: discover_plugins → load_builtin_plugins → _register_unique
+  [49] Src [from_path]: from_path → infer_language
       PURITY: 100% pure
-  [50] Src [run_server]: run_server → handle_request → handle_initialize
+  [50] Src [to_dict]: to_dict
       PURITY: 100% pure
 
 LAYERS:
@@ -129,7 +129,7 @@ LAYERS:
   │ !! check                      273L  1C   11m  CC=20     ←2
   │ planfile_adapter           255L  4C   13m  CC=13     ←0
   │ !! redup                      254L  4C   14m  CC=15     ←0
-  │ !! inline                     249L  0C    8m  CC=49     ←8
+  │ !! inline                     249L  0C    8m  CC=49     ←9
   │ !! manifest_ops               219L  2C    9m  CC=16     ←1
   │ artifacts                  181L  1C    6m  CC=9      ←3
   │ !! nexu                       178L  1C    6m  CC=19     ←0
@@ -138,7 +138,7 @@ LAYERS:
   │ models                     154L  7C    2m  CC=2      ←0
   │ planfile                   141L  2C    7m  CC=11     ←3
   │ grouping                   138L  2C    6m  CC=6      ←3
-  │ !! propose_llm                130L  0C    3m  CC=18     ←1
+  │ !! propose_llm                130L  0C    3m  CC=18     ←2
   │ handlers                   124L  0C    9m  CC=4      ←0
   │ server                     118L  0C    5m  CC=5      ←0
   │ !! toon                       118L  0C    2m  CC=34     ←2
@@ -224,6 +224,10 @@ LAYERS:
   │ Cargo.toml                   9L  0C    0m  CC=0.0    ←0
   │ intract.config.ts            8L  0C    0m  CC=0.0    ←0
   │
+  scripts/                        CC̄=3.8    ←in:0  →out:2
+  │ generate_toon_from_map     475L  2C   18m  CC=9      ←0
+  │ ci-full-stack.sh            76L  0C    1m  CC=0.0    ←0
+  │
   examples/                       CC̄=2.1    ←in:0  →out:0
   │ v2-violation.validate.json   245L  0C    0m  CC=0.0    ←0
   │ v1-pass.validate.json      229L  0C    0m  CC=0.0    ←0
@@ -241,8 +245,8 @@ LAYERS:
   │ openapi.yaml                21L  0C    0m  CC=0.0    ←0
   │ openapi.yaml                21L  0C    0m  CC=0.0    ←0
   │ run-demo.sh                 20L  0C    0m  CC=0.0    ←0
-  │ intent.yaml                 20L  0C    0m  CC=0.0    ←0
   │ Makefile                    20L  0C    0m  CC=0.0    ←0
+  │ intent.yaml                 20L  0C    0m  CC=0.0    ←0
   │ intent.yaml                 19L  0C    0m  CC=0.0    ←0
   │ auth.js                     16L  0C    3m  CC=3      ←0
   │ calc                        15L  0C    3m  CC=2      ←0
@@ -269,12 +273,9 @@ LAYERS:
   │ extension.js                51L  0C   13m  CC=4      ←0
   │ intract.tmLanguage.json     19L  0C    0m  CC=0.0    ←0
   │
-  scripts/                        CC̄=0.0    ←in:0  →out:0
-  │ ci-full-stack.sh            76L  0C    1m  CC=0.0    ←0
-  │
   ./                              CC̄=0.0    ←in:0  →out:0
   │ !! goal.yaml                  511L  0C    0m  CC=0.0    ←0
-  │ tree.txt                   270L  0C    0m  CC=0.0    ←0
+  │ tree.txt                   299L  0C    0m  CC=0.0    ←0
   │ pyproject.toml             101L  0C    0m  CC=0.0    ←0
   │ action.yml                  91L  0C    0m  CC=0.0    ←0
   │ project.sh                  50L  0C    0m  CC=0.0    ←0
@@ -300,11 +301,12 @@ LAYERS:
      src/intract/reporters/__init__.py         0L
 
 COUPLING:
-                              examples.integration_tests                 src.intract
-  examples.integration_tests                          ──                           9  !! fan-out
-                 src.intract                          ←9                          ──  hub
+                                             src.intract  examples.integration_tests                     scripts
+                 src.intract                          ──                          ←9                          ←2  hub
+  examples.integration_tests                           9                          ──                              !! fan-out
+                     scripts                           2                                                      ──
   CYCLES: none
-  HUB: src.intract/ (fan-in=9)
+  HUB: src.intract/ (fan-in=11)
   SMELL: examples.integration_tests/ fan-out=9 → split needed
 
 EXTERNAL:

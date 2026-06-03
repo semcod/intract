@@ -5,18 +5,23 @@
 
 - **Project**: /home/tom/github/semcod/intract
 - **Primary Language**: python
-- **Languages**: python: 97, yaml: 15, json: 11, typescript: 7, shell: 4
+- **Languages**: python: 98, yaml: 15, json: 11, typescript: 7, shell: 4
 - **Analysis Mode**: static
-- **Total Functions**: 353
-- **Total Classes**: 77
-- **Modules**: 154
-- **Entry Points**: 180
+- **Total Functions**: 371
+- **Total Classes**: 79
+- **Modules**: 155
+- **Entry Points**: 181
 
 ## Architecture by Module
 
 ### src.intract.cli
 - **Functions**: 26
 - **File**: `cli.py`
+
+### scripts.generate_toon_from_map
+- **Functions**: 18
+- **Classes**: 2
+- **File**: `generate_toon_from_map.py`
 
 ### extensions.vscode-intract.extension
 - **Functions**: 16
@@ -47,14 +52,14 @@
 - **Classes**: 6
 - **File**: `builtins.py`
 
-### src.intract.mcp.handlers
-- **Functions**: 9
-- **File**: `handlers.py`
-
 ### src.intract.manifest_ops
 - **Functions**: 9
 - **Classes**: 2
 - **File**: `manifest_ops.py`
+
+### src.intract.mcp.handlers
+- **Functions**: 9
+- **File**: `handlers.py`
 
 ### src.intract.validators.input_output
 - **Functions**: 8
@@ -70,25 +75,24 @@
 - **Functions**: 8
 - **File**: `inline.py`
 
-### src.intract.integrations.planfile
+### examples.showcase.server
 - **Functions**: 7
-- **Classes**: 2
-- **File**: `planfile.py`
+- **Classes**: 1
+- **File**: `server.py`
 
 ### src.intract.core.cache
 - **Functions**: 7
 - **Classes**: 2
 - **File**: `cache.py`
 
-### examples.showcase.server
+### src.intract.integrations.planfile
 - **Functions**: 7
-- **Classes**: 1
-- **File**: `server.py`
+- **Classes**: 2
+- **File**: `planfile.py`
 
-### src.intract.watch
+### examples.integration_tests.run_examples
 - **Functions**: 6
-- **Classes**: 3
-- **File**: `watch.py`
+- **File**: `run_examples.py`
 
 ### src.intract.duplicates.grouping
 - **Functions**: 6
@@ -103,11 +107,6 @@
 ### src.intract.engine.assigner
 - **Functions**: 6
 - **File**: `assigner.py`
-
-### src.intract.integrations.nexu
-- **Functions**: 6
-- **Classes**: 1
-- **File**: `nexu.py`
 
 ## Key Entry Points
 
@@ -193,6 +192,9 @@ Main execution flows into the system:
 > Export validation tickets locally and optionally push to a planfile API.
 - **Calls**: planfile_app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, src.intract.project.validate_project, PlanfileApiAdapter
 
+### scripts.generate_toon_from_map.main
+- **Calls**: scripts.generate_toon_from_map._build_parser, parser.parse_args, scripts.generate_toon_from_map._ensure_parent, args.output_file.write_text, print, args.map_file.exists, print, scripts.generate_toon_from_map.generate_toon_lines
+
 ### src.intract.integrations.planfile_adapter.PlanfileConfig.from_env
 - **Calls**: cls, Path, os.environ.get, os.environ.get, os.environ.get, os.environ.get, os.environ.get, os.environ.get
 
@@ -214,9 +216,6 @@ Main execution flows into the system:
 
 ### src.intract.mcp.handlers.handle_validate_staged
 - **Calls**: src.intract.mcp.handlers._resolve_path, src.intract.mcp.handlers._resolve_manifest, bool, src.intract.check.staged_check, src.intract.config.load_config, src.intract.policy.decide_policy, json.dumps, params.get
-
-### src.intract.integrations.planfile_adapter.PlanfileApiAdapter.emit_webhook
-- **Calls**: None.encode, urllib.request.Request, PlanfileWebhookResult, None.hexdigest, json.dumps, urllib.request.urlopen, PlanfileWebhookResult, RuntimeError
 
 ## Process Flows
 
@@ -303,13 +302,13 @@ This cache stores
 - **Methods**: 6
 - **Key Methods**: src.intract.plugins.base.PluginRegistry.add_parser, src.intract.plugins.base.PluginRegistry.add_validator, src.intract.plugins.base.PluginRegistry.add_reporter, src.intract.plugins.base.PluginRegistry.add_integration, src.intract.plugins.base.PluginRegistry.parse_artifact, src.intract.plugins.base.PluginRegistry.validate_artifact
 
-### src.intract.integrations.planfile.PlanfileExporter
-- **Methods**: 5
-- **Key Methods**: src.intract.integrations.planfile.PlanfileExporter.__init__, src.intract.integrations.planfile.PlanfileExporter.export, src.intract.integrations.planfile.PlanfileExporter._write_yaml, src.intract.integrations.planfile.PlanfileExporter._write_json, src.intract.integrations.planfile.PlanfileExporter._write_todo
-
 ### src.intract.core.models.ProjectReport
 - **Methods**: 5
 - **Key Methods**: src.intract.core.models.ProjectReport.passed, src.intract.core.models.ProjectReport.partial, src.intract.core.models.ProjectReport.failed, src.intract.core.models.ProjectReport.violations, src.intract.core.models.ProjectReport.to_dict
+
+### src.intract.integrations.planfile.PlanfileExporter
+- **Methods**: 5
+- **Key Methods**: src.intract.integrations.planfile.PlanfileExporter.__init__, src.intract.integrations.planfile.PlanfileExporter.export, src.intract.integrations.planfile.PlanfileExporter._write_yaml, src.intract.integrations.planfile.PlanfileExporter._write_json, src.intract.integrations.planfile.PlanfileExporter._write_todo
 
 ### examples.showcase.server.ShowcaseHandler
 - **Methods**: 4
@@ -323,6 +322,10 @@ This cache stores
 ### src.intract.graph.ContractGraph
 - **Methods**: 2
 - **Key Methods**: src.intract.graph.ContractGraph.to_dict, src.intract.graph.ContractGraph.to_mermaid
+
+### src.intract.manifest_ops.ManifestApplyBatchResult
+- **Methods**: 2
+- **Key Methods**: src.intract.manifest_ops.ManifestApplyBatchResult.added_total, src.intract.manifest_ops.ManifestApplyBatchResult.to_dict
 
 ### src.intract.validators.input_output.InputPresenceRule
 - **Methods**: 2
@@ -367,10 +370,6 @@ This cache stores
 - **Methods**: 2
 - **Key Methods**: src.intract.plugins.builtins.ManifestParserPlugin.supports, src.intract.plugins.builtins.ManifestParserPlugin.parse
 
-### src.intract.plugins.builtins.BasicContractValidatorPlugin
-- **Methods**: 2
-- **Key Methods**: src.intract.plugins.builtins.BasicContractValidatorPlugin.supports, src.intract.plugins.builtins.BasicContractValidatorPlugin.validate
-
 ## Data Transformation Functions
 
 Key functions that process and transform data:
@@ -392,6 +391,12 @@ Key functions that process and transform data:
 
 ### src.intract.manifest_schema.validate_manifest
 - **Output to**: Path, ManifestValidationReport, manifest_path.exists, ManifestValidationReport, Draft202012Validator
+
+### src.intract.validate_snippet.validate_artifact_with_proposals
+> Validate an HTML/code artifact together with proposed contract lines.
+
+Proposed lines are injected a
+- **Output to**: src.intract.integrations.vallm.validate_proposal, mapped.to_dict, None.strip, header_lines.append, None.join
 
 ### src.intract.validators.artifacts.validate_openapi
 - **Output to**: src.intract.parsers.openapi.parse_openapi_contracts, None.lower, ArtifactValidationReport, src.intract.core.signatures.build_signature, record.owner.lower
@@ -444,9 +449,6 @@ Key functions that process and transform data:
 ### src.intract.plugins.builtins.InlineContractParserPlugin.parse
 - **Output to**: src.intract.parsers.inline.extract_contract_records_from_text, PluginResult, src.intract.core.signatures.build_signatures
 
-### src.intract.plugins.builtins.OpenAPIParserPlugin.parse
-- **Output to**: src.intract.parsers.openapi.parse_openapi_text, PluginResult, src.intract.core.signatures.build_signatures
-
 ## Public API Surface
 
 Functions exposed as public API (no underscore prefix):
@@ -463,11 +465,12 @@ Functions exposed as public API (no underscore prefix):
 - `src.intract.cli.check` - 32 calls
 - `src.intract.manifest_ops.apply_ledger_to_manifest` - 30 calls
 - `src.intract.cli.manifest_apply_ledger` - 30 calls
-- `src.intract.propose_llm.propose_contracts_llm` - 28 calls
 - `examples.showcase.server.ShowcaseHandler.do_POST` - 28 calls
+- `src.intract.propose_llm.propose_contracts_llm` - 28 calls
 - `src.intract.cli.watch` - 28 calls
 - `src.intract.config.IntractConfig.from_mapping` - 23 calls
 - `src.intract.integrations.redup.validate_for_redup` - 23 calls
+- `scripts.generate_toon_from_map.generate_toon_lines` - 23 calls
 - `src.intract.integrations.planfile.tickets_from_report` - 21 calls
 - `src.intract.integrations.planfile_adapter.PlanfileApiAdapter.apply_webhook_event` - 21 calls
 - `src.intract.cli.engine_drift` - 21 calls
@@ -478,9 +481,9 @@ Functions exposed as public API (no underscore prefix):
 - `src.intract.check.block_extent` - 18 calls
 - `src.intract.graph.build_graph` - 18 calls
 - `src.intract.cli.engine_suggest` - 18 calls
+- `examples.integration_tests.run_examples.run_example_03` - 17 calls
 - `src.intract.validators.artifacts.validate_artifact` - 17 calls
 - `src.intract.engine.analyzer.analyze_source_units` - 17 calls
-- `examples.integration_tests.run_examples.run_example_03` - 17 calls
 - `src.intract.cli.duplicates` - 17 calls
 - `src.intract.check.parse_unified_diff_hunks` - 16 calls
 - `src.intract.duplicates.grouping.pairs_to_intent_groups` - 16 calls
@@ -490,7 +493,6 @@ Functions exposed as public API (no underscore prefix):
 - `src.intract.cli.graph` - 16 calls
 - `src.intract.cli.propose_llm_cmd` - 16 calls
 - `src.intract.check.validate_sources_for_hunks` - 15 calls
-- `src.intract.sdk.ContractBuilder.to_inline` - 15 calls
 
 ## System Interactions
 

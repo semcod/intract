@@ -1,10 +1,10 @@
-# intract | 143f 9020L | python:125,typescript:7,shell:5,javascript:2,go:2,less:1,rust:1 | 2026-06-01
-# stats: 307 func | 73 cls | 143 mod | CC̄=4.8 | critical:32 | cycles:0
+# intract | 145f 9593L | python:127,typescript:7,shell:5,javascript:2,go:2,less:1,rust:1 | 2026-06-03
+# stats: 330 func | 75 cls | 145 mod | CC̄=4.8 | critical:32 | cycles:0
 # alerts[5]: CC parse_contract_line=49; CC parse_toon_uri_line=34; CC block_extent=20; CC load_manifest_records=20; CC read_toon_manifest_contracts=19
 # hotspots[5]: scan fan=22; check fan=21; parse_contract_line fan=19; validate_manifest fan=17; watch fan=16
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[143]:
+M[145]:
   app.doql.less,49
   examples/full-stack/src/analyzer.py,4
   examples/full-stack/src/parser_a.py,4
@@ -31,6 +31,7 @@ M[143]:
   extensions/vscode-intract/extension.js,52
   project.sh,50
   scripts/ci-full-stack.sh,77
+  scripts/generate_toon_from_map.py,476
   sdks/go/examples/main.go,23
   sdks/go/intractsdk/sdk.go,69
   sdks/python/src/intract_plugin_example/__init__.py,27
@@ -125,6 +126,7 @@ M[143]:
   tests/test_cache.py,36
   tests/test_check_staged.py,35
   tests/test_full_stack.py,28
+  tests/test_generate_toon_from_map.py,97
   tests/test_hunk_filter.py,89
   tests/test_integrations.py,61
   tests/test_language_analyzers.py,117
@@ -204,6 +206,28 @@ D:
   examples/web-app/iterations/v2-violation/backend/routes.py:
     e: read_profile
     read_profile(user_id;users)
+  scripts/generate_toon_from_map.py:
+    e: _slug,_parse_intent_from_name,_iter_section_lines,_parse_modules,_extract_symbol_names,_parse_functions,_contract_fragment,_toon_uri,_llm_contract_fragment,_resolve_output_profile,_effective_include,_default_function_fragment,_function_fragment,generate_toon_lines,_build_parser,_run_validate,_ensure_parent,main,FunctionTarget,OutputProfileConfig
+    FunctionTarget:
+    OutputProfileConfig:
+    _slug(value)
+    _parse_intent_from_name(name)
+    _iter_section_lines(lines)
+    _parse_modules(lines)
+    _extract_symbol_names(line)
+    _parse_functions(lines)
+    _contract_fragment()
+    _toon_uri(file_path)
+    _llm_contract_fragment()
+    _resolve_output_profile(profile)
+    _effective_include()
+    _default_function_fragment()
+    _function_fragment()
+    generate_toon_lines()
+    _build_parser()
+    _run_validate(root;manifest)
+    _ensure_parent(path)
+    main(argv)
   sdks/python/src/intract_plugin_example/__init__.py:
     e: ExampleParserPlugin,ExampleValidatorPlugin
     ExampleParserPlugin: supports(1),parse(1)
@@ -637,6 +661,13 @@ D:
     test_full_stack_validate_passes()
     test_full_stack_graph_covers_requires()
     test_full_stack_finds_intent_duplicates()
+  tests/test_generate_toon_from_map.py:
+    e: _sample_map_text,test_parse_modules_reads_m_section_entries,test_parse_functions_extracts_symbols_and_skips_private,test_generate_toon_lines_dev_profile_filters_project_and_shapes_functions,test_generate_toon_lines_ci_security_profile_includes_project_and_security_validate
+    _sample_map_text()
+    test_parse_modules_reads_m_section_entries()
+    test_parse_functions_extracts_symbols_and_skips_private()
+    test_generate_toon_lines_dev_profile_filters_project_and_shapes_functions(tmp_path)
+    test_generate_toon_lines_ci_security_profile_includes_project_and_security_validate(tmp_path)
   tests/test_hunk_filter.py:
     e: test_changed_lines_by_file,test_block_extent_finds_function_body,test_signature_touched_by_body_change,test_validate_sources_for_hunks_only_touched_contract,test_validate_sources_for_hunks_catches_violation_in_touched_block
     test_changed_lines_by_file()

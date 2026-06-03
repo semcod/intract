@@ -1,12 +1,15 @@
 flowchart TD
-%% generated in 0.02s
+%% generated in 0.10s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
         src__intract__config__IntractConfig__from_mapping["from_mapping"]
+        src__intract__propose_llm__propose_contracts_llm{{propose_contracts_llm CC=18}}
         src__intract__scan_artifacts__ArtifactScanReport__to_dict["to_dict"]
+        src__intract__proposals__ProposedContract__to_dict["to_dict"]
+        src__intract__proposals__propose_ui_delta_contract_dicts["propose_ui_delta_contract_dict"]
         src__intract__check__ChangedHunk__to_dict["to_dict"]
         src__intract__check__block_extent{{block_extent CC=20}}
         src__intract__check__validate_selected_paths("validate_selected_paths CC=8")
@@ -17,9 +20,6 @@ flowchart TD
         src__intract__policy__decide_policy{{decide_policy CC=15}}
         src__intract__sdk__ContractBuilder__to_inline["to_inline"]
         src__intract__sdk__contract["contract"]
-        src__intract__manifest_schema__ManifestValidationReport__to_dict["to_dict"]
-        src__intract__manifest_schema__validate_manifest{{validate_manifest CC=15}}
-        src__intract__duplicates__grouping__DuplicateContract__to_dict["to_dict"]
         ...["+144 more"]
     end
 
@@ -32,4 +32,4 @@ flowchart TD
         src__intract__cli___export_tickets["_export_tickets"]
     end
 
-    class src__intract__config__IntractConfig__from_mapping,src__intract__scan_artifacts__ArtifactScanReport__to_dict,src__intract__check__ChangedHunk__to_dict,src__intract__coverage__CoverageReport__to_dict,src__intract__graph__ContractGraph__to_dict,src__intract__graph__ContractGraph__to_mermaid,src__intract__sdk__ContractBuilder__to_inline,src__intract__sdk__contract,src__intract__manifest_schema__ManifestValidationReport__to_dict,src__intract__duplicates__grouping__DuplicateContract__to_dict entry
+    class src__intract__config__IntractConfig__from_mapping,src__intract__scan_artifacts__ArtifactScanReport__to_dict,src__intract__proposals__ProposedContract__to_dict,src__intract__proposals__propose_ui_delta_contract_dicts,src__intract__check__ChangedHunk__to_dict,src__intract__coverage__CoverageReport__to_dict,src__intract__graph__ContractGraph__to_dict,src__intract__graph__ContractGraph__to_mermaid,src__intract__sdk__ContractBuilder__to_inline,src__intract__sdk__contract entry

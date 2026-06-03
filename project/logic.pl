@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('intract', '0.5.9', 'python').
+project_metadata('intract', '0.5.11', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 49, 'less').
@@ -28,6 +28,7 @@ project_file('examples/web-app/run-demo.sh', 21, 'shell').
 project_file('extensions/vscode-intract/extension.js', 52, 'javascript').
 project_file('project.sh', 50, 'shell').
 project_file('scripts/ci-full-stack.sh', 77, 'shell').
+project_file('scripts/generate_toon_from_map.py', 476, 'python').
 project_file('sdks/go/examples/main.go', 23, 'go').
 project_file('sdks/go/intractsdk/sdk.go', 69, 'go').
 project_file('sdks/python/src/intract_plugin_example/__init__.py', 27, 'python').
@@ -122,6 +123,7 @@ project_file('src/intract/yaml_manifest.py', 4, 'python').
 project_file('tests/test_cache.py', 36, 'python').
 project_file('tests/test_check_staged.py', 35, 'python').
 project_file('tests/test_full_stack.py', 28, 'python').
+project_file('tests/test_generate_toon_from_map.py', 97, 'python').
 project_file('tests/test_hunk_filter.py', 89, 'python').
 project_file('tests/test_integrations.py', 61, 'python').
 project_file('tests/test_language_analyzers.py', 117, 'python').
@@ -171,6 +173,24 @@ python_function('examples/web-app/iterations/v1-pass/backend/auth.py', 'check_pe
 python_function('examples/web-app/iterations/v1-pass/backend/routes.py', 'read_profile', 2, 1, 1).
 python_function('examples/web-app/iterations/v2-violation/backend/auth.py', 'check_permission', 2, 1, 1).
 python_function('examples/web-app/iterations/v2-violation/backend/routes.py', 'read_profile', 2, 1, 1).
+python_function('scripts/generate_toon_from_map.py', '_slug', 1, 2, 3).
+python_function('scripts/generate_toon_from_map.py', '_parse_intent_from_name', 1, 5, 6).
+python_function('scripts/generate_toon_from_map.py', '_iter_section_lines', 1, 6, 1).
+python_function('scripts/generate_toon_from_map.py', '_parse_modules', 1, 4, 5).
+python_function('scripts/generate_toon_from_map.py', '_extract_symbol_names', 1, 5, 4).
+python_function('scripts/generate_toon_from_map.py', '_parse_functions', 1, 9, 11).
+python_function('scripts/generate_toon_from_map.py', '_contract_fragment', 0, 5, 4).
+python_function('scripts/generate_toon_from_map.py', '_toon_uri', 1, 2, 1).
+python_function('scripts/generate_toon_from_map.py', '_llm_contract_fragment', 0, 8, 6).
+python_function('scripts/generate_toon_from_map.py', '_resolve_output_profile', 1, 3, 1).
+python_function('scripts/generate_toon_from_map.py', '_effective_include', 0, 2, 0).
+python_function('scripts/generate_toon_from_map.py', '_default_function_fragment', 0, 2, 3).
+python_function('scripts/generate_toon_from_map.py', '_function_fragment', 0, 3, 2).
+python_function('scripts/generate_toon_from_map.py', 'generate_toon_lines', 0, 6, 13).
+python_function('scripts/generate_toon_from_map.py', '_build_parser', 0, 1, 4).
+python_function('scripts/generate_toon_from_map.py', '_run_validate', 2, 1, 3).
+python_function('scripts/generate_toon_from_map.py', '_ensure_parent', 1, 3, 2).
+python_function('scripts/generate_toon_from_map.py', 'main', 1, 5, 12).
 python_function('src/intract/analyzers/blocks.py', 'scan_braced_block', 2, 8, 2).
 python_function('src/intract/analyzers/blocks.py', 'block_extent_from_patterns', 3, 7, 6).
 python_function('src/intract/analyzers/csharp.py', 'csharp_block_extent', 2, 8, 6).
@@ -380,6 +400,11 @@ python_function('tests/test_check_staged.py', 'test_validate_selected_paths_full
 python_function('tests/test_full_stack.py', 'test_full_stack_validate_passes', 0, 2, 1).
 python_function('tests/test_full_stack.py', 'test_full_stack_graph_covers_requires', 0, 4, 1).
 python_function('tests/test_full_stack.py', 'test_full_stack_finds_intent_duplicates', 0, 5, 2).
+python_function('tests/test_generate_toon_from_map.py', '_sample_map_text', 0, 1, 0).
+python_function('tests/test_generate_toon_from_map.py', 'test_parse_modules_reads_m_section_entries', 0, 2, 3).
+python_function('tests/test_generate_toon_from_map.py', 'test_parse_functions_extracts_symbols_and_skips_private', 0, 8, 3).
+python_function('tests/test_generate_toon_from_map.py', 'test_generate_toon_lines_dev_profile_filters_project_and_shapes_functions', 1, 7, 4).
+python_function('tests/test_generate_toon_from_map.py', 'test_generate_toon_lines_ci_security_profile_includes_project_and_security_validate', 1, 4, 4).
 python_function('tests/test_hunk_filter.py', 'test_changed_lines_by_file', 0, 2, 2).
 python_function('tests/test_hunk_filter.py', 'test_block_extent_finds_function_body', 0, 3, 1).
 python_function('tests/test_hunk_filter.py', 'test_signature_touched_by_body_change', 0, 3, 3).
@@ -461,6 +486,8 @@ python_method('ShowcaseHandler', '__init__', 0, 1, 3).
 python_method('ShowcaseHandler', '_write_json', 2, 1, 8).
 python_method('ShowcaseHandler', 'do_GET', 0, 2, 5).
 python_method('ShowcaseHandler', 'do_POST', 0, 8, 18).
+python_class('scripts/generate_toon_from_map.py', 'FunctionTarget').
+python_class('scripts/generate_toon_from_map.py', 'OutputProfileConfig').
 python_class('sdks/python/src/intract_plugin_example/__init__.py', 'ExampleParserPlugin').
 python_method('ExampleParserPlugin', 'supports', 1, 1, 0).
 python_method('ExampleParserPlugin', 'parse', 1, 1, 1).
