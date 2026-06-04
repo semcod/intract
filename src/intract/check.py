@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib
 import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -73,6 +74,17 @@ def load_selected_sources(root: str | Path, files: list[str]) -> dict[str, str]:
 
 
 MANIFEST_NAMES = {"intent.yaml", "intract.yaml", ".intract.yaml"}
+BLOCK_EXTENT_ANALYZERS = {
+    ".py": ("intract.analyzers.python_ast", "python_block_extent"),
+    ".ts": ("intract.analyzers.typescript", "typescript_block_extent"),
+    ".tsx": ("intract.analyzers.typescript", "typescript_block_extent"),
+    ".js": ("intract.analyzers.typescript", "typescript_block_extent"),
+    ".jsx": ("intract.analyzers.typescript", "typescript_block_extent"),
+    ".cs": ("intract.analyzers.csharp", "csharp_block_extent"),
+    ".java": ("intract.analyzers.java", "java_block_extent"),
+    ".go": ("intract.analyzers.go", "go_block_extent"),
+    ".rs": ("intract.analyzers.rust", "rust_block_extent"),
+}
 
 
 def _manifest_changed(files: list[str]) -> bool:
@@ -89,35 +101,30 @@ def changed_lines_by_file(hunks: list[ChangedHunk]) -> dict[str, set[int]]:
     return result
 
 
-def block_extent(source: str, start_line: int, *, file_path: str | None = None) -> tuple[int, int]:
-    """Approximate block extent after an @intract comment (function/class body)."""
-    if file_path:
-        suffix = Path(file_path).suffix.lower()
-        if suffix == ".py":
-            from intract.analyzers.python_ast import python_block_extent
+def _language_block_extent(
+    source: str,
+    start_line: int,
+    file_path: str | None,
+) -> tuple[int, int] | None:
+    if not file_path:
+        return None
+    analyzer = BLOCK_EXTENT_ANALYZERS.get(Path(file_path).suffix.lower())
+    if analyzer is None:
+        return None
+    module_name, function_name = analyzer
+    module = importlib.import_module(module_name)
+    return getattr(module, function_name)(source, start_line)
 
-            return python_block_extent(source, start_line)
-        if suffix in {".ts", ".tsx", ".js", ".jsx"}:
-            from intract.analyzers.typescript import typescript_block_extent
 
-            return typescript_block_extent(source, start_line)
-        if suffix == ".cs":
-            from intract.analyzers.csharp import csharp_block_extent
+def _is_python_declaration(stripped: str) -> bool:
+    return stripped.startswith(("def ", "class ", "async def "))
 
-            return csharp_block_extent(source, start_line)
-        if suffix == ".java":
-            from intract.analyzers.java import java_block_extent
 
-            return java_block_extent(source, start_line)
-        if suffix == ".go":
-            from intract.analyzers.go import go_block_extent
+def _is_fallback_preamble(stripped: str) -> bool:
+    return stripped.startswith("#") or not stripped or stripped.startswith(("import ", "from "))
 
-            return go_block_extent(source, start_line)
-        if suffix == ".rs":
-            from intract.analyzers.rust import rust_block_extent
 
-            return rust_block_extent(source, start_line)
-
+def _fallback_block_extent(source: str, start_line: int) -> tuple[int, int]:
     lines = source.splitlines()
     if start_line < 1 or start_line > len(lines):
         return start_line, start_line
@@ -130,15 +137,11 @@ def block_extent(source: str, start_line: int, *, file_path: str | None = None) 
         stripped = line.strip()
 
         if not in_block:
-            if stripped.startswith(("def ", "class ", "async def ")):
+            if _is_python_declaration(stripped):
                 in_block = True
                 end = index
                 continue
-            if (
-                stripped.startswith("#")
-                or not stripped
-                or stripped.startswith(("import ", "from "))
-            ):
+            if _is_fallback_preamble(stripped):
                 end = index
                 continue
             break
@@ -149,11 +152,19 @@ def block_extent(source: str, start_line: int, *, file_path: str | None = None) 
         if line[0].isspace():
             end = index
             continue
-        if stripped.startswith(("def ", "class ", "async def ")) or "@intract" in line:
+        if _is_python_declaration(stripped) or "@intract" in line:
             break
         break
 
     return start_line, end
+
+
+def block_extent(source: str, start_line: int, *, file_path: str | None = None) -> tuple[int, int]:
+    """Approximate block extent after an @intract comment (function/class body)."""
+    language_extent = _language_block_extent(source, start_line, file_path)
+    if language_extent is not None:
+        return language_extent
+    return _fallback_block_extent(source, start_line)
 
 
 def signature_touched(signature, changed_lines: set[int], source: str) -> bool:
@@ -181,14 +192,22 @@ def validate_sources_for_hunks(
 
     all_signatures = []
     for file_path, source in sources.items():
-        records = extract_contract_records_from_text(source, file_path=file_path, default_scope="block")
+        records = extract_contract_records_from_text(
+            source,
+            file_path=file_path,
+            default_scope="block",
+        )
         all_signatures.extend(build_signatures(records))
 
     touched = [
         signature
         for signature in all_signatures
         if signature.file_path in changed
-        and signature_touched(signature, changed[signature.file_path], sources.get(signature.file_path, ""))
+        and signature_touched(
+            signature,
+            changed[signature.file_path],
+            sources.get(signature.file_path, ""),
+        )
     ]
 
     results = [
@@ -265,7 +284,12 @@ def staged_check(
     return report, files, hunks
 
 
-def changed_check(root: str | Path = ".", *, base_ref: str = "main", manifest: str | Path | None = None):
+def changed_check(
+    root: str | Path = ".",
+    *,
+    base_ref: str = "main",
+    manifest: str | Path | None = None,
+):
     changes = changed_files(root, base_ref=base_ref)
     files = paths_from_changes(changes)
     full_graph = _manifest_changed(files)

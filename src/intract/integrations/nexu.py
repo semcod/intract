@@ -107,72 +107,83 @@ def scan_contracts_in_file(path: Path, root: Path | None = None) -> list[IntentC
     return scan_contracts_in_text(text, source=source)
 
 
+def _contract_items(data) -> list[dict]:
+    return [item for item in data.get("contracts", []) or [] if isinstance(item, dict)]
+
+
+def _list_field(item: dict, key: str) -> list[str]:
+    return list(item.get(key, []) or [])
+
+
+def _base_intent_contract(
+    item: dict,
+    path: Path,
+    *,
+    raw_prefix: str,
+    default_scope: str,
+) -> IntentContract:
+    intent = str(item.get("intent", ""))
+    return IntentContract(
+        raw=f"{raw_prefix}:{item.get('id', intent)}",
+        contract_id=str(item.get("id", "")),
+        scope=str(item.get("scope", default_scope)),
+        intent=intent,
+        priority=int(item.get("priority", 3) or 3),
+        domain=str(item.get("domain", "general")),
+        input=_list_field(item, "input"),
+        output=_list_field(item, "output"),
+        effect=_list_field(item, "effect"),
+        forbid=_list_field(item, "forbid"),
+        require=_list_field(item, "require"),
+        validate=_list_field(item, "validate"),
+        meaning=str(item.get("meaning", "")),
+        source=str(path),
+        line=0,
+    )
+
+
 def read_manifest_contracts(path: Path) -> list[IntentContract]:
     if not path.exists():
         return []
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    contracts: list[IntentContract] = []
-    for item in data.get("contracts", []) or []:
-        intent = str(item.get("intent", ""))
-        contract = IntentContract(
-            raw=f"manifest:{item.get('id', intent)}",
-            contract_id=str(item.get("id", "")),
-            scope=str(item.get("scope", "project")),
-            intent=intent,
-            priority=int(item.get("priority", 3) or 3),
-            domain=str(item.get("domain", "general")),
-            input=list(item.get("input", []) or []),
-            output=list(item.get("output", []) or []),
-            effect=list(item.get("effect", []) or []),
-            forbid=list(item.get("forbid", []) or []),
-            require=list(item.get("require", []) or []),
-            validate=list(item.get("validate", []) or []),
-            meaning=str(item.get("meaning", "")),
-            source=str(path),
-            line=0,
-        )
-        contracts.append(contract)
-    return contracts
+    return [
+        _base_intent_contract(item, path, raw_prefix="manifest", default_scope="project")
+        for item in _contract_items(data)
+    ]
+
+
+def _read_yaml_mapping(path: Path) -> dict | None:
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def _toon_target(item: dict) -> dict:
+    target = item.get("target") or {}
+    return target if isinstance(target, dict) else {}
+
+
+def _target_line_value(target: dict) -> int | None:
+    value = target.get("line")
+    return int(value) if value is not None else None
+
+
+def _toon_intent_contract(item: dict, path: Path) -> IntentContract:
+    target = _toon_target(item)
+    contract = _base_intent_contract(item, path, raw_prefix="toon", default_scope="toon")
+    contract.target_file = str(target.get("file") or "")
+    contract.target_function = str(target.get("function") or "")
+    contract.target_line = _target_line_value(target)
+    contract.target_xpath = str(target.get("xpath") or target.get("xpatch") or "")
+    return contract
 
 
 def read_toon_manifest_contracts(path: Path) -> list[IntentContract]:
     if not path.exists():
         return []
-    try:
-        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    except Exception:
+    data = _read_yaml_mapping(path)
+    if data is None:
         return []
-    contracts: list[IntentContract] = []
-    for item in data.get("contracts", []) or []:
-        intent = str(item.get("intent", ""))
-        target = item.get("target") or {}
-        # Parse targets
-        target_file = str(target.get("file") or "")
-        target_function = str(target.get("function") or "")
-        target_line_val = target.get("line")
-        target_line = int(target_line_val) if target_line_val is not None else None
-        target_xpath = str(target.get("xpath") or target.get("xpatch") or "")
-
-        contract = IntentContract(
-            raw=f"toon:{item.get('id', intent)}",
-            contract_id=str(item.get("id", "")),
-            scope=str(item.get("scope", "toon")),
-            intent=intent,
-            priority=int(item.get("priority", 3) or 3),
-            domain=str(item.get("domain", "general")),
-            input=list(item.get("input", []) or []),
-            output=list(item.get("output", []) or []),
-            effect=list(item.get("effect", []) or []),
-            forbid=list(item.get("forbid", []) or []),
-            require=list(item.get("require", []) or []),
-            validate=list(item.get("validate", []) or []),
-            meaning=str(item.get("meaning", "")),
-            source=str(path),
-            line=0,
-            target_file=target_file,
-            target_function=target_function,
-            target_line=target_line,
-            target_xpath=target_xpath,
-        )
-        contracts.append(contract)
-    return contracts
+    return [_toon_intent_contract(item, path) for item in _contract_items(data)]

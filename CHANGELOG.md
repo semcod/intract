@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.13] - 2026-06-04
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update docs/examples.md
+- Update examples/README.md
+- Update examples/markdown-generator/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/test_markdown_generator_example.py
+
+### Other
+- Update app.doql.less
+- Update examples/markdown-generator/demo.py
+- Update examples/markdown-generator/intract.yaml
+- Update examples/markdown-generator/pass/generator.py
+- Update examples/markdown-generator/run-demo.sh
+- Update examples/markdown-generator/violation/generator.py
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- ... and 14 more files
+
 ## [0.5.12] - 2026-06-03
 
 ### Docs

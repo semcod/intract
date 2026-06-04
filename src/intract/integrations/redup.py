@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable, Protocol, runtime_checkable
+from typing import Any, Protocol, runtime_checkable
 
 from intract.core.signatures import build_signature, build_signatures
 from intract.duplicates import find_intent_pairs, pairs_to_intent_groups
@@ -54,7 +55,11 @@ def signatures_from_text(
     file_path: str,
     default_scope: str = "function",
 ):
-    records = extract_contract_records_from_text(text, file_path=file_path, default_scope=default_scope)
+    records = extract_contract_records_from_text(
+        text,
+        file_path=file_path,
+        default_scope=default_scope,
+    )
     return build_signatures(records)
 
 
@@ -182,6 +187,45 @@ def parse_policy_tokens(value: str | list[str] | None) -> list[str]:
     return [part.strip() for part in str(value).split(",") if part.strip()]
 
 
+def _resolve_manifest_path(project_root: Path, manifest: str | Path | None, config) -> Path | None:
+    if manifest:
+        return Path(manifest)
+    configured = project_root / config.manifest
+    return configured if configured.exists() else None
+
+
+def _graph_for_policy(project_root: Path, manifest_path: Path | None, fail_on: list[str]):
+    if manifest_path and "missing_required_p1" in fail_on:
+        from intract.graph import build_graph
+
+        return build_graph(project_root, manifest=manifest_path)
+    return None
+
+
+def _intent_duplicate_label(group: dict[str, Any]) -> str:
+    group_id = group.get("group_id", "unknown")
+    contracts = group.get("evidence", {}).get("contracts", [])
+    return ",".join(contracts) if contracts else group_id
+
+
+def _duplicate_reasons(intent_groups: list[dict[str, Any]]) -> list[str]:
+    return [f"intent_duplicate: {_intent_duplicate_label(group)}" for group in intent_groups]
+
+
+def _apply_duplicate_policy(
+    reasons: list[str],
+    warnings: list[str],
+    *,
+    duplicate_groups: list[dict[str, Any]],
+    fail_on: list[str],
+    warn_on: list[str],
+) -> None:
+    if "intent_duplicate" in fail_on and duplicate_groups:
+        reasons.extend(_duplicate_reasons(duplicate_groups))
+    if "intent_duplicate" in warn_on and duplicate_groups:
+        warnings.append(f"intent_duplicate: {len(duplicate_groups)} group(s)")
+
+
 def validate_for_redup(
     root: str | Path,
     *,
@@ -192,45 +236,34 @@ def validate_for_redup(
 ) -> RedupPolicyResult:
     """Apply Intract project policy for reDUP consumers (scan gates / CLI)."""
     from intract.config import load_config
-    from intract.graph import build_graph
     from intract.policy import decide_policy
     from intract.project import validate_project
 
     project_root = Path(root)
     config = load_config(project_root)
-    manifest_path = Path(manifest) if manifest else None
-    if manifest_path is None and (project_root / config.manifest).exists():
-        manifest_path = project_root / config.manifest
-
+    manifest_path = _resolve_manifest_path(project_root, manifest, config)
     report = validate_project(project_root, manifest_path=manifest_path)
     resolved_fail_on = fail_on or list(config.fail_on)
     resolved_warn_on = warn_on or list(config.warn_on)
-
-    graph = None
-    if manifest_path and "missing_required_p1" in resolved_fail_on:
-        graph = build_graph(project_root, manifest=manifest_path)
 
     decision = decide_policy(
         report,
         fail_on=resolved_fail_on,
         warn_on=resolved_warn_on,
-        graph=graph,
+        graph=_graph_for_policy(project_root, manifest_path, resolved_fail_on),
         manifest_path=manifest_path,
     )
 
     reasons = list(decision.reasons)
     warnings = list(decision.warnings)
     duplicate_groups = intent_groups or []
-
-    if "intent_duplicate" in resolved_fail_on and duplicate_groups:
-        for group in duplicate_groups:
-            group_id = group.get("group_id", "unknown")
-            contracts = group.get("evidence", {}).get("contracts", [])
-            label = ",".join(contracts) if contracts else group_id
-            reasons.append(f"intent_duplicate: {label}")
-
-    if "intent_duplicate" in resolved_warn_on and duplicate_groups:
-        warnings.append(f"intent_duplicate: {len(duplicate_groups)} group(s)")
+    _apply_duplicate_policy(
+        reasons,
+        warnings,
+        duplicate_groups=duplicate_groups,
+        fail_on=resolved_fail_on,
+        warn_on=resolved_warn_on,
+    )
 
     return RedupPolicyResult(
         should_fail=bool(reasons),

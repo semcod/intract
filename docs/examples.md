@@ -43,6 +43,34 @@ python -m intract scan examples/web-app/iterations/v1-pass --all-artifacts
 
 - [`examples/full-stack/`](../examples/full-stack/)
 
+## Markdown generator
+
+- [`examples/markdown-generator/`](../examples/markdown-generator/)
+
+Pokazuje generator treści Markdown na zadany temat. Manifest Intract wymaga kroków:
+
+- `transform.topic`
+- `build.markdown_outline`
+- `render.markdown_section`
+- `validate.markdown_contract`
+
+Komendy:
+
+```bash
+bash examples/markdown-generator/run-demo.sh
+python -m intract validate examples/markdown-generator/pass \
+  --manifest examples/markdown-generator/intract.yaml
+python -m intract validate examples/markdown-generator/violation \
+  --manifest examples/markdown-generator/intract.yaml
+```
+
+Oczekiwane:
+
+```text
+pass: status pass
+violation: status violation, forbid:network, forbid:write
+```
+
 ## 01 — Python PASS
 
 Folder:

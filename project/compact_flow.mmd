@@ -1,7 +1,9 @@
 flowchart TD
-%% generated in 0.10s
+%% generated in 0.03s
     examples__integration_tests["examples.integration_tests<br/>12 funcs"]
+    examples__markdown_generator["examples.markdown-generator<br/>14 funcs"]
     scripts__generate_toon_from_map["scripts.generate_toon_from_map<br/>18 funcs"]
-    src__intract["src.intract<br/>285 funcs"]
+    src__intract["src.intract<br/>374 funcs"]
     examples__integration_tests ==>|9| src__intract
     scripts__generate_toon_from_map -->|2| src__intract
+    examples__markdown_generator -->|1| src__intract

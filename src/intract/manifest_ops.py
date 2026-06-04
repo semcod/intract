@@ -137,6 +137,54 @@ def resolve_manifest_paths(
     return [("project", project_path), ("capsule", capsule_path)]
 
 
+def _existing_contract_ids(manifest: dict[str, Any]) -> set[str]:
+    return {
+        str(item.get("id", "")).strip()
+        for item in manifest.get("contracts", [])
+        if isinstance(item, dict) and item.get("id")
+    }
+
+
+def _should_apply_ledger_entry(entry: dict[str, Any], *, only_evolved: bool) -> bool:
+    if not only_evolved:
+        return True
+    return "evolved_by_llm" in str(entry.get("status", ""))
+
+
+def _iter_ledger_proposals(ledger_path: Path, *, only_evolved: bool):
+    for entry in load_policy_ledger(ledger_path):
+        if not _should_apply_ledger_entry(entry, only_evolved=only_evolved):
+            continue
+        for proposal in entry.get("proposed_contracts", []) or []:
+            if isinstance(proposal, dict):
+                yield proposal
+
+
+def _append_manifest_proposal(
+    proposal: dict[str, Any],
+    manifest: dict[str, Any],
+    existing_ids: set[str],
+    result: ManifestApplyResult,
+) -> None:
+    line = str(proposal.get("line", "")).strip()
+    manifest_entry = contract_line_to_manifest_entry(line)
+    if manifest_entry is None:
+        result.skipped.append(line or str(proposal.get("id", "")))
+        return
+
+    contract_id = str(manifest_entry.get("id", "")).strip()
+    if not contract_id:
+        result.skipped.append(line)
+        return
+    if contract_id in existing_ids:
+        result.skipped.append(contract_id)
+        return
+
+    manifest["contracts"].append(manifest_entry)
+    existing_ids.add(contract_id)
+    result.added.append(contract_id)
+
+
 def apply_ledger_to_manifest(
     manifest_path: Path,
     ledger_path: Path,
@@ -147,39 +195,15 @@ def apply_ledger_to_manifest(
 ) -> ManifestApplyResult:
     """Append proposed contracts from cinema ledger into intract.yaml (by id, no duplicates)."""
     manifest = load_manifest_document(manifest_path)
-    existing_ids = {
-        str(item.get("id", "")).strip()
-        for item in manifest.get("contracts", [])
-        if isinstance(item, dict) and item.get("id")
-    }
-
+    existing_ids = _existing_contract_ids(manifest)
     result = ManifestApplyResult(
         manifest_path=str(manifest_path),
         dry_run=dry_run,
         target=target,
     )
 
-    for entry in load_policy_ledger(ledger_path):
-        if only_evolved and "evolved_by_llm" not in str(entry.get("status", "")):
-            continue
-        for proposal in entry.get("proposed_contracts", []) or []:
-            if not isinstance(proposal, dict):
-                continue
-            line = str(proposal.get("line", "")).strip()
-            manifest_entry = contract_line_to_manifest_entry(line)
-            if manifest_entry is None:
-                result.skipped.append(line or str(proposal.get("id", "")))
-                continue
-            contract_id = str(manifest_entry.get("id", "")).strip()
-            if not contract_id:
-                result.skipped.append(line)
-                continue
-            if contract_id in existing_ids:
-                result.skipped.append(contract_id)
-                continue
-            manifest["contracts"].append(manifest_entry)
-            existing_ids.add(contract_id)
-            result.added.append(contract_id)
+    for proposal in _iter_ledger_proposals(ledger_path, only_evolved=only_evolved):
+        _append_manifest_proposal(proposal, manifest, existing_ids, result)
 
     if result.added and not dry_run:
         write_manifest_document(manifest_path, manifest)

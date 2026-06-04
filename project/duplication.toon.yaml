@@ -1,28 +1,35 @@
-# redup/duplication | 4 groups | 94f 7317L | 2026-06-03
+# redup/duplication | 6 groups | 97f 8069L | 2026-06-04
 
 SUMMARY:
-  files_scanned: 94
-  total_lines:   7317
-  dup_groups:    4
-  dup_fragments: 8
-  saved_lines:   33
-  scan_ms:       12917
+  files_scanned: 97
+  total_lines:   8069
+  dup_groups:    6
+  dup_fragments: 12
+  saved_lines:   51
+  scan_ms:       2346
 
-HOTSPOTS[6] (files with most duplication):
+HOTSPOTS[7] (files with most duplication):
   src/intract/analyzers/csharp.py  dup=25L  groups=2  frags=2  (0.3%)
-  src/intract/analyzers/blocks.py  dup=19L  groups=1  frags=1  (0.3%)
+  src/intract/analyzers/blocks.py  dup=19L  groups=1  frags=1  (0.2%)
+  examples/markdown-generator/pass/generator.py  dup=18L  groups=2  frags=2  (0.2%)
+  examples/markdown-generator/violation/generator.py  dup=18L  groups=2  frags=2  (0.2%)
   src/intract/mcp/handlers.py  dup=10L  groups=1  frags=2  (0.1%)
   src/intract/analyzers/typescript.py  dup=6L  groups=1  frags=1  (0.1%)
   examples/web-app/iterations/v1-pass/backend/routes.py  dup=3L  groups=1  frags=1  (0.0%)
-  examples/web-app/iterations/v2-violation/backend/routes.py  dup=3L  groups=1  frags=1  (0.0%)
 
-DUPLICATES[4] (ranked by impact):
+DUPLICATES[6] (ranked by impact):
   [ef612f5468430a71]   STRU  scan_braced_block  L=19 N=2 saved=19 sim=1.00
       src/intract/analyzers/blocks.py:6-24  (scan_braced_block)
       src/intract/analyzers/csharp.py:39-57  (_scan_braced_block)
+  [ff5c895aacf2a3d8]   EXAC  generate_markdown_document  L=13 N=2 saved=13 sim=1.00
+      examples/markdown-generator/pass/generator.py:66-78  (generate_markdown_document)
+      examples/markdown-generator/violation/generator.py:64-76  (generate_markdown_document)
   [ac0065a129c81ecd]   STRU  _treesitter_csharp_extent  L=6 N=2 saved=6 sim=1.00
       src/intract/analyzers/csharp.py:60-65  (_treesitter_csharp_extent)
       src/intract/analyzers/typescript.py:61-66  (_treesitter_typescript_extent)
+  [16a76191517e9cbf]   EXAC  normalize_topic  L=5 N=2 saved=5 sim=1.00
+      examples/markdown-generator/pass/generator.py:9-13  (normalize_topic)
+      examples/markdown-generator/violation/generator.py:11-15  (normalize_topic)
   [a1077c782ef473a0]   STRU  handle_validate_project  L=5 N=2 saved=5 sim=1.00
       src/intract/mcp/handlers.py:36-40  (handle_validate_project)
       src/intract/mcp/handlers.py:90-94  (handle_build_graph)
@@ -30,32 +37,42 @@ DUPLICATES[4] (ranked by impact):
       examples/web-app/iterations/v1-pass/backend/routes.py:2-4  (read_profile)
       examples/web-app/iterations/v2-violation/backend/routes.py:2-4  (read_profile)
 
-REFACTOR[4] (ranked by priority):
+REFACTOR[6] (ranked by priority):
   [1] ○ extract_function   → src/intract/analyzers/utils/scan_braced_block.py
       WHY: 2 occurrences of 19-line block across 2 files — saves 19 lines
       FILES: src/intract/analyzers/blocks.py, src/intract/analyzers/csharp.py
-  [2] ○ extract_function   → src/intract/analyzers/utils/_treesitter_csharp_extent.py
+  [2] ○ extract_function   → examples/markdown-generator/utils/generate_markdown_document.py
+      WHY: 2 occurrences of 13-line block across 2 files — saves 13 lines
+      FILES: examples/markdown-generator/pass/generator.py, examples/markdown-generator/violation/generator.py
+  [3] ○ extract_function   → src/intract/analyzers/utils/_treesitter_csharp_extent.py
       WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
       FILES: src/intract/analyzers/csharp.py, src/intract/analyzers/typescript.py
-  [3] ○ extract_function   → src/intract/mcp/utils/handle_validate_project.py
+  [4] ○ extract_function   → examples/markdown-generator/utils/normalize_topic.py
+      WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
+      FILES: examples/markdown-generator/pass/generator.py, examples/markdown-generator/violation/generator.py
+  [5] ○ extract_function   → src/intract/mcp/utils/handle_validate_project.py
       WHY: 2 occurrences of 5-line block across 1 files — saves 5 lines
       FILES: src/intract/mcp/handlers.py
-  [4] ○ extract_function   → examples/web-app/iterations/utils/read_profile.py
+  [6] ○ extract_function   → examples/web-app/iterations/utils/read_profile.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: examples/web-app/iterations/v1-pass/backend/routes.py, examples/web-app/iterations/v2-violation/backend/routes.py
 
-QUICK_WINS[2] (low risk, high savings — do first):
+QUICK_WINS[3] (low risk, high savings — do first):
   [1] extract_function   saved=19L  → src/intract/analyzers/utils/scan_braced_block.py
       FILES: blocks.py, csharp.py
-  [2] extract_function   saved=6L  → src/intract/analyzers/utils/_treesitter_csharp_extent.py
+  [2] extract_function   saved=13L  → examples/markdown-generator/utils/generate_markdown_document.py
+      FILES: generator.py, generator.py
+  [3] extract_function   saved=6L  → src/intract/analyzers/utils/_treesitter_csharp_extent.py
       FILES: csharp.py, typescript.py
 
-EFFORT_ESTIMATE (total ≈ 1.1h):
+EFFORT_ESTIMATE (total ≈ 1.7h):
   medium scan_braced_block                   saved=19L  ~38min
+  easy   generate_markdown_document          saved=13L  ~26min
   easy   _treesitter_csharp_extent           saved=6L  ~12min
+  easy   normalize_topic                     saved=5L  ~10min
   easy   handle_validate_project             saved=5L  ~10min
   easy   read_profile                        saved=3L  ~6min
 
 METRICS-TARGET:
-  dup_groups:  4 → 0
-  saved_lines: 33 lines recoverable
+  dup_groups:  6 → 0
+  saved_lines: 51 lines recoverable

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
@@ -57,60 +58,60 @@ def contract_from_mapping(data: dict[str, Any]) -> Contract:
     )
 
 
-def load_manifest_records(path: Path) -> list[ContractRecord]:
-    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+def _target_mapping(item: dict[str, Any]) -> dict[str, Any]:
+    target = item.get("target") or {}
+    return target if isinstance(target, dict) else {}
+
+
+def _target_line(target: dict[str, Any]) -> int | None:
+    value = target.get("line")
+    if value is not None and str(value).isdigit():
+        return int(value)
+    return None
+
+
+def _target_tags(target: dict[str, Any]) -> tuple[str, ...]:
+    tags = []
+    target_func = target.get("func", target.get("function"))
+    target_xpath = target.get("xpath", target.get("xpatch"))
+    if target_func:
+        tags.append(f"target_func:{target_func}")
+    if target_xpath:
+        tags.append(f"target_xpath:{target_xpath}")
+    return tuple(tags)
+
+
+def _with_target_tags(contract: Contract, target: dict[str, Any]) -> Contract:
+    tags = _target_tags(target)
+    if not tags:
+        return contract
+    return replace(contract, tags=contract.tags + tags)
+
+
+def _top_level_contract_record(item: dict[str, Any], path: Path, index: int) -> ContractRecord:
+    target = _target_mapping(item)
+    target_line = _target_line(target)
+    start_line = target_line if target_line is not None else index
+    target_file = target.get("file")
+
+    return ContractRecord(
+        contract=_with_target_tags(contract_from_mapping(item), target),
+        file_path=str(target_file) if target_file else str(path),
+        start_line=start_line,
+        end_line=start_line,
+    )
+
+
+def _top_level_contract_records(data: dict[str, Any], path: Path) -> list[ContractRecord]:
+    return [
+        _top_level_contract_record(item, path, index)
+        for index, item in enumerate(data.get("contracts", []) or [], start=1)
+        if isinstance(item, dict)
+    ]
+
+
+def _file_contract_records(files: Any) -> list[ContractRecord]:
     records: list[ContractRecord] = []
-    for index, item in enumerate(data.get("contracts", []) or [], start=1):
-        if isinstance(item, dict):
-            target = item.get("target") or {}
-            target_file = target.get("file")
-            target_line_val = target.get("line")
-            target_line = None
-            if target_line_val is not None and str(target_line_val).isdigit():
-                target_line = int(target_line_val)
-            
-            contract = contract_from_mapping(item)
-            target_func = target.get("func", target.get("function"))
-            target_xpath = target.get("xpath", target.get("xpatch"))
-            if target_func or target_xpath:
-                new_tags = list(contract.tags)
-                if target_func:
-                    new_tags.append(f"target_func:{target_func}")
-                if target_xpath:
-                    new_tags.append(f"target_xpath:{target_xpath}")
-                # Reconstruct contract with updated tags
-                contract = Contract(
-                    action=contract.action,
-                    object=contract.object,
-                    scope=contract.scope,
-                    priority=contract.priority,
-                    domain=contract.domain,
-                    inputs=contract.inputs,
-                    outputs=contract.outputs,
-                    effects=contract.effects,
-                    forbidden=contract.forbidden,
-                    required=contract.required,
-                    validators=contract.validators,
-                    tags=tuple(new_tags),
-                    algorithms=contract.algorithms,
-                    relations=contract.relations,
-                    contract_id=contract.contract_id,
-                    meaning=contract.meaning,
-                    raw=contract.raw,
-                )
-                
-            file_path = str(target_file) if target_file else str(path)
-            start_line = target_line if target_line is not None else index
-            end_line = start_line
-            records.append(
-                ContractRecord(
-                    contract=contract,
-                    file_path=file_path,
-                    start_line=start_line,
-                    end_line=end_line,
-                )
-            )
-    files = data.get("files", {}) or {}
     if isinstance(files, dict):
         for file_path, file_contracts in files.items():
             if not isinstance(file_contracts, list):
@@ -125,6 +126,15 @@ def load_manifest_records(path: Path) -> list[ContractRecord]:
                             end_line=index,
                         )
                     )
+    return records
+
+
+def load_manifest_records(path: Path) -> list[ContractRecord]:
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    if not isinstance(data, dict):
+        return []
+    records = _top_level_contract_records(data, path)
+    records.extend(_file_contract_records(data.get("files", {}) or {}))
     return records
 
 

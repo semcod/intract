@@ -1,27 +1,12 @@
-# code2llm | 155f 10443L | python:98,yaml:15,json:11,typescript:7,shell:4,toml:4,javascript:2,csharp:2,go:2,txt:1,yml:1,intract:1,java:1,rust:1 | 2026-06-03
-# generated in 0.10s
-# CC̅=4.3 | critical:14/371 | dups:0 | cycles:0
+# code2llm | 160f 11387L | python:101,yaml:16,json:11,typescript:7,shell:5,toml:4,javascript:2,csharp:2,go:2,txt:1,yml:1,intract:1,java:1,rust:1 | 2026-06-04
+# generated in 0.03s
+# CC̅=3.5 | critical:0/474 | dups:0 | cycles:0
 
-HEALTH[14]:
-  🟡 CC    propose_contracts_llm CC=18 (limit:15)
-  🟡 CC    block_extent CC=20 (limit:15)
-  🟡 CC    decide_policy CC=15 (limit:15)
-  🟡 CC    validate_manifest CC=15 (limit:15)
-  🟡 CC    apply_ledger_to_manifest CC=16 (limit:15)
-  🟡 CC    infer_artifact_kind CC=17 (limit:15)
-  🟡 CC    build_signature CC=15 (limit:15)
-  🟡 CC    parse_contract_line CC=49 (limit:15)
-  🟡 CC    load_manifest_records CC=20 (limit:15)
-  🟡 CC    parse_toon_uri_line CC=34 (limit:15)
-  🟡 CC    read_toon_manifest_contracts CC=19 (limit:15)
-  🟡 CC    validate_for_redup CC=15 (limit:15)
-  🟡 CC    scan CC=15 (limit:15)
-  🟡 CC    validate_sources CC=16 (limit:15)
+HEALTH[0]: ok
 
-REFACTOR[1]:
-  1. split 14 high-CC methods  (CC>15)
+REFACTOR[0]: none needed
 
-PIPELINES[146]:
+PIPELINES[160]:
   [1] Src [read_profile]: read_profile
       PURITY: 100% pure
   [2] Src [check_permission]: check_permission
@@ -54,7 +39,7 @@ PIPELINES[146]:
       PURITY: 100% pure
   [16] Src [write_to_log]: write_to_log
       PURITY: 100% pure
-  [17] Src [main]: main → run_example_01 → validate_project → load_project_sources → ...(1 more)
+  [17] Src [main]: main → run_example_01 → validate_project → load_project_sources → ...(2 more)
       PURITY: 100% pure
   [18] Src [canUpdateResource]: canUpdateResource
       PURITY: 100% pure
@@ -78,13 +63,13 @@ PIPELINES[146]:
       PURITY: 100% pure
   [28] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [29] Src [to_dict]: to_dict
+  [29] Src [to_mermaid]: to_mermaid → _safe
       PURITY: 100% pure
-  [30] Src [to_mermaid]: to_mermaid → _safe
+  [30] Src [to_inline]: to_inline
       PURITY: 100% pure
-  [31] Src [to_inline]: to_inline
+  [31] Src [contract]: contract
       PURITY: 100% pure
-  [32] Src [contract]: contract
+  [32] Src [validate_artifact_with_proposals]: validate_artifact_with_proposals → validate_proposal → extract_contract_records_from_text → parse_contract_line → ...(2 more)
       PURITY: 100% pure
   [33] Src [to_dict]: to_dict
       PURITY: 100% pure
@@ -92,78 +77,93 @@ PIPELINES[146]:
       PURITY: 100% pure
   [35] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [36] Src [validate_artifact_with_proposals]: validate_artifact_with_proposals → validate_proposal → extract_contract_records_from_text → parse_contract_line → ...(2 more)
+  [36] Src [validate]: validate → contains_token_like → normalize_label
       PURITY: 100% pure
-  [37] Src [to_dict]: to_dict
+  [37] Src [validate]: validate → contains_token_like → normalize_label
       PURITY: 100% pure
-  [38] Src [to_dict]: to_dict
+  [38] Src [validate]: validate → has_return_value
       PURITY: 100% pure
-  [39] Src [to_dict]: to_dict
+  [39] Src [validate]: validate → detect_effects
       PURITY: 100% pure
-  [40] Src [validate]: validate → contains_token_like → normalize_label
+  [40] Src [__init__]: __init__
       PURITY: 100% pure
-  [41] Src [validate]: validate → contains_token_like → normalize_label
+  [41] Src [register]: register
       PURITY: 100% pure
-  [42] Src [validate]: validate → has_return_value
+  [42] Src [rules]: rules
       PURITY: 100% pure
-  [43] Src [validate]: validate → detect_effects
+  [43] Src [run]: run
       PURITY: 100% pure
-  [44] Src [__init__]: __init__
+  [44] Src [summarize]: summarize
       PURITY: 100% pure
-  [45] Src [register]: register
+  [45] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [46] Src [rules]: rules
+  [46] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [47] Src [run]: run
+  [47] Src [__init__]: __init__
       PURITY: 100% pure
-  [48] Src [summarize]: summarize
+  [48] Src [_hash]: _hash
       PURITY: 100% pure
-  [49] Src [from_path]: from_path → infer_language
+  [49] Src [_get_key]: _get_key
       PURITY: 100% pure
-  [50] Src [to_dict]: to_dict
+  [50] Src [load]: load
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=4.8    ←in:0  →out:0
-  │ !! cli                        623L  0C   26m  CC=15     ←0
-  │ !! check                      273L  1C   11m  CC=20     ←2
+  sdks/                           CC̄=4.4    ←in:0  →out:0
+  │ sdk.go                      68L  1C    2m  CC=11     ←0
+  │ lib.rs                      54L  1C    2m  CC=10     ←0
+  │ IntractContract.java        50L  1C    2m  CC=11     ←0
+  │ index.ts                    42L  0C    3m  CC=10     ←0
+  │ IntractContract.cs          38L  1C    1m  CC=9      ←0
+  │ __init__                    26L  2C    4m  CC=2      ←0
+  │ main.go                     22L  0C    1m  CC=1      ←0
+  │ pyproject.toml              19L  0C    0m  CC=0.0    ←0
+  │ package.json                16L  0C    0m  CC=0.0    ←0
+  │ basic.ts                    13L  0C    0m  CC=0.0    ←0
+  │ tsconfig.json               10L  0C    0m  CC=0.0    ←0
+  │ Cargo.toml                   9L  0C    0m  CC=0.0    ←0
+  │ intract.config.ts            8L  0C    0m  CC=0.0    ←0
+  │
+  src/                            CC̄=3.8    ←in:0  →out:0
+  │ !! cli                        683L  0C   33m  CC=13     ←0
+  │ inline                     335L  1C   24m  CC=13     ←9
+  │ check                      297L  1C   15m  CC=14     ←2
+  │ redup                      287L  4C   19m  CC=8      ←0
   │ planfile_adapter           255L  4C   13m  CC=13     ←0
-  │ !! redup                      254L  4C   14m  CC=15     ←0
-  │ !! inline                     249L  0C    8m  CC=49     ←9
-  │ !! manifest_ops               219L  2C    9m  CC=16     ←1
+  │ manifest_ops               243L  2C   13m  CC=13     ←1
+  │ nexu                       189L  1C   13m  CC=9      ←0
   │ artifacts                  181L  1C    6m  CC=9      ←3
-  │ !! nexu                       178L  1C    6m  CC=19     ←0
-  │ !! manifest                   167L  0C    5m  CC=20     ←8
+  │ manifest                   177L  0C   12m  CC=9      ←8
+  │ toon                       169L  0C   13m  CC=8      ←2
+  │ project                    167L  0C    8m  CC=9      ←11
+  │ propose_llm                166L  0C   10m  CC=7      ←2
   │ watch                      160L  3C    6m  CC=10     ←2
   │ models                     154L  7C    2m  CC=2      ←0
   │ planfile                   141L  2C    7m  CC=11     ←3
   │ grouping                   138L  2C    6m  CC=6      ←3
-  │ !! propose_llm                130L  0C    3m  CC=18     ←2
+  │ artifact                   132L  2C    5m  CC=10     ←3
   │ handlers                   124L  0C    9m  CC=4      ←0
+  │ signatures                 122L  1C    8m  CC=3      ←8
   │ server                     118L  0C    5m  CC=5      ←0
-  │ !! toon                       118L  0C    2m  CC=34     ←2
   │ vallm                      116L  2C    5m  CC=12     ←2
-  │ !! project                    115L  0C    4m  CC=16     ←10
+  │ manifest_schema            116L  2C    8m  CC=9      ←2
   │ drift                      113L  2C    5m  CC=5      ←1
   │ builtins                   111L  6C   11m  CC=3      ←0
   │ base                       109L  6C   12m  CC=5      ←0
   │ assigner                   109L  0C    6m  CC=10     ←1
+  │ policy                     106L  1C    7m  CC=7      ←3
   │ proposals                  100L  1C    4m  CC=9      ←1
   │ cache                       99L  2C    7m  CC=4      ←0
-  │ !! manifest_schema             94L  2C    3m  CC=15     ←2
-  │ !! artifact                    93L  2C    3m  CC=17     ←3
   │ schemas                     91L  0C    0m  CC=0.0    ←0
   │ registry                    85L  1C    8m  CC=7      ←1
   │ analyzer                    85L  0C    4m  CC=12     ←1
-  │ !! signatures                  78L  0C    3m  CC=15     ←8
   │ input_output                74L  3C    8m  CC=7      ←0
-  │ !! policy                      72L  1C    2m  CC=15     ←3
   │ scan_artifacts              70L  1C    3m  CC=7      ←2
-  │ python_ast                  70L  0C    3m  CC=14     ←1
+  │ python_ast                  70L  0C    3m  CC=14     ←0
   │ normalizer                  69L  0C    4m  CC=7      ←4
   │ graph                       68L  1C    4m  CC=9      ←3
-  │ typescript                  66L  0C    3m  CC=11     ←1
-  │ csharp                      65L  0C    3m  CC=8      ←1
+  │ typescript                  66L  0C    3m  CC=11     ←0
+  │ csharp                      65L  0C    3m  CC=8      ←0
   │ config                      64L  1C    2m  CC=11     ←3
   │ openapi                     63L  0C    2m  CC=8      ←2
   │ sarif                       62L  0C    1m  CC=11     ←1
@@ -185,16 +185,16 @@ LAYERS:
   │ coverage                    34L  1C    2m  CC=3      ←1
   │ monitor                     32L  0C    1m  CC=4      ←2
   │ validate_snippet            28L  0C    1m  CC=3      ←0
-  │ java                        27L  0C    1m  CC=4      ←1
+  │ java                        27L  0C    1m  CC=4      ←0
   │ __init__                    24L  0C    0m  CC=0.0    ←0
   │ __init__                    21L  0C    0m  CC=0.0    ←0
   │ __init__                    21L  0C    0m  CC=0.0    ←0
   │ __init__                    21L  0C    0m  CC=0.0    ←0
   │ __init__                    20L  0C    0m  CC=0.0    ←0
-  │ rust                        15L  0C    1m  CC=1      ←1
+  │ rust                        15L  0C    1m  CC=1      ←0
   │ __init__                    15L  0C    0m  CC=0.0    ←0
   │ requirements                13L  0C    1m  CC=6      ←1
-  │ go                          13L  0C    1m  CC=1      ←1
+  │ go                          13L  0C    1m  CC=1      ←0
   │ validation                  13L  0C    0m  CC=0.0    ←0
   │ __init__                    13L  0C    0m  CC=0.0    ←0
   │ mcp_server                   6L  0C    0m  CC=0.0    ←0
@@ -209,30 +209,19 @@ LAYERS:
   │ yaml_manifest                3L  0C    0m  CC=0.0    ←0
   │ __init__                     0L  0C    0m  CC=0.0    ←0
   │
-  sdks/                           CC̄=4.4    ←in:0  →out:0
-  │ sdk.go                      68L  1C    2m  CC=11     ←0
-  │ lib.rs                      54L  1C    2m  CC=10     ←0
-  │ IntractContract.java        50L  1C    2m  CC=11     ←0
-  │ index.ts                    42L  0C    3m  CC=10     ←0
-  │ IntractContract.cs          38L  1C    1m  CC=9      ←0
-  │ __init__                    26L  2C    4m  CC=2      ←0
-  │ main.go                     22L  0C    1m  CC=1      ←0
-  │ pyproject.toml              19L  0C    0m  CC=0.0    ←0
-  │ package.json                16L  0C    0m  CC=0.0    ←0
-  │ basic.ts                    13L  0C    0m  CC=0.0    ←0
-  │ tsconfig.json               10L  0C    0m  CC=0.0    ←0
-  │ Cargo.toml                   9L  0C    0m  CC=0.0    ←0
-  │ intract.config.ts            8L  0C    0m  CC=0.0    ←0
-  │
   scripts/                        CC̄=3.8    ←in:0  →out:2
   │ generate_toon_from_map     475L  2C   18m  CC=9      ←0
   │ ci-full-stack.sh            76L  0C    1m  CC=0.0    ←0
   │
-  examples/                       CC̄=2.1    ←in:0  →out:0
+  examples/                       CC̄=2.3    ←in:0  →out:0
   │ v2-violation.validate.json   245L  0C    0m  CC=0.0    ←0
   │ v1-pass.validate.json      229L  0C    0m  CC=0.0    ←0
   │ server                     142L  1C    7m  CC=8      ←0
   │ run_examples               117L  0C    6m  CC=10     ←0
+  │ generator                   82L  0C    5m  CC=4      ←0
+  │ intract.yaml                82L  0C    0m  CC=0.0    ←0
+  │ generator                   76L  0C    5m  CC=3      ←0
+  │ demo                        68L  0C    4m  CC=4      ←0
   │ v2-violation.artifacts.json    66L  0C    0m  CC=0.0    ←0
   │ v1-pass.artifacts.json      55L  0C    0m  CC=0.0    ←0
   │ intract.yaml                35L  0C    0m  CC=0.0    ←0
@@ -256,6 +245,7 @@ LAYERS:
   │ app                          8L  0C    1m  CC=3      ←0
   │ ScanPipeline.cs              7L  0C    1m  CC=1      ←0
   │ Dockerfile                   7L  0C    0m  CC=0.0    ←0
+  │ run-demo.sh                  7L  0C    0m  CC=0.0    ←0
   │ auth                         6L  0C    1m  CC=1      ←0
   │ permission.ts                6L  0C    3m  CC=1      ←0
   │ auth                         5L  0C    1m  CC=2      ←0
@@ -275,12 +265,12 @@ LAYERS:
   │
   ./                              CC̄=0.0    ←in:0  →out:0
   │ !! goal.yaml                  511L  0C    0m  CC=0.0    ←0
-  │ tree.txt                   299L  0C    0m  CC=0.0    ←0
+  │ tree.txt                   304L  0C    0m  CC=0.0    ←0
+  │ Makefile                   111L  0C    0m  CC=0.0    ←0
   │ pyproject.toml             101L  0C    0m  CC=0.0    ←0
   │ action.yml                  91L  0C    0m  CC=0.0    ←0
   │ project.sh                  50L  0C    0m  CC=0.0    ←0
   │ pyqual.yaml                 38L  0C    0m  CC=0.0    ←0
-  │ Makefile                    13L  0C    0m  CC=0.0    ←0
   │ Dockerfile                   9L  0C    0m  CC=0.0    ←0
   │ .pre-commit-hooks.yaml       6L  0C    0m  CC=0.0    ←0
   │
@@ -301,12 +291,13 @@ LAYERS:
      src/intract/reporters/__init__.py         0L
 
 COUPLING:
-                                             src.intract  examples.integration_tests                     scripts
-                 src.intract                          ──                          ←9                          ←2  hub
-  examples.integration_tests                           9                          ──                              !! fan-out
-                     scripts                           2                                                      ──
+                                               src.intract   examples.integration_tests                      scripts  examples.markdown-generator
+                  src.intract                           ──                           ←9                           ←2                           ←1  hub
+   examples.integration_tests                            9                           ──                                                            !! fan-out
+                      scripts                            2                                                        ──                             
+  examples.markdown-generator                            1                                                                                     ──
   CYCLES: none
-  HUB: src.intract/ (fan-in=11)
+  HUB: src.intract/ (fan-in=12)
   SMELL: examples.integration_tests/ fan-out=9 → split needed
 
 EXTERNAL:

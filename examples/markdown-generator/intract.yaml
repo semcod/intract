@@ -1,0 +1,82 @@
+version: intract.v1
+
+contracts:
+  - id: md.generate_document
+    scope: function
+    intent: build:markdown_document
+    priority: 1
+    domain: documentation
+    target:
+      file: generator.py
+      func: generate_markdown_document
+    input: [topic, required_sections]
+    output: [markdown_document]
+    effect: [none]
+    forbid: [network, write]
+    require:
+      - transform.topic
+      - build.markdown_outline
+      - render.markdown_section
+      - validate.markdown_contract
+    validate: [input_presence, output_presence, return_value, no_forbidden_effect]
+    meaning: "Generator must keep the requested topic and return Markdown with the required document shape."
+
+  - id: md.normalize_topic
+    scope: function
+    intent: transform:topic
+    priority: 2
+    domain: documentation
+    target:
+      file: generator.py
+      func: normalize_topic
+    input: [topic]
+    output: [normalized_topic]
+    effect: [none]
+    forbid: [network, write]
+    validate: [input_presence, output_presence, return_value, no_forbidden_effect]
+    meaning: "Topic is normalized before it is used by the generator."
+
+  - id: md.build_outline
+    scope: function
+    intent: build:markdown_outline
+    priority: 2
+    domain: documentation
+    target:
+      file: generator.py
+      func: build_markdown_outline
+    input: [normalized_topic, required_sections]
+    output: [markdown_outline]
+    effect: [none]
+    forbid: [network, write]
+    validate: [input_presence, output_presence, return_value, no_forbidden_effect]
+    meaning: "The document outline must be built from the normalized topic and required sections."
+
+  - id: md.render_sections
+    scope: function
+    intent: render:markdown_section
+    priority: 2
+    domain: documentation
+    target:
+      file: generator.py
+      func: render_markdown_sections
+    input: [markdown_outline, normalized_topic]
+    output: [markdown_document]
+    effect: [none]
+    forbid: [network, write]
+    validate: [input_presence, output_presence, return_value, no_forbidden_effect]
+    meaning: "Renderer returns Markdown text without external side effects."
+
+  - id: md.guard_contract
+    scope: function
+    intent: validate:markdown_contract
+    priority: 1
+    domain: documentation
+    target:
+      file: generator.py
+      func: guard_markdown_contract
+    input: [markdown_document, required_sections, normalized_topic]
+    output: [format_report]
+    effect: [none]
+    forbid: [network, write]
+    validate: [input_presence, output_presence, return_value, no_forbidden_effect]
+    meaning: "Runtime guard checks the H1, required headings, topic retention and HTML-free Markdown."

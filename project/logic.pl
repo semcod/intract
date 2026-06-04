@@ -1,8 +1,8 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('intract', '0.5.11', 'python').
+project_metadata('intract', '0.5.12', 'python').
 
 % ── Project Files ────────────────────────────────────────
-project_file('app.doql.less', 49, 'less').
+project_file('app.doql.less', 119, 'less').
 project_file('examples/full-stack/src/analyzer.py', 4, 'python').
 project_file('examples/full-stack/src/parser_a.py', 4, 'python').
 project_file('examples/full-stack/src/parser_b.py', 4, 'python').
@@ -12,6 +12,10 @@ project_file('examples/integration_tests/02_typescript_violation_planfile/permis
 project_file('examples/integration_tests/03_watch_engine_drift/reporter.py', 5, 'python').
 project_file('examples/integration_tests/03_watch_engine_drift/scanner.py', 9, 'python').
 project_file('examples/integration_tests/run_examples.py', 118, 'python').
+project_file('examples/markdown-generator/demo.py', 69, 'python').
+project_file('examples/markdown-generator/pass/generator.py', 83, 'python').
+project_file('examples/markdown-generator/run-demo.sh', 8, 'shell').
+project_file('examples/markdown-generator/violation/generator.py', 77, 'python').
 project_file('examples/python/parse_extensions.py', 9, 'python').
 project_file('examples/showcase/server.py', 143, 'python').
 project_file('examples/toon/src/auth.js', 17, 'javascript').
@@ -48,16 +52,16 @@ project_file('src/intract/analyzers/rust.py', 16, 'python').
 project_file('src/intract/analyzers/treesitter.py', 63, 'python').
 project_file('src/intract/analyzers/typescript.py', 67, 'python').
 project_file('src/intract/artifacts.py', 6, 'python').
-project_file('src/intract/check.py', 274, 'python').
-project_file('src/intract/cli.py', 624, 'python').
+project_file('src/intract/check.py', 298, 'python').
+project_file('src/intract/cli.py', 684, 'python').
 project_file('src/intract/config.py', 65, 'python').
 project_file('src/intract/core/__init__.py', 36, 'python').
-project_file('src/intract/core/artifact.py', 94, 'python').
+project_file('src/intract/core/artifact.py', 133, 'python').
 project_file('src/intract/core/cache.py', 100, 'python').
 project_file('src/intract/core/models.py', 155, 'python').
 project_file('src/intract/core/normalizer.py', 70, 'python').
 project_file('src/intract/core/registry.py', 7, 'python').
-project_file('src/intract/core/signatures.py', 79, 'python').
+project_file('src/intract/core/signatures.py', 123, 'python').
 project_file('src/intract/coverage.py', 35, 'python').
 project_file('src/intract/duplicates/__init__.py', 16, 'python').
 project_file('src/intract/duplicates/grouping.py', 139, 'python').
@@ -75,13 +79,13 @@ project_file('src/intract/engine/scanner.py', 54, 'python').
 project_file('src/intract/git.py', 54, 'python').
 project_file('src/intract/graph.py', 69, 'python').
 project_file('src/intract/integrations/__init__.py', 45, 'python').
-project_file('src/intract/integrations/nexu.py', 179, 'python').
+project_file('src/intract/integrations/nexu.py', 190, 'python').
 project_file('src/intract/integrations/planfile.py', 142, 'python').
 project_file('src/intract/integrations/planfile_adapter.py', 256, 'python').
-project_file('src/intract/integrations/redup.py', 255, 'python').
+project_file('src/intract/integrations/redup.py', 288, 'python').
 project_file('src/intract/integrations/vallm.py', 117, 'python').
-project_file('src/intract/manifest_ops.py', 220, 'python').
-project_file('src/intract/manifest_schema.py', 95, 'python').
+project_file('src/intract/manifest_ops.py', 244, 'python').
+project_file('src/intract/manifest_schema.py', 117, 'python').
 project_file('src/intract/mcp/__init__.py', 22, 'python').
 project_file('src/intract/mcp/handlers.py', 125, 'python').
 project_file('src/intract/mcp/schemas.py', 92, 'python').
@@ -91,18 +95,18 @@ project_file('src/intract/models.py', 4, 'python').
 project_file('src/intract/normalizer.py', 4, 'python').
 project_file('src/intract/parser.py', 4, 'python').
 project_file('src/intract/parsers/__init__.py', 14, 'python').
-project_file('src/intract/parsers/inline.py', 250, 'python').
-project_file('src/intract/parsers/manifest.py', 168, 'python').
+project_file('src/intract/parsers/inline.py', 336, 'python').
+project_file('src/intract/parsers/manifest.py', 178, 'python').
 project_file('src/intract/parsers/openapi.py', 64, 'python').
-project_file('src/intract/parsers/toon.py', 119, 'python').
+project_file('src/intract/parsers/toon.py', 170, 'python').
 project_file('src/intract/plugins/__init__.py', 25, 'python').
 project_file('src/intract/plugins/base.py', 110, 'python').
 project_file('src/intract/plugins/builtins.py', 112, 'python').
 project_file('src/intract/plugins/manager.py', 62, 'python').
-project_file('src/intract/policy.py', 73, 'python').
-project_file('src/intract/project.py', 116, 'python').
+project_file('src/intract/policy.py', 107, 'python').
+project_file('src/intract/project.py', 168, 'python').
 project_file('src/intract/proposals.py', 101, 'python').
-project_file('src/intract/propose_llm.py', 131, 'python').
+project_file('src/intract/propose_llm.py', 167, 'python').
 project_file('src/intract/reporters/__init__.py', 1, 'python').
 project_file('src/intract/reporters/sarif.py', 63, 'python').
 project_file('src/intract/scan_artifacts.py', 71, 'python').
@@ -129,6 +133,7 @@ project_file('tests/test_integrations.py', 61, 'python').
 project_file('tests/test_language_analyzers.py', 117, 'python').
 project_file('tests/test_manifest.py', 27, 'python').
 project_file('tests/test_manifest_ops.py', 107, 'python').
+project_file('tests/test_markdown_generator_example.py', 79, 'python').
 project_file('tests/test_mcp.py', 63, 'python').
 project_file('tests/test_new_modules.py', 49, 'python').
 project_file('tests/test_next_stage.py', 37, 'python').
@@ -162,6 +167,20 @@ python_function('examples/integration_tests/run_examples.py', 'run_example_02', 
 python_function('examples/integration_tests/run_examples.py', 'run_example_03', 1, 2, 12).
 python_function('examples/integration_tests/run_examples.py', 'run_example_04', 1, 1, 2).
 python_function('examples/integration_tests/run_examples.py', 'main', 0, 10, 9).
+python_function('examples/markdown-generator/demo.py', '_validate_project', 2, 2, 3).
+python_function('examples/markdown-generator/demo.py', '_load_pass_generator', 0, 3, 4).
+python_function('examples/markdown-generator/demo.py', '_violation_messages', 1, 4, 1).
+python_function('examples/markdown-generator/demo.py', 'main', 0, 4, 6).
+python_function('examples/markdown-generator/pass/generator.py', 'normalize_topic', 1, 2, 4).
+python_function('examples/markdown-generator/pass/generator.py', 'build_markdown_outline', 2, 3, 1).
+python_function('examples/markdown-generator/pass/generator.py', 'render_markdown_sections', 3, 2, 0).
+python_function('examples/markdown-generator/pass/generator.py', 'guard_markdown_contract', 3, 4, 5).
+python_function('examples/markdown-generator/pass/generator.py', 'generate_markdown_document', 2, 2, 5).
+python_function('examples/markdown-generator/violation/generator.py', 'normalize_topic', 1, 2, 4).
+python_function('examples/markdown-generator/violation/generator.py', 'build_markdown_outline', 2, 3, 4).
+python_function('examples/markdown-generator/violation/generator.py', 'render_markdown_sections', 3, 2, 2).
+python_function('examples/markdown-generator/violation/generator.py', 'guard_markdown_contract', 3, 3, 4).
+python_function('examples/markdown-generator/violation/generator.py', 'generate_markdown_document', 2, 2, 5).
 python_function('examples/python/parse_extensions.py', 'parse_extensions', 1, 3, 3).
 python_function('examples/showcase/server.py', 'load_env_file', 1, 6, 6).
 python_function('examples/showcase/server.py', 'resolve_runtime_config', 0, 4, 4).
@@ -213,7 +232,11 @@ python_function('src/intract/check.py', 'parse_unified_diff_hunks', 1, 6, 9).
 python_function('src/intract/check.py', 'load_selected_sources', 2, 5, 4).
 python_function('src/intract/check.py', '_manifest_changed', 1, 2, 2).
 python_function('src/intract/check.py', 'changed_lines_by_file', 1, 4, 4).
-python_function('src/intract/check.py', 'block_extent', 2, 20, 14).
+python_function('src/intract/check.py', '_language_block_extent', 3, 3, 5).
+python_function('src/intract/check.py', '_is_python_declaration', 1, 1, 1).
+python_function('src/intract/check.py', '_is_fallback_preamble', 1, 3, 1).
+python_function('src/intract/check.py', '_fallback_block_extent', 2, 11, 7).
+python_function('src/intract/check.py', 'block_extent', 2, 2, 2).
 python_function('src/intract/check.py', 'signature_touched', 3, 2, 4).
 python_function('src/intract/check.py', 'validate_sources_for_hunks', 3, 14, 14).
 python_function('src/intract/check.py', 'validate_selected_paths', 2, 8, 7).
@@ -221,7 +244,14 @@ python_function('src/intract/check.py', 'staged_check', 1, 4, 7).
 python_function('src/intract/check.py', 'changed_check', 1, 1, 4).
 python_function('src/intract/cli.py', 'main', 1, 2, 4).
 python_function('src/intract/cli.py', 'init', 2, 3, 9).
-python_function('src/intract/cli.py', 'scan', 3, 15, 22).
+python_function('src/intract/cli.py', '_print_artifact_scan_report', 1, 3, 2).
+python_function('src/intract/cli.py', '_scan_artifacts', 1, 3, 6).
+python_function('src/intract/cli.py', '_is_scan_candidate', 1, 2, 1).
+python_function('src/intract/cli.py', '_scan_contract_file', 1, 2, 2).
+python_function('src/intract/cli.py', '_scan_inline_records', 1, 5, 7).
+python_function('src/intract/cli.py', '_scan_row', 1, 1, 0).
+python_function('src/intract/cli.py', '_print_scan_table', 1, 2, 5).
+python_function('src/intract/cli.py', 'scan', 3, 4, 10).
 python_function('src/intract/cli.py', 'validate', 4, 3, 10).
 python_function('src/intract/cli.py', 'check', 9, 13, 21).
 python_function('src/intract/cli.py', 'coverage', 2, 2, 9).
@@ -247,13 +277,20 @@ python_function('src/intract/cli.py', 'propose_llm_cmd', 4, 6, 10).
 python_function('src/intract/cli.py', 'manifest_apply_ledger', 7, 10, 13).
 python_function('src/intract/config.py', 'load_config', 1, 11, 10).
 python_function('src/intract/core/artifact.py', 'infer_language', 1, 1, 3).
-python_function('src/intract/core/artifact.py', 'infer_artifact_kind', 2, 17, 4).
+python_function('src/intract/core/artifact.py', '_kind_from_filename', 3, 10, 2).
+python_function('src/intract/core/artifact.py', '_kind_from_structured_content', 2, 7, 1).
+python_function('src/intract/core/artifact.py', 'infer_artifact_kind', 2, 3, 4).
 python_function('src/intract/core/normalizer.py', 'normalize_label', 1, 7, 10).
 python_function('src/intract/core/normalizer.py', 'normalize_action', 1, 4, 2).
 python_function('src/intract/core/normalizer.py', 'normalize_many', 1, 4, 3).
 python_function('src/intract/core/normalizer.py', 'normalize_requirement', 1, 6, 8).
 python_function('src/intract/core/signatures.py', 'make_block_id', 4, 1, 3).
-python_function('src/intract/core/signatures.py', 'build_signature', 1, 15, 14).
+python_function('src/intract/core/signatures.py', '_normalize_contract', 1, 2, 6).
+python_function('src/intract/core/signatures.py', '_add_feature_values', 3, 2, 1).
+python_function('src/intract/core/signatures.py', '_signature_features', 2, 2, 2).
+python_function('src/intract/core/signatures.py', '_exact_hash', 1, 1, 5).
+python_function('src/intract/core/signatures.py', '_block_id', 1, 2, 1).
+python_function('src/intract/core/signatures.py', 'build_signature', 1, 3, 6).
 python_function('src/intract/core/signatures.py', 'build_signatures', 1, 2, 1).
 python_function('src/intract/coverage.py', 'calculate_coverage', 1, 3, 8).
 python_function('src/intract/duplicates/grouping.py', 'union_find_groups', 1, 5, 7).
@@ -293,8 +330,15 @@ python_function('src/intract/integrations/nexu.py', 'format_intract_v1_line', 1,
 python_function('src/intract/integrations/nexu.py', 'parse_intract_line', 1, 9, 7).
 python_function('src/intract/integrations/nexu.py', 'scan_contracts_in_text', 1, 3, 4).
 python_function('src/intract/integrations/nexu.py', 'scan_contracts_in_file', 2, 3, 4).
-python_function('src/intract/integrations/nexu.py', 'read_manifest_contracts', 1, 12, 9).
-python_function('src/intract/integrations/nexu.py', 'read_toon_manifest_contracts', 1, 19, 9).
+python_function('src/intract/integrations/nexu.py', '_contract_items', 1, 4, 2).
+python_function('src/intract/integrations/nexu.py', '_list_field', 2, 2, 2).
+python_function('src/intract/integrations/nexu.py', '_base_intent_contract', 2, 2, 5).
+python_function('src/intract/integrations/nexu.py', 'read_manifest_contracts', 1, 4, 5).
+python_function('src/intract/integrations/nexu.py', '_read_yaml_mapping', 1, 4, 3).
+python_function('src/intract/integrations/nexu.py', '_toon_target', 1, 3, 2).
+python_function('src/intract/integrations/nexu.py', '_target_line_value', 1, 2, 2).
+python_function('src/intract/integrations/nexu.py', '_toon_intent_contract', 2, 5, 5).
+python_function('src/intract/integrations/nexu.py', 'read_toon_manifest_contracts', 1, 4, 4).
 python_function('src/intract/integrations/planfile.py', '_severity_from_status', 1, 4, 0).
 python_function('src/intract/integrations/planfile.py', 'tickets_from_report', 1, 11, 8).
 python_function('src/intract/integrations/planfile_adapter.py', '_ticket_from_dict', 1, 2, 5).
@@ -309,7 +353,12 @@ python_function('src/intract/integrations/redup.py', 'signatures_from_manifest',
 python_function('src/intract/integrations/redup.py', '_with_block_lines', 2, 1, 3).
 python_function('src/intract/integrations/redup.py', 'find_intent_duplicate_groups', 1, 8, 8).
 python_function('src/intract/integrations/redup.py', 'parse_policy_tokens', 1, 7, 4).
-python_function('src/intract/integrations/redup.py', 'validate_for_redup', 1, 15, 14).
+python_function('src/intract/integrations/redup.py', '_resolve_manifest_path', 3, 3, 2).
+python_function('src/intract/integrations/redup.py', '_graph_for_policy', 3, 3, 1).
+python_function('src/intract/integrations/redup.py', '_intent_duplicate_label', 1, 2, 2).
+python_function('src/intract/integrations/redup.py', '_duplicate_reasons', 1, 2, 1).
+python_function('src/intract/integrations/redup.py', '_apply_duplicate_policy', 2, 5, 4).
+python_function('src/intract/integrations/redup.py', 'validate_for_redup', 1, 4, 12).
 python_function('src/intract/integrations/redup.py', 'scan_blocks_for_intent_duplicates', 1, 2, 4).
 python_function('src/intract/integrations/vallm.py', 'map_validation_result', 1, 6, 3).
 python_function('src/intract/integrations/vallm.py', 'map_project_report', 1, 7, 3).
@@ -320,10 +369,19 @@ python_function('src/intract/manifest_ops.py', 'write_manifest_document', 2, 1, 
 python_function('src/intract/manifest_ops.py', 'contract_line_to_manifest_entry', 1, 13, 5).
 python_function('src/intract/manifest_ops.py', 'load_policy_ledger', 1, 6, 5).
 python_function('src/intract/manifest_ops.py', 'resolve_manifest_paths', 0, 5, 1).
-python_function('src/intract/manifest_ops.py', 'apply_ledger_to_manifest', 2, 16, 11).
+python_function('src/intract/manifest_ops.py', '_existing_contract_ids', 1, 4, 4).
+python_function('src/intract/manifest_ops.py', '_should_apply_ledger_entry', 1, 2, 2).
+python_function('src/intract/manifest_ops.py', '_iter_ledger_proposals', 1, 6, 4).
+python_function('src/intract/manifest_ops.py', '_append_manifest_proposal', 4, 5, 6).
+python_function('src/intract/manifest_ops.py', 'apply_ledger_to_manifest', 2, 4, 7).
 python_function('src/intract/manifest_ops.py', 'apply_ledger_to_manifests', 0, 2, 4).
 python_function('src/intract/manifest_schema.py', '_load_schema', 0, 2, 5).
-python_function('src/intract/manifest_schema.py', 'validate_manifest', 1, 15, 17).
+python_function('src/intract/manifest_schema.py', '_manifest_report', 2, 1, 2).
+python_function('src/intract/manifest_schema.py', '_invalid_manifest_report', 2, 1, 3).
+python_function('src/intract/manifest_schema.py', '_load_manifest_data', 1, 3, 3).
+python_function('src/intract/manifest_schema.py', '_jsonschema_issues', 1, 5, 8).
+python_function('src/intract/manifest_schema.py', '_fallback_issues', 1, 9, 5).
+python_function('src/intract/manifest_schema.py', 'validate_manifest', 1, 4, 7).
 python_function('src/intract/mcp/handlers.py', '_resolve_path', 1, 1, 4).
 python_function('src/intract/mcp/handlers.py', '_resolve_manifest', 2, 4, 6).
 python_function('src/intract/mcp/handlers.py', 'handle_validate_project', 1, 1, 5).
@@ -344,32 +402,81 @@ python_function('src/intract/parsers/inline.py', 'parse_priority', 1, 5, 7).
 python_function('src/intract/parsers/inline.py', 'parse_key_value', 1, 2, 4).
 python_function('src/intract/parsers/inline.py', 'marker_payload', 1, 3, 3).
 python_function('src/intract/parsers/inline.py', 'extract_intract_uri', 1, 9, 6).
-python_function('src/intract/parsers/inline.py', 'parse_contract_line', 1, 49, 19).
+python_function('src/intract/parsers/inline.py', '_parse_uri_contract', 2, 6, 2).
+python_function('src/intract/parsers/inline.py', '_set_intent', 3, 2, 2).
+python_function('src/intract/parsers/inline.py', '_set_action', 3, 1, 0).
+python_function('src/intract/parsers/inline.py', '_set_object', 3, 1, 0).
+python_function('src/intract/parsers/inline.py', '_set_scope', 3, 2, 0).
+python_function('src/intract/parsers/inline.py', '_set_priority', 3, 2, 4).
+python_function('src/intract/parsers/inline.py', '_set_domain', 3, 1, 0).
+python_function('src/intract/parsers/inline.py', '_set_contract_id', 3, 1, 0).
+python_function('src/intract/parsers/inline.py', '_set_meaning', 3, 1, 0).
+python_function('src/intract/parsers/inline.py', '_extend_list', 1, 1, 3).
+python_function('src/intract/parsers/inline.py', '_add_relation', 3, 2, 2).
+python_function('src/intract/parsers/inline.py', '_add_unknown_tag', 3, 1, 1).
+python_function('src/intract/parsers/inline.py', '_parse_special_token', 2, 8, 4).
+python_function('src/intract/parsers/inline.py', '_apply_key_value_pair', 3, 1, 2).
+python_function('src/intract/parsers/inline.py', '_resolve_action_object', 1, 5, 2).
+python_function('src/intract/parsers/inline.py', 'parse_contract_line', 1, 13, 12).
 python_function('src/intract/parsers/inline.py', 'extract_contract_records_from_text', 1, 3, 5).
 python_function('src/intract/parsers/manifest.py', '_to_tuple', 1, 9, 6).
 python_function('src/intract/parsers/manifest.py', '_parse_intent', 1, 3, 2).
 python_function('src/intract/parsers/manifest.py', 'contract_from_mapping', 1, 3, 7).
-python_function('src/intract/parsers/manifest.py', 'load_manifest_records', 1, 20, 15).
+python_function('src/intract/parsers/manifest.py', '_target_mapping', 1, 3, 2).
+python_function('src/intract/parsers/manifest.py', '_target_line', 1, 3, 4).
+python_function('src/intract/parsers/manifest.py', '_target_tags', 1, 3, 3).
+python_function('src/intract/parsers/manifest.py', '_with_target_tags', 2, 2, 2).
+python_function('src/intract/parsers/manifest.py', '_top_level_contract_record', 3, 3, 7).
+python_function('src/intract/parsers/manifest.py', '_top_level_contract_records', 2, 4, 4).
+python_function('src/intract/parsers/manifest.py', '_file_contract_records', 1, 6, 7).
+python_function('src/intract/parsers/manifest.py', 'load_manifest_records', 1, 4, 7).
 python_function('src/intract/parsers/manifest.py', 'create_sample_manifest', 0, 1, 0).
 python_function('src/intract/parsers/openapi.py', 'parse_openapi_contracts', 1, 8, 10).
 python_function('src/intract/parsers/openapi.py', 'parse_openapi_text', 1, 8, 9).
-python_function('src/intract/parsers/toon.py', 'parse_toon_uri_line', 2, 34, 16).
+python_function('src/intract/parsers/toon.py', '_parse_action_object_from_intent', 2, 8, 1).
+python_function('src/intract/parsers/toon.py', '_extract_file_path', 1, 2, 0).
+python_function('src/intract/parsers/toon.py', '_get_first', 3, 1, 1).
+python_function('src/intract/parsers/toon.py', '_get_list', 2, 4, 5).
+python_function('src/intract/parsers/toon.py', '_get_first_alias', 1, 3, 1).
+python_function('src/intract/parsers/toon.py', '_get_list_alias', 1, 3, 1).
+python_function('src/intract/parsers/toon.py', '_build_tags', 3, 3, 3).
+python_function('src/intract/parsers/toon.py', '_start_line', 1, 2, 2).
+python_function('src/intract/parsers/toon.py', '_priority', 1, 2, 3).
+python_function('src/intract/parsers/toon.py', '_action_object', 1, 3, 3).
+python_function('src/intract/parsers/toon.py', '_contract_from_uri', 2, 1, 9).
+python_function('src/intract/parsers/toon.py', 'parse_toon_uri_line', 2, 3, 10).
 python_function('src/intract/parsers/toon.py', 'load_toon_records', 1, 5, 6).
 python_function('src/intract/plugins/manager.py', '_register_unique', 3, 3, 2).
 python_function('src/intract/plugins/manager.py', 'load_builtin_plugins', 0, 1, 8).
 python_function('src/intract/plugins/manager.py', 'discover_plugins', 0, 6, 6).
 python_function('src/intract/policy.py', '_p1_missing_reasons', 2, 7, 6).
-python_function('src/intract/policy.py', 'decide_policy', 1, 15, 11).
+python_function('src/intract/policy.py', '_result_status', 1, 1, 2).
+python_function('src/intract/policy.py', '_result_policy_line', 2, 1, 2).
+python_function('src/intract/policy.py', '_collect_result_policy', 1, 5, 4).
+python_function('src/intract/policy.py', '_invalid_manifest_reasons', 1, 3, 1).
+python_function('src/intract/policy.py', '_missing_required_p1_reasons', 2, 4, 3).
+python_function('src/intract/policy.py', 'decide_policy', 1, 6, 6).
 python_function('src/intract/project.py', 'load_project_sources', 1, 9, 7).
 python_function('src/intract/project.py', 'extract_signatures_from_sources', 1, 2, 4).
-python_function('src/intract/project.py', 'validate_sources', 1, 16, 11).
+python_function('src/intract/project.py', '_validate_observed_signatures', 2, 2, 2).
+python_function('src/intract/project.py', '_validate_manifest_signature', 3, 4, 4).
+python_function('src/intract/project.py', '_validate_manifest_signatures', 3, 2, 2).
+python_function('src/intract/project.py', '_project_status', 1, 9, 2).
+python_function('src/intract/project.py', 'validate_sources', 1, 2, 6).
 python_function('src/intract/project.py', 'validate_project', 1, 6, 7).
 python_function('src/intract/proposals.py', '_ui_contract_line', 0, 1, 0).
 python_function('src/intract/proposals.py', 'propose_ui_delta_contracts', 0, 9, 5).
 python_function('src/intract/proposals.py', 'propose_ui_delta_contract_dicts', 0, 2, 2).
 python_function('src/intract/propose_llm.py', '_extract_intract_lines', 1, 4, 5).
 python_function('src/intract/propose_llm.py', '_lines_to_proposals', 1, 7, 6).
-python_function('src/intract/propose_llm.py', 'propose_contracts_llm', 1, 18, 12).
+python_function('src/intract/propose_llm.py', '_load_litellm_completion', 0, 2, 1).
+python_function('src/intract/propose_llm.py', '_resolve_model', 1, 4, 1).
+python_function('src/intract/propose_llm.py', '_resolve_api_key', 1, 4, 2).
+python_function('src/intract/propose_llm.py', '_build_prompt', 1, 2, 0).
+python_function('src/intract/propose_llm.py', '_message_content_to_text', 1, 5, 4).
+python_function('src/intract/propose_llm.py', '_strip_markdown_fence', 1, 2, 3).
+python_function('src/intract/propose_llm.py', '_json_line_strings', 1, 5, 4).
+python_function('src/intract/propose_llm.py', 'propose_contracts_llm', 1, 3, 12).
 python_function('src/intract/reporters/sarif.py', 'report_to_sarif', 1, 11, 7).
 python_function('src/intract/scan_artifacts.py', 'discover_artifact_paths', 1, 7, 10).
 python_function('src/intract/scan_artifacts.py', 'scan_all_artifacts', 1, 3, 6).
@@ -426,6 +533,11 @@ python_function('tests/test_manifest.py', 'test_load_manifest_records', 1, 4, 3)
 python_function('tests/test_manifest_ops.py', 'test_contract_line_to_manifest_entry_parses_ui_line', 0, 5, 1).
 python_function('tests/test_manifest_ops.py', 'test_apply_ledger_to_manifest_adds_only_evolved', 1, 4, 4).
 python_function('tests/test_manifest_ops.py', 'test_apply_ledger_to_manifests_both_targets', 1, 4, 5).
+python_function('tests/test_markdown_generator_example.py', '_load_pass_generator', 0, 3, 3).
+python_function('tests/test_markdown_generator_example.py', 'test_markdown_generator_pass_validates_and_generates_required_format', 0, 7, 4).
+python_function('tests/test_markdown_generator_example.py', 'test_markdown_generator_violation_flags_forbidden_effects', 0, 6, 2).
+python_function('tests/test_markdown_generator_example.py', 'test_markdown_guard_rejects_topic_drift_and_html_format', 0, 6, 2).
+python_function('tests/test_markdown_generator_example.py', 'test_markdown_generator_demo_script_runs', 0, 5, 2).
 python_function('tests/test_mcp.py', 'test_tool_schema_lists_core_tools', 0, 4, 0).
 python_function('tests/test_mcp.py', 'test_initialize_response', 0, 2, 1).
 python_function('tests/test_mcp.py', 'test_tools_list_response', 0, 3, 1).
@@ -525,6 +637,7 @@ python_method('ProjectReport', 'partial', 0, 3, 0).
 python_method('ProjectReport', 'failed', 0, 3, 0).
 python_method('ProjectReport', 'violations', 0, 3, 0).
 python_method('ProjectReport', 'to_dict', 0, 2, 2).
+python_class('src/intract/core/signatures.py', '_NormalizedContract').
 python_class('src/intract/coverage.py', 'CoverageReport').
 python_method('CoverageReport', 'to_dict', 0, 1, 1).
 python_class('src/intract/duplicates/grouping.py', 'DuplicateContract').
@@ -583,6 +696,8 @@ python_method('ManifestApplyBatchResult', 'to_dict', 0, 2, 1).
 python_class('src/intract/manifest_schema.py', 'ManifestIssue').
 python_class('src/intract/manifest_schema.py', 'ManifestValidationReport').
 python_method('ManifestValidationReport', 'to_dict', 0, 2, 1).
+python_class('src/intract/parsers/inline.py', '_ContractParserState').
+python_method('_ContractParserState', '__init__', 1, 1, 0).
 python_class('src/intract/plugins/base.py', 'PluginResult').
 python_class('src/intract/plugins/base.py', 'ParserPlugin').
 python_method('ParserPlugin', 'supports', 1, 1, 0).
@@ -659,6 +774,18 @@ python_class('src/intract/watch.py', 'WatchConfig').
 % ── Dependencies ─────────────────────────────────────────
 
 % ── Makefile Targets ─────────────────────────────────────
+makefile_target('help', 'Default target').
+makefile_target('install', 'Installation').
+makefile_target('install-dev', '').
+makefile_target('test', 'Testing').
+makefile_target('test-cov', '').
+makefile_target('lint', 'Code quality').
+makefile_target('format', '').
+makefile_target('clean', 'Utilities').
+makefile_target('publish', 'Release helpers').
+makefile_target('publish-confirm', '').
+makefile_target('publish-test', '').
+makefile_target('version', '').
 makefile_target('install', '').
 makefile_target('test', '').
 makefile_target('lint', '').
@@ -692,11 +819,57 @@ sumd_declared_file('project/calls.toon.yaml', 'analysis').
 sumd_interface('cli', 'argparse').
 sumd_interface('cli', '').
 sumd_workflow('install', 'manual').
-sumd_workflow_step('install', 1, 'pip install -e .[dev]').
+sumd_workflow_step('install', 1, 'echo "📦 Installing sumd..."').
+sumd_workflow_step('install', 2, 'if command -v uv > /dev/null 2>&1').
+sumd_workflow_step('install', 3, 'uv pip install -e .').
+sumd_workflow_step('install', 4, 'else \').
+sumd_workflow_step('install', 5, 'pip install -e .').
+sumd_workflow_step('install', 6, 'fi').
+sumd_workflow_step('install', 7, 'echo "✅ Installation completed!"').
+sumd_workflow('install-dev', 'manual').
+sumd_workflow_step('install-dev', 1, 'echo "📦 Installing sumd with dev dependencies..."').
+sumd_workflow_step('install-dev', 2, 'if command -v uv > /dev/null 2>&1').
+sumd_workflow_step('install-dev', 3, 'uv pip install -e ".[dev]"').
+sumd_workflow_step('install-dev', 4, 'else \').
+sumd_workflow_step('install-dev', 5, 'pip install -e ".[dev]"').
+sumd_workflow_step('install-dev', 6, 'fi').
+sumd_workflow_step('install-dev', 7, 'echo "✅ Dev installation completed!"').
 sumd_workflow('test', 'manual').
-sumd_workflow_step('test', 1, 'pytest -q').
+sumd_workflow_step('test', 1, 'echo "🧪 Running tests..."').
+sumd_workflow_step('test', 2, '.venv/bin/python -m pytest tests/ -v --tb=short').
+sumd_workflow('test-cov', 'manual').
+sumd_workflow_step('test-cov', 1, 'echo "🧪 Running tests with coverage..."').
+sumd_workflow_step('test-cov', 2, '.venv/bin/python -m pytest tests/ -v --cov=sumd --cov-report=term-missing --cov-report=json').
 sumd_workflow('lint', 'manual').
-sumd_workflow_step('lint', 1, 'ruff check .').
+sumd_workflow_step('lint', 1, 'echo "🔍 Running linting with ruff..."').
+sumd_workflow_step('lint', 2, '.venv/bin/python -m ruff check sumd/').
+sumd_workflow_step('lint', 3, '.venv/bin/python -m ruff check tests/').
 sumd_workflow('format', 'manual').
-sumd_workflow_step('format', 1, 'ruff format .').
+sumd_workflow_step('format', 1, 'echo "📝 Formatting code with ruff..."').
+sumd_workflow_step('format', 2, '.venv/bin/python -m ruff format sumd/').
+sumd_workflow_step('format', 3, '.venv/bin/python -m ruff format tests/').
+sumd_workflow('clean', 'manual').
+sumd_workflow_step('clean', 1, 'echo "🧹 Cleaning temporary files..."').
+sumd_workflow_step('clean', 2, 'find . -type f -name "*.pyc" -delete').
+sumd_workflow_step('clean', 3, 'find . -type d -name "__pycache__" -delete').
+sumd_workflow('publish', 'manual').
+sumd_workflow_step('publish', 1, 'echo "📦 Publishing to PyPI..."').
+sumd_workflow_step('publish', 2, 'command -v .venv/bin/twine > /dev/null 2>&1 || (.venv/bin/pip install --upgrade twine build)').
+sumd_workflow_step('publish', 3, 'rm -rf dist/ build/ *.egg-info/').
+sumd_workflow_step('publish', 4, '.venv/bin/python -m build').
+sumd_workflow_step('publish', 5, '.venv/bin/twine check dist/*').
+sumd_workflow_step('publish', 6, 'echo "⚡ Ready to upload. Run: make publish-confirm to upload to PyPI"').
+sumd_workflow('publish-confirm', 'manual').
+sumd_workflow_step('publish-confirm', 1, 'echo "🚀 Uploading to PyPI..."').
+sumd_workflow_step('publish-confirm', 2, '.venv/bin/twine upload dist/*').
+sumd_workflow('publish-test', 'manual').
+sumd_workflow_step('publish-test', 1, 'echo "📦 Publishing to TestPyPI..."').
+sumd_workflow_step('publish-test', 2, 'command -v .venv/bin/twine > /dev/null 2>&1 || (.venv/bin/pip install --upgrade twine build)').
+sumd_workflow_step('publish-test', 3, 'rm -rf dist/ build/ *.egg-info/').
+sumd_workflow_step('publish-test', 4, '.venv/bin/python -m build').
+sumd_workflow_step('publish-test', 5, '.venv/bin/twine upload --repository testpypi dist/*').
+sumd_workflow('version', 'manual').
+sumd_workflow_step('version', 1, 'echo "📦 Version information..."').
+sumd_workflow_step('version', 2, 'cat VERSION').
+sumd_workflow_step('version', 3, '.venv/bin/python -c "from importlib.metadata import version').
 

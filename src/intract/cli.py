@@ -52,48 +52,82 @@ def init(path: Path = typer.Argument(Path(".")), force: bool = typer.Option(Fals
     console.print(f"[green]Created[/] {target}")
 
 
-@app.command()
-def scan(
-    path: Path = typer.Argument(Path(".")),
-    json_output: bool = typer.Option(False, "--json"),
-    all_artifacts: bool = typer.Option(False, "--all-artifacts", help="Also scan and validate non-code artifacts."),
-):
-    """Scan files for inline @intract contracts."""
-    if all_artifacts:
-        from .scan_artifacts import scan_all_artifacts
+SCAN_SUFFIXES = {
+    ".py",
+    ".js",
+    ".ts",
+    ".cs",
+    ".java",
+    ".go",
+    ".rs",
+    ".yaml",
+    ".yml",
+    ".json",
+    ".toml",
+    ".sh",
+    ".sql",
+    ".html",
+    ".css",
+}
 
-        artifact_report = scan_all_artifacts(path)
-        if json_output:
-            console.print_json(json.dumps(artifact_report.to_dict(), ensure_ascii=False))
-            return
-        console.print(f"[bold]Artifacts scanned:[/] {len(artifact_report.artifacts)}")
-        console.print(f"[bold]Violations:[/] {len(artifact_report.violations)}")
-        for report in artifact_report.reports:
-            for result in report.results:
-                console.print(f"- {report.path}: {result.status.value} {result.contract}")
-        if artifact_report.violations:
-            raise typer.Exit(1)
+
+def _print_artifact_scan_report(artifact_report) -> None:
+    console.print(f"[bold]Artifacts scanned:[/] {len(artifact_report.artifacts)}")
+    console.print(f"[bold]Violations:[/] {len(artifact_report.violations)}")
+    for report in artifact_report.reports:
+        for result in report.results:
+            console.print(f"- {report.path}: {result.status.value} {result.contract}")
+
+
+def _scan_artifacts(path: Path, *, json_output: bool) -> None:
+    from .scan_artifacts import scan_all_artifacts
+
+    artifact_report = scan_all_artifacts(path)
+    if json_output:
+        console.print_json(json.dumps(artifact_report.to_dict(), ensure_ascii=False))
         return
+    _print_artifact_scan_report(artifact_report)
+    if artifact_report.violations:
+        raise typer.Exit(1)
+
+
+def _is_scan_candidate(path: Path) -> bool:
+    return path.suffix in SCAN_SUFFIXES or path.name.lower() == "dockerfile"
+
+
+def _scan_contract_file(path: Path, *, file_path: str):
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        return []
+    return extract_contract_records_from_text(text, file_path=file_path)
+
+
+def _scan_inline_records(path: Path):
+    if path.is_file():
+        return _scan_contract_file(path, file_path=str(path))
 
     records = []
-    if path.is_file():
-        records.extend(extract_contract_records_from_text(path.read_text(encoding="utf-8"), file_path=str(path)))
-    else:
-        for file_path in path.rglob("*"):
-            if not file_path.is_file():
-                continue
-            if file_path.suffix not in {".py", ".js", ".ts", ".cs", ".java", ".go", ".rs", ".yaml", ".yml", ".json", ".toml", ".sh", ".sql", ".html", ".css"} and file_path.name.lower() != "dockerfile":
-                continue
-            try:
-                records.extend(extract_contract_records_from_text(file_path.read_text(encoding="utf-8"), file_path=str(file_path.relative_to(path))))
-            except UnicodeDecodeError:
-                continue
+    for file_path in path.rglob("*"):
+        if file_path.is_file() and _is_scan_candidate(file_path):
+            records.extend(
+                _scan_contract_file(file_path, file_path=str(file_path.relative_to(path)))
+            )
+    return records
 
-    data = [{"file": r.file_path, "line": r.start_line, "scope": r.contract.scope, "intent": r.contract.key, "priority": r.contract.priority, "domain": r.contract.domain} for r in records]
-    if json_output:
-        console.print_json(json.dumps(data, ensure_ascii=False))
-        return
 
+def _scan_row(record) -> dict[str, object]:
+    return {
+        "file": record.file_path,
+        "line": record.start_line,
+        "scope": record.contract.scope,
+        "intent": record.contract.key,
+        "priority": record.contract.priority,
+        "domain": record.contract.domain,
+    }
+
+
+def _print_scan_table(data: list[dict[str, object]]) -> None:
     table = Table(title="Intract contracts")
     table.add_column("File")
     table.add_column("Line")
@@ -102,8 +136,34 @@ def scan(
     table.add_column("Priority")
     table.add_column("Domain")
     for item in data:
-        table.add_row(item["file"], str(item["line"]), item["scope"], item["intent"], str(item["priority"]), item["domain"])
+        table.add_row(
+            str(item["file"]),
+            str(item["line"]),
+            str(item["scope"]),
+            str(item["intent"]),
+            str(item["priority"]),
+            str(item["domain"]),
+        )
     console.print(table)
+
+
+@app.command()
+def scan(
+    path: Path = typer.Argument(Path(".")),
+    json_output: bool = typer.Option(False, "--json"),
+    all_artifacts: bool = typer.Option(False, "--all-artifacts", help="Also scan and validate non-code artifacts."),
+):
+    """Scan files for inline @intract contracts."""
+    if all_artifacts:
+        _scan_artifacts(path, json_output=json_output)
+        return
+
+    data = [_scan_row(record) for record in _scan_inline_records(path)]
+    if json_output:
+        console.print_json(json.dumps(data, ensure_ascii=False))
+        return
+
+    _print_scan_table(data)
 
 
 @app.command()

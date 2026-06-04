@@ -1,47 +1,11 @@
 source: code2llm
-# generated in 0.17s
+# generated in 0.08s
 schema: code2llm.planfile_tickets.v1
 project_root: /home/tom/github/semcod/intract
 tickets:
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.parsers.inline.parse_contract_line
-    (CC=49)'
-  description: 'code2llm reports `src.intract.parsers.inline.parse_contract_line`
-    at `src/intract/parsers/inline.py:95` with cyclomatic complexity 49 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/parsers/inline.py
-  dedupe_key: code2llm:cc:src/intract/parsers/inline.py:src.intract.parsers.inline.parse_contract_line
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.parsers.toon.parse_toon_uri_line
-    (CC=34)'
-  description: 'code2llm reports `src.intract.parsers.toon.parse_toon_uri_line` at
-    `src/intract/parsers/toon.py:9` with cyclomatic complexity 34 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/parsers/toon.py
-  dedupe_key: code2llm:cc:src/intract/parsers/toon.py:src.intract.parsers.toon.parse_toon_uri_line
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: check'
-  description: 'code2llm reports `God Function: check` in `src/intract/cli.py:127`.
+  description: 'code2llm reports `God Function: check` in `src/intract/cli.py:187`.
 
 
     Function ''check'' is oversized: CC=13, fan-out=21, mutations=23.
@@ -56,13 +20,13 @@ tickets:
   - god-function
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:127:God Function: check'
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:187:God Function: check'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: action'
-  description: 'code2llm reports `Shotgun Surgery: action` in `src/intract/parsers/toon.py:9`.
+  description: 'code2llm reports `Shotgun Surgery: action` in `src/intract/parsers/toon.py:80`.
 
 
-    Mutation of variable ''action'' spans 7 functions. Changing this logic requires
+    Mutation of variable ''action'' spans 6 functions. Changing this logic requires
     work in many places.
 
 
@@ -75,11 +39,11 @@ tickets:
   - shotgun-surgery
   files:
   - src/intract/parsers/toon.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/parsers/toon.py:9:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/parsers/toon.py:80:Shotgun
     Surgery: action'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: adapter'
-  description: 'code2llm reports `Shotgun Surgery: adapter` in `src/intract/cli.py:292`.
+  description: 'code2llm reports `Shotgun Surgery: adapter` in `src/intract/cli.py:311`.
 
 
     Mutation of variable ''adapter'' spans 5 functions. Changing this logic requires
@@ -95,11 +59,11 @@ tickets:
   - shotgun-surgery
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/cli.py:292:Shotgun Surgery:
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/cli.py:311:Shotgun Surgery:
     adapter'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: changes'
-  description: 'code2llm reports `Shotgun Surgery: changes` in `src/intract/check.py:246`.
+  description: 'code2llm reports `Shotgun Surgery: changes` in `src/intract/watch.py:127`.
 
 
     Mutation of variable ''changes'' spans 7 functions. Changing this logic requires
@@ -114,15 +78,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/check.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/check.py:246:Shotgun Surgery:
+  - src/intract/watch.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/watch.py:127:Shotgun Surgery:
     changes'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: contract'
-  description: 'code2llm reports `Shotgun Surgery: contract` in `src/intract/integrations/nexu.py:110`.
+  title: 'Address code smell: Shotgun Surgery: config'
+  description: 'code2llm reports `Shotgun Surgery: config` in `src/intract/cli.py:187`.
 
 
-    Mutation of variable ''contract'' spans 16 functions. Changing this logic requires
+    Mutation of variable ''config'' spans 8 functions. Changing this logic requires
     work in many places.
 
 
@@ -134,15 +98,35 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/integrations/nexu.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/nexu.py:110:Shotgun
+  - src/intract/cli.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/cli.py:187:Shotgun Surgery:
+    config'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: contract'
+  description: 'code2llm reports `Shotgun Surgery: contract` in `src/intract/parsers/inline.py:316`.
+
+
+    Mutation of variable ''contract'' spans 17 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/parsers/inline.py:316:Shotgun
     Surgery: contract'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: contract_id'
-  description: 'code2llm reports `Shotgun Surgery: contract_id` in `src/intract/parsers/toon.py:9`.
+  description: 'code2llm reports `Shotgun Surgery: contract_id` in `src/intract/parsers/toon.py:80`.
 
 
-    Mutation of variable ''contract_id'' spans 6 functions. Changing this logic requires
+    Mutation of variable ''contract_id'' spans 5 functions. Changing this logic requires
     work in many places.
 
 
@@ -155,34 +139,14 @@ tickets:
   - shotgun-surgery
   files:
   - src/intract/parsers/toon.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/parsers/toon.py:9:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/parsers/toon.py:80:Shotgun
     Surgery: contract_id'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: contracts'
-  description: 'code2llm reports `Shotgun Surgery: contracts` in `src/intract/integrations/nexu.py:110`.
-
-
-    Mutation of variable ''contracts'' spans 6 functions. Changing this logic requires
-    work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - src/intract/integrations/nexu.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/nexu.py:110:Shotgun
-    Surgery: contracts'
-- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: data'
-  description: 'code2llm reports `Shotgun Surgery: data` in `src/intract/engine/drift.py:50`.
+  description: 'code2llm reports `Shotgun Surgery: data` in `src/intract/manifest_schema.py:103`.
 
 
-    Mutation of variable ''data'' spans 16 functions. Changing this logic requires
+    Mutation of variable ''data'' spans 17 functions. Changing this logic requires
     work in many places.
 
 
@@ -194,32 +158,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/engine/drift.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/engine/drift.py:50:Shotgun
+  - src/intract/manifest_schema.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/manifest_schema.py:103:Shotgun
     Surgery: data'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: effects'
-  description: 'code2llm reports `Shotgun Surgery: effects` in `src/intract/engine/assigner.py:68`.
-
-
-    Mutation of variable ''effects'' spans 6 functions. Changing this logic requires
-    work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - src/intract/engine/assigner.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/engine/assigner.py:68:Shotgun
-    Surgery: effects'
-- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: end'
-  description: 'code2llm reports `Shotgun Surgery: end` in `src/intract/analyzers/blocks.py:6`.
+  description: 'code2llm reports `Shotgun Surgery: end` in `src/intract/check.py:170`.
 
 
     Mutation of variable ''end'' spans 8 functions. Changing this logic requires work
@@ -234,35 +178,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/analyzers/blocks.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/analyzers/blocks.py:6:Shotgun
-    Surgery: end'
+  - src/intract/check.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/check.py:170:Shotgun Surgery:
+    end'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: file_path'
-  description: 'code2llm reports `Shotgun Surgery: file_path` in `src/intract/integrations/redup.py:61`.
+  description: 'code2llm reports `Shotgun Surgery: file_path` in `src/intract/check.py:60`.
 
 
-    Mutation of variable ''file_path'' spans 8 functions. Changing this logic requires
-    work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - src/intract/integrations/redup.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/redup.py:61:Shotgun
-    Surgery: file_path'
-- signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: files'
-  description: 'code2llm reports `Shotgun Surgery: files` in `src/intract/check.py:246`.
-
-
-    Mutation of variable ''files'' spans 5 functions. Changing this logic requires
+    Mutation of variable ''file_path'' spans 7 functions. Changing this logic requires
     work in many places.
 
 
@@ -275,14 +199,34 @@ tickets:
   - shotgun-surgery
   files:
   - src/intract/check.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/check.py:246:Shotgun Surgery:
-    files'
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/check.py:60:Shotgun Surgery:
+    file_path'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: format_report'
+  description: 'code2llm reports `Shotgun Surgery: format_report` in `examples/markdown-generator/pass/generator.py:47`.
+
+
+    Mutation of variable ''format_report'' spans 5 functions. Changing this logic
+    requires work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - examples/markdown-generator/pass/generator.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/markdown-generator/pass/generator.py:47:Shotgun
+    Surgery: format_report'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: intent'
-  description: 'code2llm reports `Shotgun Surgery: intent` in `src/intract/integrations/nexu.py:110`.
+  description: 'code2llm reports `Shotgun Surgery: intent` in `src/intract/parsers/toon.py:80`.
 
 
-    Mutation of variable ''intent'' spans 7 functions. Changing this logic requires
+    Mutation of variable ''intent'' spans 6 functions. Changing this logic requires
     work in many places.
 
 
@@ -294,15 +238,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/integrations/nexu.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/nexu.py:110:Shotgun
+  - src/intract/parsers/toon.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/parsers/toon.py:80:Shotgun
     Surgery: intent'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: issues'
-  description: 'code2llm reports `Shotgun Surgery: issues` in `src/intract/manifest_schema.py:48`.
+  description: 'code2llm reports `Shotgun Surgery: issues` in `src/intract/integrations/vallm.py:56`.
 
 
-    Mutation of variable ''issues'' spans 8 functions. Changing this logic requires
+    Mutation of variable ''issues'' spans 9 functions. Changing this logic requires
     work in many places.
 
 
@@ -314,12 +258,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/manifest_schema.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/manifest_schema.py:48:Shotgun
+  - src/intract/integrations/vallm.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/vallm.py:56:Shotgun
     Surgery: issues'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: key'
-  description: 'code2llm reports `Shotgun Surgery: key` in `src/intract/duplicates/grouping.py:66`.
+  description: 'code2llm reports `Shotgun Surgery: key` in `examples/showcase/server.py:16`.
 
 
     Mutation of variable ''key'' spans 6 functions. Changing this logic requires work
@@ -334,15 +278,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/duplicates/grouping.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/duplicates/grouping.py:66:Shotgun
+  - examples/showcase/server.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/showcase/server.py:16:Shotgun
     Surgery: key'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: line'
-  description: 'code2llm reports `Shotgun Surgery: line` in `src/intract/validate_snippet.py:10`.
+  description: 'code2llm reports `Shotgun Surgery: line` in `examples/showcase/server.py:16`.
 
 
-    Mutation of variable ''line'' spans 14 functions. Changing this logic requires
+    Mutation of variable ''line'' spans 15 functions. Changing this logic requires
     work in many places.
 
 
@@ -354,12 +298,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/validate_snippet.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/validate_snippet.py:10:Shotgun
+  - examples/showcase/server.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/showcase/server.py:16:Shotgun
     Surgery: line'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: lines'
-  description: 'code2llm reports `Shotgun Surgery: lines` in `scripts/generate_toon_from_map.py:441`.
+  description: 'code2llm reports `Shotgun Surgery: lines` in `src/intract/propose_llm.py:13`.
 
 
     Mutation of variable ''lines'' spans 17 functions. Changing this logic requires
@@ -374,15 +318,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/generate_toon_from_map.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/generate_toon_from_map.py:441:Shotgun
+  - src/intract/propose_llm.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/propose_llm.py:13:Shotgun
     Surgery: lines'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: manifest'
-  description: 'code2llm reports `Shotgun Surgery: manifest` in `src/intract/policy.py:35`.
+  description: 'code2llm reports `Shotgun Surgery: manifest` in `src/intract/mcp/handlers.py:90`.
 
 
-    Mutation of variable ''manifest'' spans 7 functions. Changing this logic requires
+    Mutation of variable ''manifest'' spans 8 functions. Changing this logic requires
     work in many places.
 
 
@@ -394,12 +338,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/policy.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/policy.py:35:Shotgun Surgery:
-    manifest'
+  - src/intract/mcp/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/mcp/handlers.py:90:Shotgun
+    Surgery: manifest'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: manifest_path'
-  description: 'code2llm reports `Shotgun Surgery: manifest_path` in `src/intract/manifest_schema.py:48`.
+  description: 'code2llm reports `Shotgun Surgery: manifest_path` in `src/intract/manifest_schema.py:103`.
 
 
     Mutation of variable ''manifest_path'' spans 5 functions. Changing this logic
@@ -415,11 +359,31 @@ tickets:
   - shotgun-surgery
   files:
   - src/intract/manifest_schema.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/manifest_schema.py:48:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/manifest_schema.py:103:Shotgun
     Surgery: manifest_path'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: markdown_document'
+  description: 'code2llm reports `Shotgun Surgery: markdown_document` in `examples/markdown-generator/violation/generator.py:32`.
+
+
+    Mutation of variable ''markdown_document'' spans 5 functions. Changing this logic
+    requires work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - examples/markdown-generator/violation/generator.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/markdown-generator/violation/generator.py:32:Shotgun
+    Surgery: markdown_document'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: missing'
-  description: 'code2llm reports `Shotgun Surgery: missing` in `src/intract/validators/base.py:38`.
+  description: 'code2llm reports `Shotgun Surgery: missing` in `src/intract/integrations/planfile.py:34`.
 
 
     Mutation of variable ''missing'' spans 9 functions. Changing this logic requires
@@ -434,12 +398,72 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/validators/base.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/validators/base.py:38:Shotgun
+  - src/intract/integrations/planfile.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/planfile.py:34:Shotgun
     Surgery: missing'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: name'
+  description: 'code2llm reports `Shotgun Surgery: name` in `src/intract/validators/artifacts.py:167`.
+
+
+    Mutation of variable ''name'' spans 9 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/intract/validators/artifacts.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/validators/artifacts.py:167:Shotgun
+    Surgery: name'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: normalized'
+  description: 'code2llm reports `Shotgun Surgery: normalized` in `src/intract/core/normalizer.py:45`.
+
+
+    Mutation of variable ''normalized'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/intract/core/normalizer.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/core/normalizer.py:45:Shotgun
+    Surgery: normalized'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: out'
+  description: 'code2llm reports `Shotgun Surgery: out` in `scripts/generate_toon_from_map.py:309`.
+
+
+    Mutation of variable ''out'' spans 5 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - scripts/generate_toon_from_map.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/generate_toon_from_map.py:309:Shotgun
+    Surgery: out'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: parser'
-  description: 'code2llm reports `Shotgun Surgery: parser` in `scripts/generate_toon_from_map.py:441`.
+  description: 'code2llm reports `Shotgun Surgery: parser` in `src/intract/analyzers/treesitter.py:23`.
 
 
     Mutation of variable ''parser'' spans 5 functions. Changing this logic requires
@@ -454,35 +478,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - scripts/generate_toon_from_map.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/generate_toon_from_map.py:441:Shotgun
+  - src/intract/analyzers/treesitter.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/analyzers/treesitter.py:23:Shotgun
     Surgery: parser'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: parts'
-  description: 'code2llm reports `Shotgun Surgery: parts` in `src/intract/core/normalizer.py:27`.
-
-
-    Mutation of variable ''parts'' spans 8 functions. Changing this logic requires
-    work in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - src/intract/core/normalizer.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/core/normalizer.py:27:Shotgun
-    Surgery: parts'
-- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: path'
-  description: 'code2llm reports `Shotgun Surgery: path` in `examples/integration_tests/run_examples.py:36`.
+  description: 'code2llm reports `Shotgun Surgery: path` in `src/intract/check.py:60`.
 
 
-    Mutation of variable ''path'' spans 8 functions. Changing this logic requires
+    Mutation of variable ''path'' spans 9 functions. Changing this logic requires
     work in many places.
 
 
@@ -494,12 +498,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - examples/integration_tests/run_examples.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:examples/integration_tests/run_examples.py:36:Shotgun
-    Surgery: path'
+  - src/intract/check.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/check.py:60:Shotgun Surgery:
+    path'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: proposals'
-  description: 'code2llm reports `Shotgun Surgery: proposals` in `src/intract/proposals.py:41`.
+  description: 'code2llm reports `Shotgun Surgery: proposals` in `src/intract/cli.py:598`.
 
 
     Mutation of variable ''proposals'' spans 5 functions. Changing this logic requires
@@ -514,35 +518,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/proposals.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/proposals.py:41:Shotgun
-    Surgery: proposals'
+  - src/intract/cli.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/cli.py:598:Shotgun Surgery:
+    proposals'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: raw'
-  description: 'code2llm reports `Shotgun Surgery: raw` in `scripts/generate_toon_from_map.py:138`.
+  description: 'code2llm reports `Shotgun Surgery: raw` in `src/intract/engine/drift.py:57`.
 
 
-    Mutation of variable ''raw'' spans 9 functions. Changing this logic requires work
-    in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - scripts/generate_toon_from_map.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:scripts/generate_toon_from_map.py:138:Shotgun
-    Surgery: raw'
-- signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: records'
-  description: 'code2llm reports `Shotgun Surgery: records` in `src/intract/cli.py:56`.
-
-
-    Mutation of variable ''records'' spans 14 functions. Changing this logic requires
+    Mutation of variable ''raw'' spans 10 functions. Changing this logic requires
     work in many places.
 
 
@@ -554,12 +538,52 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/cli.py:56:Shotgun Surgery:
-    records'
+  - src/intract/engine/drift.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/engine/drift.py:57:Shotgun
+    Surgery: raw'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: reasons'
+  description: 'code2llm reports `Shotgun Surgery: reasons` in `src/intract/integrations/redup.py:229`.
+
+
+    Mutation of variable ''reasons'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/intract/integrations/redup.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/redup.py:229:Shotgun
+    Surgery: reasons'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: records'
+  description: 'code2llm reports `Shotgun Surgery: records` in `src/intract/parsers/inline.py:316`.
+
+
+    Mutation of variable ''records'' spans 15 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/parsers/inline.py:316:Shotgun
+    Surgery: records'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: report'
-  description: 'code2llm reports `Shotgun Surgery: report` in `src/intract/check.py:246`.
+  description: 'code2llm reports `Shotgun Surgery: report` in `src/intract/integrations/vallm.py:78`.
 
 
     Mutation of variable ''report'' spans 24 functions. Changing this logic requires
@@ -574,12 +598,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/check.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/check.py:246:Shotgun Surgery:
-    report'
+  - src/intract/integrations/vallm.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/vallm.py:78:Shotgun
+    Surgery: report'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: result'
-  description: 'code2llm reports `Shotgun Surgery: result` in `src/intract/cli.py:292`.
+  description: 'code2llm reports `Shotgun Surgery: result` in `src/intract/check.py:94`.
 
 
     Mutation of variable ''result'' spans 13 functions. Changing this logic requires
@@ -594,12 +618,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/cli.py:292:Shotgun Surgery:
+  - src/intract/check.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/check.py:94:Shotgun Surgery:
     result'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: results'
+  description: 'code2llm reports `Shotgun Surgery: results` in `src/intract/integrations/planfile.py:34`.
+
+
+    Mutation of variable ''results'' spans 9 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/intract/integrations/planfile.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/planfile.py:34:Shotgun
+    Surgery: results'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: root'
-  description: 'code2llm reports `Shotgun Surgery: root` in `src/intract/coverage.py:21`.
+  description: 'code2llm reports `Shotgun Surgery: root` in `src/intract/scan_artifacts.py:62`.
 
 
     Mutation of variable ''root'' spans 17 functions. Changing this logic requires
@@ -614,15 +658,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/coverage.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/coverage.py:21:Shotgun Surgery:
-    root'
+  - src/intract/scan_artifacts.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/scan_artifacts.py:62:Shotgun
+    Surgery: root'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: signature'
-  description: 'code2llm reports `Shotgun Surgery: signature` in `src/intract/integrations/redup.py:61`.
+  title: 'Address code smell: Shotgun Surgery: score'
+  description: 'code2llm reports `Shotgun Surgery: score` in `src/intract/integrations/vallm.py:56`.
 
 
-    Mutation of variable ''signature'' spans 5 functions. Changing this logic requires
+    Mutation of variable ''score'' spans 5 functions. Changing this logic requires
     work in many places.
 
 
@@ -634,12 +678,12 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/integrations/redup.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/redup.py:61:Shotgun
-    Surgery: signature'
+  - src/intract/integrations/vallm.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/vallm.py:56:Shotgun
+    Surgery: score'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: sources'
-  description: 'code2llm reports `Shotgun Surgery: sources` in `src/intract/project.py:19`.
+  description: 'code2llm reports `Shotgun Surgery: sources` in `src/intract/check.py:60`.
 
 
     Mutation of variable ''sources'' spans 8 functions. Changing this logic requires
@@ -654,12 +698,52 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/project.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/project.py:19:Shotgun Surgery:
+  - src/intract/check.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/check.py:60:Shotgun Surgery:
     sources'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: state'
+  description: 'code2llm reports `Shotgun Surgery: state` in `src/intract/parsers/inline.py:253`.
+
+
+    Mutation of variable ''state'' spans 11 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/parsers/inline.py:253:Shotgun
+    Surgery: state'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: status'
+  description: 'code2llm reports `Shotgun Surgery: status` in `src/intract/integrations/vallm.py:56`.
+
+
+    Mutation of variable ''status'' spans 9 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/intract/integrations/vallm.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/vallm.py:56:Shotgun
+    Surgery: status'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: table'
-  description: 'code2llm reports `Shotgun Surgery: table` in `src/intract/cli.py:56`.
+  description: 'code2llm reports `Shotgun Surgery: table` in `src/intract/cli.py:260`.
 
 
     Mutation of variable ''table'' spans 5 functions. Changing this logic requires
@@ -675,14 +759,14 @@ tickets:
   - shotgun-surgery
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/cli.py:56:Shotgun Surgery:
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/cli.py:260:Shotgun Surgery:
     table'
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: text'
-  description: 'code2llm reports `Shotgun Surgery: text` in `src/intract/cli.py:222`.
+  title: 'Address code smell: Shotgun Surgery: target'
+  description: 'code2llm reports `Shotgun Surgery: target` in `src/intract/parsers/manifest.py:61`.
 
 
-    Mutation of variable ''text'' spans 17 functions. Changing this logic requires
+    Mutation of variable ''target'' spans 6 functions. Changing this logic requires
     work in many places.
 
 
@@ -694,15 +778,35 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/cli.py:222:Shotgun Surgery:
-    text'
+  - src/intract/parsers/manifest.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/parsers/manifest.py:61:Shotgun
+    Surgery: target'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: text'
+  description: 'code2llm reports `Shotgun Surgery: text` in `src/intract/validators/artifacts.py:167`.
+
+
+    Mutation of variable ''text'' spans 18 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/intract/validators/artifacts.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/validators/artifacts.py:167:Shotgun
+    Surgery: text'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: value'
   description: 'code2llm reports `Shotgun Surgery: value` in `examples/showcase/server.py:16`.
 
 
-    Mutation of variable ''value'' spans 5 functions. Changing this logic requires
+    Mutation of variable ''value'' spans 8 functions. Changing this logic requires
     work in many places.
 
 
@@ -719,7 +823,7 @@ tickets:
     Surgery: value'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: violations'
-  description: 'code2llm reports `Shotgun Surgery: violations` in `src/intract/validators/base.py:38`.
+  description: 'code2llm reports `Shotgun Surgery: violations` in `src/intract/integrations/planfile.py:34`.
 
 
     Mutation of variable ''violations'' spans 5 functions. Changing this logic requires
@@ -734,355 +838,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/intract/validators/base.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/validators/base.py:38:Shotgun
+  - src/intract/integrations/planfile.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/intract/integrations/planfile.py:34:Shotgun
     Surgery: violations'
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.check.block_extent (CC=20)'
-  description: 'code2llm reports `src.intract.check.block_extent` at `src/intract/check.py:92`
-    with cyclomatic complexity 20 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/check.py
-  dedupe_key: code2llm:cc:src/intract/check.py:src.intract.check.block_extent
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.cli.scan (CC=15)'
-  description: 'code2llm reports `src.intract.cli.scan` at `src/intract/cli.py:56`
-    with cyclomatic complexity 15 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/cli.py
-  dedupe_key: code2llm:cc:src/intract/cli.py:src.intract.cli.scan
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.core.artifact.infer_artifact_kind
-    (CC=17)'
-  description: 'code2llm reports `src.intract.core.artifact.infer_artifact_kind` at
-    `src/intract/core/artifact.py:67` with cyclomatic complexity 17 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/core/artifact.py
-  dedupe_key: code2llm:cc:src/intract/core/artifact.py:src.intract.core.artifact.infer_artifact_kind
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.core.signatures.build_signature
-    (CC=15)'
-  description: 'code2llm reports `src.intract.core.signatures.build_signature` at
-    `src/intract/core/signatures.py:14` with cyclomatic complexity 15 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/core/signatures.py
-  dedupe_key: code2llm:cc:src/intract/core/signatures.py:src.intract.core.signatures.build_signature
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.integrations.nexu.read_toon_manifest_contracts
-    (CC=19)'
-  description: 'code2llm reports `src.intract.integrations.nexu.read_toon_manifest_contracts`
-    at `src/intract/integrations/nexu.py:138` with cyclomatic complexity 19 (limit
-    15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/integrations/nexu.py
-  dedupe_key: code2llm:cc:src/intract/integrations/nexu.py:src.intract.integrations.nexu.read_toon_manifest_contracts
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.integrations.redup.validate_for_redup
-    (CC=15)'
-  description: 'code2llm reports `src.intract.integrations.redup.validate_for_redup`
-    at `src/intract/integrations/redup.py:185` with cyclomatic complexity 15 (limit
-    15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/integrations/redup.py
-  dedupe_key: code2llm:cc:src/intract/integrations/redup.py:src.intract.integrations.redup.validate_for_redup
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.manifest_ops.apply_ledger_to_manifest
-    (CC=16)'
-  description: 'code2llm reports `src.intract.manifest_ops.apply_ledger_to_manifest`
-    at `src/intract/manifest_ops.py:140` with cyclomatic complexity 16 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/manifest_ops.py
-  dedupe_key: code2llm:cc:src/intract/manifest_ops.py:src.intract.manifest_ops.apply_ledger_to_manifest
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.manifest_schema.validate_manifest
-    (CC=15)'
-  description: 'code2llm reports `src.intract.manifest_schema.validate_manifest` at
-    `src/intract/manifest_schema.py:48` with cyclomatic complexity 15 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/manifest_schema.py
-  dedupe_key: code2llm:cc:src/intract/manifest_schema.py:src.intract.manifest_schema.validate_manifest
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.parsers.manifest.load_manifest_records
-    (CC=20)'
-  description: 'code2llm reports `src.intract.parsers.manifest.load_manifest_records`
-    at `src/intract/parsers/manifest.py:60` with cyclomatic complexity 20 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/parsers/manifest.py
-  dedupe_key: code2llm:cc:src/intract/parsers/manifest.py:src.intract.parsers.manifest.load_manifest_records
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.policy.decide_policy (CC=15)'
-  description: 'code2llm reports `src.intract.policy.decide_policy` at `src/intract/policy.py:35`
-    with cyclomatic complexity 15 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/policy.py
-  dedupe_key: code2llm:cc:src/intract/policy.py:src.intract.policy.decide_policy
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.project.validate_sources (CC=16)'
-  description: 'code2llm reports `src.intract.project.validate_sources` at `src/intract/project.py:48`
-    with cyclomatic complexity 16 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/project.py
-  dedupe_key: code2llm:cc:src/intract/project.py:src.intract.project.validate_sources
-- signal: code2llm_cc
-  title: 'Reduce cyclomatic complexity: src.intract.propose_llm.propose_contracts_llm
-    (CC=18)'
-  description: 'code2llm reports `src.intract.propose_llm.propose_contracts_llm` at
-    `src/intract/propose_llm.py:46` with cyclomatic complexity 18 (limit 15).
-
-
-    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
-    code2llm after the change and keep tests green.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - complexity
-  - refactor
-  files:
-  - src/intract/propose_llm.py
-  dedupe_key: code2llm:cc:src/intract/propose_llm.py:src.intract.propose_llm.propose_contracts_llm
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: json_output, manifest, path, planfile'
-  description: 'code2llm reports `Data Clump: json_output, manifest, path, planfile`
-    in `src/intract/cli.py:110`.
+  title: 'Address code smell: Data Clump: artifact, contracts, self'
+  description: 'code2llm reports `Data Clump: artifact, contracts, self` in `src/intract/plugins/base.py:37`.
 
 
-    Arguments (json_output, manifest, path, planfile) are used together in multiple
-    functions: src.intract.cli.validate, src.intract.cli.engine_run.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:data_clump:src/intract/cli.py:110:Data Clump: json_output,
-    manifest, path, planfile'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: json_output, manifest, path, planfile'
-  description: 'code2llm reports `Data Clump: json_output, manifest, path, planfile`
-    in `src/intract/cli.py:411`.
-
-
-    Arguments (json_output, manifest, path, planfile) are used together in multiple
-    functions: src.intract.cli.validate, src.intract.cli.engine_run.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:data_clump:src/intract/cli.py:411:Data Clump: json_output,
-    manifest, path, planfile'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: project, api_url, manifest, path, token'
-  description: 'code2llm reports `Data Clump: project, api_url, manifest, path, token`
-    in `src/intract/cli.py:251`.
-
-
-    Arguments (project, api_url, manifest, path, token) are used together in multiple
-    functions: src.intract.cli.planfile_push, src.intract.cli.planfile_sync.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:data_clump:src/intract/cli.py:251:Data Clump: project,
-    api_url, manifest, path, token'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: project, api_url, manifest, path, token'
-  description: 'code2llm reports `Data Clump: project, api_url, manifest, path, token`
-    in `src/intract/cli.py:292`.
-
-
-    Arguments (project, api_url, manifest, path, token) are used together in multiple
-    functions: src.intract.cli.planfile_push, src.intract.cli.planfile_sync.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:data_clump:src/intract/cli.py:292:Data Clump: project,
-    api_url, manifest, path, token'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, code_snippet, contract_rules'
-  description: 'code2llm reports `Data Clump: self, code_snippet, contract_rules`
-    in `src/intract/core/cache.py:38`.
-
-
-    Arguments (self, code_snippet, contract_rules) are used together in multiple functions:
-    src.intract.core.cache.IntractDecisionCache._get_key, src.intract.core.cache.IntractDecisionCache.get_decision.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/intract/core/cache.py
-  dedupe_key: 'code2llm:smell:data_clump:src/intract/core/cache.py:38:Data Clump:
-    self, code_snippet, contract_rules'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, code_snippet, contract_rules'
-  description: 'code2llm reports `Data Clump: self, code_snippet, contract_rules`
-    in `src/intract/core/cache.py:72`.
-
-
-    Arguments (self, code_snippet, contract_rules) are used together in multiple functions:
-    src.intract.core.cache.IntractDecisionCache._get_key, src.intract.core.cache.IntractDecisionCache.get_decision.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/intract/core/cache.py
-  dedupe_key: 'code2llm:smell:data_clump:src/intract/core/cache.py:72:Data Clump:
-    self, code_snippet, contract_rules'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, contracts, artifact'
-  description: 'code2llm reports `Data Clump: self, contracts, artifact` in `src/intract/plugins/base.py:37`.
-
-
-    Arguments (self, contracts, artifact) are used together in multiple functions:
+    Arguments (artifact, contracts, self) are used together in multiple functions:
     src.intract.plugins.base.ValidatorPlugin.validate, src.intract.plugins.base.PluginRegistry.validate_artifact,
     src.intract.plugins.builtins.BasicContractValidatorPlugin.validate, src.intract.plugins.builtins.ArtifactStructureValidatorPlugin.validate,
     sdks.python.src.intract_plugin_example.ExampleValidatorPlugin.validate.
@@ -1098,13 +862,13 @@ tickets:
   files:
   - src/intract/plugins/base.py
   dedupe_key: 'code2llm:smell:data_clump:src/intract/plugins/base.py:37:Data Clump:
-    self, contracts, artifact'
+    artifact, contracts, self'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, contracts, artifact'
-  description: 'code2llm reports `Data Clump: self, contracts, artifact` in `src/intract/plugins/base.py:88`.
+  title: 'Address code smell: Data Clump: artifact, contracts, self'
+  description: 'code2llm reports `Data Clump: artifact, contracts, self` in `src/intract/plugins/base.py:88`.
 
 
-    Arguments (self, contracts, artifact) are used together in multiple functions:
+    Arguments (artifact, contracts, self) are used together in multiple functions:
     src.intract.plugins.base.ValidatorPlugin.validate, src.intract.plugins.base.PluginRegistry.validate_artifact,
     src.intract.plugins.builtins.BasicContractValidatorPlugin.validate, src.intract.plugins.builtins.ArtifactStructureValidatorPlugin.validate,
     sdks.python.src.intract_plugin_example.ExampleValidatorPlugin.validate.
@@ -1120,13 +884,13 @@ tickets:
   files:
   - src/intract/plugins/base.py
   dedupe_key: 'code2llm:smell:data_clump:src/intract/plugins/base.py:88:Data Clump:
-    self, contracts, artifact'
+    artifact, contracts, self'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, contracts, artifact'
-  description: 'code2llm reports `Data Clump: self, contracts, artifact` in `src/intract/plugins/builtins.py:73`.
+  title: 'Address code smell: Data Clump: artifact, contracts, self'
+  description: 'code2llm reports `Data Clump: artifact, contracts, self` in `src/intract/plugins/builtins.py:73`.
 
 
-    Arguments (self, contracts, artifact) are used together in multiple functions:
+    Arguments (artifact, contracts, self) are used together in multiple functions:
     src.intract.plugins.base.ValidatorPlugin.validate, src.intract.plugins.base.PluginRegistry.validate_artifact,
     src.intract.plugins.builtins.BasicContractValidatorPlugin.validate, src.intract.plugins.builtins.ArtifactStructureValidatorPlugin.validate,
     sdks.python.src.intract_plugin_example.ExampleValidatorPlugin.validate.
@@ -1142,13 +906,13 @@ tickets:
   files:
   - src/intract/plugins/builtins.py
   dedupe_key: 'code2llm:smell:data_clump:src/intract/plugins/builtins.py:73:Data Clump:
-    self, contracts, artifact'
+    artifact, contracts, self'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, contracts, artifact'
-  description: 'code2llm reports `Data Clump: self, contracts, artifact` in `src/intract/plugins/builtins.py:94`.
+  title: 'Address code smell: Data Clump: artifact, contracts, self'
+  description: 'code2llm reports `Data Clump: artifact, contracts, self` in `src/intract/plugins/builtins.py:94`.
 
 
-    Arguments (self, contracts, artifact) are used together in multiple functions:
+    Arguments (artifact, contracts, self) are used together in multiple functions:
     src.intract.plugins.base.ValidatorPlugin.validate, src.intract.plugins.base.PluginRegistry.validate_artifact,
     src.intract.plugins.builtins.BasicContractValidatorPlugin.validate, src.intract.plugins.builtins.ArtifactStructureValidatorPlugin.validate,
     sdks.python.src.intract_plugin_example.ExampleValidatorPlugin.validate.
@@ -1164,13 +928,13 @@ tickets:
   files:
   - src/intract/plugins/builtins.py
   dedupe_key: 'code2llm:smell:data_clump:src/intract/plugins/builtins.py:94:Data Clump:
-    self, contracts, artifact'
+    artifact, contracts, self'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, contracts, artifact'
-  description: 'code2llm reports `Data Clump: self, contracts, artifact` in `sdks/python/src/intract_plugin_example/__init__.py:25`.
+  title: 'Address code smell: Data Clump: artifact, contracts, self'
+  description: 'code2llm reports `Data Clump: artifact, contracts, self` in `sdks/python/src/intract_plugin_example/__init__.py:25`.
 
 
-    Arguments (self, contracts, artifact) are used together in multiple functions:
+    Arguments (artifact, contracts, self) are used together in multiple functions:
     src.intract.plugins.base.ValidatorPlugin.validate, src.intract.plugins.base.PluginRegistry.validate_artifact,
     src.intract.plugins.builtins.BasicContractValidatorPlugin.validate, src.intract.plugins.builtins.ArtifactStructureValidatorPlugin.validate,
     sdks.python.src.intract_plugin_example.ExampleValidatorPlugin.validate.
@@ -1186,14 +950,15 @@ tickets:
   files:
   - sdks/python/src/intract_plugin_example/__init__.py
   dedupe_key: 'code2llm:smell:data_clump:sdks/python/src/intract_plugin_example/__init__.py:25:Data
-    Clump: self, contracts, artifact'
+    Clump: artifact, contracts, self'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, path, tickets'
-  description: 'code2llm reports `Data Clump: self, path, tickets` in `src/intract/integrations/planfile.py:97`.
+  title: 'Address code smell: Data Clump: contract_rules, self, code_snippet'
+  description: 'code2llm reports `Data Clump: contract_rules, self, code_snippet`
+    in `src/intract/core/cache.py:38`.
 
 
-    Arguments (self, path, tickets) are used together in multiple functions: src.intract.integrations.planfile.PlanfileExporter._write_yaml,
-    src.intract.integrations.planfile.PlanfileExporter._write_json, src.intract.integrations.planfile.PlanfileExporter._write_todo.
+    Arguments (contract_rules, self, code_snippet) are used together in multiple functions:
+    src.intract.core.cache.IntractDecisionCache._get_key, src.intract.core.cache.IntractDecisionCache.get_decision.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -1204,16 +969,17 @@ tickets:
   - code-smell
   - data-clump
   files:
-  - src/intract/integrations/planfile.py
-  dedupe_key: 'code2llm:smell:data_clump:src/intract/integrations/planfile.py:97:Data
-    Clump: self, path, tickets'
+  - src/intract/core/cache.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/core/cache.py:38:Data Clump:
+    contract_rules, self, code_snippet'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, path, tickets'
-  description: 'code2llm reports `Data Clump: self, path, tickets` in `src/intract/integrations/planfile.py:121`.
+  title: 'Address code smell: Data Clump: contract_rules, self, code_snippet'
+  description: 'code2llm reports `Data Clump: contract_rules, self, code_snippet`
+    in `src/intract/core/cache.py:72`.
 
 
-    Arguments (self, path, tickets) are used together in multiple functions: src.intract.integrations.planfile.PlanfileExporter._write_yaml,
-    src.intract.integrations.planfile.PlanfileExporter._write_json, src.intract.integrations.planfile.PlanfileExporter._write_todo.
+    Arguments (contract_rules, self, code_snippet) are used together in multiple functions:
+    src.intract.core.cache.IntractDecisionCache._get_key, src.intract.core.cache.IntractDecisionCache.get_decision.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -1224,16 +990,18 @@ tickets:
   - code-smell
   - data-clump
   files:
-  - src/intract/integrations/planfile.py
-  dedupe_key: 'code2llm:smell:data_clump:src/intract/integrations/planfile.py:121:Data
-    Clump: self, path, tickets'
+  - src/intract/core/cache.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/core/cache.py:72:Data Clump:
+    contract_rules, self, code_snippet'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, path, tickets'
-  description: 'code2llm reports `Data Clump: self, path, tickets` in `src/intract/integrations/planfile.py:129`.
+  title: 'Address code smell: Data Clump: markdown_document, required_sections, normalized_topic'
+  description: 'code2llm reports `Data Clump: markdown_document, required_sections,
+    normalized_topic` in `examples/markdown-generator/pass/generator.py:47`.
 
 
-    Arguments (self, path, tickets) are used together in multiple functions: src.intract.integrations.planfile.PlanfileExporter._write_yaml,
-    src.intract.integrations.planfile.PlanfileExporter._write_json, src.intract.integrations.planfile.PlanfileExporter._write_todo.
+    Arguments (markdown_document, required_sections, normalized_topic) are used together
+    in multiple functions: examples.markdown-generator.pass.generator.guard_markdown_contract,
+    examples.markdown-generator.violation.generator.guard_markdown_contract.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -1244,16 +1012,124 @@ tickets:
   - code-smell
   - data-clump
   files:
-  - src/intract/integrations/planfile.py
-  dedupe_key: 'code2llm:smell:data_clump:src/intract/integrations/planfile.py:129:Data
-    Clump: self, path, tickets'
+  - examples/markdown-generator/pass/generator.py
+  dedupe_key: 'code2llm:smell:data_clump:examples/markdown-generator/pass/generator.py:47:Data
+    Clump: markdown_document, required_sections, normalized_topic'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, source, context, signature'
-  description: 'code2llm reports `Data Clump: self, source, context, signature` in
+  title: 'Address code smell: Data Clump: markdown_document, required_sections, normalized_topic'
+  description: 'code2llm reports `Data Clump: markdown_document, required_sections,
+    normalized_topic` in `examples/markdown-generator/violation/generator.py:46`.
+
+
+    Arguments (markdown_document, required_sections, normalized_topic) are used together
+    in multiple functions: examples.markdown-generator.pass.generator.guard_markdown_contract,
+    examples.markdown-generator.violation.generator.guard_markdown_contract.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - examples/markdown-generator/violation/generator.py
+  dedupe_key: 'code2llm:smell:data_clump:examples/markdown-generator/violation/generator.py:46:Data
+    Clump: markdown_document, required_sections, normalized_topic'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: markdown_outline, normalized_topic, audience'
+  description: 'code2llm reports `Data Clump: markdown_outline, normalized_topic,
+    audience` in `examples/markdown-generator/pass/generator.py:32`.
+
+
+    Arguments (markdown_outline, normalized_topic, audience) are used together in
+    multiple functions: examples.markdown-generator.pass.generator.render_markdown_sections,
+    examples.markdown-generator.violation.generator.render_markdown_sections.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - examples/markdown-generator/pass/generator.py
+  dedupe_key: 'code2llm:smell:data_clump:examples/markdown-generator/pass/generator.py:32:Data
+    Clump: markdown_outline, normalized_topic, audience'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: markdown_outline, normalized_topic, audience'
+  description: 'code2llm reports `Data Clump: markdown_outline, normalized_topic,
+    audience` in `examples/markdown-generator/violation/generator.py:32`.
+
+
+    Arguments (markdown_outline, normalized_topic, audience) are used together in
+    multiple functions: examples.markdown-generator.pass.generator.render_markdown_sections,
+    examples.markdown-generator.violation.generator.render_markdown_sections.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - examples/markdown-generator/violation/generator.py
+  dedupe_key: 'code2llm:smell:data_clump:examples/markdown-generator/violation/generator.py:32:Data
+    Clump: markdown_outline, normalized_topic, audience'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: planfile, manifest, json_output, path'
+  description: 'code2llm reports `Data Clump: planfile, manifest, json_output, path`
+    in `src/intract/cli.py:170`.
+
+
+    Arguments (planfile, manifest, json_output, path) are used together in multiple
+    functions: src.intract.cli.validate, src.intract.cli.engine_run.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/cli.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/cli.py:170:Data Clump: planfile,
+    manifest, json_output, path'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: planfile, manifest, json_output, path'
+  description: 'code2llm reports `Data Clump: planfile, manifest, json_output, path`
+    in `src/intract/cli.py:471`.
+
+
+    Arguments (planfile, manifest, json_output, path) are used together in multiple
+    functions: src.intract.cli.validate, src.intract.cli.engine_run.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/cli.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/cli.py:471:Data Clump: planfile,
+    manifest, json_output, path'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: source, context, self, signature'
+  description: 'code2llm reports `Data Clump: source, context, self, signature` in
     `src/intract/validators/input_output.py:31`.
 
 
-    Arguments (self, source, context, signature) are used together in multiple functions:
+    Arguments (source, context, self, signature) are used together in multiple functions:
     src.intract.validators.input_output.InputPresenceRule.validate, src.intract.validators.input_output.OutputPresenceRule.validate,
     src.intract.validators.input_output.ReturnValueRule.validate, src.intract.validators.base.ValidationRule.validate,
     src.intract.validators.effects.NoForbiddenEffectRule.validate.
@@ -1269,14 +1145,14 @@ tickets:
   files:
   - src/intract/validators/input_output.py
   dedupe_key: 'code2llm:smell:data_clump:src/intract/validators/input_output.py:31:Data
-    Clump: self, source, context, signature'
+    Clump: source, context, self, signature'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, source, context, signature'
-  description: 'code2llm reports `Data Clump: self, source, context, signature` in
+  title: 'Address code smell: Data Clump: source, context, self, signature'
+  description: 'code2llm reports `Data Clump: source, context, self, signature` in
     `src/intract/validators/input_output.py:45`.
 
 
-    Arguments (self, source, context, signature) are used together in multiple functions:
+    Arguments (source, context, self, signature) are used together in multiple functions:
     src.intract.validators.input_output.InputPresenceRule.validate, src.intract.validators.input_output.OutputPresenceRule.validate,
     src.intract.validators.input_output.ReturnValueRule.validate, src.intract.validators.base.ValidationRule.validate,
     src.intract.validators.effects.NoForbiddenEffectRule.validate.
@@ -1292,14 +1168,14 @@ tickets:
   files:
   - src/intract/validators/input_output.py
   dedupe_key: 'code2llm:smell:data_clump:src/intract/validators/input_output.py:45:Data
-    Clump: self, source, context, signature'
+    Clump: source, context, self, signature'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, source, context, signature'
-  description: 'code2llm reports `Data Clump: self, source, context, signature` in
+  title: 'Address code smell: Data Clump: source, context, self, signature'
+  description: 'code2llm reports `Data Clump: source, context, self, signature` in
     `src/intract/validators/input_output.py:59`.
 
 
-    Arguments (self, source, context, signature) are used together in multiple functions:
+    Arguments (source, context, self, signature) are used together in multiple functions:
     src.intract.validators.input_output.InputPresenceRule.validate, src.intract.validators.input_output.OutputPresenceRule.validate,
     src.intract.validators.input_output.ReturnValueRule.validate, src.intract.validators.base.ValidationRule.validate,
     src.intract.validators.effects.NoForbiddenEffectRule.validate.
@@ -1315,14 +1191,14 @@ tickets:
   files:
   - src/intract/validators/input_output.py
   dedupe_key: 'code2llm:smell:data_clump:src/intract/validators/input_output.py:59:Data
-    Clump: self, source, context, signature'
+    Clump: source, context, self, signature'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, source, context, signature'
-  description: 'code2llm reports `Data Clump: self, source, context, signature` in
+  title: 'Address code smell: Data Clump: source, context, self, signature'
+  description: 'code2llm reports `Data Clump: source, context, self, signature` in
     `src/intract/validators/base.py:34`.
 
 
-    Arguments (self, source, context, signature) are used together in multiple functions:
+    Arguments (source, context, self, signature) are used together in multiple functions:
     src.intract.validators.input_output.InputPresenceRule.validate, src.intract.validators.input_output.OutputPresenceRule.validate,
     src.intract.validators.input_output.ReturnValueRule.validate, src.intract.validators.base.ValidationRule.validate,
     src.intract.validators.effects.NoForbiddenEffectRule.validate.
@@ -1338,14 +1214,14 @@ tickets:
   files:
   - src/intract/validators/base.py
   dedupe_key: 'code2llm:smell:data_clump:src/intract/validators/base.py:34:Data Clump:
-    self, source, context, signature'
+    source, context, self, signature'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, source, context, signature'
-  description: 'code2llm reports `Data Clump: self, source, context, signature` in
+  title: 'Address code smell: Data Clump: source, context, self, signature'
+  description: 'code2llm reports `Data Clump: source, context, self, signature` in
     `src/intract/validators/effects.py:34`.
 
 
-    Arguments (self, source, context, signature) are used together in multiple functions:
+    Arguments (source, context, self, signature) are used together in multiple functions:
     src.intract.validators.input_output.InputPresenceRule.validate, src.intract.validators.input_output.OutputPresenceRule.validate,
     src.intract.validators.input_output.ReturnValueRule.validate, src.intract.validators.base.ValidationRule.validate,
     src.intract.validators.effects.NoForbiddenEffectRule.validate.
@@ -1361,7 +1237,372 @@ tickets:
   files:
   - src/intract/validators/effects.py
   dedupe_key: 'code2llm:smell:data_clump:src/intract/validators/effects.py:34:Data
-    Clump: self, source, context, signature'
+    Clump: source, context, self, signature'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: tickets, self, path'
+  description: 'code2llm reports `Data Clump: tickets, self, path` in `src/intract/integrations/planfile.py:97`.
+
+
+    Arguments (tickets, self, path) are used together in multiple functions: src.intract.integrations.planfile.PlanfileExporter._write_yaml,
+    src.intract.integrations.planfile.PlanfileExporter._write_json, src.intract.integrations.planfile.PlanfileExporter._write_todo.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/integrations/planfile.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/integrations/planfile.py:97:Data
+    Clump: tickets, self, path'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: tickets, self, path'
+  description: 'code2llm reports `Data Clump: tickets, self, path` in `src/intract/integrations/planfile.py:121`.
+
+
+    Arguments (tickets, self, path) are used together in multiple functions: src.intract.integrations.planfile.PlanfileExporter._write_yaml,
+    src.intract.integrations.planfile.PlanfileExporter._write_json, src.intract.integrations.planfile.PlanfileExporter._write_todo.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/integrations/planfile.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/integrations/planfile.py:121:Data
+    Clump: tickets, self, path'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: tickets, self, path'
+  description: 'code2llm reports `Data Clump: tickets, self, path` in `src/intract/integrations/planfile.py:129`.
+
+
+    Arguments (tickets, self, path) are used together in multiple functions: src.intract.integrations.planfile.PlanfileExporter._write_yaml,
+    src.intract.integrations.planfile.PlanfileExporter._write_json, src.intract.integrations.planfile.PlanfileExporter._write_todo.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/integrations/planfile.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/integrations/planfile.py:129:Data
+    Clump: tickets, self, path'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: token, path, api_url, manifest, project'
+  description: 'code2llm reports `Data Clump: token, path, api_url, manifest, project`
+    in `src/intract/cli.py:311`.
+
+
+    Arguments (token, path, api_url, manifest, project) are used together in multiple
+    functions: src.intract.cli.planfile_push, src.intract.cli.planfile_sync.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/cli.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/cli.py:311:Data Clump: token,
+    path, api_url, manifest, project'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: token, path, api_url, manifest, project'
+  description: 'code2llm reports `Data Clump: token, path, api_url, manifest, project`
+    in `src/intract/cli.py:352`.
+
+
+    Arguments (token, path, api_url, manifest, project) are used together in multiple
+    functions: src.intract.cli.planfile_push, src.intract.cli.planfile_sync.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/cli.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/cli.py:352:Data Clump: token,
+    path, api_url, manifest, project'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: value, state, _key'
+  description: 'code2llm reports `Data Clump: value, state, _key` in `src/intract/parsers/inline.py:133`.
+
+
+    Arguments (value, state, _key) are used together in multiple functions: src.intract.parsers.inline._set_intent,
+    src.intract.parsers.inline._set_action, src.intract.parsers.inline._set_object,
+    src.intract.parsers.inline._set_scope, src.intract.parsers.inline._set_priority,
+    src.intract.parsers.inline._set_domain, src.intract.parsers.inline._set_contract_id,
+    src.intract.parsers.inline._set_meaning.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/parsers/inline.py:133:Data Clump:
+    value, state, _key'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: value, state, _key'
+  description: 'code2llm reports `Data Clump: value, state, _key` in `src/intract/parsers/inline.py:140`.
+
+
+    Arguments (value, state, _key) are used together in multiple functions: src.intract.parsers.inline._set_intent,
+    src.intract.parsers.inline._set_action, src.intract.parsers.inline._set_object,
+    src.intract.parsers.inline._set_scope, src.intract.parsers.inline._set_priority,
+    src.intract.parsers.inline._set_domain, src.intract.parsers.inline._set_contract_id,
+    src.intract.parsers.inline._set_meaning.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/parsers/inline.py:140:Data Clump:
+    value, state, _key'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: value, state, _key'
+  description: 'code2llm reports `Data Clump: value, state, _key` in `src/intract/parsers/inline.py:144`.
+
+
+    Arguments (value, state, _key) are used together in multiple functions: src.intract.parsers.inline._set_intent,
+    src.intract.parsers.inline._set_action, src.intract.parsers.inline._set_object,
+    src.intract.parsers.inline._set_scope, src.intract.parsers.inline._set_priority,
+    src.intract.parsers.inline._set_domain, src.intract.parsers.inline._set_contract_id,
+    src.intract.parsers.inline._set_meaning.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/parsers/inline.py:144:Data Clump:
+    value, state, _key'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: value, state, _key'
+  description: 'code2llm reports `Data Clump: value, state, _key` in `src/intract/parsers/inline.py:148`.
+
+
+    Arguments (value, state, _key) are used together in multiple functions: src.intract.parsers.inline._set_intent,
+    src.intract.parsers.inline._set_action, src.intract.parsers.inline._set_object,
+    src.intract.parsers.inline._set_scope, src.intract.parsers.inline._set_priority,
+    src.intract.parsers.inline._set_domain, src.intract.parsers.inline._set_contract_id,
+    src.intract.parsers.inline._set_meaning.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/parsers/inline.py:148:Data Clump:
+    value, state, _key'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: value, state, _key'
+  description: 'code2llm reports `Data Clump: value, state, _key` in `src/intract/parsers/inline.py:152`.
+
+
+    Arguments (value, state, _key) are used together in multiple functions: src.intract.parsers.inline._set_intent,
+    src.intract.parsers.inline._set_action, src.intract.parsers.inline._set_object,
+    src.intract.parsers.inline._set_scope, src.intract.parsers.inline._set_priority,
+    src.intract.parsers.inline._set_domain, src.intract.parsers.inline._set_contract_id,
+    src.intract.parsers.inline._set_meaning.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/parsers/inline.py:152:Data Clump:
+    value, state, _key'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: value, state, _key'
+  description: 'code2llm reports `Data Clump: value, state, _key` in `src/intract/parsers/inline.py:157`.
+
+
+    Arguments (value, state, _key) are used together in multiple functions: src.intract.parsers.inline._set_intent,
+    src.intract.parsers.inline._set_action, src.intract.parsers.inline._set_object,
+    src.intract.parsers.inline._set_scope, src.intract.parsers.inline._set_priority,
+    src.intract.parsers.inline._set_domain, src.intract.parsers.inline._set_contract_id,
+    src.intract.parsers.inline._set_meaning.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/parsers/inline.py:157:Data Clump:
+    value, state, _key'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: value, state, _key'
+  description: 'code2llm reports `Data Clump: value, state, _key` in `src/intract/parsers/inline.py:161`.
+
+
+    Arguments (value, state, _key) are used together in multiple functions: src.intract.parsers.inline._set_intent,
+    src.intract.parsers.inline._set_action, src.intract.parsers.inline._set_object,
+    src.intract.parsers.inline._set_scope, src.intract.parsers.inline._set_priority,
+    src.intract.parsers.inline._set_domain, src.intract.parsers.inline._set_contract_id,
+    src.intract.parsers.inline._set_meaning.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/parsers/inline.py:161:Data Clump:
+    value, state, _key'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: value, state, _key'
+  description: 'code2llm reports `Data Clump: value, state, _key` in `src/intract/parsers/inline.py:165`.
+
+
+    Arguments (value, state, _key) are used together in multiple functions: src.intract.parsers.inline._set_intent,
+    src.intract.parsers.inline._set_action, src.intract.parsers.inline._set_object,
+    src.intract.parsers.inline._set_scope, src.intract.parsers.inline._set_priority,
+    src.intract.parsers.inline._set_domain, src.intract.parsers.inline._set_contract_id,
+    src.intract.parsers.inline._set_meaning.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/parsers/inline.py:165:Data Clump:
+    value, state, _key'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: value, state, key'
+  description: 'code2llm reports `Data Clump: value, state, key` in `src/intract/parsers/inline.py:176`.
+
+
+    Arguments (value, state, key) are used together in multiple functions: src.intract.parsers.inline._add_relation,
+    src.intract.parsers.inline._add_unknown_tag, src.intract.parsers.inline._apply_key_value_pair.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/parsers/inline.py:176:Data Clump:
+    value, state, key'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: value, state, key'
+  description: 'code2llm reports `Data Clump: value, state, key` in `src/intract/parsers/inline.py:180`.
+
+
+    Arguments (value, state, key) are used together in multiple functions: src.intract.parsers.inline._add_relation,
+    src.intract.parsers.inline._add_unknown_tag, src.intract.parsers.inline._apply_key_value_pair.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/parsers/inline.py:180:Data Clump:
+    value, state, key'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: value, state, key'
+  description: 'code2llm reports `Data Clump: value, state, key` in `src/intract/parsers/inline.py:248`.
+
+
+    Arguments (value, state, key) are used together in multiple functions: src.intract.parsers.inline._add_relation,
+    src.intract.parsers.inline._add_unknown_tag, src.intract.parsers.inline._apply_key_value_pair.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:data_clump:src/intract/parsers/inline.py:248:Data Clump:
+    value, state, key'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _append_manifest_proposal'
+  description: 'code2llm reports `God Function: _append_manifest_proposal` in `src/intract/manifest_ops.py:163`.
+
+
+    Function ''_append_manifest_proposal'' is oversized: CC=5, fan-out=9, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/intract/manifest_ops.py
+  dedupe_key: 'code2llm:smell:god_function:src/intract/manifest_ops.py:163:God Function:
+    _append_manifest_proposal'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _build_parser'
   description: 'code2llm reports `God Function: _build_parser` in `scripts/generate_toon_from_map.py:390`.
@@ -1381,6 +1622,25 @@ tickets:
   - scripts/generate_toon_from_map.py
   dedupe_key: 'code2llm:smell:god_function:scripts/generate_toon_from_map.py:390:God
     Function: _build_parser'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _fallback_block_extent'
+  description: 'code2llm reports `God Function: _fallback_block_extent` in `src/intract/check.py:127`.
+
+
+    Function ''_fallback_block_extent'' is oversized: CC=11, fan-out=7, mutations=10.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/intract/check.py
+  dedupe_key: 'code2llm:smell:god_function:src/intract/check.py:127:God Function:
+    _fallback_block_extent'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _find_extent'
   description: 'code2llm reports `God Function: _find_extent` in `src/intract/analyzers/treesitter.py:23`.
@@ -1402,7 +1662,7 @@ tickets:
     Function: _find_extent'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _format_check_text'
-  description: 'code2llm reports `God Function: _format_check_text` in `src/intract/cli.py:451`.
+  description: 'code2llm reports `God Function: _format_check_text` in `src/intract/cli.py:511`.
 
 
     Function ''_format_check_text'' is oversized: CC=7, fan-out=4, mutations=15.
@@ -1417,7 +1677,7 @@ tickets:
   - god-function
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:451:God Function: _format_check_text'
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:511:God Function: _format_check_text'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _parse_functions'
   description: 'code2llm reports `God Function: _parse_functions` in `scripts/generate_toon_from_map.py:138`.
@@ -1439,7 +1699,7 @@ tickets:
     Function: _parse_functions'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _parse_intent'
-  description: 'code2llm reports `God Function: _parse_intent` in `src/intract/parsers/manifest.py:23`.
+  description: 'code2llm reports `God Function: _parse_intent` in `src/intract/parsers/manifest.py:24`.
 
 
     Function ''_parse_intent'' is oversized: CC=3, fan-out=4, mutations=8.
@@ -1454,11 +1714,29 @@ tickets:
   - god-function
   files:
   - src/intract/parsers/manifest.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/parsers/manifest.py:23:God
+  dedupe_key: 'code2llm:smell:god_function:src/intract/parsers/manifest.py:24:God
     Function: _parse_intent'
 - signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _print_scan_table'
+  description: 'code2llm reports `God Function: _print_scan_table` in `src/intract/cli.py:130`.
+
+
+    Function ''_print_scan_table'' is oversized: CC=2, fan-out=5, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/intract/cli.py
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:130:God Function: _print_scan_table'
+- signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _print_validation_report'
-  description: 'code2llm reports `God Function: _print_validation_report` in `src/intract/cli.py:433`.
+  description: 'code2llm reports `God Function: _print_validation_report` in `src/intract/cli.py:493`.
 
 
     Function ''_print_validation_report'' is oversized: CC=4, fan-out=7, mutations=11.
@@ -1473,7 +1751,7 @@ tickets:
   - god-function
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:433:God Function: _print_validation_report'
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:493:God Function: _print_validation_report'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _scan_braced_block'
   description: 'code2llm reports `God Function: _scan_braced_block` in `src/intract/analyzers/csharp.py:39`.
@@ -1512,6 +1790,25 @@ tickets:
   - src/intract/analyzers/typescript.py
   dedupe_key: 'code2llm:smell:god_function:src/intract/analyzers/typescript.py:38:God
     Function: _scan_braced_block'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _validate_manifest_signature'
+  description: 'code2llm reports `God Function: _validate_manifest_signature` in `src/intract/project.py:86`.
+
+
+    Function ''_validate_manifest_signature'' is oversized: CC=4, fan-out=4, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/intract/project.py
+  dedupe_key: 'code2llm:smell:god_function:src/intract/project.py:86:God Function:
+    _validate_manifest_signature'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: activate'
   description: 'code2llm reports `God Function: activate` in `extensions/vscode-intract/extension.js:21`.
@@ -1589,7 +1886,7 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:src/intract/graph.py:39:God Function: build_graph'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: clean_comment_line'
-  description: 'code2llm reports `God Function: clean_comment_line` in `src/intract/parsers/inline.py:16`.
+  description: 'code2llm reports `God Function: clean_comment_line` in `src/intract/parsers/inline.py:17`.
 
 
     Function ''clean_comment_line'' is oversized: CC=12, fan-out=5, mutations=9.
@@ -1604,7 +1901,7 @@ tickets:
   - god-function
   files:
   - src/intract/parsers/inline.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/parsers/inline.py:16:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/intract/parsers/inline.py:17:God Function:
     clean_comment_line'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: collect_source_units'
@@ -1627,7 +1924,7 @@ tickets:
     collect_source_units'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: contract_from_mapping'
-  description: 'code2llm reports `God Function: contract_from_mapping` in `src/intract/parsers/manifest.py:33`.
+  description: 'code2llm reports `God Function: contract_from_mapping` in `src/intract/parsers/manifest.py:34`.
 
 
     Function ''contract_from_mapping'' is oversized: CC=3, fan-out=7, mutations=7.
@@ -1642,7 +1939,7 @@ tickets:
   - god-function
   files:
   - src/intract/parsers/manifest.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/parsers/manifest.py:33:God
+  dedupe_key: 'code2llm:smell:god_function:src/intract/parsers/manifest.py:34:God
     Function: contract_from_mapping'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: contract_line_to_manifest_entry'
@@ -1664,6 +1961,25 @@ tickets:
   - src/intract/manifest_ops.py
   dedupe_key: 'code2llm:smell:god_function:src/intract/manifest_ops.py:73:God Function:
     contract_line_to_manifest_entry'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: decide_policy'
+  description: 'code2llm reports `God Function: decide_policy` in `src/intract/policy.py:87`.
+
+
+    Function ''decide_policy'' is oversized: CC=6, fan-out=6, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/intract/policy.py
+  dedupe_key: 'code2llm:smell:god_function:src/intract/policy.py:87:God Function:
+    decide_policy'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: detect_drift'
   description: 'code2llm reports `God Function: detect_drift` in `src/intract/engine/drift.py:66`.
@@ -1704,7 +2020,7 @@ tickets:
     do_POST'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: duplicates'
-  description: 'code2llm reports `God Function: duplicates` in `src/intract/cli.py:200`.
+  description: 'code2llm reports `God Function: duplicates` in `src/intract/cli.py:260`.
 
 
     Function ''duplicates'' is oversized: CC=4, fan-out=13, mutations=8.
@@ -1719,10 +2035,10 @@ tickets:
   - god-function
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:200:God Function: duplicates'
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:260:God Function: duplicates'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: engine_drift'
-  description: 'code2llm reports `God Function: engine_drift` in `src/intract/cli.py:391`.
+  description: 'code2llm reports `God Function: engine_drift` in `src/intract/cli.py:451`.
 
 
     Function ''engine_drift'' is oversized: CC=4, fan-out=14, mutations=8.
@@ -1737,10 +2053,10 @@ tickets:
   - god-function
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:391:God Function: engine_drift'
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:451:God Function: engine_drift'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: engine_run'
-  description: 'code2llm reports `God Function: engine_run` in `src/intract/cli.py:411`.
+  description: 'code2llm reports `God Function: engine_run` in `src/intract/cli.py:471`.
 
 
     Function ''engine_run'' is oversized: CC=4, fan-out=13, mutations=2.
@@ -1755,10 +2071,10 @@ tickets:
   - god-function
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:411:God Function: engine_run'
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:471:God Function: engine_run'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: engine_suggest'
-  description: 'code2llm reports `God Function: engine_suggest` in `src/intract/cli.py:374`.
+  description: 'code2llm reports `God Function: engine_suggest` in `src/intract/cli.py:434`.
 
 
     Function ''engine_suggest'' is oversized: CC=3, fan-out=14, mutations=8.
@@ -1773,10 +2089,10 @@ tickets:
   - god-function
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:374:God Function: engine_suggest'
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:434:God Function: engine_suggest'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: find_intent_duplicate_groups'
-  description: 'code2llm reports `God Function: find_intent_duplicate_groups` in `src/intract/integrations/redup.py:104`.
+  description: 'code2llm reports `God Function: find_intent_duplicate_groups` in `src/intract/integrations/redup.py:109`.
 
 
     Function ''find_intent_duplicate_groups'' is oversized: CC=8, fan-out=8, mutations=15.
@@ -1791,7 +2107,7 @@ tickets:
   - god-function
   files:
   - src/intract/integrations/redup.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/integrations/redup.py:104:God
+  dedupe_key: 'code2llm:smell:god_function:src/intract/integrations/redup.py:109:God
     Function: find_intent_duplicate_groups'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: generate_toon_lines'
@@ -1814,7 +2130,7 @@ tickets:
     Function: generate_toon_lines'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: graph'
-  description: 'code2llm reports `God Function: graph` in `src/intract/cli.py:222`.
+  description: 'code2llm reports `God Function: graph` in `src/intract/cli.py:282`.
 
 
     Function ''graph'' is oversized: CC=5, fan-out=12, mutations=4.
@@ -1829,7 +2145,7 @@ tickets:
   - god-function
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:222:God Function: graph'
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:282:God Function: graph'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: handle_validate_staged'
   description: 'code2llm reports `God Function: handle_validate_staged` in `src/intract/mcp/handlers.py:43`.
@@ -1907,8 +2223,27 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:scripts/generate_toon_from_map.py:441:God
     Function: main'
 - signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: main'
+  description: 'code2llm reports `God Function: main` in `examples/markdown-generator/demo.py:39`.
+
+
+    Function ''main'' is oversized: CC=4, fan-out=6, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - examples/markdown-generator/demo.py
+  dedupe_key: 'code2llm:smell:god_function:examples/markdown-generator/demo.py:39:God
+    Function: main'
+- signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: manifest_apply_ledger'
-  description: 'code2llm reports `God Function: manifest_apply_ledger` in `src/intract/cli.py:567`.
+  description: 'code2llm reports `God Function: manifest_apply_ledger` in `src/intract/cli.py:627`.
 
 
     Function ''manifest_apply_ledger'' is oversized: CC=10, fan-out=14, mutations=3.
@@ -1923,7 +2258,7 @@ tickets:
   - god-function
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:567:God Function: manifest_apply_ledger'
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:627:God Function: manifest_apply_ledger'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: map_project_report'
   description: 'code2llm reports `God Function: map_project_report` in `src/intract/integrations/vallm.py:56`.
@@ -2001,6 +2336,25 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:src/intract/duplicates/grouping.py:90:God
     Function: pairs_to_intent_groups'
 - signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: parse_contract_line'
+  description: 'code2llm reports `God Function: parse_contract_line` in `src/intract/parsers/inline.py:260`.
+
+
+    Function ''parse_contract_line'' is oversized: CC=13, fan-out=13, mutations=14.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/intract/parsers/inline.py
+  dedupe_key: 'code2llm:smell:god_function:src/intract/parsers/inline.py:260:God Function:
+    parse_contract_line'
+- signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: parse_intract_line'
   description: 'code2llm reports `God Function: parse_intract_line` in `src/intract/integrations/nexu.py:48`.
 
@@ -2058,8 +2412,27 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:src/intract/parsers/openapi.py:39:God Function:
     parse_openapi_text'
 - signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: parse_toon_uri_line'
+  description: 'code2llm reports `God Function: parse_toon_uri_line` in `src/intract/parsers/toon.py:119`.
+
+
+    Function ''parse_toon_uri_line'' is oversized: CC=3, fan-out=11, mutations=11.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/intract/parsers/toon.py
+  dedupe_key: 'code2llm:smell:god_function:src/intract/parsers/toon.py:119:God Function:
+    parse_toon_uri_line'
+- signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: planfile_pull'
-  description: 'code2llm reports `God Function: planfile_pull` in `src/intract/cli.py:271`.
+  description: 'code2llm reports `God Function: planfile_pull` in `src/intract/cli.py:331`.
 
 
     Function ''planfile_pull'' is oversized: CC=3, fan-out=11, mutations=2.
@@ -2074,7 +2447,26 @@ tickets:
   - god-function
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:271:God Function: planfile_pull'
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:331:God Function: planfile_pull'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: propose_contracts_llm'
+  description: 'code2llm reports `God Function: propose_contracts_llm` in `src/intract/propose_llm.py:123`.
+
+
+    Function ''propose_contracts_llm'' is oversized: CC=3, fan-out=12, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/intract/propose_llm.py
+  dedupe_key: 'code2llm:smell:god_function:src/intract/propose_llm.py:123:God Function:
+    propose_contracts_llm'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: python_block_extent'
   description: 'code2llm reports `God Function: python_block_extent` in `src/intract/analyzers/python_ast.py:35`.
@@ -2191,7 +2583,7 @@ tickets:
     Function: score_similarity'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: signatures_from_blocks'
-  description: 'code2llm reports `God Function: signatures_from_blocks` in `src/intract/integrations/redup.py:61`.
+  description: 'code2llm reports `God Function: signatures_from_blocks` in `src/intract/integrations/redup.py:66`.
 
 
     Function ''signatures_from_blocks'' is oversized: CC=5, fan-out=6, mutations=9.
@@ -2206,11 +2598,11 @@ tickets:
   - god-function
   files:
   - src/intract/integrations/redup.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/integrations/redup.py:61:God
+  dedupe_key: 'code2llm:smell:god_function:src/intract/integrations/redup.py:66:God
     Function: signatures_from_blocks'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: staged_check'
-  description: 'code2llm reports `God Function: staged_check` in `src/intract/check.py:246`.
+  description: 'code2llm reports `God Function: staged_check` in `src/intract/check.py:265`.
 
 
     Function ''staged_check'' is oversized: CC=4, fan-out=7, mutations=8.
@@ -2225,7 +2617,7 @@ tickets:
   - god-function
   files:
   - src/intract/check.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/check.py:246:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/intract/check.py:265:God Function:
     staged_check'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: suggest_contract_for_fragment'
@@ -2307,6 +2699,44 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:src/intract/validators/engine.py:13:God
     Function: validate_contract_against_source'
 - signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: validate_for_redup'
+  description: 'code2llm reports `God Function: validate_for_redup` in `src/intract/integrations/redup.py:229`.
+
+
+    Function ''validate_for_redup'' is oversized: CC=4, fan-out=12, mutations=10.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/intract/integrations/redup.py
+  dedupe_key: 'code2llm:smell:god_function:src/intract/integrations/redup.py:229:God
+    Function: validate_for_redup'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: validate_manifest'
+  description: 'code2llm reports `God Function: validate_manifest` in `src/intract/manifest_schema.py:103`.
+
+
+    Function ''validate_manifest'' is oversized: CC=4, fan-out=7, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/intract/manifest_schema.py
+  dedupe_key: 'code2llm:smell:god_function:src/intract/manifest_schema.py:103:God
+    Function: validate_manifest'
+- signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: validate_openapi'
   description: 'code2llm reports `God Function: validate_openapi` in `src/intract/validators/artifacts.py:26`.
 
@@ -2327,7 +2757,7 @@ tickets:
     Function: validate_openapi'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: validate_project'
-  description: 'code2llm reports `God Function: validate_project` in `src/intract/project.py:83`.
+  description: 'code2llm reports `God Function: validate_project` in `src/intract/project.py:135`.
 
 
     Function ''validate_project'' is oversized: CC=6, fan-out=7, mutations=12.
@@ -2342,7 +2772,7 @@ tickets:
   - god-function
   files:
   - src/intract/project.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/project.py:83:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/intract/project.py:135:God Function:
     validate_project'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: validate_proposal'
@@ -2365,7 +2795,7 @@ tickets:
     Function: validate_proposal'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: validate_selected_paths'
-  description: 'code2llm reports `God Function: validate_selected_paths` in `src/intract/check.py:213`.
+  description: 'code2llm reports `God Function: validate_selected_paths` in `src/intract/check.py:232`.
 
 
     Function ''validate_selected_paths'' is oversized: CC=8, fan-out=8, mutations=9.
@@ -2380,11 +2810,11 @@ tickets:
   - god-function
   files:
   - src/intract/check.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/check.py:213:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/intract/check.py:232:God Function:
     validate_selected_paths'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: validate_sources_for_hunks'
-  description: 'code2llm reports `God Function: validate_sources_for_hunks` in `src/intract/check.py:166`.
+  description: 'code2llm reports `God Function: validate_sources_for_hunks` in `src/intract/check.py:177`.
 
 
     Function ''validate_sources_for_hunks'' is oversized: CC=14, fan-out=14, mutations=13.
@@ -2399,11 +2829,11 @@ tickets:
   - god-function
   files:
   - src/intract/check.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/check.py:166:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/intract/check.py:177:God Function:
     validate_sources_for_hunks'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: watch'
-  description: 'code2llm reports `God Function: watch` in `src/intract/cli.py:341`.
+  description: 'code2llm reports `God Function: watch` in `src/intract/cli.py:401`.
 
 
     Function ''watch'' is oversized: CC=3, fan-out=16, mutations=0.
@@ -2418,7 +2848,7 @@ tickets:
   - god-function
   files:
   - src/intract/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:341:God Function: watch'
+  dedupe_key: 'code2llm:smell:god_function:src/intract/cli.py:401:God Function: watch'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: watch_tree'
   description: 'code2llm reports `God Function: watch_tree` in `src/intract/watch.py:127`.

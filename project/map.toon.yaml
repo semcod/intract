@@ -1,11 +1,11 @@
-# intract | 145f 9593L | python:127,typescript:7,shell:5,javascript:2,go:2,less:1,rust:1 | 2026-06-03
-# stats: 330 func | 75 cls | 145 mod | CC̄=4.8 | critical:32 | cycles:0
-# alerts[5]: CC parse_contract_line=49; CC parse_toon_uri_line=34; CC block_extent=20; CC load_manifest_records=20; CC read_toon_manifest_contracts=19
-# hotspots[5]: scan fan=22; check fan=21; parse_contract_line fan=19; validate_manifest fan=17; watch fan=16
+# intract | 150f 10505L | python:131,typescript:7,shell:6,javascript:2,go:2,less:1,rust:1 | 2026-06-04
+# stats: 437 func | 77 cls | 150 mod | CC̄=3.9 | critical:20 | cycles:0
+# alerts[5]: CC python_block_extent=14; CC validate_sources_for_hunks=14; CC check=13; CC contract_line_to_manifest_entry=13; CC parse_contract_line=13
+# hotspots[5]: check fan=21; watch fan=16; validate_sources_for_hunks fan=14; engine_suggest fan=14; engine_drift fan=14
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[145]:
-  app.doql.less,49
+M[150]:
+  app.doql.less,119
   examples/full-stack/src/analyzer.py,4
   examples/full-stack/src/parser_a.py,4
   examples/full-stack/src/parser_b.py,4
@@ -15,6 +15,10 @@ M[145]:
   examples/integration_tests/03_watch_engine_drift/reporter.py,5
   examples/integration_tests/03_watch_engine_drift/scanner.py,9
   examples/integration_tests/run_examples.py,118
+  examples/markdown-generator/demo.py,69
+  examples/markdown-generator/pass/generator.py,83
+  examples/markdown-generator/run-demo.sh,8
+  examples/markdown-generator/violation/generator.py,77
   examples/python/parse_extensions.py,9
   examples/showcase/server.py,143
   examples/toon/src/auth.js,17
@@ -51,16 +55,16 @@ M[145]:
   src/intract/analyzers/treesitter.py,63
   src/intract/analyzers/typescript.py,67
   src/intract/artifacts.py,6
-  src/intract/check.py,274
-  src/intract/cli.py,624
+  src/intract/check.py,298
+  src/intract/cli.py,684
   src/intract/config.py,65
   src/intract/core/__init__.py,36
-  src/intract/core/artifact.py,94
+  src/intract/core/artifact.py,133
   src/intract/core/cache.py,100
   src/intract/core/models.py,155
   src/intract/core/normalizer.py,70
   src/intract/core/registry.py,7
-  src/intract/core/signatures.py,79
+  src/intract/core/signatures.py,123
   src/intract/coverage.py,35
   src/intract/duplicates/__init__.py,16
   src/intract/duplicates/grouping.py,139
@@ -78,13 +82,13 @@ M[145]:
   src/intract/git.py,54
   src/intract/graph.py,69
   src/intract/integrations/__init__.py,45
-  src/intract/integrations/nexu.py,179
+  src/intract/integrations/nexu.py,190
   src/intract/integrations/planfile.py,142
   src/intract/integrations/planfile_adapter.py,256
-  src/intract/integrations/redup.py,255
+  src/intract/integrations/redup.py,288
   src/intract/integrations/vallm.py,117
-  src/intract/manifest_ops.py,220
-  src/intract/manifest_schema.py,95
+  src/intract/manifest_ops.py,244
+  src/intract/manifest_schema.py,117
   src/intract/mcp/__init__.py,22
   src/intract/mcp/handlers.py,125
   src/intract/mcp/schemas.py,92
@@ -94,18 +98,18 @@ M[145]:
   src/intract/normalizer.py,4
   src/intract/parser.py,4
   src/intract/parsers/__init__.py,14
-  src/intract/parsers/inline.py,250
-  src/intract/parsers/manifest.py,168
+  src/intract/parsers/inline.py,336
+  src/intract/parsers/manifest.py,178
   src/intract/parsers/openapi.py,64
-  src/intract/parsers/toon.py,119
+  src/intract/parsers/toon.py,170
   src/intract/plugins/__init__.py,25
   src/intract/plugins/base.py,110
   src/intract/plugins/builtins.py,112
   src/intract/plugins/manager.py,62
-  src/intract/policy.py,73
-  src/intract/project.py,116
+  src/intract/policy.py,107
+  src/intract/project.py,168
   src/intract/proposals.py,101
-  src/intract/propose_llm.py,131
+  src/intract/propose_llm.py,167
   src/intract/reporters/__init__.py,1
   src/intract/reporters/sarif.py,63
   src/intract/scan_artifacts.py,71
@@ -132,6 +136,7 @@ M[145]:
   tests/test_language_analyzers.py,117
   tests/test_manifest.py,27
   tests/test_manifest_ops.py,107
+  tests/test_markdown_generator_example.py,79
   tests/test_mcp.py,63
   tests/test_new_modules.py,49
   tests/test_next_stage.py,37
@@ -180,6 +185,26 @@ D:
     run_example_03(base)
     run_example_04(base)
     main()
+  examples/markdown-generator/demo.py:
+    e: _validate_project,_load_pass_generator,_violation_messages,main
+    _validate_project(path;manifest_path)
+    _load_pass_generator()
+    _violation_messages(report)
+    main()
+  examples/markdown-generator/pass/generator.py:
+    e: normalize_topic,build_markdown_outline,render_markdown_sections,guard_markdown_contract,generate_markdown_document
+    normalize_topic(topic)
+    build_markdown_outline(normalized_topic;required_sections)
+    render_markdown_sections(markdown_outline;normalized_topic;audience)
+    guard_markdown_contract(markdown_document;required_sections;normalized_topic)
+    generate_markdown_document(topic;audience)
+  examples/markdown-generator/violation/generator.py:
+    e: normalize_topic,build_markdown_outline,render_markdown_sections,guard_markdown_contract,generate_markdown_document
+    normalize_topic(topic)
+    build_markdown_outline(normalized_topic;required_sections)
+    render_markdown_sections(markdown_outline;normalized_topic;audience)
+    guard_markdown_contract(markdown_document;required_sections;normalized_topic)
+    generate_markdown_document(topic;audience)
   examples/python/parse_extensions.py:
     e: parse_extensions
     parse_extensions(raw_extensions)
@@ -271,12 +296,16 @@ D:
     _treesitter_typescript_extent(source;start_line)
   src/intract/artifacts.py:
   src/intract/check.py:
-    e: parse_unified_diff_hunks,load_selected_sources,_manifest_changed,changed_lines_by_file,block_extent,signature_touched,validate_sources_for_hunks,validate_selected_paths,staged_check,changed_check,ChangedHunk
+    e: parse_unified_diff_hunks,load_selected_sources,_manifest_changed,changed_lines_by_file,_language_block_extent,_is_python_declaration,_is_fallback_preamble,_fallback_block_extent,block_extent,signature_touched,validate_sources_for_hunks,validate_selected_paths,staged_check,changed_check,ChangedHunk
     ChangedHunk: to_dict(0)
     parse_unified_diff_hunks(diff_text)
     load_selected_sources(root;files)
     _manifest_changed(files)
     changed_lines_by_file(hunks)
+    _language_block_extent(source;start_line;file_path)
+    _is_python_declaration(stripped)
+    _is_fallback_preamble(stripped)
+    _fallback_block_extent(source;start_line)
     block_extent(source;start_line)
     signature_touched(signature;changed_lines;source)
     validate_sources_for_hunks(root;files;hunks)
@@ -284,9 +313,16 @@ D:
     staged_check(root)
     changed_check(root)
   src/intract/cli.py:
-    e: main,init,scan,validate,check,coverage,duplicates,graph,tickets,planfile_push,planfile_pull,planfile_sync,planfile_webhook_test,planfile_webhook_apply,watch,engine_suggest,engine_drift,engine_run,_export_tickets,_print_validation_report,_format_check_text,check_manifest,artifact_validate,propose_delta,propose_llm_cmd,manifest_apply_ledger
+    e: main,init,_print_artifact_scan_report,_scan_artifacts,_is_scan_candidate,_scan_contract_file,_scan_inline_records,_scan_row,_print_scan_table,scan,validate,check,coverage,duplicates,graph,tickets,planfile_push,planfile_pull,planfile_sync,planfile_webhook_test,planfile_webhook_apply,watch,engine_suggest,engine_drift,engine_run,_export_tickets,_print_validation_report,_format_check_text,check_manifest,artifact_validate,propose_delta,propose_llm_cmd,manifest_apply_ledger
     main(version)
     init(path;force)
+    _print_artifact_scan_report(artifact_report)
+    _scan_artifacts(path)
+    _is_scan_candidate(path)
+    _scan_contract_file(path)
+    _scan_inline_records(path)
+    _scan_row(record)
+    _print_scan_table(data)
     scan(path;json_output;all_artifacts)
     validate(path;manifest;json_output;planfile)
     check(path;staged;changed;base;hunks;manifest;fmt;output;planfile)
@@ -317,10 +353,12 @@ D:
     load_config(root)
   src/intract/core/__init__.py:
   src/intract/core/artifact.py:
-    e: infer_language,infer_artifact_kind,ArtifactKind,Artifact
+    e: infer_language,_kind_from_filename,_kind_from_structured_content,infer_artifact_kind,ArtifactKind,Artifact
     ArtifactKind:
     Artifact: from_path(2)
     infer_language(path)
+    _kind_from_filename(path;name;suffix)
+    _kind_from_structured_content(suffix;content)
     infer_artifact_kind(path;content)
   src/intract/core/cache.py:
     e: CacheEntry,IntractDecisionCache
@@ -343,8 +381,14 @@ D:
     normalize_requirement(value)
   src/intract/core/registry.py:
   src/intract/core/signatures.py:
-    e: make_block_id,build_signature,build_signatures
+    e: make_block_id,_normalize_contract,_add_feature_values,_signature_features,_exact_hash,_block_id,build_signature,build_signatures,_NormalizedContract
+    _NormalizedContract:
     make_block_id(file_path;start_line;end_line;scope)
+    _normalize_contract(record)
+    _add_feature_values(features;prefix;values)
+    _signature_features(record;normalized)
+    _exact_hash(features)
+    _block_id(record)
     build_signature(record)
     build_signatures(records)
   src/intract/coverage.py:
@@ -423,13 +467,20 @@ D:
     build_graph(root;manifest)
   src/intract/integrations/__init__.py:
   src/intract/integrations/nexu.py:
-    e: format_intract_v1_line,parse_intract_line,scan_contracts_in_text,scan_contracts_in_file,read_manifest_contracts,read_toon_manifest_contracts,IntentContract
+    e: format_intract_v1_line,parse_intract_line,scan_contracts_in_text,scan_contracts_in_file,_contract_items,_list_field,_base_intent_contract,read_manifest_contracts,_read_yaml_mapping,_toon_target,_target_line_value,_toon_intent_contract,read_toon_manifest_contracts,IntentContract
     IntentContract: key(0)
     format_intract_v1_line(contract)
     parse_intract_line(line)
     scan_contracts_in_text(text)
     scan_contracts_in_file(path;root)
+    _contract_items(data)
+    _list_field(item;key)
+    _base_intent_contract(item;path)
     read_manifest_contracts(path)
+    _read_yaml_mapping(path)
+    _toon_target(item)
+    _target_line_value(target)
+    _toon_intent_contract(item;path)
     read_toon_manifest_contracts(path)
   src/intract/integrations/planfile.py:
     e: _severity_from_status,tickets_from_report,Ticket,PlanfileExporter
@@ -446,7 +497,7 @@ D:
     _ticket_from_dict(data)
     _default_created_at()
   src/intract/integrations/redup.py:
-    e: block_text,block_file_path,block_start_line,block_end_line,signatures_from_text,signatures_from_blocks,signatures_from_manifest,_with_block_lines,find_intent_duplicate_groups,parse_policy_tokens,validate_for_redup,scan_blocks_for_intent_duplicates,CodeBlockLike,BlockAdapter,RedupScanResult,RedupPolicyResult
+    e: block_text,block_file_path,block_start_line,block_end_line,signatures_from_text,signatures_from_blocks,signatures_from_manifest,_with_block_lines,find_intent_duplicate_groups,parse_policy_tokens,_resolve_manifest_path,_graph_for_policy,_intent_duplicate_label,_duplicate_reasons,_apply_duplicate_policy,validate_for_redup,scan_blocks_for_intent_duplicates,CodeBlockLike,BlockAdapter,RedupScanResult,RedupPolicyResult
     CodeBlockLike:
     BlockAdapter:
     RedupScanResult: to_dict(0)
@@ -461,6 +512,11 @@ D:
     _with_block_lines(signature;block)
     find_intent_duplicate_groups(blocks)
     parse_policy_tokens(value)
+    _resolve_manifest_path(project_root;manifest;config)
+    _graph_for_policy(project_root;manifest_path;fail_on)
+    _intent_duplicate_label(group)
+    _duplicate_reasons(intent_groups)
+    _apply_duplicate_policy(reasons;warnings)
     validate_for_redup(root)
     scan_blocks_for_intent_duplicates(blocks)
   src/intract/integrations/vallm.py:
@@ -472,7 +528,7 @@ D:
     validate_for_vallm(root)
     validate_proposal(code)
   src/intract/manifest_ops.py:
-    e: load_manifest_document,write_manifest_document,contract_line_to_manifest_entry,load_policy_ledger,resolve_manifest_paths,apply_ledger_to_manifest,apply_ledger_to_manifests,ManifestApplyResult,ManifestApplyBatchResult
+    e: load_manifest_document,write_manifest_document,contract_line_to_manifest_entry,load_policy_ledger,resolve_manifest_paths,_existing_contract_ids,_should_apply_ledger_entry,_iter_ledger_proposals,_append_manifest_proposal,apply_ledger_to_manifest,apply_ledger_to_manifests,ManifestApplyResult,ManifestApplyBatchResult
     ManifestApplyResult: to_dict(0)
     ManifestApplyBatchResult: added_total(0),to_dict(0)
     load_manifest_document(path)
@@ -480,13 +536,22 @@ D:
     contract_line_to_manifest_entry(line)
     load_policy_ledger(path)
     resolve_manifest_paths()
+    _existing_contract_ids(manifest)
+    _should_apply_ledger_entry(entry)
+    _iter_ledger_proposals(ledger_path)
+    _append_manifest_proposal(proposal;manifest;existing_ids;result)
     apply_ledger_to_manifest(manifest_path;ledger_path)
     apply_ledger_to_manifests()
   src/intract/manifest_schema.py:
-    e: _load_schema,validate_manifest,ManifestIssue,ManifestValidationReport
+    e: _load_schema,_manifest_report,_invalid_manifest_report,_load_manifest_data,_jsonschema_issues,_fallback_issues,validate_manifest,ManifestIssue,ManifestValidationReport
     ManifestIssue:
     ManifestValidationReport: to_dict(0)
     _load_schema()
+    _manifest_report(path;issues)
+    _invalid_manifest_report(path;message)
+    _load_manifest_data(path)
+    _jsonschema_issues(data)
+    _fallback_issues(data)
     validate_manifest(path)
   src/intract/mcp/__init__.py:
   src/intract/mcp/handlers.py:
@@ -514,20 +579,43 @@ D:
   src/intract/parser.py:
   src/intract/parsers/__init__.py:
   src/intract/parsers/inline.py:
-    e: clean_comment_line,split_csv,parse_priority,parse_key_value,marker_payload,extract_intract_uri,parse_contract_line,extract_contract_records_from_text
+    e: clean_comment_line,split_csv,parse_priority,parse_key_value,marker_payload,extract_intract_uri,_parse_uri_contract,_set_intent,_set_action,_set_object,_set_scope,_set_priority,_set_domain,_set_contract_id,_set_meaning,_extend_list,_add_relation,_add_unknown_tag,_parse_special_token,_apply_key_value_pair,_resolve_action_object,parse_contract_line,extract_contract_records_from_text,_ContractParserState
+    _ContractParserState: __init__(1)
     clean_comment_line(line)
     split_csv(value)
     parse_priority(token)
     parse_key_value(token)
     marker_payload(line)
     extract_intract_uri(payload)
+    _parse_uri_contract(payload;default_scope)
+    _set_intent(_key;value;state)
+    _set_action(_key;value;state)
+    _set_object(_key;value;state)
+    _set_scope(_key;value;state)
+    _set_priority(_key;value;state)
+    _set_domain(_key;value;state)
+    _set_contract_id(_key;value;state)
+    _set_meaning(_key;value;state)
+    _extend_list(attribute)
+    _add_relation(key;value;state)
+    _add_unknown_tag(key;value;state)
+    _parse_special_token(token;state)
+    _apply_key_value_pair(key;value;state)
+    _resolve_action_object(state)
     parse_contract_line(line)
     extract_contract_records_from_text(source)
   src/intract/parsers/manifest.py:
-    e: _to_tuple,_parse_intent,contract_from_mapping,load_manifest_records,create_sample_manifest
+    e: _to_tuple,_parse_intent,contract_from_mapping,_target_mapping,_target_line,_target_tags,_with_target_tags,_top_level_contract_record,_top_level_contract_records,_file_contract_records,load_manifest_records,create_sample_manifest
     _to_tuple(value)
     _parse_intent(value)
     contract_from_mapping(data)
+    _target_mapping(item)
+    _target_line(target)
+    _target_tags(target)
+    _with_target_tags(contract;target)
+    _top_level_contract_record(item;path;index)
+    _top_level_contract_records(data;path)
+    _file_contract_records(files)
     load_manifest_records(path)
     create_sample_manifest()
   src/intract/parsers/openapi.py:
@@ -535,7 +623,18 @@ D:
     parse_openapi_contracts(path)
     parse_openapi_text(content)
   src/intract/parsers/toon.py:
-    e: parse_toon_uri_line,load_toon_records
+    e: _parse_action_object_from_intent,_extract_file_path,_get_first,_get_list,_get_first_alias,_get_list_alias,_build_tags,_start_line,_priority,_action_object,_contract_from_uri,parse_toon_uri_line,load_toon_records
+    _parse_action_object_from_intent(intent;contract_id)
+    _extract_file_path(parsed)
+    _get_first(params;key;default)
+    _get_list(params;key)
+    _get_first_alias(params)
+    _get_list_alias(params)
+    _build_tags(func_val;xpath_val;fragment_params)
+    _start_line(line_val)
+    _priority(fragment_params)
+    _action_object(fragment_params)
+    _contract_from_uri(text;fragment_params)
     parse_toon_uri_line(line;line_num)
     load_toon_records(path)
   src/intract/plugins/__init__.py:
@@ -561,14 +660,23 @@ D:
     load_builtin_plugins()
     discover_plugins()
   src/intract/policy.py:
-    e: _p1_missing_reasons,decide_policy,PolicyDecision
+    e: _p1_missing_reasons,_result_status,_result_policy_line,_collect_result_policy,_invalid_manifest_reasons,_missing_required_p1_reasons,decide_policy,PolicyDecision
     PolicyDecision:
     _p1_missing_reasons(graph;manifest_path)
+    _result_status(result)
+    _result_policy_line(result;status)
+    _collect_result_policy(report)
+    _invalid_manifest_reasons(manifest_path)
+    _missing_required_p1_reasons(graph;manifest_path)
     decide_policy(report)
   src/intract/project.py:
-    e: load_project_sources,extract_signatures_from_sources,validate_sources,validate_project
+    e: load_project_sources,extract_signatures_from_sources,_validate_observed_signatures,_validate_manifest_signature,_validate_manifest_signatures,_project_status,validate_sources,validate_project
     load_project_sources(root)
     extract_signatures_from_sources(sources)
+    _validate_observed_signatures(observed_signatures;sources)
+    _validate_manifest_signature(required_signature;observed_signatures;sources)
+    _validate_manifest_signatures(manifest_records;observed_signatures;sources)
+    _project_status(results)
     validate_sources(sources)
     validate_project(root)
   src/intract/proposals.py:
@@ -578,9 +686,16 @@ D:
     propose_ui_delta_contracts()
     propose_ui_delta_contract_dicts()
   src/intract/propose_llm.py:
-    e: _extract_intract_lines,_lines_to_proposals,propose_contracts_llm
+    e: _extract_intract_lines,_lines_to_proposals,_load_litellm_completion,_resolve_model,_resolve_api_key,_build_prompt,_message_content_to_text,_strip_markdown_fence,_json_line_strings,propose_contracts_llm
     _extract_intract_lines(text)
     _lines_to_proposals(lines)
+    _load_litellm_completion()
+    _resolve_model(model)
+    _resolve_api_key(api_key)
+    _build_prompt(source)
+    _message_content_to_text(content)
+    _strip_markdown_fence(raw)
+    _json_line_strings(raw)
     propose_contracts_llm(source)
   src/intract/reporters/__init__.py:
   src/intract/reporters/sarif.py:
@@ -699,6 +814,13 @@ D:
     test_contract_line_to_manifest_entry_parses_ui_line()
     test_apply_ledger_to_manifest_adds_only_evolved(tmp_path)
     test_apply_ledger_to_manifests_both_targets(tmp_path)
+  tests/test_markdown_generator_example.py:
+    e: _load_pass_generator,test_markdown_generator_pass_validates_and_generates_required_format,test_markdown_generator_violation_flags_forbidden_effects,test_markdown_guard_rejects_topic_drift_and_html_format,test_markdown_generator_demo_script_runs
+    _load_pass_generator()
+    test_markdown_generator_pass_validates_and_generates_required_format()
+    test_markdown_generator_violation_flags_forbidden_effects()
+    test_markdown_guard_rejects_topic_drift_and_html_format()
+    test_markdown_generator_demo_script_runs()
   tests/test_mcp.py:
     e: test_tool_schema_lists_core_tools,test_initialize_response,test_tools_list_response,test_validate_intent_snippet_handler,test_validate_project_on_full_stack,test_tools_call_routes_handler
     test_tool_schema_lists_core_tools()

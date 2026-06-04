@@ -32,6 +32,58 @@ def _p1_missing_reasons(graph: Any, manifest_path: Path) -> list[str]:
     return reasons
 
 
+def _result_status(result: Any) -> str:
+    raw_status = getattr(result, "status", "")
+    return getattr(raw_status, "value", str(raw_status))
+
+
+def _result_policy_line(result: Any, status: str) -> str:
+    contract = getattr(result, "contract", "unknown.contract")
+    file_path = getattr(result, "file_path", "")
+    return f"{status}: {contract} {file_path}".strip()
+
+
+def _collect_result_policy(
+    report: Any,
+    *,
+    fail_on: list[str],
+    warn_on: list[str],
+) -> tuple[list[str], list[str]]:
+    reasons: list[str] = []
+    warnings: list[str] = []
+
+    for result in getattr(report, "results", []) or []:
+        status = _result_status(result)
+        line = _result_policy_line(result, status)
+        if status in fail_on:
+            reasons.append(line)
+        elif status in warn_on:
+            warnings.append(line)
+
+    return reasons, warnings
+
+
+def _invalid_manifest_reasons(manifest_path: str | Path) -> list[str]:
+    from .manifest_schema import validate_manifest
+
+    manifest_report = validate_manifest(manifest_path)
+    if manifest_report.valid:
+        return []
+    return [
+        f"invalid_manifest: {issue.path}: {issue.message}"
+        for issue in manifest_report.issues
+    ]
+
+
+def _missing_required_p1_reasons(graph: Any | None, manifest_path: str | Path | None) -> list[str]:
+    if graph is None or manifest_path is None:
+        return []
+    manifest = Path(manifest_path)
+    if not manifest.exists():
+        return []
+    return _p1_missing_reasons(graph, manifest)
+
+
 def decide_policy(
     report: Any,
     *,
@@ -43,30 +95,12 @@ def decide_policy(
     fail_on = fail_on or ["violation", "fail", "invalid_manifest"]
     warn_on = warn_on or ["partial", "unknown"]
 
-    reasons: list[str] = []
-    warnings: list[str] = []
+    reasons, warnings = _collect_result_policy(report, fail_on=fail_on, warn_on=warn_on)
 
-    for result in getattr(report, "results", []) or []:
-        status = getattr(getattr(result, "status", ""), "value", str(getattr(result, "status", "")))
-        contract = getattr(result, "contract", "unknown.contract")
-        file_path = getattr(result, "file_path", "")
-
-        if status in fail_on:
-            reasons.append(f"{status}: {contract} {file_path}".strip())
-        elif status in warn_on:
-            warnings.append(f"{status}: {contract} {file_path}".strip())
-
-    if "missing_required_p1" in fail_on and graph is not None and manifest_path is not None:
-        manifest = Path(manifest_path)
-        if manifest.exists():
-            reasons.extend(_p1_missing_reasons(graph, manifest))
+    if "missing_required_p1" in fail_on:
+        reasons.extend(_missing_required_p1_reasons(graph, manifest_path))
 
     if "invalid_manifest" in fail_on and manifest_path is not None:
-        from .manifest_schema import validate_manifest
-
-        manifest_report = validate_manifest(manifest_path)
-        if not manifest_report.valid:
-            for issue in manifest_report.issues:
-                reasons.append(f"invalid_manifest: {issue.path}: {issue.message}")
+        reasons.extend(_invalid_manifest_reasons(manifest_path))
 
     return PolicyDecision(should_fail=bool(reasons), reasons=reasons, warnings=warnings)

@@ -9,6 +9,7 @@ Katalog `examples/` pokazuje jak używać paczki **intract** w realistycznych sc
 | [`showcase/`](showcase/) | **Przeglądarka / UX** | **Interaktywny Dashboard** prezentujący Intract live z edytorem i symulatorem |
 | [`toon/`](toon/) | Integracja / CI | Zewnętrzne adresowanie (.toon / intract.toon.yaml) z Makefile i skryptami |
 | [`web-app/`](web-app/) | **Aplikacje webowe** | Dwie iteracji produktu (pass vs violation), mock UI, OpenAPI, Dockerfile |
+| [`markdown-generator/`](markdown-generator/) | Content / dokumenty | Generator Markdown pilnujący tematu, sekcji, formatu i zakazanych efektów |
 | [`full-stack/`](full-stack/) | Pipeline / analiza | Manifest `require`, duplikaty intencji, graf |
 | [`integration_tests/`](integration_tests/) | CI / QA | 3 automatyczne scenariusze (`run_examples.py`) |
 | [`python/`](python/) | Pojedynczy kontrakt | Minimalny `@intract.v1` w Pythonie |
@@ -31,6 +32,11 @@ python examples/integration_tests/run_examples.py
 
 # Full-stack
 python -m intract validate examples/full-stack --manifest examples/full-stack/intract.yaml
+
+# Markdown generator
+bash examples/markdown-generator/run-demo.sh
+python -m intract validate examples/markdown-generator/pass \
+  --manifest examples/markdown-generator/intract.yaml
 ```
 
 ## Struktura (konwencja)

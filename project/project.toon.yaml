@@ -1,55 +1,52 @@
-# intract | 371 func | 88f | 10443L | python | 2026-06-03
-# generated in 0.01s
+# intract | 474 func | 91f | 11387L | python | 2026-06-04
+# generated in 0.00s
 
 HEALTH:
-  CC̄=4.3  critical=35 (limit:10)  dup=2  cycles=0
+  CC̄=3.5  critical=23 (limit:10)  dup=2  cycles=0
 
 ALERTS[20]:
-  !!! cc_exceeded      parse_contract_line = 49 (limit:15)
-  !!! cc_exceeded      parse_toon_uri_line = 34 (limit:15)
-  !!! high_fan_out     parse_contract_line = 31 (limit:10)
-  !!! high_fan_out     parse_toon_uri_line = 24 (limit:10)
-  !!! high_fan_out     scan = 24 (limit:10)
   !!! high_fan_out     ShowcaseHandler.do_POST = 22 (limit:10)
   !!! high_fan_out     check = 21 (limit:10)
-  !!  cc_exceeded      block_extent = 20 (limit:15)
-  !!  cc_exceeded      load_manifest_records = 20 (limit:15)
-  !!  high_fan_out     load_manifest_records = 18 (limit:10)
+  !!  high_fan_out     watch = 16 (limit:10)
+  !   high_fan_out     build_graph = 14 (limit:10)
+  !   high_fan_out     pairs_to_intent_groups = 14 (limit:10)
+  !   high_fan_out     validate_artifact = 14 (limit:10)
+  !   high_fan_out     PlanfileApiAdapter.apply_webhook_event = 14 (limit:10)
+  !   high_fan_out     engine_suggest = 14 (limit:10)
+  !   high_fan_out     engine_drift = 14 (limit:10)
+  !   high_fan_out     manifest_apply_ledger = 14 (limit:10)
 
-MODULES[155] (top by size):
-  M[src/intract/cli.py] 623L C:0 F:26 CC↑15 D:0 (python)
+MODULES[160] (top by size):
+  M[src/intract/cli.py] 683L C:0 F:33 CC↑13 D:0 (python)
   M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
   M[scripts/generate_toon_from_map.py] 475L C:2 F:18 CC↑9 D:0 (python)
-  M[tree.txt] 299L C:0 F:0 CC↑0 D:0 (txt)
-  M[src/intract/check.py] 273L C:1 F:11 CC↑20 D:2 (python)
+  M[src/intract/parsers/inline.py] 335L C:1 F:24 CC↑13 D:9 (python)
+  M[tree.txt] 304L C:0 F:0 CC↑0 D:0 (txt)
+  M[src/intract/check.py] 297L C:1 F:15 CC↑14 D:2 (python)
+  M[src/intract/integrations/redup.py] 287L C:4 F:19 CC↑8 D:0 (python)
   M[src/intract/integrations/planfile_adapter.py] 255L C:4 F:13 CC↑13 D:0 (python)
-  M[src/intract/integrations/redup.py] 254L C:4 F:14 CC↑15 D:0 (python)
-  M[src/intract/parsers/inline.py] 249L C:0 F:8 CC↑49 D:9 (python)
   M[examples/web-app/mock/reports/v2-violation.validate.json] 245L C:0 F:0 CC↑0 D:0 (json)
+  M[src/intract/manifest_ops.py] 243L C:2 F:13 CC↑13 D:1 (python)
   M[examples/web-app/mock/reports/v1-pass.validate.json] 229L C:0 F:0 CC↑0 D:0 (json)
-  M[src/intract/manifest_ops.py] 219L C:2 F:9 CC↑16 D:1 (python)
+  M[src/intract/integrations/nexu.py] 189L C:1 F:13 CC↑9 D:0 (python)
   M[src/intract/validators/artifacts.py] 181L C:1 F:6 CC↑9 D:3 (python)
-  M[src/intract/integrations/nexu.py] 178L C:1 F:6 CC↑19 D:0 (python)
-  M[src/intract/parsers/manifest.py] 167L C:0 F:5 CC↑20 D:8 (python)
-  M[src/intract/watch.py] 160L C:3 F:6 CC↑10 D:2 (python)
-  LANGS: python:98/yaml:15/json:11/typescript:7/other:5/shell:4/toml:4/go:2/csharp:2/javascript:2/java:1/rust:1/yml:1/intract:1/txt:1
+  M[src/intract/parsers/manifest.py] 177L C:0 F:12 CC↑9 D:8 (python)
+  M[src/intract/parsers/toon.py] 169L C:0 F:13 CC↑8 D:2 (python)
+  LANGS: python:101/yaml:16/json:11/typescript:7/other:5/shell:5/toml:4/go:2/csharp:2/javascript:2/java:1/rust:1/yml:1/intract:1/txt:1
 
 HOTSPOTS[10]:
-  ★ parse_contract_line fan=31  // Orchestrates 31 calls
-  ★ parse_toon_uri_line fan=24  // Parse a single flat Toon URI line into a ContractRecord.
-
-Format:
-  intract://<f
-  ★ scan fan=24  // Scan files for inline @intract contracts.
   ★ ShowcaseHandler.do_POST fan=22  // Orchestrates 22 calls
   ★ check fan=21  // Policy-aware validation for pre-commit/CI.
+  ★ watch fan=16  // Watch folder and re-validate Intract contracts when logical files change.
+  ★ build_graph fan=14  // Orchestrates 14 calls
+  ★ pairs_to_intent_groups fan=14  // Orchestrates 14 calls
 
-REFACTOR[15]:
-  [1] H/L Split parse_contract_line (CC=49)
-  [2] H/L Split parse_toon_uri_line (CC=34)
-  [3] H/H Split god module src/intract/cli.py (623L, 0 classes)
-  [4] H/H Split god module goal.yaml (511L, 0 classes)
-  [5] M/L Split propose_contracts_llm (CC=18)
+REFACTOR[5]:
+  [1] H/H Split god module src/intract/cli.py (683L, 0 classes)
+  [2] H/H Split god module goal.yaml (511L, 0 classes)
+  [3] M/M Reduce ShowcaseHandler.do_POST fan-out (currently 22)
+  [4] M/M Reduce check fan-out (currently 21)
+  [5] M/M Reduce watch fan-out (currently 16)
 
 EVOLUTION:
-  2026-06-03 CC̄=4.3 crit=35 10443L // Automated analysis
+  2026-06-04 CC̄=3.5 crit=23 11387L // Automated analysis

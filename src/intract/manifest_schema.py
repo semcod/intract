@@ -45,50 +45,72 @@ def _load_schema() -> dict[str, Any]:
     }
 
 
-def validate_manifest(path: str | Path) -> ManifestValidationReport:
-    manifest_path = Path(path)
-    issues: list[ManifestIssue] = []
+def _manifest_report(path: Path, issues: list[ManifestIssue]) -> ManifestValidationReport:
+    return ManifestValidationReport(path=str(path), valid=not issues, issues=issues)
 
-    if not manifest_path.exists():
-        return ManifestValidationReport(
-            path=str(manifest_path),
-            valid=False,
-            issues=[ManifestIssue(path=str(manifest_path), message="Manifest file does not exist.")],
-        )
 
+def _invalid_manifest_report(path: Path, message: str) -> ManifestValidationReport:
+    return _manifest_report(path, [ManifestIssue(path=str(path), message=message)])
+
+
+def _load_manifest_data(path: Path) -> tuple[Any, ManifestValidationReport | None]:
     try:
-        data = yaml.safe_load(manifest_path.read_text(encoding="utf-8")) or {}
+        return yaml.safe_load(path.read_text(encoding="utf-8")) or {}, None
     except Exception as exc:
-        return ManifestValidationReport(
-            path=str(manifest_path),
-            valid=False,
-            issues=[ManifestIssue(path=str(manifest_path), message=f"Invalid YAML: {exc}")],
-        )
+        return None, _invalid_manifest_report(path, f"Invalid YAML: {exc}")
 
+
+def _jsonschema_issues(data: Any) -> list[ManifestIssue] | None:
     try:
         from jsonschema import Draft202012Validator
-
-        validator = Draft202012Validator(_load_schema())
-        for error in sorted(validator.iter_errors(data), key=lambda e: list(e.path)):
-            location = ".".join(str(x) for x in error.path) or "$"
-            issues.append(ManifestIssue(path=location, message=error.message))
     except ImportError:
-        # Lightweight fallback when jsonschema is not installed.
-        contracts = data.get("contracts", [])
-        if contracts is not None and not isinstance(contracts, list):
-            issues.append(ManifestIssue(path="contracts", message="contracts must be a list"))
+        return None
 
-        for index, contract in enumerate(contracts or []):
-            if not isinstance(contract, dict):
-                issues.append(ManifestIssue(path=f"contracts.{index}", message="contract must be an object"))
-                continue
-            if "scope" not in contract:
-                issues.append(ManifestIssue(path=f"contracts.{index}.scope", message="scope is required"))
-            if "intent" not in contract:
-                issues.append(ManifestIssue(path=f"contracts.{index}.intent", message="intent is required"))
+    validator = Draft202012Validator(_load_schema())
+    return [
+        ManifestIssue(path=".".join(str(x) for x in error.path) or "$", message=error.message)
+        for error in sorted(validator.iter_errors(data), key=lambda e: list(e.path))
+    ]
 
-    return ManifestValidationReport(
-        path=str(manifest_path),
-        valid=not issues,
-        issues=issues,
-    )
+
+def _fallback_issues(data: Any) -> list[ManifestIssue]:
+    issues: list[ManifestIssue] = []
+    if not isinstance(data, dict):
+        return [ManifestIssue(path="$", message="manifest must be an object")]
+
+    contracts = data.get("contracts", [])
+    if contracts is not None and not isinstance(contracts, list):
+        issues.append(ManifestIssue(path="contracts", message="contracts must be a list"))
+        return issues
+
+    for index, contract in enumerate(contracts or []):
+        if not isinstance(contract, dict):
+            issues.append(
+                ManifestIssue(path=f"contracts.{index}", message="contract must be an object")
+            )
+            continue
+        if "scope" not in contract:
+            issues.append(
+                ManifestIssue(path=f"contracts.{index}.scope", message="scope is required")
+            )
+        if "intent" not in contract:
+            issues.append(
+                ManifestIssue(path=f"contracts.{index}.intent", message="intent is required")
+            )
+    return issues
+
+
+def validate_manifest(path: str | Path) -> ManifestValidationReport:
+    manifest_path = Path(path)
+    if not manifest_path.exists():
+        return _invalid_manifest_report(manifest_path, "Manifest file does not exist.")
+
+    data, error_report = _load_manifest_data(manifest_path)
+    if error_report is not None:
+        return error_report
+
+    issues = _jsonschema_issues(data)
+    if issues is None:
+        issues = _fallback_issues(data)
+
+    return _manifest_report(manifest_path, issues)

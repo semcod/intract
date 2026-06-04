@@ -21,6 +21,28 @@ class ArtifactKind(str, Enum):
     UNKNOWN = "unknown"
 
 
+DOCKERFILE_NAMES = {"dockerfile"}
+COMPOSE_NAMES = {"docker-compose.yml", "docker-compose.yaml", "compose.yml", "compose.yaml"}
+MANIFEST_NAMES = {"intent.yaml", "intract.yaml", ".intract.yaml"}
+STRUCTURED_SPEC_SUFFIXES = {".yaml", ".yml", ".json"}
+TERRAFORM_SUFFIXES = {".tf", ".tfvars"}
+SOURCE_CODE_SUFFIXES = {
+    ".py",
+    ".js",
+    ".ts",
+    ".tsx",
+    ".jsx",
+    ".cs",
+    ".java",
+    ".go",
+    ".rs",
+    ".php",
+    ".rb",
+    ".sh",
+    ".sql",
+}
+
+
 @dataclass(frozen=True)
 class Artifact:
     path: str
@@ -30,7 +52,7 @@ class Artifact:
     metadata: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
-    def from_path(cls, path: str | Path, *, kind: ArtifactKind | None = None) -> "Artifact":
+    def from_path(cls, path: str | Path, *, kind: ArtifactKind | None = None) -> Artifact:
         p = Path(path)
         content = p.read_text(encoding="utf-8")
         return cls(
@@ -64,30 +86,47 @@ def infer_language(path: str) -> str | None:
     }.get(suffix)
 
 
+def _kind_from_filename(path: str, name: str, suffix: str) -> ArtifactKind | None:
+    normalized_path = path.replace("\\", "/")
+    if name in DOCKERFILE_NAMES or name.startswith("dockerfile."):
+        return ArtifactKind.DOCKERFILE
+    if name in COMPOSE_NAMES:
+        return ArtifactKind.COMPOSE
+    if name in MANIFEST_NAMES:
+        return ArtifactKind.MANIFEST
+    if ".github/workflows" in normalized_path:
+        return ArtifactKind.GITHUB_ACTIONS
+    if name == ".gitlab-ci.yml":
+        return ArtifactKind.GITLAB_CI
+    if suffix in TERRAFORM_SUFFIXES:
+        return ArtifactKind.TERRAFORM
+    if suffix == ".md":
+        return ArtifactKind.MARKDOWN
+    if suffix in SOURCE_CODE_SUFFIXES:
+        return ArtifactKind.SOURCE_CODE
+    return None
+
+
+def _kind_from_structured_content(suffix: str, content: str) -> ArtifactKind | None:
+    if suffix not in STRUCTURED_SPEC_SUFFIXES:
+        return None
+    preview = content[:500].lower()
+    if suffix in {".yaml", ".yml"} and "apiVersion:" in content and "kind:" in content:
+        return ArtifactKind.KUBERNETES
+    if "openapi" in preview:
+        return ArtifactKind.OPENAPI
+    if "asyncapi" in preview:
+        return ArtifactKind.ASYNCAPI
+    return None
+
+
 def infer_artifact_kind(path: str, content: str = "") -> ArtifactKind:
     name = Path(path).name.lower()
     suffix = Path(path).suffix.lower()
 
-    if name == "dockerfile" or name.startswith("dockerfile."):
-        return ArtifactKind.DOCKERFILE
-    if name in {"docker-compose.yml", "docker-compose.yaml", "compose.yml", "compose.yaml"}:
-        return ArtifactKind.COMPOSE
-    if name in {"intent.yaml", "intract.yaml", ".intract.yaml"}:
-        return ArtifactKind.MANIFEST
-    if ".github/workflows" in path.replace("\\", "/"):
-        return ArtifactKind.GITHUB_ACTIONS
-    if name == ".gitlab-ci.yml":
-        return ArtifactKind.GITLAB_CI
-    if suffix in {".tf", ".tfvars"}:
-        return ArtifactKind.TERRAFORM
-    if suffix in {".yaml", ".yml"} and "apiVersion:" in content and "kind:" in content:
-        return ArtifactKind.KUBERNETES
-    if suffix in {".yaml", ".yml", ".json"} and "openapi" in content[:500].lower():
-        return ArtifactKind.OPENAPI
-    if suffix in {".yaml", ".yml", ".json"} and "asyncapi" in content[:500].lower():
-        return ArtifactKind.ASYNCAPI
-    if suffix == ".md":
-        return ArtifactKind.MARKDOWN
-    if suffix in {".py", ".js", ".ts", ".tsx", ".jsx", ".cs", ".java", ".go", ".rs", ".php", ".rb", ".sh", ".sql"}:
-        return ArtifactKind.SOURCE_CODE
-    return ArtifactKind.UNKNOWN
+    filename_kind = _kind_from_filename(path, name, suffix)
+    if filename_kind is not None:
+        return filename_kind
+
+    content_kind = _kind_from_structured_content(suffix, content)
+    return content_kind or ArtifactKind.UNKNOWN
