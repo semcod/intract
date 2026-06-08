@@ -2,19 +2,34 @@
 
 app {
   name: intract;
-  version: 0.5.12;
+  version: 0.5.13;
+  description: "Intent contract tagging, validation and semantic mapping for codebases.";
+  license: Apache-2.0;
+  authors: "Tom Sapletta <tom@sapletta.com>";
+  keywords: "intent, contract, static-analysis, code-quality, validation, refactoring";
 }
 
 dependencies {
   runtime: "pyyaml>=6.0, typer>=0.12.0, rich>=13.0";
   dev: "pytest>=7.0, ruff>=0.4, mypy>=1.8, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
+  llm: litellm>=1.0;
+  watch: watchdog>=4.0;
+  schema: jsonschema>=4.0;
+  treesitter: "tree-sitter>=0.22, tree-sitter-languages>=1.10.2";
+}
+
+interface[type="mcp"] {
+  framework: stdio;
+}
+interface[type="mcp"] page[name="intract-mcp"] {
+  entry: intract.mcp.server:run_server;
 }
 
 interface[type="cli"] {
   framework: argparse;
 }
 interface[type="cli"] page[name="intract"] {
-
+  entry: intract.cli:app;
 }
 
 workflow[name="install"] {
@@ -107,6 +122,14 @@ workflow[name="version"] {
   step-3: run cmd=.venv/bin/python -c "from importlib.metadata import version; print(f'Installed version: {version(\"sumd\")}')";
 }
 
+tests {
+  import: testql-scenarios/**/*.testql.toon.yaml;
+}
+
+env_vars {
+  keys: OPENROUTER_API_KEY, LLM_MODEL, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_MAX_RETRIES, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_CREATE_BACKUPS, INTRACT_LLM_MODEL, LLM_API_KEY, OPENROUTER_API_BASE, PLANFILE_URL, INTRACT_PLANFILE_URL, PLANFILE_TOKEN, INTRACT_PLANFILE_TOKEN, PLANFILE_PROJECT, INTRACT_PLANFILE_PROJECT, PLANFILE_WEBHOOK_URL, INTRACT_PLANFILE_WEBHOOK_URL, PLANFILE_WEBHOOK_SECRET, INTRACT_PLANFILE_WEBHOOK_SECRET, INTRACT_PLANFILE_DIR;
+}
+
 deploy {
   target: docker;
 }
@@ -114,5 +137,9 @@ deploy {
 environment[name="local"] {
   runtime: docker-compose;
   env_file: .env;
+  template_file: .env.example;
   python_version: >=3.10;
+  vars: LLM_MODEL, OPENROUTER_API_KEY, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_CREATE_BACKUPS, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_MAX_RETRIES;
+  runtime_llm: OPENROUTER_API_BASE, OPENROUTER_API_KEY;
+  runtime_pfix: PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_CREATE_BACKUPS, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_MAX_RETRIES;
 }
