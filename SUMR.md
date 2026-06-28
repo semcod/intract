@@ -17,7 +17,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `intract`
-- **version**: `0.5.12`
+- **version**: `0.5.13`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -37,7 +37,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: intract;
-  version: 0.5.12;
+  version: 0.5.13;
 }
 
 dependencies {
@@ -261,20 +261,20 @@ HUBS[20]:
     CC=6  in:1  out:23  total:24
   src.intract.core.signatures._normalize_contract
     CC=2  in:1  out:22  total:23
-  src.intract.integrations.planfile_adapter._ticket_from_dict
-    CC=2  in:2  out:21  total:23
   src.intract.graph.build_graph
     CC=9  in:5  out:18  total:23
+  src.intract.integrations.planfile_adapter._ticket_from_dict
+    CC=2  in:2  out:21  total:23
   src.intract.integrations.nexu._base_intent_contract
     CC=2  in:2  out:21  total:23
   src.intract.parsers.inline.clean_comment_line
     CC=12  in:2  out:20  total:22
   src.intract.cli.engine_drift
     CC=4  in:0  out:21  total:21
-  src.intract.cli.engine_run
-    CC=4  in:0  out:20  total:20
   src.intract.validators.artifacts.validate_artifact
     CC=9  in:3  out:17  total:20
+  src.intract.cli.engine_run
+    CC=4  in:0  out:20  total:20
   src.intract.parsers.toon._contract_from_uri
     CC=1  in:1  out:19  total:20
   src.intract.validators.engine.validate_contract_against_source
@@ -637,6 +637,17 @@ MODULES:
     watch_tree  CC=7  out:10
 
 EDGES:
+  examples.markdown-generator.demo._validate_project → src.intract.project.validate_project
+  examples.markdown-generator.demo.main → examples.markdown-generator.demo._load_pass_generator
+  examples.markdown-generator.demo.main → examples.markdown-generator.demo._validate_project
+  examples.markdown-generator.pass.generator.generate_markdown_document → examples.markdown-generator.pass.generator.normalize_topic
+  examples.markdown-generator.pass.generator.generate_markdown_document → examples.markdown-generator.pass.generator.build_markdown_outline
+  examples.markdown-generator.pass.generator.generate_markdown_document → examples.markdown-generator.pass.generator.render_markdown_sections
+  examples.markdown-generator.pass.generator.generate_markdown_document → examples.markdown-generator.pass.generator.guard_markdown_contract
+  examples.markdown-generator.violation.generator.generate_markdown_document → examples.markdown-generator.violation.generator.normalize_topic
+  examples.markdown-generator.violation.generator.generate_markdown_document → examples.markdown-generator.violation.generator.build_markdown_outline
+  examples.markdown-generator.violation.generator.generate_markdown_document → examples.markdown-generator.violation.generator.render_markdown_sections
+  examples.markdown-generator.violation.generator.generate_markdown_document → examples.markdown-generator.violation.generator.guard_markdown_contract
   examples.showcase.server.resolve_runtime_config → examples.showcase.server.load_env_file
   examples.showcase.server.ShowcaseHandler.do_GET → examples.showcase.server.resolve_runtime_config
   examples.showcase.server.ShowcaseHandler.do_POST → examples.showcase.server.resolve_runtime_config
@@ -652,41 +663,30 @@ EDGES:
   examples.integration_tests.run_examples.main → examples.integration_tests.run_examples.run_example_03
   examples.integration_tests.run_examples.main → examples.integration_tests.run_examples.run_example_04
   examples.integration_tests.run_examples.main → examples.integration_tests.run_examples.print_result
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._load_litellm_completion
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._resolve_model
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._resolve_api_key
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._build_prompt
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._strip_markdown_fence
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._json_line_strings
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._lines_to_proposals
   src.intract.watch.snapshot_tree → src.intract.watch.should_scan
   src.intract.watch.snapshot_tree → src.intract.watch.hash_file
   src.intract.watch.watch_tree → src.intract.watch.snapshot_tree
   src.intract.watch.watch_tree → src.intract.watch.diff_snapshots
-  src.intract.scan_artifacts.discover_artifact_paths → src.intract.core.artifact.infer_artifact_kind
-  src.intract.scan_artifacts.scan_all_artifacts → src.intract.scan_artifacts.discover_artifact_paths
-  src.intract.scan_artifacts.scan_all_artifacts → src.intract.validators.artifacts.validate_artifact
-  src.intract.proposals.propose_ui_delta_contract_dicts → src.intract.proposals.propose_ui_delta_contracts
-  src.intract.coverage.calculate_coverage → src.intract.project.load_project_sources
-  src.intract.coverage.calculate_coverage → src.intract.project.extract_signatures_from_sources
-  src.intract.graph.ContractGraph.to_mermaid → src.intract.graph._safe
-  src.intract.graph.build_graph → src.intract.project.load_project_sources
-  src.intract.graph.build_graph → src.intract.project.extract_signatures_from_sources
-  src.intract.git.staged_files → src.intract.git._run_git
-  src.intract.git.changed_files → src.intract.git._run_git
-  src.intract.git.staged_hunks → src.intract.git._run_git
-  src.intract.validate_snippet.validate_artifact_with_proposals → src.intract.integrations.vallm.validate_proposal
-  src.intract.duplicates.scoring.object_similarity → src.intract.duplicates.scoring.jaccard
-  src.intract.duplicates.scoring.score_similarity → src.intract.duplicates.scoring.object_similarity
-  src.intract.duplicates.scoring.score_similarity → src.intract.duplicates.scoring.jaccard
-  src.intract.duplicates.matcher.find_intent_pairs → src.intract.duplicates.matcher.bucket_signatures
-  src.intract.duplicates.matcher.find_intent_pairs → src.intract.duplicates.scoring.score_similarity
-  src.intract.duplicates.grouping.pairs_to_intent_groups → src.intract.duplicates.grouping.union_find_groups
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.project.load_project_sources
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.project.extract_signatures_from_sources
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.duplicates.matcher.find_intent_pairs
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.duplicates.grouping.pairs_to_duplicate_contracts
-  src.intract.validators.artifacts.validate_openapi → src.intract.parsers.openapi.parse_openapi_contracts
-  src.intract.validators.artifacts.validate_openapi → src.intract.core.signatures.build_signature
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_dockerfile
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_github_actions
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_openapi
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_kubernetes
-  src.intract.validators.engine.validate_contract_against_source → src.intract.validators.base.merge_rule_results
-  src.intract.validators.engine.validate_contract_against_source → src.intract.validators.registry.get_rule_registry
+  src.intract.cli.init → src.intract.parsers.manifest.create_sample_manifest
+  src.intract.cli._scan_artifacts → src.intract.scan_artifacts.scan_all_artifacts
+  src.intract.cli._scan_artifacts → src.intract.cli._print_artifact_scan_report
+  src.intract.cli._scan_contract_file → src.intract.parsers.inline.extract_contract_records_from_text
+  src.intract.cli._scan_inline_records → src.intract.cli._scan_contract_file
+  src.intract.cli._scan_inline_records → src.intract.cli._is_scan_candidate
+  src.intract.cli.scan → src.intract.cli._print_scan_table
+  src.intract.cli.scan → src.intract.cli._scan_artifacts
+  src.intract.cli.scan → src.intract.cli._scan_row
+  src.intract.cli.scan → src.intract.cli._scan_inline_records
+  src.intract.cli.validate → src.intract.project.validate_project
+  src.intract.cli.validate → src.intract.cli._print_validation_report
+  src.intract.cli.validate → src.intract.cli._export_tickets
 ```
 
 ## Test Contracts
@@ -728,20 +728,20 @@ HUBS[20]:
     CC=6  in:1  out:23  total:24
   src.intract.core.signatures._normalize_contract
     CC=2  in:1  out:22  total:23
-  src.intract.integrations.planfile_adapter._ticket_from_dict
-    CC=2  in:2  out:21  total:23
   src.intract.graph.build_graph
     CC=9  in:5  out:18  total:23
+  src.intract.integrations.planfile_adapter._ticket_from_dict
+    CC=2  in:2  out:21  total:23
   src.intract.integrations.nexu._base_intent_contract
     CC=2  in:2  out:21  total:23
   src.intract.parsers.inline.clean_comment_line
     CC=12  in:2  out:20  total:22
   src.intract.cli.engine_drift
     CC=4  in:0  out:21  total:21
-  src.intract.cli.engine_run
-    CC=4  in:0  out:20  total:20
   src.intract.validators.artifacts.validate_artifact
     CC=9  in:3  out:17  total:20
+  src.intract.cli.engine_run
+    CC=4  in:0  out:20  total:20
   src.intract.parsers.toon._contract_from_uri
     CC=1  in:1  out:19  total:20
   src.intract.validators.engine.validate_contract_against_source
@@ -1104,6 +1104,17 @@ MODULES:
     watch_tree  CC=7  out:10
 
 EDGES:
+  examples.markdown-generator.demo._validate_project → src.intract.project.validate_project
+  examples.markdown-generator.demo.main → examples.markdown-generator.demo._load_pass_generator
+  examples.markdown-generator.demo.main → examples.markdown-generator.demo._validate_project
+  examples.markdown-generator.pass.generator.generate_markdown_document → examples.markdown-generator.pass.generator.normalize_topic
+  examples.markdown-generator.pass.generator.generate_markdown_document → examples.markdown-generator.pass.generator.build_markdown_outline
+  examples.markdown-generator.pass.generator.generate_markdown_document → examples.markdown-generator.pass.generator.render_markdown_sections
+  examples.markdown-generator.pass.generator.generate_markdown_document → examples.markdown-generator.pass.generator.guard_markdown_contract
+  examples.markdown-generator.violation.generator.generate_markdown_document → examples.markdown-generator.violation.generator.normalize_topic
+  examples.markdown-generator.violation.generator.generate_markdown_document → examples.markdown-generator.violation.generator.build_markdown_outline
+  examples.markdown-generator.violation.generator.generate_markdown_document → examples.markdown-generator.violation.generator.render_markdown_sections
+  examples.markdown-generator.violation.generator.generate_markdown_document → examples.markdown-generator.violation.generator.guard_markdown_contract
   examples.showcase.server.resolve_runtime_config → examples.showcase.server.load_env_file
   examples.showcase.server.ShowcaseHandler.do_GET → examples.showcase.server.resolve_runtime_config
   examples.showcase.server.ShowcaseHandler.do_POST → examples.showcase.server.resolve_runtime_config
@@ -1119,47 +1130,36 @@ EDGES:
   examples.integration_tests.run_examples.main → examples.integration_tests.run_examples.run_example_03
   examples.integration_tests.run_examples.main → examples.integration_tests.run_examples.run_example_04
   examples.integration_tests.run_examples.main → examples.integration_tests.run_examples.print_result
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._load_litellm_completion
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._resolve_model
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._resolve_api_key
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._build_prompt
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._strip_markdown_fence
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._json_line_strings
+  src.intract.propose_llm.propose_contracts_llm → src.intract.propose_llm._lines_to_proposals
   src.intract.watch.snapshot_tree → src.intract.watch.should_scan
   src.intract.watch.snapshot_tree → src.intract.watch.hash_file
   src.intract.watch.watch_tree → src.intract.watch.snapshot_tree
   src.intract.watch.watch_tree → src.intract.watch.diff_snapshots
-  src.intract.scan_artifacts.discover_artifact_paths → src.intract.core.artifact.infer_artifact_kind
-  src.intract.scan_artifacts.scan_all_artifacts → src.intract.scan_artifacts.discover_artifact_paths
-  src.intract.scan_artifacts.scan_all_artifacts → src.intract.validators.artifacts.validate_artifact
-  src.intract.proposals.propose_ui_delta_contract_dicts → src.intract.proposals.propose_ui_delta_contracts
-  src.intract.coverage.calculate_coverage → src.intract.project.load_project_sources
-  src.intract.coverage.calculate_coverage → src.intract.project.extract_signatures_from_sources
-  src.intract.graph.ContractGraph.to_mermaid → src.intract.graph._safe
-  src.intract.graph.build_graph → src.intract.project.load_project_sources
-  src.intract.graph.build_graph → src.intract.project.extract_signatures_from_sources
-  src.intract.git.staged_files → src.intract.git._run_git
-  src.intract.git.changed_files → src.intract.git._run_git
-  src.intract.git.staged_hunks → src.intract.git._run_git
-  src.intract.validate_snippet.validate_artifact_with_proposals → src.intract.integrations.vallm.validate_proposal
-  src.intract.duplicates.scoring.object_similarity → src.intract.duplicates.scoring.jaccard
-  src.intract.duplicates.scoring.score_similarity → src.intract.duplicates.scoring.object_similarity
-  src.intract.duplicates.scoring.score_similarity → src.intract.duplicates.scoring.jaccard
-  src.intract.duplicates.matcher.find_intent_pairs → src.intract.duplicates.matcher.bucket_signatures
-  src.intract.duplicates.matcher.find_intent_pairs → src.intract.duplicates.scoring.score_similarity
-  src.intract.duplicates.grouping.pairs_to_intent_groups → src.intract.duplicates.grouping.union_find_groups
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.project.load_project_sources
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.project.extract_signatures_from_sources
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.duplicates.matcher.find_intent_pairs
-  src.intract.duplicates.grouping.find_duplicate_contracts → src.intract.duplicates.grouping.pairs_to_duplicate_contracts
-  src.intract.validators.artifacts.validate_openapi → src.intract.parsers.openapi.parse_openapi_contracts
-  src.intract.validators.artifacts.validate_openapi → src.intract.core.signatures.build_signature
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_dockerfile
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_github_actions
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_openapi
-  src.intract.validators.artifacts.validate_artifact → src.intract.validators.artifacts.validate_kubernetes
-  src.intract.validators.engine.validate_contract_against_source → src.intract.validators.base.merge_rule_results
-  src.intract.validators.engine.validate_contract_against_source → src.intract.validators.registry.get_rule_registry
+  src.intract.cli.init → src.intract.parsers.manifest.create_sample_manifest
+  src.intract.cli._scan_artifacts → src.intract.scan_artifacts.scan_all_artifacts
+  src.intract.cli._scan_artifacts → src.intract.cli._print_artifact_scan_report
+  src.intract.cli._scan_contract_file → src.intract.parsers.inline.extract_contract_records_from_text
+  src.intract.cli._scan_inline_records → src.intract.cli._scan_contract_file
+  src.intract.cli._scan_inline_records → src.intract.cli._is_scan_candidate
+  src.intract.cli.scan → src.intract.cli._print_scan_table
+  src.intract.cli.scan → src.intract.cli._scan_artifacts
+  src.intract.cli.scan → src.intract.cli._scan_row
+  src.intract.cli.scan → src.intract.cli._scan_inline_records
+  src.intract.cli.validate → src.intract.project.validate_project
+  src.intract.cli.validate → src.intract.cli._print_validation_report
+  src.intract.cli.validate → src.intract.cli._export_tickets
 ```
 
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 160f 11387L | python:101,yaml:16,json:11,typescript:7,shell:5,toml:4,javascript:2,csharp:2,go:2,txt:1,yml:1,intract:1,java:1,rust:1 | 2026-06-04
+# code2llm | 160f 11397L | python:101,yaml:16,json:11,typescript:7,shell:5,toml:4,javascript:2,csharp:2,go:2,txt:1,yml:1,intract:1,java:1,rust:1 | 2026-06-05
 # generated in 0.03s
 # CC̅=3.5 | critical:0/474 | dups:0 | cycles:0
 
@@ -1184,89 +1184,89 @@ PIPELINES[160]:
       PURITY: 100% pure
   [8] Src [parse_extensions]: parse_extensions
       PURITY: 100% pure
-  [9] Src [__init__]: __init__
+  [9] Src [main]: main → _load_pass_generator
       PURITY: 100% pure
-  [10] Src [_write_json]: _write_json
+  [10] Src [generate_markdown_document]: generate_markdown_document → normalize_topic
       PURITY: 100% pure
-  [11] Src [do_GET]: do_GET → resolve_runtime_config → load_env_file
+  [11] Src [generate_markdown_document]: generate_markdown_document → normalize_topic
       PURITY: 100% pure
-  [12] Src [do_POST]: do_POST → resolve_runtime_config → load_env_file
+  [12] Src [__init__]: __init__
       PURITY: 100% pure
-  [13] Src [main]: main
+  [13] Src [_write_json]: _write_json
       PURITY: 100% pure
-  [14] Src [fetchUserProfile]: fetchUserProfile
+  [14] Src [do_GET]: do_GET → resolve_runtime_config → load_env_file
       PURITY: 100% pure
-  [15] Src [divide]: divide
+  [15] Src [do_POST]: do_POST → resolve_runtime_config → load_env_file
       PURITY: 100% pure
-  [16] Src [write_to_log]: write_to_log
+  [16] Src [main]: main
       PURITY: 100% pure
-  [17] Src [main]: main → run_example_01 → validate_project → load_project_sources → ...(2 more)
+  [17] Src [fetchUserProfile]: fetchUserProfile
       PURITY: 100% pure
-  [18] Src [canUpdateResource]: canUpdateResource
+  [18] Src [divide]: divide
       PURITY: 100% pure
-  [19] Src [response]: response
+  [19] Src [write_to_log]: write_to_log
       PURITY: 100% pure
-  [20] Src [render_summary]: render_summary
+  [20] Src [main]: main → run_example_01 → validate_project → load_project_sources → ...(2 more)
       PURITY: 100% pure
-  [21] Src [collect_project_files]: collect_project_files
+  [21] Src [canUpdateResource]: canUpdateResource
       PURITY: 100% pure
-  [22] Src [parse_extensions]: parse_extensions
+  [22] Src [response]: response
       PURITY: 100% pure
-  [23] Src [CollectFiles]: CollectFiles
+  [23] Src [render_summary]: render_summary
       PURITY: 100% pure
-  [24] Src [from_mapping]: from_mapping
+  [24] Src [collect_project_files]: collect_project_files
       PURITY: 100% pure
-  [25] Src [to_dict]: to_dict
+  [25] Src [parse_extensions]: parse_extensions
       PURITY: 100% pure
-  [26] Src [propose_ui_delta_contract_dicts]: propose_ui_delta_contract_dicts → propose_ui_delta_contracts → _ui_contract_line
+  [26] Src [CollectFiles]: CollectFiles
       PURITY: 100% pure
-  [27] Src [to_dict]: to_dict
+  [27] Src [from_mapping]: from_mapping
       PURITY: 100% pure
-  [28] Src [to_dict]: to_dict
+  [28] Src [main]: main
       PURITY: 100% pure
-  [29] Src [to_mermaid]: to_mermaid → _safe
+  [29] Src [init]: init → create_sample_manifest
       PURITY: 100% pure
-  [30] Src [to_inline]: to_inline
+  [30] Src [scan]: scan → _print_scan_table
       PURITY: 100% pure
-  [31] Src [contract]: contract
+  [31] Src [validate]: validate → validate_project → load_project_sources → infer_artifact_kind → ...(1 more)
       PURITY: 100% pure
-  [32] Src [validate_artifact_with_proposals]: validate_artifact_with_proposals → validate_proposal → extract_contract_records_from_text → parse_contract_line → ...(2 more)
+  [32] Src [check]: check → load_config
       PURITY: 100% pure
-  [33] Src [to_dict]: to_dict
+  [33] Src [coverage]: coverage → calculate_coverage → load_project_sources → infer_artifact_kind → ...(1 more)
       PURITY: 100% pure
-  [34] Src [to_dict]: to_dict
+  [34] Src [duplicates]: duplicates → find_duplicate_contracts → load_project_sources → infer_artifact_kind → ...(1 more)
       PURITY: 100% pure
-  [35] Src [to_dict]: to_dict
+  [35] Src [graph]: graph → build_graph → load_project_sources → infer_artifact_kind → ...(1 more)
       PURITY: 100% pure
-  [36] Src [validate]: validate → contains_token_like → normalize_label
+  [36] Src [tickets]: tickets → validate_project → load_project_sources → infer_artifact_kind → ...(1 more)
       PURITY: 100% pure
-  [37] Src [validate]: validate → contains_token_like → normalize_label
+  [37] Src [planfile_push]: planfile_push → validate_project → load_project_sources → infer_artifact_kind → ...(1 more)
       PURITY: 100% pure
-  [38] Src [validate]: validate → has_return_value
+  [38] Src [planfile_pull]: planfile_pull
       PURITY: 100% pure
-  [39] Src [validate]: validate → detect_effects
+  [39] Src [planfile_sync]: planfile_sync → validate_project → load_project_sources → infer_artifact_kind → ...(1 more)
       PURITY: 100% pure
-  [40] Src [__init__]: __init__
+  [40] Src [planfile_webhook_test]: planfile_webhook_test
       PURITY: 100% pure
-  [41] Src [register]: register
+  [41] Src [planfile_webhook_apply]: planfile_webhook_apply
       PURITY: 100% pure
-  [42] Src [rules]: rules
+  [42] Src [watch]: watch → validate_project → load_project_sources → infer_artifact_kind → ...(1 more)
       PURITY: 100% pure
-  [43] Src [run]: run
+  [43] Src [engine_suggest]: engine_suggest → scan_suggest_and_validate → collect_source_units → infer_language
       PURITY: 100% pure
-  [44] Src [summarize]: summarize
+  [44] Src [engine_drift]: engine_drift → scan_suggest_and_validate → collect_source_units → infer_language
       PURITY: 100% pure
-  [45] Src [to_dict]: to_dict
+  [45] Src [engine_run]: engine_run → scan_suggest_and_validate → collect_source_units → infer_language
       PURITY: 100% pure
-  [46] Src [to_dict]: to_dict
+  [46] Src [check_manifest]: check_manifest → validate_manifest → _load_manifest_data → _invalid_manifest_report → ...(1 more)
       PURITY: 100% pure
-  [47] Src [__init__]: __init__
+  [47] Src [artifact_validate]: artifact_validate → validate_artifact → validate_dockerfile
       PURITY: 100% pure
-  [48] Src [_hash]: _hash
+  [48] Src [propose_delta]: propose_delta → propose_ui_delta_contracts → _ui_contract_line
       PURITY: 100% pure
-  [49] Src [_get_key]: _get_key
+  [49] Src [propose_llm_cmd]: propose_llm_cmd → propose_contracts_llm → _load_litellm_completion
       PURITY: 100% pure
-  [50] Src [load]: load
+  [50] Src [manifest_apply_ledger]: manifest_apply_ledger → apply_ledger_to_manifest → load_manifest_document
       PURITY: 100% pure
 
 LAYERS:
@@ -1306,8 +1306,8 @@ LAYERS:
   │ handlers                   124L  0C    9m  CC=4      ←0
   │ signatures                 122L  1C    8m  CC=3      ←8
   │ server                     118L  0C    5m  CC=5      ←0
-  │ vallm                      116L  2C    5m  CC=12     ←2
   │ manifest_schema            116L  2C    8m  CC=9      ←2
+  │ vallm                      116L  2C    5m  CC=12     ←2
   │ drift                      113L  2C    5m  CC=5      ←1
   │ builtins                   111L  6C   11m  CC=3      ←0
   │ base                       109L  6C   12m  CC=5      ←0
@@ -1426,7 +1426,7 @@ LAYERS:
   │
   ./                              CC̄=0.0    ←in:0  →out:0
   │ !! goal.yaml                  511L  0C    0m  CC=0.0    ←0
-  │ tree.txt                   304L  0C    0m  CC=0.0    ←0
+  │ tree.txt                   314L  0C    0m  CC=0.0    ←0
   │ Makefile                   111L  0C    0m  CC=0.0    ←0
   │ pyproject.toml             101L  0C    0m  CC=0.0    ←0
   │ action.yml                  91L  0C    0m  CC=0.0    ←0
@@ -1469,7 +1469,7 @@ EXTERNAL:
 ### Duplication (`project/duplication.toon.yaml`)
 
 ```toon markpact:analysis path=project/duplication.toon.yaml
-# redup/duplication | 6 groups | 97f 8069L | 2026-06-04
+# redup/duplication | 6 groups | 97f 8069L | 2026-06-05
 
 SUMMARY:
   files_scanned: 97
@@ -1477,7 +1477,7 @@ SUMMARY:
   dup_groups:    6
   dup_fragments: 12
   saved_lines:   51
-  scan_ms:       2346
+  scan_ms:       2418
 
 HOTSPOTS[7] (files with most duplication):
   src/intract/analyzers/csharp.py  dup=25L  groups=2  frags=2  (0.3%)
@@ -1552,7 +1552,7 @@ METRICS-TARGET:
 ### Evolution / Churn (`project/evolution.toon.yaml`)
 
 ```toon markpact:analysis path=project/evolution.toon.yaml
-# code2llm/evolution | 401 func | 66f | 2026-06-04
+# code2llm/evolution | 401 func | 66f | 2026-06-05
 # generated in 0.00s
 
 NEXT[2] (ranked by impact):
@@ -1601,7 +1601,7 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.6 → now CC̄=3.7
+  prev CC̄=3.7 → now CC̄=3.7
 ```
 
 ## Intent

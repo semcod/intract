@@ -10,13 +10,17 @@ from intract import __version__
 from intract.mcp.handlers import TOOL_HANDLERS
 from intract.mcp.schemas import TOOL_SCHEMA_INTRACT
 
+_PROTOCOL_VERSION = "2024-11-05"
+_NOTIFICATIONS = frozenset({"notifications/initialized", "notifications/cancelled"})
 
-def handle_initialize(request_id: Any) -> dict[str, Any]:
+
+def handle_initialize(request_id: Any, params: dict[str, Any] | None = None) -> dict[str, Any]:
+    client_version = (params or {}).get("protocolVersion", _PROTOCOL_VERSION)
     return {
         "jsonrpc": "2.0",
         "id": request_id,
         "result": {
-            "protocolVersion": "0.1.0",
+            "protocolVersion": client_version,
             "serverInfo": {"name": "intract", "version": __version__},
             "capabilities": {"tools": {}},
         },
@@ -66,8 +70,10 @@ def handle_request(request: dict[str, Any]) -> dict[str, Any]:
     params = request.get("params", {}) or {}
     request_id = request.get("id")
 
+    if method in _NOTIFICATIONS:
+        return {}
     if method == "initialize":
-        return handle_initialize(request_id)
+        return handle_initialize(request_id, params)
     if method == "tools/list":
         return handle_tools_list(request_id)
     if method == "tools/call":
@@ -91,7 +97,8 @@ def run_server() -> None:
         try:
             request = json.loads(line)
             response = handle_request(request)
-            print(json.dumps(response), flush=True)
+            if response:
+                print(json.dumps(response), flush=True)
         except json.JSONDecodeError as exc:
             print(
                 json.dumps(

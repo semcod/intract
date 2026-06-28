@@ -6,30 +6,30 @@ flowchart TD
 
     subgraph Core
         src__intract__config__IntractConfig__from_mapping["from_mapping"]
-        src__intract__scan_artifacts__ArtifactScanReport__to_dict["to_dict"]
-        src__intract__proposals__ProposedContract__to_dict["to_dict"]
-        src__intract__proposals__propose_ui_delta_contract_dicts["propose_ui_delta_contract_dict"]
-        src__intract__coverage__CoverageReport__to_dict["to_dict"]
-        src__intract__graph__ContractGraph__to_dict["to_dict"]
-        src__intract__graph__ContractGraph__to_mermaid["to_mermaid"]
-        src__intract__sdk__ContractBuilder__to_inline["to_inline"]
-        src__intract__sdk__contract["contract"]
-        src__intract__validate_snippet__validate_artifact_with_proposals["validate_artifact_with_proposa"]
-        src__intract__duplicates__grouping__DuplicateContract__to_dict["to_dict"]
-        src__intract__duplicates__grouping__IntentDuplicateGroup__to_dict["to_dict"]
-        src__intract__validators__artifacts__ArtifactValidationReport__to_dict["to_dict"]
-        src__intract__validators__input_output__InputPresenceRule__supports["supports"]
-        src__intract__validators__input_output__InputPresenceRule__validate["validate"]
+        src__intract__cli__main["main"]
+        src__intract__cli__init["init"]
+        src__intract__cli___print_artifact_scan_report["_print_artifact_scan_report"]
+        src__intract__cli___scan_artifacts["_scan_artifacts"]
+        src__intract__cli___is_scan_candidate["_is_scan_candidate"]
+        src__intract__cli___scan_contract_file["_scan_contract_file"]
+        src__intract__cli___scan_inline_records["_scan_inline_records"]
+        src__intract__cli___scan_row["_scan_row"]
+        src__intract__cli___print_scan_table["_print_scan_table"]
+        src__intract__cli__scan["scan"]
+        src__intract__cli__validate["validate"]
+        src__intract__cli__check["check"]
+        src__intract__cli__coverage["coverage"]
+        src__intract__cli__duplicates["duplicates"]
         ...["+162 more"]
     end
 
     subgraph Exporters
+        src__intract__cli___export_tickets["_export_tickets"]
         src__intract__integrations__planfile__PlanfileExporter__export["export"]
         src__intract__integrations__planfile__PlanfileExporter___write_yaml["_write_yaml"]
         src__intract__integrations__planfile__PlanfileExporter___write_json["_write_json"]
         src__intract__integrations__planfile__PlanfileExporter___write_todo["_write_todo"]
         src__intract__integrations__planfile_adapter__PlanfileApiAdapter__export_local["export_local"]
-        src__intract__cli___export_tickets["_export_tickets"]
     end
 
-    class src__intract__config__IntractConfig__from_mapping,src__intract__scan_artifacts__ArtifactScanReport__to_dict,src__intract__proposals__ProposedContract__to_dict,src__intract__proposals__propose_ui_delta_contract_dicts,src__intract__coverage__CoverageReport__to_dict,src__intract__graph__ContractGraph__to_dict,src__intract__graph__ContractGraph__to_mermaid,src__intract__sdk__ContractBuilder__to_inline,src__intract__sdk__contract,src__intract__validate_snippet__validate_artifact_with_proposals entry
+    class src__intract__config__IntractConfig__from_mapping,src__intract__cli__main,src__intract__cli__init,src__intract__cli___print_artifact_scan_report,src__intract__cli___scan_artifacts,src__intract__cli___is_scan_candidate,src__intract__cli___scan_contract_file,src__intract__cli___scan_inline_records,src__intract__cli___scan_row,src__intract__cli___print_scan_table entry

@@ -30,6 +30,15 @@
 │   │   │   ├── reporter.py
 │   │   │   └── scanner.py
 │   │   └── run_examples.py
+│   ├── markdown-generator
+│   │   ├── demo.py
+│   │   ├── intract.yaml
+│   │   ├── pass
+│   │   │   └── generator.py
+│   │   ├── README.md
+│   │   ├── run-demo.sh
+│   │   └── violation
+│   │       └── generator.py
 │   ├── python
 │   │   └── parse_extensions.py
 │   ├── README.md
@@ -273,6 +282,7 @@
 │   ├── test_language_analyzers.py
 │   ├── test_manifest_ops.py
 │   ├── test_manifest.py
+│   ├── test_markdown_generator_example.py
 │   ├── test_mcp.py
 │   ├── test_new_modules.py
 │   ├── test_next_stage.py
@@ -301,4 +311,4 @@
 ├── uv.lock
 └── VERSION
 
-65 directories, 237 files
+68 directories, 244 files

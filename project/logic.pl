@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('intract', '0.5.12', 'python').
+project_metadata('intract', '0.5.13', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 119, 'less').
