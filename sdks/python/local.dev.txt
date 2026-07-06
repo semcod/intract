@@ -1,0 +1,9 @@
+# local.dev.txt — locally developed dependencies of this project (generated 2026-07-04)
+# by ~/github/local.dev.sh — DO NOT EDIT; see ~/github/local.dev.md
+# project: intract-plugin-example 0.1.0 (python) at /home/tom/github/semcod/intract/sdks/python
+# deps declared: 1 | with local source: 1
+
+## LOCAL DEPS  (dep | required | local source (version) | installed | status)
+intract | >=0.2.0 | /home/tom/github/semcod/intract (0.5.14) | 0.5.13 editable | OK-EDITABLE  [pyproject.toml]
+
+## EXTERNAL DEPS (no local source, 0): -
