@@ -309,3 +309,8 @@ site/public/artifacts/*.deb
 site/public/artifacts/*.AppImage
 site/public/artifacts/*.msi
 site/public/artifacts/*.exe
+.agents/
+.codex/
+.github/
+.intract/
+.vscode/
